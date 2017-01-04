@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace luval.vision.core
 {
-    public class Class1
+    public class VisionManager
     {
+
     }
 }
