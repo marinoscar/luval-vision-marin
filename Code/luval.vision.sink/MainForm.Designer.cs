@@ -40,6 +40,8 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.processBtn = new System.Windows.Forms.Button();
             this.pictureBox = new System.Windows.Forms.PictureBox();
+            this.splitter1 = new System.Windows.Forms.Splitter();
+            this.resultText = new System.Windows.Forms.TextBox();
             this.mainMenu.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
@@ -131,18 +133,37 @@
             // 
             // pictureBox
             // 
-            this.pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBox.Dock = System.Windows.Forms.DockStyle.Left;
             this.pictureBox.Location = new System.Drawing.Point(0, 24);
             this.pictureBox.Name = "pictureBox";
-            this.pictureBox.Size = new System.Drawing.Size(832, 523);
+            this.pictureBox.Size = new System.Drawing.Size(420, 523);
             this.pictureBox.TabIndex = 2;
             this.pictureBox.TabStop = false;
+            // 
+            // splitter1
+            // 
+            this.splitter1.Location = new System.Drawing.Point(420, 24);
+            this.splitter1.Name = "splitter1";
+            this.splitter1.Size = new System.Drawing.Size(3, 523);
+            this.splitter1.TabIndex = 3;
+            this.splitter1.TabStop = false;
+            // 
+            // resultText
+            // 
+            this.resultText.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.resultText.Location = new System.Drawing.Point(423, 24);
+            this.resultText.Multiline = true;
+            this.resultText.Name = "resultText";
+            this.resultText.Size = new System.Drawing.Size(409, 523);
+            this.resultText.TabIndex = 4;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(832, 597);
+            this.Controls.Add(this.resultText);
+            this.Controls.Add(this.splitter1);
             this.Controls.Add(this.pictureBox);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.mainMenu);
@@ -171,6 +192,8 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button processBtn;
         private System.Windows.Forms.PictureBox pictureBox;
+        private System.Windows.Forms.Splitter splitter1;
+        private System.Windows.Forms.TextBox resultText;
     }
 }
 

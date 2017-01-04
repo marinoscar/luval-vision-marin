@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="ImageManager.cs" />
     <Compile Include="IOcrProvider.cs" />
+    <Compile Include="LineItem.cs" />
     <Compile Include="OcrProvider.cs" />
     <Compile Include="OcrResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
