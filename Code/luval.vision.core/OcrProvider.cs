@@ -15,9 +15,9 @@ namespace luval.vision.core
     public class OcrProvider
     {
 
-        public OcrResult DoOcr(FileInfo file)
+        public OcrResult DoOcr(string fileName)
         {
-            var response = DoOcrRequest(file);
+            var response = DoOcrRequest(fileName);
             if (response.StatusCode != HttpStatusCode.OK)
                 throw new InvalidOperationException("Unable to process request");
             return JsonConvert.DeserializeObject<OcrResult>(response.Content);
@@ -32,7 +32,7 @@ namespace luval.vision.core
             request.RequestFormat = DataFormat.Json;
             request.AddHeader("Ocp-Apim-Subscription-Key", apiKey);
             request.AddHeader("Content-Type", "multipart/form-data");
-            request.AddFile("content", file.FullName);
+            request.AddFile("content", fileName);
             return client.Execute(request);
         }
     }

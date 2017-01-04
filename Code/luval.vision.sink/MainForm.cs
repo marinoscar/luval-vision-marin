@@ -53,6 +53,8 @@ namespace luval.vision.sink
             }
             var provider = new OcrProvider();
             var result = provider.DoOcr(_fileName);
+            var bmp = new ImageManager().Process(result, pictureBox.Image);
+            pictureBox.Image = bmp;
         }
     }
 }

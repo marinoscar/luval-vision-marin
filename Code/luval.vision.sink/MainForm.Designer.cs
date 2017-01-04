@@ -120,6 +120,7 @@
             // 
             // processBtn
             // 
+            this.processBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.processBtn.Location = new System.Drawing.Point(745, 12);
             this.processBtn.Name = "processBtn";
             this.processBtn.Size = new System.Drawing.Size(75, 23);
