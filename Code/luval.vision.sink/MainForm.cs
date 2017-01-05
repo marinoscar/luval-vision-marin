@@ -33,6 +33,8 @@ namespace luval.vision.sink
             };
             if (dialog.ShowDialog() == DialogResult.Cancel) return;
             _fileName = dialog.FileName;
+            pictureBox.Image = null;
+            if (File.Exists("tmp.img")) File.Delete("tmp.img");
             File.Copy(dialog.FileName, "tmp.img", true);
             var image = Image.FromFile("tmp.img");
             pictureBox.Image = image;
@@ -57,6 +59,7 @@ namespace luval.vision.sink
             pictureBox.Image = bmp;
             var items = provider.GetLines(result);
             resultText.Lines = items.Select(i => i.ToText()).ToArray();
+            resultText.AppendText(InvoiceData.FromOcr(items).ToString());
         }
     }
 }
