@@ -24,9 +24,9 @@ namespace luval.vision.core
             return JsonConvert.DeserializeObject<OcrResult>(response.Content);
         }
 
-        public string[] GetLines(OcrResult item)
+        public IEnumerable<LineItem> GetLines(OcrResult item)
         {
-            var result = new List<LineItem>();
+            var result = new List<OcrArea>();
             var id = 1;
             var regionId = 1;
             foreach (var region in item.Regions)
@@ -35,7 +35,7 @@ namespace luval.vision.core
                 {
                     var box = line.Value<string>("boundingBox").Split(",".ToCharArray()).Select(i => Convert.ToInt32(i)).ToArray();
                     var words = line.Value<JArray>("words").Select(i => i.Value<string>("text")).ToArray();
-                    result.Add(new LineItem()
+                    result.Add(new OcrArea()
                     {
                         Id = id,
                         RegionId = regionId,
@@ -52,31 +52,40 @@ namespace luval.vision.core
             return AlignLines(result);
         }
 
-        private string[] AlignLines(IEnumerable<LineItem> items)
+        private IEnumerable<LineItem> AlignLines(IEnumerable<OcrArea> items)
         {
-            var linesProcessed = new List<int>();
+            var resultLineItems = new List<LineItem>();
             var offset = (int)(items.Max(i => i.Height) * 0.05); //Lines within 5% of the selected Y axis
-            var buffer = new Dictionary<int, List<LineItem>>();
-            foreach(var item in items.OrderBy(i => i.Y).ToList()) //Start from Top to Bottom
+            var lineNo = 1;
+            var iterator = items.OrderBy(i => i.Y).ToList();
+            while (iterator.Count > 0)
             {
+                var item = iterator.First();
                 var min = item.Y - offset;
                 var max = item.Y + offset;
-                var similar = items.Where(i => i.Id != item.Id && !linesProcessed.Contains(i.Id) && (i.Y >= min && i.Y < max)).ToList();
-                var index = buffer.Keys.Count;
+                var similar = iterator.Where(i => i.Id != item.Id && (i.Y >= min && i.Y < max)).ToList();
                 if (similar.Count > 0)
                 {
-                    linesProcessed.AddRange(similar.Select(i => i.Id));
-                    var tmp = new List<LineItem>(similar) { item };
-                    buffer[index] = tmp.OrderBy(i => i.X).ToList(); //order from left to right
-                }
-                else if(!linesProcessed.Contains(item.Id))
-                {
-                    buffer[index] = new List<LineItem>() { item };
+                    var tmp = new List<OcrArea>(similar) { item };
+                    tmp.ForEach(i => iterator.Remove(i));
+                    resultLineItems.Add(new LineItem()
+                    {
+                        LineNumber = lineNo,
+                        Areas = tmp.OrderBy(i => i.X).ToList() //order from left to right
+                    });
                 }
                 else
-                    linesProcessed.Add(item.Id);
+                {
+                    iterator.Remove(item);
+                    resultLineItems.Add(new LineItem()
+                    {
+                        LineNumber = lineNo,
+                        Areas = new[] { item } //order from left to right
+                    });
+                }
+                lineNo++;
             }
-            return buffer.Select(i => string.Join("     ", i.Value.Select(j => string.Join(" ", j.Words)))).Distinct().ToArray();
+            return resultLineItems;
         }
 
         private IRestResponse DoOcrRequest(string fileName)

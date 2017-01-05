@@ -8,13 +8,11 @@ namespace luval.vision.core
 {
     public class LineItem
     {
-        public int Id { get; set; }
-        public int RegionId { get; set; }
-        public int X { get; set; }
-        public int Y { get; set; }
-        public int Width { get; set; }
-        public int Height { get; set; }
-
-        public string[] Words { get; set; }
+        public int LineNumber { get; set; }
+        public IEnumerable<OcrArea> Areas { get; set; }
+        public string ToText()
+        {
+            return string.Join("        ", Areas.Select(i => i.ToText()));
+        }
     }
 }
