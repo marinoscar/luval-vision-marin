@@ -33,10 +33,14 @@ namespace luval.vision.sink
             };
             if (dialog.ShowDialog() == DialogResult.Cancel) return;
             _fileName = dialog.FileName;
+            if (pictureBox.Image != null) pictureBox.Image.Dispose();
             pictureBox.Image = null;
-            if (File.Exists("tmp.img")) File.Delete("tmp.img");
-            File.Copy(dialog.FileName, "tmp.img", true);
-            var image = Image.FromFile("tmp.img");
+            var image = default(Image);
+            using (var stream = new StreamReader(_fileName))
+            {
+                image = Image.FromStream(stream.BaseStream);
+                stream.Close();
+            }
             pictureBox.Image = image;
             pictureBox.Refresh();
         }
