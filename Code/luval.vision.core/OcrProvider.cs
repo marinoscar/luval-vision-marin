@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -51,6 +52,29 @@ namespace luval.vision.core
             }
             return AlignLines(result);
         }
+
+        public string GetTotal(string fileName)
+        {
+            var result = DoOcr(fileName);
+            return GetTotal(GetLines(result));
+        }
+
+        public string GetTotal(IEnumerable<LineItem> lines)
+        {
+            var text = string.Empty;
+            foreach(var item in lines.Reverse())
+            {
+                text = item.ToText();
+                if (text.ToLowerInvariant().Contains("total"))
+                {
+                    var amountValues = Regex.Matches(text, @"[0-9]|-|\.|,").Cast<Match>().Where(i => i.Success).Select(i => i.Value).ToList();
+                    return string.Join("", amountValues);
+                }
+            }
+            return string.Empty;
+        }
+
+
 
         private IEnumerable<LineItem> AlignLines(IEnumerable<OcrArea> items)
         {

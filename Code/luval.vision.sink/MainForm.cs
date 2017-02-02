@@ -60,6 +60,7 @@ namespace luval.vision.sink
             var items = provider.GetLines(result);
             resultText.Lines = items.Select(i => i.ToText()).ToArray();
             resultText.AppendText(InvoiceData.FromOcr(items).ToString());
+            totalText.Text = provider.GetTotal(items);
         }
     }
 }

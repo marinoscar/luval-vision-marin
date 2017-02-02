@@ -32,19 +32,23 @@
             this.mainMenu = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.exitMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.customizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.panel1 = new System.Windows.Forms.Panel();
             this.processBtn = new System.Windows.Forms.Button();
             this.pictureBox = new System.Windows.Forms.PictureBox();
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.resultText = new System.Windows.Forms.TextBox();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.totalText = new System.Windows.Forms.TextBox();
             this.mainMenu.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // mainMenu
@@ -74,14 +78,19 @@
             this.openMenu.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.openMenu.Name = "openMenu";
             this.openMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.openMenu.Size = new System.Drawing.Size(152, 22);
+            this.openMenu.Size = new System.Drawing.Size(146, 22);
             this.openMenu.Text = "&Open";
             this.openMenu.Click += new System.EventHandler(this.openMenu_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(143, 6);
             // 
             // exitMenu
             // 
             this.exitMenu.Name = "exitMenu";
-            this.exitMenu.Size = new System.Drawing.Size(152, 22);
+            this.exitMenu.Size = new System.Drawing.Size(146, 22);
             this.exitMenu.Text = "E&xit";
             this.exitMenu.Click += new System.EventHandler(this.exitMenu_Click);
             // 
@@ -97,19 +106,14 @@
             // customizeToolStripMenuItem
             // 
             this.customizeToolStripMenuItem.Name = "customizeToolStripMenuItem";
-            this.customizeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.customizeToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.customizeToolStripMenuItem.Text = "&Customize";
             // 
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.optionsToolStripMenuItem.Text = "&Options";
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
             // 
             // panel1
             // 
@@ -136,13 +140,13 @@
             this.pictureBox.Dock = System.Windows.Forms.DockStyle.Left;
             this.pictureBox.Location = new System.Drawing.Point(0, 24);
             this.pictureBox.Name = "pictureBox";
-            this.pictureBox.Size = new System.Drawing.Size(420, 523);
+            this.pictureBox.Size = new System.Drawing.Size(499, 523);
             this.pictureBox.TabIndex = 2;
             this.pictureBox.TabStop = false;
             // 
             // splitter1
             // 
-            this.splitter1.Location = new System.Drawing.Point(420, 24);
+            this.splitter1.Location = new System.Drawing.Point(499, 24);
             this.splitter1.Name = "splitter1";
             this.splitter1.Size = new System.Drawing.Size(3, 523);
             this.splitter1.TabIndex = 3;
@@ -152,17 +156,46 @@
             // 
             this.resultText.Dock = System.Windows.Forms.DockStyle.Fill;
             this.resultText.Font = new System.Drawing.Font("Courier New", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.resultText.Location = new System.Drawing.Point(423, 24);
+            this.resultText.Location = new System.Drawing.Point(502, 24);
             this.resultText.Multiline = true;
             this.resultText.Name = "resultText";
-            this.resultText.Size = new System.Drawing.Size(409, 523);
+            this.resultText.Size = new System.Drawing.Size(330, 523);
             this.resultText.TabIndex = 4;
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.totalText);
+            this.panel2.Controls.Add(this.label1);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel2.Location = new System.Drawing.Point(502, 501);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(330, 46);
+            this.panel2.TabIndex = 5;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(3, 14);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(108, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Invoice Total Amount";
+            // 
+            // totalText
+            // 
+            this.totalText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.totalText.Location = new System.Drawing.Point(117, 11);
+            this.totalText.Name = "totalText";
+            this.totalText.Size = new System.Drawing.Size(201, 20);
+            this.totalText.TabIndex = 1;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(832, 597);
+            this.Controls.Add(this.panel2);
             this.Controls.Add(this.resultText);
             this.Controls.Add(this.splitter1);
             this.Controls.Add(this.pictureBox);
@@ -175,6 +208,8 @@
             this.mainMenu.PerformLayout();
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -195,6 +230,9 @@
         private System.Windows.Forms.PictureBox pictureBox;
         private System.Windows.Forms.Splitter splitter1;
         private System.Windows.Forms.TextBox resultText;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox totalText;
     }
 }
 
