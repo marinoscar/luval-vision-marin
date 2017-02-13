@@ -43,8 +43,8 @@
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.resultText = new System.Windows.Forms.TextBox();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
             this.totalText = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.mainMenu.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
@@ -172,15 +172,6 @@
             this.panel2.Size = new System.Drawing.Size(330, 46);
             this.panel2.TabIndex = 5;
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 14);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(108, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Invoice Total Amount";
-            // 
             // totalText
             // 
             this.totalText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -189,6 +180,15 @@
             this.totalText.Name = "totalText";
             this.totalText.Size = new System.Drawing.Size(201, 20);
             this.totalText.TabIndex = 1;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(3, 14);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(108, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Invoice Total Amount";
             // 
             // MainForm
             // 

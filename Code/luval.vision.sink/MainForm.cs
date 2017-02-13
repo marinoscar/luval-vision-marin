@@ -66,5 +66,19 @@ namespace luval.vision.sink
             resultText.AppendText(InvoiceData.FromOcr(items).ToString());
             totalText.Text = provider.GetTotal(items);
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(_fileName))
+            {
+                MessageBox.Show("Please load an image for processing", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            var provider = new OcrProvider();
+            var result = provider.DoOcr(_fileName);
+            var bmp = new ImageManager().Process(result, pictureBox.Image);
+            pictureBox.Image = bmp;
+            totalText.Text = provider.GetTotal(_fileName);
+        }
     }
 }
