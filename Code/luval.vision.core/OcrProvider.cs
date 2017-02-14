@@ -25,6 +25,25 @@ namespace luval.vision.core
             return JsonConvert.DeserializeObject<OcrResult>(response.Content);
         }
 
+
+        public ProcessedOcr ProcessOcr(OcrResult ocrResult)
+        {
+            var result = new ProcessedOcr();
+            var lines = GetLines(ocrResult);
+            result.Lines = lines;
+            result.OcrValue = ocrResult;
+            result.Result = DoParseResult(lines);
+            return result;
+        }
+
+        public ParseResult DoParseResult(IEnumerable<LineItem> lines)
+        {
+            var result = new ParseResult() {
+                Total = GetTotal(lines), Tax = GetLineNumberValue(lines,"tax")
+            };
+            return result;
+        }
+
         public IEnumerable<LineItem> GetLines(OcrResult item)
         {
             var result = new List<OcrArea>();
@@ -61,11 +80,16 @@ namespace luval.vision.core
 
         public string GetTotal(IEnumerable<LineItem> lines)
         {
+            return GetLineNumberValue(lines, "total");
+        }
+
+        public string GetLineNumberValue(IEnumerable<LineItem> lines, string pattern)
+        {
             var text = string.Empty;
-            foreach(var item in lines.Reverse())
+            foreach (var item in lines.Reverse())
             {
                 text = item.ToText();
-                if (text.ToLowerInvariant().Contains("total"))
+                if (text.ToLowerInvariant().Contains(pattern))
                 {
                     var amountValues = Regex.Matches(text, @"[0-9]|-|\.|,").Cast<Match>().Where(i => i.Success).Select(i => i.Value).ToList();
                     return string.Join("", amountValues);

@@ -38,17 +38,23 @@
             this.customizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnDemo = new System.Windows.Forms.Button();
             this.processBtn = new System.Windows.Forms.Button();
             this.pictureBox = new System.Windows.Forms.PictureBox();
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.resultText = new System.Windows.Forms.TextBox();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.totalText = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.mainTab = new System.Windows.Forms.TabControl();
+            this.tabPicture = new System.Windows.Forms.TabPage();
+            this.panelPicture = new System.Windows.Forms.Panel();
+            this.tabResult = new System.Windows.Forms.TabPage();
+            this.resultGrid = new System.Windows.Forms.PropertyGrid();
             this.mainMenu.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
-            this.panel2.SuspendLayout();
+            this.mainTab.SuspendLayout();
+            this.tabPicture.SuspendLayout();
+            this.panelPicture.SuspendLayout();
+            this.tabResult.SuspendLayout();
             this.SuspendLayout();
             // 
             // mainMenu
@@ -117,12 +123,24 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btnDemo);
             this.panel1.Controls.Add(this.processBtn);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.Location = new System.Drawing.Point(0, 547);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(832, 50);
             this.panel1.TabIndex = 1;
+            // 
+            // btnDemo
+            // 
+            this.btnDemo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnDemo.Location = new System.Drawing.Point(664, 12);
+            this.btnDemo.Name = "btnDemo";
+            this.btnDemo.Size = new System.Drawing.Size(75, 23);
+            this.btnDemo.TabIndex = 1;
+            this.btnDemo.Text = "&Demo";
+            this.btnDemo.UseVisualStyleBackColor = true;
+            this.btnDemo.Click += new System.EventHandler(this.btnDemo_Click);
             // 
             // processBtn
             // 
@@ -137,16 +155,16 @@
             // 
             // pictureBox
             // 
-            this.pictureBox.Dock = System.Windows.Forms.DockStyle.Left;
-            this.pictureBox.Location = new System.Drawing.Point(0, 24);
+            this.pictureBox.Location = new System.Drawing.Point(0, 0);
             this.pictureBox.Name = "pictureBox";
-            this.pictureBox.Size = new System.Drawing.Size(499, 523);
+            this.pictureBox.Size = new System.Drawing.Size(815, 445);
+            this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pictureBox.TabIndex = 2;
             this.pictureBox.TabStop = false;
             // 
             // splitter1
             // 
-            this.splitter1.Location = new System.Drawing.Point(499, 24);
+            this.splitter1.Location = new System.Drawing.Point(0, 24);
             this.splitter1.Name = "splitter1";
             this.splitter1.Size = new System.Drawing.Size(3, 523);
             this.splitter1.TabIndex = 3;
@@ -156,49 +174,71 @@
             // 
             this.resultText.Dock = System.Windows.Forms.DockStyle.Fill;
             this.resultText.Font = new System.Drawing.Font("Courier New", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.resultText.Location = new System.Drawing.Point(502, 24);
+            this.resultText.Location = new System.Drawing.Point(246, 3);
             this.resultText.Multiline = true;
             this.resultText.Name = "resultText";
-            this.resultText.Size = new System.Drawing.Size(330, 523);
+            this.resultText.Size = new System.Drawing.Size(572, 491);
             this.resultText.TabIndex = 4;
             // 
-            // panel2
+            // mainTab
             // 
-            this.panel2.Controls.Add(this.totalText);
-            this.panel2.Controls.Add(this.label1);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(502, 501);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(330, 46);
-            this.panel2.TabIndex = 5;
+            this.mainTab.Controls.Add(this.tabPicture);
+            this.mainTab.Controls.Add(this.tabResult);
+            this.mainTab.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mainTab.Location = new System.Drawing.Point(3, 24);
+            this.mainTab.Name = "mainTab";
+            this.mainTab.SelectedIndex = 0;
+            this.mainTab.Size = new System.Drawing.Size(829, 523);
+            this.mainTab.TabIndex = 6;
             // 
-            // totalText
+            // tabPicture
             // 
-            this.totalText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.totalText.Location = new System.Drawing.Point(117, 11);
-            this.totalText.Name = "totalText";
-            this.totalText.Size = new System.Drawing.Size(201, 20);
-            this.totalText.TabIndex = 1;
+            this.tabPicture.Controls.Add(this.panelPicture);
+            this.tabPicture.Location = new System.Drawing.Point(4, 22);
+            this.tabPicture.Name = "tabPicture";
+            this.tabPicture.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPicture.Size = new System.Drawing.Size(821, 497);
+            this.tabPicture.TabIndex = 0;
+            this.tabPicture.Text = "Document";
+            this.tabPicture.UseVisualStyleBackColor = true;
             // 
-            // label1
+            // panelPicture
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 14);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(108, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Invoice Total Amount";
+            this.panelPicture.AutoScroll = true;
+            this.panelPicture.Controls.Add(this.pictureBox);
+            this.panelPicture.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelPicture.Location = new System.Drawing.Point(3, 3);
+            this.panelPicture.Name = "panelPicture";
+            this.panelPicture.Size = new System.Drawing.Size(815, 491);
+            this.panelPicture.TabIndex = 0;
+            // 
+            // tabResult
+            // 
+            this.tabResult.Controls.Add(this.resultText);
+            this.tabResult.Controls.Add(this.resultGrid);
+            this.tabResult.Location = new System.Drawing.Point(4, 22);
+            this.tabResult.Name = "tabResult";
+            this.tabResult.Padding = new System.Windows.Forms.Padding(3);
+            this.tabResult.Size = new System.Drawing.Size(821, 497);
+            this.tabResult.TabIndex = 1;
+            this.tabResult.Text = "Results";
+            this.tabResult.UseVisualStyleBackColor = true;
+            // 
+            // resultGrid
+            // 
+            this.resultGrid.Dock = System.Windows.Forms.DockStyle.Left;
+            this.resultGrid.Location = new System.Drawing.Point(3, 3);
+            this.resultGrid.Name = "resultGrid";
+            this.resultGrid.Size = new System.Drawing.Size(243, 491);
+            this.resultGrid.TabIndex = 0;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(832, 597);
-            this.Controls.Add(this.panel2);
-            this.Controls.Add(this.resultText);
+            this.Controls.Add(this.mainTab);
             this.Controls.Add(this.splitter1);
-            this.Controls.Add(this.pictureBox);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.mainMenu);
             this.MainMenuStrip = this.mainMenu;
@@ -208,8 +248,12 @@
             this.mainMenu.PerformLayout();
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
+            this.mainTab.ResumeLayout(false);
+            this.tabPicture.ResumeLayout(false);
+            this.panelPicture.ResumeLayout(false);
+            this.panelPicture.PerformLayout();
+            this.tabResult.ResumeLayout(false);
+            this.tabResult.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -230,9 +274,12 @@
         private System.Windows.Forms.PictureBox pictureBox;
         private System.Windows.Forms.Splitter splitter1;
         private System.Windows.Forms.TextBox resultText;
-        private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox totalText;
+        private System.Windows.Forms.TabControl mainTab;
+        private System.Windows.Forms.TabPage tabPicture;
+        private System.Windows.Forms.Panel panelPicture;
+        private System.Windows.Forms.TabPage tabResult;
+        private System.Windows.Forms.PropertyGrid resultGrid;
+        private System.Windows.Forms.Button btnDemo;
     }
 }
 

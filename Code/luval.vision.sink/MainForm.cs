@@ -1,4 +1,5 @@
 ﻿using luval.vision.core;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,14 +13,24 @@ using System.Windows.Forms;
 
 namespace luval.vision.sink
 {
-    public partial class MainForm : Form
+    public partial class MainForm : Form, IMainformPresenter
     {
 
         private string _fileName;
+        private MainformPresenter _presenter;
 
         public MainForm()
         {
             InitializeComponent();
+            _presenter = new MainformPresenter(this);
+        }
+
+        public PictureBox PictureBox { get { return pictureBox; } }
+        public PropertyGrid PropertyGrid { get { return resultGrid; } }
+        public string ResultText
+        {
+            get { return resultText.Text; }
+            set { resultText.Text = value; }
         }
 
         private void openMenu_Click(object sender, EventArgs e)
@@ -29,20 +40,11 @@ namespace luval.vision.sink
             {
                 Title = "Open Image",
                 Filter = "Image Files(*.BMP;*.JPG;*.GIF;*.PNG)|*.BMP;*.JPG;*.GIF;*.PNG|All files (*.*)|*.*",
-                RestoreDirectory = true 
+                RestoreDirectory = true
             };
             if (dialog.ShowDialog() == DialogResult.Cancel) return;
             _fileName = dialog.FileName;
-            if (pictureBox.Image != null) pictureBox.Image.Dispose();
-            pictureBox.Image = null;
-            var image = default(Image);
-            using (var stream = new StreamReader(_fileName))
-            {
-                image = Image.FromStream(stream.BaseStream);
-                stream.Close();
-            }
-            pictureBox.Image = image;
-            pictureBox.Refresh();
+            _presenter.DoLoadImage(_fileName);
         }
 
         private void exitMenu_Click(object sender, EventArgs e)
@@ -58,27 +60,19 @@ namespace luval.vision.sink
                 return;
             }
             var provider = new OcrProvider();
-            var result = provider.DoOcr(_fileName);
-            var bmp = new ImageManager().Process(result, pictureBox.Image);
-            pictureBox.Image = bmp;
-            var items = provider.GetLines(result);
-            resultText.Lines = items.Select(i => i.ToText()).ToArray();
-            resultText.AppendText(InvoiceData.FromOcr(items).ToString());
-            totalText.Text = provider.GetTotal(items);
+            var result = _presenter.ProcessFromFile(_fileName);
+            _presenter.DoFullProcess(result);
         }
 
-        private void button1_Click(object sender, EventArgs e)
+
+
+        private void btnDemo_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(_fileName))
-            {
-                MessageBox.Show("Please load an image for processing", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            var provider = new OcrProvider();
-            var result = provider.DoOcr(_fileName);
-            var bmp = new ImageManager().Process(result, pictureBox.Image);
-            pictureBox.Image = bmp;
-            totalText.Text = provider.GetTotal(_fileName);
+            _presenter.DoLoadImage(@"Demo/sample-receipt.jpg");
+            var response = File.ReadAllText(@"Demo/sample-response.json");
+            var ocrResult = JsonConvert.DeserializeObject<OcrResult>(response);
+            _presenter.DoFullProcess(ocrResult);
+
         }
     }
 }

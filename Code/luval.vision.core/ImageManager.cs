@@ -30,5 +30,20 @@ namespace luval.vision.core
             }
             return bmp;
         }
+
+        public Image ProcessLines(IEnumerable<LineItem> lines, Image img)
+        {
+            var bmp = new Bitmap(img);
+            var grayPen = new Pen(Color.DarkGreen, 1);
+            using (var graphic = Graphics.FromImage(bmp))
+            {
+                foreach(var line in lines)
+                {
+                    var y = line.GetY();
+                    graphic.DrawLine(grayPen, new Point(0, y), new Point(img.Width, y));
+                }
+            }
+            return bmp;
+        }
     }
 }
