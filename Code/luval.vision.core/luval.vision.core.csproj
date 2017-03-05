@@ -58,6 +58,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enum.cs" />
+    <Compile Include="Extractor.cs" />
     <Compile Include="ImageManager.cs" />
     <Compile Include="InvoiceData.cs" />
     <Compile Include="IOcrProvider.cs" />
@@ -65,6 +67,7 @@
     <Compile Include="OcrArea.cs" />
     <Compile Include="OcrProvider.cs" />
     <Compile Include="OcrResult.cs" />
+    <Compile Include="OcrWord.cs" />
     <Compile Include="ParseResult.cs" />
     <Compile Include="ProcessedOcr.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
