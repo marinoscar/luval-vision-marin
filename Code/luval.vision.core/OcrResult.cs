@@ -50,6 +50,7 @@ namespace luval.vision.core
                     {
                         var word = ParseWord(jWord, line);
                         line.Words.Add(word);
+                        EntityExtractor.ClassifyWord(word);
                         Words.Add(word);
                     }
                     region.Lines.Add(line);

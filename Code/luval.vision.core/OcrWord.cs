@@ -12,5 +12,11 @@ namespace luval.vision.core
         public OcrLocation Location { get; set; }
         public string Text { get; set; }
         public DataType DataType { get; set; }
+
+        public T GetValue<T>()
+        {
+            if (string.IsNullOrWhiteSpace(Text)) return default(T);
+            return default(T);
+        }
     }
 }

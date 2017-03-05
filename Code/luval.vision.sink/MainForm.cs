@@ -72,6 +72,8 @@ namespace luval.vision.sink
             var response = File.ReadAllText(@"Demo/sample-response.json");
             var ocrResult = JsonConvert.DeserializeObject<OcrResult>(response);
             ocrResult.LoadFromJsonRegion();
+            var numbers = ocrResult.Words.Where(i => i.DataType == DataType.Number).ToList();
+            var dates = ocrResult.Words.Where(i => i.DataType == DataType.Date).ToList();
             _presenter.DoFullProcess(ocrResult);
 
         }

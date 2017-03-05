@@ -16,5 +16,6 @@ namespace luval.vision.core
         public OcrRegion ParentRegion { get; set; }
         public OcrLocation Location { get; set; }
         public List<OcrWord> Words { get; set; }
+        public string Text { get { return string.Join(" ", Words.Select(i => i.Text)); } }
     }
 }
