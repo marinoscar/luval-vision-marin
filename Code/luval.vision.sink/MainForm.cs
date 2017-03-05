@@ -71,6 +71,7 @@ namespace luval.vision.sink
             _presenter.DoLoadImage(@"Demo/sample-receipt.jpg");
             var response = File.ReadAllText(@"Demo/sample-response.json");
             var ocrResult = JsonConvert.DeserializeObject<OcrResult>(response);
+            ocrResult.LoadFromJsonRegion();
             _presenter.DoFullProcess(ocrResult);
 
         }
