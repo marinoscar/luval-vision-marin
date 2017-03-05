@@ -72,8 +72,11 @@ namespace luval.vision.sink
             var response = File.ReadAllText(@"Demo/sample-response.json");
             var ocrResult = JsonConvert.DeserializeObject<OcrResult>(response);
             ocrResult.LoadFromJsonRegion();
+            var navigator = new Navigator(ocrResult.Words);
             var numbers = ocrResult.Words.Where(i => i.DataType == DataType.Number).ToList();
             var dates = ocrResult.Words.Where(i => i.DataType == DataType.Date).ToList();
+            var inv = navigator.FindByText("Invoice").FirstOrDefault();
+            var invNumber = navigator.FindNeighbors(inv, Direction.Down).FirstOrDefault();
             _presenter.DoFullProcess(ocrResult);
 
         }

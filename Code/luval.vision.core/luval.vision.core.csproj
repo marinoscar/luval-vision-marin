@@ -65,6 +65,7 @@
     <Compile Include="InvoiceData.cs" />
     <Compile Include="IOcrProvider.cs" />
     <Compile Include="LineItem.cs" />
+    <Compile Include="Navigator.cs" />
     <Compile Include="OcrArea.cs" />
     <Compile Include="OcrLine.cs" />
     <Compile Include="OcrLocation.cs" />
