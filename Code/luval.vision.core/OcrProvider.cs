@@ -49,7 +49,7 @@ namespace luval.vision.core
             var result = new List<OcrArea>();
             var id = 1;
             var regionId = 1;
-            foreach (var region in item.Regions)
+            foreach (var region in item.RegionResult)
             {
                 foreach (var line in region.Value<JArray>("lines"))
                 {

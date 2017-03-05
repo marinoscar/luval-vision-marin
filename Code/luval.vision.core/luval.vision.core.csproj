@@ -65,7 +65,10 @@
     <Compile Include="IOcrProvider.cs" />
     <Compile Include="LineItem.cs" />
     <Compile Include="OcrArea.cs" />
+    <Compile Include="OcrLine.cs" />
+    <Compile Include="OcrLocation.cs" />
     <Compile Include="OcrProvider.cs" />
+    <Compile Include="OcrRegion.cs" />
     <Compile Include="OcrResult.cs" />
     <Compile Include="OcrWord.cs" />
     <Compile Include="ParseResult.cs" />

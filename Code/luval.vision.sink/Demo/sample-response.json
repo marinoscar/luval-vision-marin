@@ -4,208 +4,1106 @@
   "orientation": "Up",
   "regions": [
     {
-      "boundingBox": "12,63,181,325",
+      "boundingBox": "54,98,386,396",
       "lines": [
         {
-          "boundingBox": "113,63,80,12",
+          "boundingBox": "54,98,151,11",
           "words": [
             {
-              "boundingBox": "113,63,80,12",
-              "text": "305-834-5586"
+              "boundingBox": "54,99,21,10",
+              "text": "IOS"
+            },
+            {
+              "boundingBox": "80,104,4,2",
+              "text": "-"
+            },
+            {
+              "boundingBox": "89,99,13,10",
+              "text": "IS"
+            },
+            {
+              "boundingBox": "107,99,65,10",
+              "text": "Innovation"
+            },
+            {
+              "boundingBox": "177,98,28,11",
+              "text": "Blvd."
             }
           ]
         },
         {
-          "boundingBox": "12,79,94,12",
+          "boundingBox": "54,117,183,11",
           "words": [
             {
-              "boundingBox": "12,79,44,12",
-              "text": "Server:"
+              "boundingBox": "54,117,62,11",
+              "text": "saskatoon"
             },
             {
-              "boundingBox": "65,79,41,12",
-              "text": "Ronald"
+              "boundingBox": "120,118,14,10",
+              "text": "SK"
+            },
+            {
+              "boundingBox": "138,117,44,11",
+              "text": "Canada"
+            },
+            {
+              "boundingBox": "215,117,22,11",
+              "text": "2X8"
             }
           ]
         },
         {
-          "boundingBox": "12,95,65,14",
+          "boundingBox": "54,154,112,11",
           "words": [
             {
-              "boundingBox": "12,95,33,13",
-              "text": "Table"
+              "boundingBox": "54,154,35,11",
+              "text": "E.I.N.:"
             },
             {
-              "boundingBox": "52,96,25,13",
-              "text": "20/1"
+              "boundingBox": "93,154,73,11",
+              "text": "98-0618786"
             }
           ]
         },
         {
-          "boundingBox": "12,112,58,12",
+          "boundingBox": "85,194,36,11",
           "words": [
             {
-              "boundingBox": "12,112,44,12",
-              "text": "Guests:"
+              "boundingBox": "85,194,17,11",
+              "text": "Bill"
             },
             {
-              "boundingBox": "67,112,3,12",
-              "text": "1"
+              "boundingBox": "105,194,16,11",
+              "text": "To"
             }
           ]
         },
         {
-          "boundingBox": "12,128,79,14",
+          "boundingBox": "84,217,180,11",
           "words": [
             {
-              "boundingBox": "12,128,46,14",
-              "text": "Reprint"
+              "boundingBox": "84,217,78,11",
+              "text": "QUALCOMM"
             },
             {
-              "boundingBox": "87,129,4,12",
-              "text": "1"
+              "boundingBox": "167,217,97,10",
+              "text": "INCORPORATED"
             }
           ]
         },
         {
-          "boundingBox": "12,161,94,13",
+          "boundingBox": "85,235,95,10",
           "words": [
             {
-              "boundingBox": "12,161,45,13",
-              "text": "Ferrari"
+              "boundingBox": "85,235,16,10",
+              "text": "PO"
             },
             {
-              "boundingBox": "66,162,40,12",
-              "text": "Carano"
+              "boundingBox": "106,235,25,10",
+              "text": "BOX"
+            },
+            {
+              "boundingBox": "135,235,45,10",
+              "text": "919042"
             }
           ]
         },
         {
-          "boundingBox": "13,178,99,12",
+          "boundingBox": "84,254,168,10",
           "words": [
             {
-              "boundingBox": "13,178,52,12",
-              "text": "Insalate"
+              "boundingBox": "84,254,24,10",
+              "text": "SAN"
             },
             {
-              "boundingBox": "72,178,40,12",
-              "text": "Cesare"
+              "boundingBox": "113,254,39,10",
+              "text": "DIEGO"
+            },
+            {
+              "boundingBox": "156,254,17,10",
+              "text": "CA"
+            },
+            {
+              "boundingBox": "180,254,72,10",
+              "text": "92191-9042"
             }
           ]
         },
         {
-          "boundingBox": "19,195,154,13",
+          "boundingBox": "85,272,24,11",
           "words": [
             {
-              "boundingBox": "19,195,46,13",
-              "text": "Caprese"
-            },
-            {
-              "boundingBox": "73,195,26,12",
-              "text": "Rith"
-            },
-            {
-              "boundingBox": "106,195,67,13",
-              "text": "prosciutto"
+              "boundingBox": "85,272,24,11",
+              "text": "USA"
             }
           ]
         },
         {
-          "boundingBox": "12,211,60,12",
+          "boundingBox": "322,329,68,14",
           "words": [
             {
-              "boundingBox": "12,211,26,12",
-              "text": "FISH"
-            },
-            {
-              "boundingBox": "46,211,26,12",
-              "text": "SPEC"
+              "boundingBox": "322,329,68,14",
+              "text": "Description"
             }
           ]
         },
         {
-          "boundingBox": "12,227,153,14",
+          "boundingBox": "115,366,151,12",
           "words": [
             {
-              "boundingBox": "12,227,46,14",
-              "text": "Spinach"
+              "boundingBox": "115,366,49,10",
+              "text": "Eventpro"
             },
             {
-              "boundingBox": "66,228,46,11",
-              "text": "Ricotta"
+              "boundingBox": "169,366,55,12",
+              "text": "Enterprise"
             },
             {
-              "boundingBox": "120,227,45,13",
-              "text": "Ravioli"
+              "boundingBox": "229,366,37,10",
+              "text": "Edition"
             }
           ]
         },
         {
-          "boundingBox": "12,243,94,13",
+          "boundingBox": "115,382,325,13",
           "words": [
             {
-              "boundingBox": "12,243,47,13",
-              "text": "Seafood"
+              "boundingBox": "115,383,35,9",
+              "text": "Venue"
             },
             {
-              "boundingBox": "73,244,33,12",
-              "text": "Pasta"
+              "boundingBox": "154,383,49,11",
+              "text": "Bookings"
+            },
+            {
+              "boundingBox": "207,383,73,11",
+              "text": "Management"
+            },
+            {
+              "boundingBox": "283,388,4,1",
+              "text": "-"
+            },
+            {
+              "boundingBox": "291,382,54,10",
+              "text": "Unlimited"
+            },
+            {
+              "boundingBox": "349,382,50,10",
+              "text": "Bookable"
+            },
+            {
+              "boundingBox": "403,383,37,12",
+              "text": "Spaces"
             }
           ]
         },
         {
-          "boundingBox": "12,260,60,12",
+          "boundingBox": "115,399,156,10",
           "words": [
             {
-              "boundingBox": "12,260,60,12",
-              "text": "Ossobucco"
+              "boundingBox": "115,399,49,10",
+              "text": "EventPro"
+            },
+            {
+              "boundingBox": "169,399,29,10",
+              "text": "Users"
+            },
+            {
+              "boundingBox": "202,404,3,2",
+              "text": "-"
+            },
+            {
+              "boundingBox": "209,399,62,10",
+              "text": "Concurrent"
             }
           ]
         },
         {
-          "boundingBox": "12,293,59,12",
+          "boundingBox": "115,415,296,13",
           "words": [
             {
-              "boundingBox": "12,293,20,12",
-              "text": "Sub"
+              "boundingBox": "115,415,33,10",
+              "text": "Active"
             },
             {
-              "boundingBox": "39,293,32,12",
+              "boundingBox": "152,415,51,13",
+              "text": "Directory"
+            },
+            {
+              "boundingBox": "207,415,34,10",
+              "text": "Linked"
+            },
+            {
+              "boundingBox": "246,415,28,13",
+              "text": "Login"
+            },
+            {
+              "boundingBox": "278,421,4,1",
+              "text": "-"
+            },
+            {
+              "boundingBox": "286,416,49,9",
+              "text": "EventPro"
+            },
+            {
+              "boundingBox": "339,415,9,10",
+              "text": "&"
+            },
+            {
+              "boundingBox": "352,416,59,9",
+              "text": "EPConnect"
+            }
+          ]
+        },
+        {
+          "boundingBox": "115,432,183,10",
+          "words": [
+            {
+              "boundingBox": "115,432,45,10",
+              "text": "Connect"
+            },
+            {
+              "boundingBox": "163,437,4,2",
+              "text": "-"
+            },
+            {
+              "boundingBox": "171,432,36,10",
+              "text": "Online"
+            },
+            {
+              "boundingBox": "210,432,35,10",
+              "text": "Venue"
+            },
+            {
+              "boundingBox": "249,432,49,10",
+              "text": "Calendar"
+            }
+          ]
+        },
+        {
+          "boundingBox": "115,448,145,13",
+          "words": [
+            {
+              "boundingBox": "115,449,45,9",
+              "text": "Connect"
+            },
+            {
+              "boundingBox": "163,454,4,1",
+              "text": "-"
+            },
+            {
+              "boundingBox": "171,448,36,10",
+              "text": "Online"
+            },
+            {
+              "boundingBox": "211,448,49,13",
+              "text": "Bookings"
+            }
+          ]
+        },
+        {
+          "boundingBox": "115,465,209,12",
+          "words": [
+            {
+              "boundingBox": "115,470,3,2",
+              "text": "-"
+            },
+            {
+              "boundingBox": "123,465,47,12",
+              "text": "Requires"
+            },
+            {
+              "boundingBox": "173,465,28,10",
+              "text": "Sales"
+            },
+            {
+              "boundingBox": "205,465,73,12",
+              "text": "Management"
+            },
+            {
+              "boundingBox": "282,465,42,10",
+              "text": "Module"
+            }
+          ]
+        },
+        {
+          "boundingBox": "115,481,288,13",
+          "words": [
+            {
+              "boundingBox": "115,482,49,9",
+              "text": "EventPro"
+            },
+            {
+              "boundingBox": "168,482,36,9",
+              "text": "Virtual"
+            },
+            {
+              "boundingBox": "208,481,49,10",
+              "text": "Assistant"
+            },
+            {
+              "boundingBox": "261,481,29,13",
+              "text": "(EVA)"
+            },
+            {
+              "boundingBox": "294,487,4,1",
+              "text": "-"
+            },
+            {
+              "boundingBox": "301,481,50,10",
+              "text": "Calendar"
+            },
+            {
+              "boundingBox": "354,481,49,10",
+              "text": "Assistant"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "boundingBox": "513,194,70,121",
+      "lines": [
+        {
+          "boundingBox": "513,194,58,11",
+          "words": [
+            {
+              "boundingBox": "513,194,58,11",
+              "text": "Attention"
+            }
+          ]
+        },
+        {
+          "boundingBox": "514,213,51,10",
+          "words": [
+            {
+              "boundingBox": "514,213,28,10",
+              "text": "User"
+            },
+            {
+              "boundingBox": "546,213,5,10",
+              "text": "l."
+            },
+            {
+              "boundingBox": "554,213,11,10",
+              "text": "D."
+            }
+          ]
+        },
+        {
+          "boundingBox": "514,231,28,11",
+          "words": [
+            {
+              "boundingBox": "514,231,28,11",
+              "text": "Date"
+            }
+          ]
+        },
+        {
+          "boundingBox": "514,249,69,11",
+          "words": [
+            {
+              "boundingBox": "514,249,30,11",
+              "text": "Sales"
+            },
+            {
+              "boundingBox": "548,249,35,11",
+              "text": "Order"
+            }
+          ]
+        },
+        {
+          "boundingBox": "513,267,55,14",
+          "words": [
+            {
+              "boundingBox": "513,267,55,14",
+              "text": "Approval"
+            }
+          ]
+        },
+        {
+          "boundingBox": "513,286,38,10",
+          "words": [
+            {
+              "boundingBox": "513,286,38,10",
+              "text": "Terms"
+            }
+          ]
+        },
+        {
+          "boundingBox": "514,305,56,10",
+          "words": [
+            {
+              "boundingBox": "514,305,23,10",
+              "text": "Due"
+            },
+            {
+              "boundingBox": "542,305,28,10",
+              "text": "Date"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "boundingBox": "115,498,455,177",
+      "lines": [
+        {
+          "boundingBox": "115,498,376,12",
+          "words": [
+            {
+              "boundingBox": "115,503,3,2",
+              "text": "-"
+            },
+            {
+              "boundingBox": "123,498,51,10",
+              "text": "Publishes"
+            },
+            {
+              "boundingBox": "177,500,25,10",
+              "text": "your"
+            },
+            {
+              "boundingBox": "206,498,44,12",
+              "text": "booking"
+            },
+            {
+              "boundingBox": "253,498,48,10",
+              "text": "calendar"
+            },
+            {
+              "boundingBox": "304,499,11,9",
+              "text": "to"
+            },
+            {
+              "boundingBox": "319,498,33,10",
+              "text": "online"
+            },
+            {
+              "boundingBox": "357,498,19,10",
+              "text": "iCal"
+            },
+            {
+              "boundingBox": "379,500,12,8",
+              "text": "or"
+            },
+            {
+              "boundingBox": "395,498,38,12",
+              "text": "Google"
+            },
+            {
+              "boundingBox": "437,498,54,10",
+              "text": "Calendars"
+            }
+          ]
+        },
+        {
+          "boundingBox": "115,514,339,13",
+          "words": [
+            {
+              "boundingBox": "115,514,88,13",
+              "text": "Implementation"
+            },
+            {
+              "boundingBox": "207,514,9,10",
+              "text": "&"
+            },
+            {
+              "boundingBox": "219,514,45,13",
+              "text": "Training"
+            },
+            {
+              "boundingBox": "268,514,44,13",
+              "text": "Package"
+            },
+            {
+              "boundingBox": "315,520,4,1",
+              "text": "-"
+            },
+            {
+              "boundingBox": "323,514,48,10",
+              "text": "Platinum"
+            },
+            {
+              "boundingBox": "375,515,6,9",
+              "text": "7"
+            },
+            {
+              "boundingBox": "386,515,20,12",
+              "text": "Day"
+            },
+            {
+              "boundingBox": "410,514,44,13",
+              "text": "Package"
+            }
+          ]
+        },
+        {
+          "boundingBox": "115,531,48,10",
+          "words": [
+            {
+              "boundingBox": "115,531,48,10",
+              "text": "Includes:"
+            }
+          ]
+        },
+        {
+          "boundingBox": "115,547,381,13",
+          "words": [
+            {
+              "boundingBox": "115,553,4,2",
+              "text": "-"
+            },
+            {
+              "boundingBox": "122,548,6,9",
+              "text": "3"
+            },
+            {
+              "boundingBox": "133,548,25,12",
+              "text": "Days"
+            },
+            {
+              "boundingBox": "162,547,46,10",
+              "text": "Business"
+            },
+            {
+              "boundingBox": "211,547,48,13",
+              "text": "Analysis,"
+            },
+            {
+              "boundingBox": "262,548,40,12",
+              "text": "System"
+            },
+            {
+              "boundingBox": "306,547,74,13",
+              "text": "Configuration"
+            },
+            {
+              "boundingBox": "384,547,9,10",
+              "text": "&"
+            },
+            {
+              "boundingBox": "397,547,51,10",
+              "text": "Database"
+            },
+            {
+              "boundingBox": "452,547,44,13",
+              "text": "Building"
+            }
+          ]
+        },
+        {
+          "boundingBox": "115,564,158,12",
+          "words": [
+            {
+              "boundingBox": "115,569,3,2",
+              "text": "-"
+            },
+            {
+              "boundingBox": "122,564,6,10",
+              "text": "3"
+            },
+            {
+              "boundingBox": "133,564,25,12",
+              "text": "Days"
+            },
+            {
+              "boundingBox": "161,564,64,10",
+              "text": "Customized"
+            },
+            {
+              "boundingBox": "229,564,44,12",
+              "text": "Training"
+            }
+          ]
+        },
+        {
+          "boundingBox": "115,581,276,12",
+          "words": [
+            {
+              "boundingBox": "115,586,3,2",
+              "text": "-"
+            },
+            {
+              "boundingBox": "123,581,6,9",
+              "text": "I"
+            },
+            {
+              "boundingBox": "133,581,20,12",
+              "text": "Day"
+            },
+            {
+              "boundingBox": "157,581,95,9",
+              "text": "EventProConnect"
+            },
+            {
+              "boundingBox": "255,581,75,12",
+              "text": "Configuration"
+            },
+            {
+              "boundingBox": "334,581,9,9",
+              "text": "&"
+            },
+            {
+              "boundingBox": "346,581,45,12",
+              "text": "Training"
+            }
+          ]
+        },
+        {
+          "boundingBox": "115,597,446,12",
+          "words": [
+            {
+              "boundingBox": "115,597,45,10",
+              "text": "Includes"
+            },
+            {
+              "boundingBox": "163,597,19,10",
+              "text": "the"
+            },
+            {
+              "boundingBox": "185,597,22,10",
+              "text": "first"
+            },
+            {
+              "boundingBox": "210,600,24,9",
+              "text": "year"
+            },
+            {
+              "boundingBox": "237,597,12,10",
+              "text": "of"
+            },
+            {
+              "boundingBox": "252,597,47,12",
+              "text": "Upgrade"
+            },
+            {
+              "boundingBox": "303,597,56,10",
+              "text": "Protection"
+            },
+            {
+              "boundingBox": "364,597,26,10",
+              "text": "Plan:"
+            },
+            {
+              "boundingBox": "395,597,22,10",
+              "text": "Dec."
+            },
+            {
+              "boundingBox": "421,597,17,12",
+              "text": "31,"
+            },
+            {
+              "boundingBox": "442,597,27,10",
+              "text": "2016"
+            },
+            {
+              "boundingBox": "472,598,11,9",
+              "text": "to"
+            },
+            {
+              "boundingBox": "488,597,22,10",
+              "text": "Dec."
+            },
+            {
+              "boundingBox": "514,597,16,12",
+              "text": "30,"
+            },
+            {
+              "boundingBox": "535,597,26,10",
+              "text": "2017"
+            }
+          ]
+        },
+        {
+          "boundingBox": "115,614,408,12",
+          "words": [
+            {
+              "boundingBox": "115,614,8,9",
+              "text": "A"
+            },
+            {
+              "boundingBox": "126,616,21,7",
+              "text": "one"
+            },
+            {
+              "boundingBox": "150,616,24,10",
+              "text": "year"
+            },
+            {
+              "boundingBox": "177,614,26,9",
+              "text": "term"
+            },
+            {
+              "boundingBox": "207,614,12,9",
+              "text": "Of"
+            },
+            {
+              "boundingBox": "222,616,46,10",
+              "text": "program"
+            },
+            {
+              "boundingBox": "272,614,54,12",
+              "text": "upgrades,"
+            },
+            {
+              "boundingBox": "330,614,72,9",
+              "text": "maintenance"
+            },
+            {
+              "boundingBox": "406,614,44,9",
+              "text": "releases"
+            },
+            {
+              "boundingBox": "453,614,20,9",
+              "text": "and"
+            },
+            {
+              "boundingBox": "477,614,46,12",
+              "text": "support."
+            }
+          ]
+        },
+        {
+          "boundingBox": "115,646,455,13",
+          "words": [
+            {
+              "boundingBox": "115,647,8,9",
+              "text": "A"
+            },
+            {
+              "boundingBox": "125,647,59,12",
+              "text": "temporary"
+            },
+            {
+              "boundingBox": "188,647,37,9",
+              "text": "license"
+            },
+            {
+              "boundingBox": "228,647,20,9",
+              "text": "and"
+            },
+            {
+              "boundingBox": "253,649,46,10",
+              "text": "program"
+            },
+            {
+              "boundingBox": "303,646,54,10",
+              "text": "download"
+            },
+            {
+              "boundingBox": "362,646,64,10",
+              "text": "instructions"
+            },
+            {
+              "boundingBox": "430,647,26,9",
+              "text": "have"
+            },
+            {
+              "boundingBox": "460,647,26,9",
+              "text": "been"
+            },
+            {
+              "boundingBox": "490,647,23,9",
+              "text": "sent"
+            },
+            {
+              "boundingBox": "517,647,11,9",
+              "text": "to"
+            },
+            {
+              "boundingBox": "531,649,21,10",
+              "text": "you"
+            },
+            {
+              "boundingBox": "555,647,15,9",
+              "text": "via"
+            }
+          ]
+        },
+        {
+          "boundingBox": "115,663,370,12",
+          "words": [
+            {
+              "boundingBox": "115,663,32,10",
+              "text": "email."
+            },
+            {
+              "boundingBox": "155,663,61,10",
+              "text": "permanent"
+            },
+            {
+              "boundingBox": "220,663,42,10",
+              "text": "licenses"
+            },
+            {
+              "boundingBox": "265,666,18,7",
+              "text": "are"
+            },
+            {
+              "boundingBox": "287,663,33,10",
+              "text": "issued"
+            },
+            {
+              "boundingBox": "325,665,27,10",
+              "text": "upon"
+            },
+            {
+              "boundingBox": "356,663,39,12",
+              "text": "receipt"
+            },
+            {
+              "boundingBox": "398,663,12,10",
+              "text": "Of"
+            },
+            {
+              "boundingBox": "412,663,17,10",
+              "text": "full"
+            },
+            {
+              "boundingBox": "433,664,52,11",
+              "text": "payment."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "boundingBox": "53,794,393,70",
+      "lines": [
+        {
+          "boundingBox": "53,794,161,12",
+          "words": [
+            {
+              "boundingBox": "53,794,34,10",
+              "text": "Thank"
+            },
+            {
+              "boundingBox": "90,796,20,10",
+              "text": "you"
+            },
+            {
+              "boundingBox": "114,794,16,10",
+              "text": "for"
+            },
+            {
+              "boundingBox": "133,796,25,10",
+              "text": "your"
+            },
+            {
+              "boundingBox": "162,794,52,12",
+              "text": "purchase."
+            }
+          ]
+        },
+        {
+          "boundingBox": "54,814,392,10",
+          "words": [
+            {
+              "boundingBox": "54,814,24,8",
+              "text": "profit"
+            },
+            {
+              "boundingBox": "80,815,37,9",
+              "text": "Systems"
+            },
+            {
+              "boundingBox": "119,815,15,7",
+              "text": "Inc."
+            },
+            {
+              "boundingBox": "137,814,20,10",
+              "text": "(dba"
+            },
+            {
+              "boundingBox": "160,815,40,7",
+              "text": "EæntPro"
+            },
+            {
+              "boundingBox": "202,814,43,10",
+              "text": "Software)"
+            },
+            {
+              "boundingBox": "248,814,21,8",
+              "text": "does"
+            },
+            {
+              "boundingBox": "272,815,14,7",
+              "text": "not"
+            },
+            {
+              "boundingBox": "290,816,15,8",
+              "text": "pay"
+            },
+            {
+              "boundingBox": "339,815,26,9",
+              "text": "taxes,"
+            },
+            {
+              "boundingBox": "392,815,13,7",
+              "text": "tax"
+            },
+            {
+              "boundingBox": "408,816,10,6",
+              "text": "or"
+            },
+            {
+              "boundingBox": "420,815,26,7",
+              "text": "VAT."
+            }
+          ]
+        },
+        {
+          "boundingBox": "53,828,364,10",
+          "words": [
+            {
+              "boundingBox": "53,828,13,8",
+              "text": "for"
+            },
+            {
+              "boundingBox": "69,828,56,8",
+              "text": "international"
+            },
+            {
+              "boundingBox": "128,828,48,10",
+              "text": "shipments."
+            },
+            {
+              "boundingBox": "182,828,17,10",
+              "text": "Any"
+            },
+            {
+              "boundingBox": "201,828,16,8",
+              "text": "and"
+            },
+            {
+              "boundingBox": "220,828,10,8",
+              "text": "all"
+            },
+            {
+              "boundingBox": "233,828,45,10",
+              "text": "applicable"
+            },
+            {
+              "boundingBox": "309,828,27,9",
+              "text": "F.A.S."
+            },
+            {
+              "boundingBox": "401,828,16,8",
+              "text": "and"
+            }
+          ]
+        },
+        {
+          "boundingBox": "54,841,364,10",
+          "words": [
+            {
+              "boundingBox": "54,842,36,7",
+              "text": "CtlStonB"
+            },
+            {
+              "boundingBox": "93,843,14,6",
+              "text": "are"
+            },
+            {
+              "boundingBox": "110,842,14,7",
+              "text": "not"
+            },
+            {
+              "boundingBox": "127,841,29,8",
+              "text": "Shown"
+            },
+            {
+              "boundingBox": "159,843,11,6",
+              "text": "on"
+            },
+            {
+              "boundingBox": "172,841,15,8",
+              "text": "the"
+            },
+            {
+              "boundingBox": "190,841,24,8",
+              "text": "order"
+            },
+            {
+              "boundingBox": "217,841,16,8",
+              "text": "and"
+            },
+            {
+              "boundingBox": "236,843,14,6",
+              "text": "are"
+            },
+            {
+              "boundingBox": "253,841,14,8",
+              "text": "the"
+            },
+            {
+              "boundingBox": "270,841,59,10",
+              "text": "r%ponsibility"
+            },
+            {
+              "boundingBox": "331,841,9,8",
+              "text": "Of"
+            },
+            {
+              "boundingBox": "342,841,15,8",
+              "text": "the"
+            },
+            {
+              "boundingBox": "360,842,44,7",
+              "text": "customer."
+            },
+            {
+              "boundingBox": "407,841,11,8",
+              "text": "All"
+            }
+          ]
+        },
+        {
+          "boundingBox": "54,856,60,8",
+          "words": [
+            {
+              "boundingBox": "54,856,43,8",
+              "text": "payments"
+            },
+            {
+              "boundingBox": "100,857,14,6",
+              "text": "are"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "boundingBox": "464,795,143,63",
+      "lines": [
+        {
+          "boundingBox": "464,795,40,14",
+          "words": [
+            {
+              "boundingBox": "464,795,40,14",
               "text": "Total"
             }
           ]
         },
         {
-          "boundingBox": "12,310,20,12",
+          "boundingBox": "465,819,142,18",
           "words": [
             {
-              "boundingBox": "12,310,20,12",
-              "text": "Tax"
+              "boundingBox": "465,819,142,18",
+              "text": "Payments/Credits"
             }
           ]
         },
         {
-          "boundingBox": "12,342,32,13",
+          "boundingBox": "465,844,97,14",
           "words": [
             {
-              "boundingBox": "12,342,32,13",
-              "text": "Total"
-            }
-          ]
-        },
-        {
-          "boundingBox": "12,376,147,12",
-          "words": [
-            {
-              "boundingBox": "12,376,25,12",
-              "text": "Ba"
+              "boundingBox": "465,844,61,14",
+              "text": "Balance"
             },
             {
-              "boundingBox": "53,378,52,10",
-              "text": "ance"
-            },
-            {
-              "boundingBox": "120,376,39,12",
+              "boundingBox": "532,845,30,13",
               "text": "Due"
             }
           ]
@@ -213,250 +1111,539 @@
       ]
     },
     {
-      "boundingBox": "86,13,209,342",
+      "boundingBox": "630,59,151,803",
       "lines": [
         {
-          "boundingBox": "86,13,126,15",
+          "boundingBox": "677,59,103,24",
           "words": [
             {
-              "boundingBox": "86,13,53,14",
-              "text": "George's"
+              "boundingBox": "677,59,103,24",
+              "text": "Invoice"
+            }
+          ]
+        },
+        {
+          "boundingBox": "733,101,47,13",
+          "words": [
+            {
+              "boundingBox": "733,101,47,13",
+              "text": "15736"
+            }
+          ]
+        },
+        {
+          "boundingBox": "715,194,65,13",
+          "words": [
+            {
+              "boundingBox": "715,194,41,13",
+              "text": "Sophia"
             },
             {
-              "boundingBox": "146,14,66,14",
-              "text": "Restaurant"
+              "boundingBox": "760,194,20,11",
+              "text": "Wu"
             }
           ]
         },
         {
-          "boundingBox": "99,30,100,12",
+          "boundingBox": "735,213,46,10",
           "words": [
             {
-              "boundingBox": "99,30,20,12",
-              "text": "300"
+              "boundingBox": "735,213,46,10",
+              "text": "034998"
+            }
+          ]
+        },
+        {
+          "boundingBox": "708,230,72,14",
+          "words": [
+            {
+              "boundingBox": "708,230,72,14",
+              "text": "30/12/2016"
+            }
+          ]
+        },
+        {
+          "boundingBox": "740,249,40,11",
+          "words": [
+            {
+              "boundingBox": "740,250,12,10",
+              "text": "CJ"
             },
             {
-              "boundingBox": "126,30,27,12",
-              "text": "72th"
+              "boundingBox": "757,249,23,11",
+              "text": "Leib"
+            }
+          ]
+        },
+        {
+          "boundingBox": "676,268,104,10",
+          "words": [
+            {
+              "boundingBox": "676,268,24,10",
+              "text": "P.o."
             },
             {
-              "boundingBox": "160,30,39,12",
-              "text": "Street"
+              "boundingBox": "704,268,76,10",
+              "text": "#900081576"
             }
           ]
         },
         {
-          "boundingBox": "86,46,132,13",
+          "boundingBox": "741,286,39,10",
           "words": [
             {
-              "boundingBox": "86,47,31,12",
-              "text": "Miami"
+              "boundingBox": "741,286,21,10",
+              "text": "Net"
             },
             {
-              "boundingBox": "126,46,33,12",
-              "text": "Beach"
+              "boundingBox": "766,286,14,10",
+              "text": "30"
+            }
+          ]
+        },
+        {
+          "boundingBox": "708,304,72,13",
+          "words": [
+            {
+              "boundingBox": "708,304,72,13",
+              "text": "29/01/2017"
+            }
+          ]
+        },
+        {
+          "boundingBox": "630,329,29,11",
+          "words": [
+            {
+              "boundingBox": "630,329,29,11",
+              "text": "price"
+            }
+          ]
+        },
+        {
+          "boundingBox": "710,329,52,11",
+          "words": [
+            {
+              "boundingBox": "710,329,52,11",
+              "text": "SubTotal"
+            }
+          ]
+        },
+        {
+          "boundingBox": "635,366,48,11",
+          "words": [
+            {
+              "boundingBox": "635,366,48,11",
+              "text": "6,300.00"
+            }
+          ]
+        },
+        {
+          "boundingBox": "726,366,48,11",
+          "words": [
+            {
+              "boundingBox": "726,366,48,11",
+              "text": "6,300.00"
+            }
+          ]
+        },
+        {
+          "boundingBox": "635,383,48,11",
+          "words": [
+            {
+              "boundingBox": "635,383,48,11",
+              "text": "4,200.00"
+            }
+          ]
+        },
+        {
+          "boundingBox": "726,383,48,11",
+          "words": [
+            {
+              "boundingBox": "726,383,48,11",
+              "text": "4,200.00"
+            }
+          ]
+        },
+        {
+          "boundingBox": "645,399,38,10",
+          "words": [
+            {
+              "boundingBox": "645,399,38,10",
+              "text": "875.00"
+            }
+          ]
+        },
+        {
+          "boundingBox": "727,399,47,11",
+          "words": [
+            {
+              "boundingBox": "727,399,47,11",
+              "text": "7,875.00"
+            }
+          ]
+        },
+        {
+          "boundingBox": "635,416,48,11",
+          "words": [
+            {
+              "boundingBox": "635,416,48,11",
+              "text": "5,000.00"
+            }
+          ]
+        },
+        {
+          "boundingBox": "727,416,47,11",
+          "words": [
+            {
+              "boundingBox": "727,416,47,11",
+              "text": "5,000.00"
+            }
+          ]
+        },
+        {
+          "boundingBox": "636,432,47,11",
+          "words": [
+            {
+              "boundingBox": "636,432,47,11",
+              "text": "1,400.00"
+            }
+          ]
+        },
+        {
+          "boundingBox": "727,432,47,11",
+          "words": [
+            {
+              "boundingBox": "727,432,47,11",
+              "text": "1,400.00"
+            }
+          ]
+        },
+        {
+          "boundingBox": "636,449,47,11",
+          "words": [
+            {
+              "boundingBox": "636,449,47,11",
+              "text": "1,400.00"
+            }
+          ]
+        },
+        {
+          "boundingBox": "727,449,47,11",
+          "words": [
+            {
+              "boundingBox": "727,449,47,11",
+              "text": "1,400.00"
+            }
+          ]
+        },
+        {
+          "boundingBox": "636,482,47,11",
+          "words": [
+            {
+              "boundingBox": "636,482,47,11",
+              "text": "1,400.00"
+            }
+          ]
+        },
+        {
+          "boundingBox": "727,482,47,11",
+          "words": [
+            {
+              "boundingBox": "727,482,47,11",
+              "text": "1,400.00"
+            }
+          ]
+        },
+        {
+          "boundingBox": "635,515,48,11",
+          "words": [
+            {
+              "boundingBox": "635,515,48,11",
+              "text": "6,000.00"
+            }
+          ]
+        },
+        {
+          "boundingBox": "726,515,48,11",
+          "words": [
+            {
+              "boundingBox": "726,515,48,11",
+              "text": "6,000.00"
+            }
+          ]
+        },
+        {
+          "boundingBox": "659,597,24,10",
+          "words": [
+            {
+              "boundingBox": "659,597,24,10",
+              "text": "0.00"
+            }
+          ]
+        },
+        {
+          "boundingBox": "750,597,24,10",
+          "words": [
+            {
+              "boundingBox": "750,597,24,10",
+              "text": "0.00"
+            }
+          ]
+        },
+        {
+          "boundingBox": "659,796,112,16",
+          "words": [
+            {
+              "boundingBox": "659,796,31,13",
+              "text": "USD"
             },
             {
-              "boundingBox": "167,46,11,13",
-              "text": "fl"
+              "boundingBox": "695,796,76,16",
+              "text": "33,575.00"
+            }
+          ]
+        },
+        {
+          "boundingBox": "702,820,69,14",
+          "words": [
+            {
+              "boundingBox": "702,820,31,14",
+              "text": "USD"
             },
             {
-              "boundingBox": "187,47,31,12",
-              "text": "33141"
+              "boundingBox": "738,820,33,14",
+              "text": "0.00"
             }
           ]
         },
         {
-          "boundingBox": "261,162,33,12",
+          "boundingBox": "659,846,112,16",
           "words": [
             {
-              "boundingBox": "261,162,33,12",
-              "text": "47.00"
-            }
-          ]
-        },
-        {
-          "boundingBox": "261,211,34,13",
-          "words": [
-            {
-              "boundingBox": "261,211,34,13",
-              "text": "25.95"
-            }
-          ]
-        },
-        {
-          "boundingBox": "263,228,32,12",
-          "words": [
-            {
-              "boundingBox": "263,228,32,12",
-              "text": "15.95"
-            }
-          ]
-        },
-        {
-          "boundingBox": "277,244,18,12",
-          "words": [
-            {
-              "boundingBox": "277,253,2,3",
-              "text": "."
+              "boundingBox": "659,846,31,14",
+              "text": "USD"
             },
             {
-              "boundingBox": "282,244,13,12",
-              "text": "95"
-            }
-          ]
-        },
-        {
-          "boundingBox": "262,261,33,12",
-          "words": [
-            {
-              "boundingBox": "262,261,33,12",
-              "text": "29.95"
-            }
-          ]
-        },
-        {
-          "boundingBox": "256,294,39,12",
-          "words": [
-            {
-              "boundingBox": "256,294,39,12",
-              "text": "155.80"
-            }
-          ]
-        },
-        {
-          "boundingBox": "263,310,32,13",
-          "words": [
-            {
-              "boundingBox": "263,310,32,13",
-              "text": "14.02"
-            }
-          ]
-        },
-        {
-          "boundingBox": "256,343,39,12",
-          "words": [
-            {
-              "boundingBox": "256,343,39,12",
-              "text": "169.82"
+              "boundingBox": "695,846,76,16",
+              "text": "33,575.00"
             }
           ]
         }
       ]
     },
     {
-      "boundingBox": "217,79,78,309",
+      "boundingBox": "53,880,678,111",
       "lines": [
         {
-          "boundingBox": "227,79,67,14",
+          "boundingBox": "53,880,570,14",
           "words": [
             {
-              "boundingBox": "227,79,67,14",
-              "text": "01/19/2013"
+              "boundingBox": "53,881,21,10",
+              "text": "We"
+            },
+            {
+              "boundingBox": "78,882,41,12",
+              "text": "accept"
+            },
+            {
+              "boundingBox": "122,880,21,11",
+              "text": "the"
+            },
+            {
+              "boundingBox": "146,880,59,14",
+              "text": "following"
+            },
+            {
+              "boundingBox": "209,882,55,12",
+              "text": "payment"
+            },
+            {
+              "boundingBox": "267,880,58,11",
+              "text": "methods."
+            },
+            {
+              "boundingBox": "330,880,36,11",
+              "text": "When"
+            },
+            {
+              "boundingBox": "371,880,44,14",
+              "text": "paying,"
+            },
+            {
+              "boundingBox": "420,880,39,14",
+              "text": "please"
+            },
+            {
+              "boundingBox": "463,880,60,11",
+              "text": "reference"
+            },
+            {
+              "boundingBox": "527,880,44,11",
+              "text": "Invoice"
+            },
+            {
+              "boundingBox": "574,881,8,10",
+              "text": "#"
+            },
+            {
+              "boundingBox": "585,881,38,10",
+              "text": "15736"
             }
           ]
         },
         {
-          "boundingBox": "242,96,52,12",
+          "boundingBox": "53,906,393,11",
           "words": [
             {
-              "boundingBox": "242,96,32,12",
-              "text": "10:53"
+              "boundingBox": "53,906,128,11",
+              "text": "VISA/Mastercard/AMEX:"
             },
             {
-              "boundingBox": "281,96,13,12",
-              "text": "PM"
+              "boundingBox": "196,906,17,10",
+              "text": "call"
+            },
+            {
+              "boundingBox": "217,906,26,11",
+              "text": "(306)"
+            },
+            {
+              "boundingBox": "246,907,47,9",
+              "text": "975-3737"
+            },
+            {
+              "boundingBox": "296,907,18,9",
+              "text": "ext."
+            },
+            {
+              "boundingBox": "317,907,18,9",
+              "text": "237"
+            },
+            {
+              "boundingBox": "338,906,22,10",
+              "text": "with"
+            },
+            {
+              "boundingBox": "363,906,22,10",
+              "text": "card"
+            },
+            {
+              "boundingBox": "388,906,58,10",
+              "text": "information"
             }
           ]
         },
         {
-          "boundingBox": "262,113,32,12",
+          "boundingBox": "133,925,181,11",
           "words": [
             {
-              "boundingBox": "262,113,32,12",
-              "text": "10062"
+              "boundingBox": "133,925,28,9",
+              "text": "Make"
+            },
+            {
+              "boundingBox": "164,925,39,11",
+              "text": "payable"
+            },
+            {
+              "boundingBox": "206,926,10,8",
+              "text": "to"
+            },
+            {
+              "boundingBox": "220,925,44,9",
+              "text": "Eventpro"
+            },
+            {
+              "boundingBox": "267,925,47,9",
+              "text": "Software."
             }
           ]
         },
         {
-          "boundingBox": "277,179,18,12",
+          "boundingBox": "53,943,653,12",
           "words": [
             {
-              "boundingBox": "277,179,18,12",
-              "text": ".50"
+              "boundingBox": "53,944,22,9",
+              "text": "ACH"
+            },
+            {
+              "boundingBox": "133,943,27,10",
+              "text": "Bank:"
+            },
+            {
+              "boundingBox": "164,944,20,9",
+              "text": "RBC"
+            },
+            {
+              "boundingBox": "187,943,26,12",
+              "text": "Royal"
+            },
+            {
+              "boundingBox": "217,944,27,10",
+              "text": "Bank,"
+            },
+            {
+              "boundingBox": "248,944,42,9",
+              "text": "154-1st"
+            },
+            {
+              "boundingBox": "368,943,50,10",
+              "text": "saskatoon"
+            },
+            {
+              "boundingBox": "422,944,35,11",
+              "text": "SK,S7K"
+            },
+            {
+              "boundingBox": "663,944,43,9",
+              "text": "4001565"
             }
           ]
         },
         {
-          "boundingBox": "268,195,27,12",
+          "boundingBox": "102,980,629,11",
           "words": [
             {
-              "boundingBox": "268,195,27,12",
-              "text": "9.50"
-            }
-          ]
-        },
-        {
-          "boundingBox": "217,376,77,12",
-          "words": [
-            {
-              "boundingBox": "217,376,36,12",
-              "text": "169"
+              "boundingBox": "102,981,95,8",
+              "text": "vwvw.EventPro.net"
             },
             {
-              "boundingBox": "260,385,3,3",
-              "text": "."
+              "boundingBox": "200,980,18,9",
+              "text": "and"
             },
             {
-              "boundingBox": "268,376,26,12",
-              "text": "82"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "boundingBox": "60,409,181,30",
-      "lines": [
-        {
-          "boundingBox": "73,409,159,12",
-          "words": [
-            {
-              "boundingBox": "73,409,53,12",
-              "text": "GRATUITY"
+              "boundingBox": "221,980,141,9",
+              "text": "www.EventPro-PIanner.com"
             },
             {
-              "boundingBox": "134,409,19,12",
-              "text": "NOT"
+              "boundingBox": "377,980,15,9",
+              "text": "Ph:"
             },
             {
-              "boundingBox": "161,409,71,12",
-              "text": "INCLUDED!!!"
-            }
-          ]
-        },
-        {
-          "boundingBox": "60,425,181,14",
-          "words": [
-            {
-              "boundingBox": "60,425,33,12",
-              "text": "Thank"
+              "boundingBox": "395,980,26,11",
+              "text": "(306)"
             },
             {
-              "boundingBox": "100,428,20,11",
-              "text": "you"
+              "boundingBox": "424,981,47,8",
+              "text": "975-3737"
             },
             {
-              "boundingBox": "127,425,20,12",
-              "text": "for"
+              "boundingBox": "486,980,18,9",
+              "text": "Fax:"
             },
             {
-              "boundingBox": "154,428,26,11",
-              "text": "your"
+              "boundingBox": "508,980,26,11",
+              "text": "(306)"
             },
             {
-              "boundingBox": "188,425,53,13",
-              "text": "business"
+              "boundingBox": "537,981,47,8",
+              "text": "975-3739"
+            },
+            {
+              "boundingBox": "598,980,30,9",
+              "text": "Email:"
+            },
+            {
+              "boundingBox": "632,980,99,11",
+              "text": "sales@eventpro.net"
             }
           ]
         }

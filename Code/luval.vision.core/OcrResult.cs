@@ -10,6 +10,11 @@ namespace luval.vision.core
 {
     public class OcrResult
     {
+        public OcrResult()
+        {
+            Regions = new List<OcrRegion>();
+        }
+
         [JsonProperty(PropertyName = "language")]
         public string Language { get; set; }
 
@@ -18,6 +23,8 @@ namespace luval.vision.core
         [JsonProperty(PropertyName = "orientation")]
         public string Orientation { get; set; }
         [JsonProperty(PropertyName = "regions")]
-        public JArray Regions { get; set; }
+        public JArray RegionResult { get; set; }
+
+        public List<OcrRegion> Regions { get; set; }
     }
 }

@@ -6,11 +6,15 @@ using System.Threading.Tasks;
 
 namespace luval.vision.core
 {
-    public class OcrWord
+    public class OcrLine
     {
-        public OcrLine ParentLine { get; set; }
+        public OcrLine()
+        {
+            Words = new List<OcrWord>();
+        }
+
+        public OcrRegion ParentRegion { get; set; }
         public OcrLocation Location { get; set; }
-        public string Text { get; set; }
-        public DataType DataType { get; set; }
+        public List<OcrWord> Words { get; set; }
     }
 }
