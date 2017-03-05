@@ -34,7 +34,7 @@ namespace luval.vision.core
                 case Direction.Left:
                     return SearchDown(word, searchArea);
                 case Direction.Right:
-                    return SearchDown(word, searchArea);
+                    return SearchRight(word, searchArea);
                 default:
                     return new OcrWord[] { };
             }
@@ -44,6 +44,17 @@ namespace luval.vision.core
         {
             return Words.Where(i => i != reference && i.Location.X >= searchArea.X && (i.Location.X < (searchArea.X + searchArea.Width)))
                 .OrderBy(i => i.Location.Y).ToList();
+        }
+
+        private IEnumerable<OcrWord> SearchRight(OcrWord reference, OcrLocation searchArea)
+        {
+            var minX = searchArea.X + searchArea.Width;
+            var minY = searchArea.Y;
+            var maxY = (searchArea.Y + searchArea.Width) * (1 + ErrorMargin);
+            var middleLine = (searchArea.Y + (searchArea.Height / 2));
+            var result =  Words.Where(i => i != reference && i.Location.X > minX && (i.Location.Y > minY && (i.Location.Y + i.Location.Width) < maxY) && 
+                (i.Location.Y < middleLine && (i.Location.Y + i.Location.Height) < middleLine)).OrderBy(i => i.Location.X).ToList();
+            return result;
         }
 
         private OcrLocation GetBasedOnDirection(OcrLocation original, Direction direction)
