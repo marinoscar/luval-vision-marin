@@ -58,6 +58,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AttributeMapping.cs" />
     <Compile Include="EntityExtractor.cs" />
     <Compile Include="Enum.cs" />
     <Compile Include="Extractor.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="LineItem.cs" />
     <Compile Include="Navigator.cs" />
     <Compile Include="OcrArea.cs" />
+    <Compile Include="OcrElement.cs" />
     <Compile Include="OcrLine.cs" />
     <Compile Include="OcrLocation.cs" />
     <Compile Include="OcrProvider.cs" />

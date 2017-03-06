@@ -13,8 +13,9 @@ namespace luval.vision.core
         public Image Process(OcrResult ocr, Image img)
         {
             var bmp = new Bitmap(img);
-            var redPen = new Pen(Color.Red, 1);
+            var redPen = new Pen(Color.Red, 2);
             var bluePen = new Pen(Color.Blue, 3);
+            var greenPen = new Pen(Color.Green, 1);
             using (var graphic = Graphics.FromImage(bmp))
             {
                 foreach(var region in ocr.RegionResult)
@@ -25,6 +26,11 @@ namespace luval.vision.core
                     {
                         var linNum = line.Value<string>("boundingBox").Split(",".ToCharArray()).Select(i => Convert.ToInt32(i)).ToArray();
                         graphic.DrawRectangle(redPen, linNum[0], linNum[1], linNum[2], linNum[3]);
+                        //foreach(var word in line.Value<JArray>("words"))
+                        //{
+                        //    var wordNum = word.Value<string>("boundingBox").Split(",".ToCharArray()).Select(i => Convert.ToInt32(i)).ToArray();
+                        //    graphic.DrawRectangle(greenPen, wordNum[0], wordNum[1], wordNum[2], wordNum[3]);
+                        //}
                     }
                 }
             }

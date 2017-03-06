@@ -13,5 +13,8 @@ namespace luval.vision.core
         public int Width { get; set; }
         public int Height { get; set; }
 
+        public int YBound { get { return Y + Height;  } }
+        public int XBound { get { return X + Width; } }
+
     }
 }

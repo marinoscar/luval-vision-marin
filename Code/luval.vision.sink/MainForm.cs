@@ -72,20 +72,25 @@ namespace luval.vision.sink
             var response = File.ReadAllText(@"Demo/sample-response.json");
             var ocrResult = JsonConvert.DeserializeObject<OcrResult>(response);
             ocrResult.LoadFromJsonRegion();
-            GetData(ocrResult);
+            var items = GetData(ocrResult);
             _presenter.DoFullProcess(ocrResult);
+            resultGrid.SelectedObject = items;
 
         }
 
-        private void GetData(OcrResult result)
+        private IDictionary<string, string> GetData(OcrResult result)
         {
-            var navigator = new Navigator(result.Words);
-            var inv = navigator.FindByText("Invoice").FirstOrDefault();
-            var invNumber = navigator.FindNeighbors(inv, Direction.Down).FirstOrDefault();
-            var date = navigator.FindByText("Date").FirstOrDefault();
-            var dateVal = navigator.FindNeighbors(date, Direction.Right).FirstOrDefault();
-            var total = navigator.FindByText("Total").FirstOrDefault();
-            var totalValue = navigator.FindNeighbors(total, Direction.Right).FirstOrDefault();
+            var options = new List<AttributeMapping>() {
+                new AttributeMapping() {  AttributeName = "Date" },
+                new AttributeMapping() {  AttributeName = "DueDate", AttributeNamePattern = "Due Date" },
+                new AttributeMapping() {  AttributeName = "Total", IsAttributeLast = true },
+                new AttributeMapping() {  AttributeName = "Invoice" },
+                new AttributeMapping() {  AttributeName = "Terms" },
+                new AttributeMapping() {  AttributeName = "Attention" },
+                new AttributeMapping() {  AttributeName = "BalanceDue", AttributeNamePattern = "Balance Due" },
+            };
+            var navigator = new Navigator(result.Lines, options);
+            return navigator.ExtractAttributes();
         }
     }
 }

@@ -12,7 +12,7 @@ namespace luval.vision.core
         public const string NumberRegEx = @"\b[0-9]{1,3}(,[0-9]{3})*(\.[0-9]+)?\b|\.[0-9]+\b";
         public const string DateRegEx = @"[0-9]{2}\/[0-9]{2}\/[0-9]{4}";
 
-        public static bool IsNumber(OcrWord word)
+        public static bool IsNumber(OcrElement word)
         {
             var result = Regex.Matches(word.Text, NumberRegEx).Cast<Match>().Where(i => i.Success).FirstOrDefault();
             if (result == null) return false;
@@ -20,7 +20,7 @@ namespace luval.vision.core
             return double.TryParse(result.Value, out parseResult);
         }
 
-        public static bool IsDate(OcrWord word)
+        public static bool IsDate(OcrElement word)
         {
             var result = Regex.Matches(word.Text, DateRegEx).Cast<Match>().Where(i => i.Success).FirstOrDefault();
             return result != null && result.Success;

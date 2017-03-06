@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace luval.vision.core
@@ -9,51 +10,98 @@ namespace luval.vision.core
     public class Navigator
     {
 
-        private const double ErrorMargin = 0.05d;
+        private const double ErrorMargin = 0.015d;
 
-        public Navigator(IEnumerable<OcrWord> words)
+        public Navigator(IEnumerable<OcrElement> elements, IEnumerable<AttributeMapping> mappings)
         {
-            Words = new List<OcrWord>(words);
+            Elements = new List<OcrElement>(elements);
+            Mappings = new List<AttributeMapping>(mappings);
         }
-        public List<OcrWord> Words { get; set; }
+        public List<OcrElement> Elements { get; set; }
+        public List<AttributeMapping> Mappings { get; set; }
 
-        public IEnumerable<OcrWord> FindByText(string text)
+        public IEnumerable<OcrElement> FindByText(string text)
         {
-            return Words.Where(i => i.Text == text);
+            return Elements.Where(i => i.Text == text);
         }
 
-        public IEnumerable<OcrWord> FindNeighbors(OcrWord word, Direction direction)
+
+        public IEnumerable<OcrElement> Find(string pattern)
         {
-            var searchArea = GetBasedOnDirection(word.Location, direction);
+            return Elements.Where(i => Regex.IsMatch(i.Text, pattern)).OrderBy(i => i.Location.Y).ToList();
+        }
+
+        public IDictionary<string, string> ExtractAttributes()
+        {
+            var result = new Dictionary<string, string>();
+            foreach(var map in Mappings)
+            {
+                result[map.AttributeName] = null;
+                var pattern = string.IsNullOrWhiteSpace(map.AttributeNamePattern) ? map.AttributeName : map.AttributeNamePattern;
+                if (string.IsNullOrWhiteSpace(pattern)) continue;
+                var elements = Find(pattern);
+                if (elements == null || !elements.Any()) continue;
+                var item = map.IsAttributeLast ? elements.LastOrDefault() : elements.FirstOrDefault();
+                switch (map.ValueDirection)
+                {
+                    case Direction.Down:
+                        AcceptSearch(map, result, SearchDown(item));
+                        break;
+                    case Direction.Right:
+                        AcceptSearch(map, result, SearchDown(item));
+                        break;
+                    default:
+                        var vals = SearchRight(item);
+                        if (vals == null || !vals.Any()) vals = SearchDown(item);
+                        AcceptSearch(map, result, vals);
+                        break;
+                }
+            }
+            return result;
+        }
+
+        private void AcceptSearch(AttributeMapping map, IDictionary<string, string> items, IEnumerable<OcrElement> values)
+        {
+            if (values == null || !values.Any()) return;
+            var val = map.IsValueLast ? values.LastOrDefault() : values.FirstOrDefault();
+            items[map.AttributeName] = val.Text;
+        }
+
+        public IEnumerable<OcrElement> FindNeighbors(OcrElement item, Direction direction)
+        {
+            var searchArea = GetBasedOnDirection(item.Location, direction);
             switch (direction)
             {
                 case Direction.Top:
-                    return SearchDown(word, searchArea);
+                    return SearchDown(item);
                 case Direction.Down:
-                    return SearchDown(word, searchArea);
+                    return SearchDown(item);
                 case Direction.Left:
-                    return SearchDown(word, searchArea);
+                    return SearchDown(item);
                 case Direction.Right:
-                    return SearchRight(word, searchArea);
+                    return SearchRight(item);
                 default:
-                    return new OcrWord[] { };
+                    return new OcrElement[] { };
             }
         }
 
-        private IEnumerable<OcrWord> SearchDown(OcrWord reference, OcrLocation searchArea)
+        private IEnumerable<OcrElement> SearchDown(OcrElement reference)
         {
-            return Words.Where(i => i != reference && i.Location.X >= searchArea.X && (i.Location.X < (searchArea.X + searchArea.Width)))
+            var searchArea = this.GetBasedOnDirection(reference.Location, Direction.Down);
+            return Elements.Where(i => i != reference && i.Location.X >= searchArea.X && (i.Location.X < (searchArea.X + searchArea.Width)))
                 .OrderBy(i => i.Location.Y).ToList();
         }
 
-        private IEnumerable<OcrWord> SearchRight(OcrWord reference, OcrLocation searchArea)
+        private IEnumerable<OcrElement> SearchRight(OcrElement reference)
         {
-            var minX = searchArea.X + searchArea.Width;
-            var minY = searchArea.Y;
-            var maxY = (searchArea.Y + searchArea.Width) * (1 + ErrorMargin);
-            var middleLine = (searchArea.Y + (searchArea.Height / 2));
-            var result =  Words.Where(i => i != reference && i.Location.X > minX && (i.Location.Y > minY && (i.Location.Y + i.Location.Width) < maxY) && 
-                (i.Location.Y < middleLine && (i.Location.Y + i.Location.Height) < middleLine)).OrderBy(i => i.Location.X).ToList();
+            var minX = reference.Location.XBound;
+            var minY = reference.Location.Y - (reference.Location.Y * ErrorMargin);
+            var maxY = reference.Location.YBound * (1 + ErrorMargin);
+            var middleLine = (reference.Location.Y + (reference.Location.Height / 3));
+            var result = Elements.Where(i => i.Location.X > minX &&
+               i.Location.Y > minY &&
+               i.Location.YBound < maxY)
+               .ToList();
             return result;
         }
 

@@ -13,7 +13,8 @@ namespace luval.vision.core
         public OcrResult()
         {
             Regions = new List<OcrRegion>();
-            Words = new List<OcrWord>();
+            Words = new List<OcrElement>();
+            Lines = new List<OcrLine>();
         }
 
         [JsonProperty(PropertyName = "language")]
@@ -27,7 +28,8 @@ namespace luval.vision.core
         public JArray RegionResult { get; set; }
 
         public List<OcrRegion> Regions { get; set; }
-        public List<OcrWord> Words { get; set; }
+        public List<OcrElement> Words { get; set; }
+        public List<OcrLine> Lines { get; set; }
 
         public void LoadFromJsonRegion()
         {
@@ -54,6 +56,7 @@ namespace luval.vision.core
                         Words.Add(word);
                     }
                     region.Lines.Add(line);
+                    Lines.Add(line);
                 }
                 Regions.Add(region);
                 id++;
