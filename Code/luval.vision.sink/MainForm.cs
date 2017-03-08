@@ -61,7 +61,8 @@ namespace luval.vision.sink
             }
             var provider = new OcrProvider();
             var result = _presenter.ProcessFromFile(_fileName);
-            _presenter.DoFullProcess(result);
+            //_presenter.DoFullProcess(result);
+            DoProcess(result);
         }
 
 
@@ -71,11 +72,23 @@ namespace luval.vision.sink
             _presenter.DoLoadImage(@"Demo/sample-receipt.jpg");
             var response = File.ReadAllText(@"Demo/sample-response.json");
             var ocrResult = JsonConvert.DeserializeObject<OcrResult>(response);
+            DoProcess(ocrResult);
+
+        }
+
+        private void DoProcess(OcrResult ocrResult)
+        {
             ocrResult.LoadFromJsonRegion();
             var items = GetData(ocrResult);
             _presenter.DoFullProcess(ocrResult);
-            resultGrid.SelectedObject = items;
-
+            resultGrid.SelectedObject = new PoData()
+            {
+                Total = items["Total"].Replace("USD", "").Replace("$", "").Replace(",", "").Trim(),
+                Date = items["Date"],
+                DueDate = items["DueDate"],
+                InvoiceNumber = items["Invoice"],
+                PONumber = items["PONumber"]
+            };
         }
 
         private IDictionary<string, string> GetData(OcrResult result)
@@ -88,6 +101,7 @@ namespace luval.vision.sink
                 new AttributeMapping() {  AttributeName = "Terms" },
                 new AttributeMapping() {  AttributeName = "Attention" },
                 new AttributeMapping() {  AttributeName = "BalanceDue", AttributeNamePattern = "Balance Due" },
+                new AttributeMapping() {  AttributeName = "PONumber", AttributeNamePattern = "PO Number" },
             };
             var navigator = new Navigator(result.Lines, options);
             return navigator.ExtractAttributes();
