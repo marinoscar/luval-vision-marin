@@ -87,9 +87,20 @@ namespace luval.vision.core
 
         private IEnumerable<OcrElement> SearchDown(OcrElement reference)
         {
+            var result = new List<OcrElement>();
             var searchArea = this.GetBasedOnDirection(reference.Location, Direction.Down);
-            return Elements.Where(i => i != reference && i.Location.X >= searchArea.X && (i.Location.X < (searchArea.X + searchArea.Width)))
-                .OrderBy(i => i.Location.Y).ToList();
+            var under = Elements.Where(i => i != reference && i.Location.X >= searchArea.X && (i.Location.X < (searchArea.X + searchArea.Width)))
+                .OrderBy(i => i.Location.Y);
+            result.AddRange(under);
+            var maxY = reference.Location.YBound + (reference.Location.Height * 5);
+            var subset = Elements.Where(i => i != reference && i.Location.YBound <= maxY).OrderBy(i => i.Location.Y);
+            var ulMaxX = reference.Location.XBound * (1 + ErrorMargin);
+            var underLeft = subset.Where(i => i.Location.X <= ulMaxX).OrderByDescending(i => i.Location.X);
+            result.AddRange(underLeft);
+            var urMaxX = reference.Location.X;
+            var underRight = subset.Where(i => i.Location.X >= urMaxX).OrderBy(i => i.Location.X);
+            result.AddRange(underRight);
+            return result; 
         }
 
         private IEnumerable<OcrElement> SearchRight(OcrElement reference)
