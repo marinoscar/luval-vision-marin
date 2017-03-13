@@ -33,33 +33,41 @@ namespace luval.vision.core
 
         public void LoadFromJsonRegion()
         {
-            var id = 1;
+            var regionId = 1;
             foreach (var jRegion in RegionResult)
             {
                 var region = new OcrRegion()
                 {
-                    RegionId = id,
+                    Id = regionId,
+                    Code = regionId.ToString().PadLeft(3, '0'),
                     Location = ParseBox(jRegion)
                 };
+                var lineId = 1;
                 foreach(var jLine in jRegion["lines"])
                 {
                     var line = new OcrLine()
                     {
+                        Id = lineId,
+                        Code = string.Format("{0}.{1}", region.Code, lineId.ToString().PadLeft(4, '0')),
                         ParentRegion = region,
                         Location = ParseBox(jLine),
                     };
+                    var wordId = 1;
                     foreach(var jWord in jLine["words"])
                     {
                         var word = ParseWord(jWord, line);
+                        word.Code = string.Format("{0}.{1}", line.Code, wordId.ToString().PadLeft(5, '0'));
                         line.Words.Add(word);
                         EntityExtractor.ClassifyWord(word);
                         Words.Add(word);
+                        wordId++;
                     }
                     region.Lines.Add(line);
                     Lines.Add(line);
+                    lineId++;
                 }
                 Regions.Add(region);
-                id++;
+                regionId++;
             }
         }
 

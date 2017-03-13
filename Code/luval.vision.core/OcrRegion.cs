@@ -13,7 +13,6 @@ namespace luval.vision.core
         {
             Lines = new List<OcrLine>();
         }
-        public int RegionId { get; set; }
         public List<OcrLine> Lines { get; set; }
     }
 }

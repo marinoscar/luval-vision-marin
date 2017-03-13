@@ -10,7 +10,7 @@ namespace luval.vision.core
     public class EntityExtractor
     {
         public const string NumberRegEx = @"\b[0-9]{1,3}(,[0-9]{3})*(\.[0-9]+)?\b|\.[0-9]+\b";
-        public const string DateRegEx = @"[0-9]{2}\/[0-9]{2}\/[0-9]{4}";
+        public const string DateRegEx = @"([1-9]{2}[\/\.\-][0-9]{2}[\/\.\-][0-9]{4})|([1-9]{4}[\/\.\-][0-9]{2}[\/\.\-][0-9]{4})|([1-9]{2}[\/\.\-][0-9]{2}[\/\.\-][0-9]{2})";
 
         public static bool IsNumber(OcrElement word)
         {

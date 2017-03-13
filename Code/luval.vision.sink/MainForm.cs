@@ -95,13 +95,13 @@ namespace luval.vision.sink
         {
             var options = new List<AttributeMapping>() {
                 new AttributeMapping() {  AttributeName = "Date" },
-                new AttributeMapping() {  AttributeName = "DueDate", AttributeNamePattern = "Due Date" },
+                new AttributeMapping() {  AttributeName = "DueDate", AnchorPatterns = "Due Date" },
                 new AttributeMapping() {  AttributeName = "Total", IsAttributeLast = true },
                 new AttributeMapping() {  AttributeName = "Invoice" },
                 new AttributeMapping() {  AttributeName = "Terms" },
                 new AttributeMapping() {  AttributeName = "Attention" },
-                new AttributeMapping() {  AttributeName = "BalanceDue", AttributeNamePattern = "Balance Due" },
-                new AttributeMapping() {  AttributeName = "PONumber", AttributeNamePattern = "PO Number" },
+                new AttributeMapping() {  AttributeName = "BalanceDue", AnchorPatterns = "Balance Due" },
+                new AttributeMapping() {  AttributeName = "PONumber", AnchorPatterns = "PO Number" },
             };
             var navigator = new Navigator(result.Lines, options);
             return navigator.ExtractAttributes();

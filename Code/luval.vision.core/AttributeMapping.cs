@@ -11,12 +11,12 @@ namespace luval.vision.core
     {
         [JsonProperty(PropertyName = "attributeName")]
         public string AttributeName { get; set; }
-        [JsonProperty(PropertyName = "attributeNamePattern")]
-        public string AttributeNamePattern { get; set; }
+        [JsonProperty(PropertyName = "anchorPatterns")]
+        public string[] AnchorPatterns { get; set; }
         [JsonProperty(PropertyName = "valueDirection")]
         public Direction ValueDirection { get; set; }
-        [JsonProperty(PropertyName = "valuePattern")]
-        public string ValuePattern { get; set; }
+        [JsonProperty(PropertyName = "valuePatterns")]
+        public string[] ValuePatterns { get; set; }
         [JsonProperty(PropertyName = "isAttributeLast")]
         public bool IsAttributeLast { get; set; }
         [JsonProperty(PropertyName = "isValueLast")]

@@ -37,7 +37,7 @@ namespace luval.vision.core
             foreach(var map in Mappings)
             {
                 result[map.AttributeName] = null;
-                var pattern = string.IsNullOrWhiteSpace(map.AttributeNamePattern) ? map.AttributeName : map.AttributeNamePattern;
+                var pattern = string.IsNullOrWhiteSpace(map.AnchorPatterns) ? map.AttributeName : map.AnchorPatterns;
                 if (string.IsNullOrWhiteSpace(pattern)) continue;
                 var elements = Find(pattern);
                 if (elements == null || !elements.Any()) continue;
