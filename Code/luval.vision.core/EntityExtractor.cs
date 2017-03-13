@@ -9,12 +9,10 @@ namespace luval.vision.core
 {
     public class EntityExtractor
     {
-        public const string NumberRegEx = @"\b[0-9]{1,3}(,[0-9]{3})*(\.[0-9]+)?\b|\.[0-9]+\b";
-        public const string DateRegEx = @"([1-9]{2}[\/\.\-][0-9]{2}[\/\.\-][0-9]{4})|([1-9]{4}[\/\.\-][0-9]{2}[\/\.\-][0-9]{4})|([1-9]{2}[\/\.\-][0-9]{2}[\/\.\-][0-9]{2})";
-
+        
         public static bool IsNumber(OcrElement word)
         {
-            var result = Regex.Matches(word.Text, NumberRegEx).Cast<Match>().Where(i => i.Success).FirstOrDefault();
+            var result = Regex.Matches(word.Text, RegexTypes.I.GetExpression("number")).Cast<Match>().Where(i => i.Success).FirstOrDefault();
             if (result == null) return false;
             var parseResult = 0d;
             return double.TryParse(result.Value, out parseResult);
@@ -22,7 +20,7 @@ namespace luval.vision.core
 
         public static bool IsDate(OcrElement word)
         {
-            var result = Regex.Matches(word.Text, DateRegEx).Cast<Match>().Where(i => i.Success).FirstOrDefault();
+            var result = Regex.Matches(word.Text, RegexTypes.I.GetExpression("date")).Cast<Match>().Where(i => i.Success).FirstOrDefault();
             return result != null && result.Success;
         }
 

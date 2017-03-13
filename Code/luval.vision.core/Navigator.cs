@@ -37,24 +37,27 @@ namespace luval.vision.core
             foreach(var map in Mappings)
             {
                 result[map.AttributeName] = null;
-                var pattern = string.IsNullOrWhiteSpace(map.AnchorPatterns) ? map.AttributeName : map.AnchorPatterns;
-                if (string.IsNullOrWhiteSpace(pattern)) continue;
-                var elements = Find(pattern);
-                if (elements == null || !elements.Any()) continue;
-                var item = map.IsAttributeLast ? elements.LastOrDefault() : elements.FirstOrDefault();
-                switch (map.ValueDirection)
+                foreach(var pattern in map.AnchorPatterns)
                 {
-                    case Direction.Down:
-                        AcceptSearch(map, result, SearchDown(item));
-                        break;
-                    case Direction.Right:
-                        AcceptSearch(map, result, SearchDown(item));
-                        break;
-                    default:
-                        var vals = SearchRight(item);
-                        if (vals == null || !vals.Any()) vals = SearchDown(item);
-                        AcceptSearch(map, result, vals);
-                        break;
+                    if (string.IsNullOrWhiteSpace(pattern)) continue;
+                    var elements = Find(pattern);
+                    if (elements == null || !elements.Any()) continue;
+                    var item = map.IsAttributeLast ? elements.LastOrDefault() : elements.FirstOrDefault();
+                    switch (map.ValueDirection)
+                    {
+                        case Direction.Down:
+                            AcceptSearch(map, result, SearchDown(item, map.ValuePatterns));
+                            break;
+                        case Direction.Right:
+                            AcceptSearch(map, result, SearchDown(item, map.ValuePatterns));
+                            break;
+                        default:
+                            var vals = SearchRight(item, map.ValuePatterns);
+                            if (vals == null || !vals.Any()) vals = SearchDown(item, map.ValuePatterns);
+                            AcceptSearch(map, result, vals);
+                            break;
+                    }
+                    break;
                 }
             }
             return result;
@@ -67,52 +70,46 @@ namespace luval.vision.core
             items[map.AttributeName] = val.Text;
         }
 
-        public IEnumerable<OcrElement> FindNeighbors(OcrElement item, Direction direction)
+        private IEnumerable<OcrElement> SearchDown(OcrElement reference, IEnumerable<string> valuePatterns)
         {
-            var searchArea = GetBasedOnDirection(item.Location, direction);
-            switch (direction)
-            {
-                case Direction.Top:
-                    return SearchDown(item);
-                case Direction.Down:
-                    return SearchDown(item);
-                case Direction.Left:
-                    return SearchDown(item);
-                case Direction.Right:
-                    return SearchRight(item);
-                default:
-                    return new OcrElement[] { };
-            }
-        }
-
-        private IEnumerable<OcrElement> SearchDown(OcrElement reference)
-        {
-            var result = new List<OcrElement>();
+            var dataSet = new List<OcrElement>();
             var searchArea = this.GetBasedOnDirection(reference.Location, Direction.Down);
             var under = Elements.Where(i => i != reference && i.Location.X >= searchArea.X && (i.Location.X < (searchArea.X + searchArea.Width)))
                 .OrderBy(i => i.Location.Y);
-            result.AddRange(under);
+            dataSet.AddRange(under);
             var maxY = reference.Location.YBound + (reference.Location.Height * 5);
             var subset = Elements.Where(i => i != reference && i.Location.YBound <= maxY).OrderBy(i => i.Location.Y);
             var ulMaxX = reference.Location.XBound * (1 + ErrorMargin);
             var underLeft = subset.Where(i => i.Location.X <= ulMaxX).OrderByDescending(i => i.Location.X);
-            result.AddRange(underLeft);
+            dataSet.AddRange(underLeft);
             var urMaxX = reference.Location.X;
             var underRight = subset.Where(i => i.Location.X >= urMaxX).OrderBy(i => i.Location.X);
-            result.AddRange(underRight);
-            return result; 
+            dataSet.AddRange(underRight);
+            return FilterByPattern(dataSet, valuePatterns); 
         }
 
-        private IEnumerable<OcrElement> SearchRight(OcrElement reference)
+        private IEnumerable<OcrElement> SearchRight(OcrElement reference, IEnumerable<string> valuePatterns)
         {
             var minX = reference.Location.XBound;
             var minY = reference.Location.Y - (reference.Location.Y * ErrorMargin);
             var maxY = reference.Location.YBound * (1 + ErrorMargin);
             var middleLine = (reference.Location.Y + (reference.Location.Height / 3));
-            var result = Elements.Where(i => i.Location.X > minX &&
+            var dataSet = Elements.Where(i => i.Location.X > minX &&
                i.Location.Y > minY &&
                i.Location.YBound < maxY)
                .ToList();
+            return FilterByPattern(dataSet, valuePatterns);
+        }
+
+        private IEnumerable<OcrElement> FilterByPattern(IEnumerable<OcrElement> elements, IEnumerable<string> patterns)
+        {
+            if (patterns == null || !patterns.Any()) return elements;
+            var result = new List<OcrElement>();
+            foreach(var p in patterns)
+            {
+                var pattern = RegexTypes.I.GetExpression(p);
+                result.AddRange(elements.Where(i => Regex.IsMatch(i.Text, pattern)).ToList());
+            }
             return result;
         }
 

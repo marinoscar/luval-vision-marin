@@ -93,16 +93,8 @@ namespace luval.vision.sink
 
         private IDictionary<string, string> GetData(OcrResult result)
         {
-            var options = new List<AttributeMapping>() {
-                new AttributeMapping() {  AttributeName = "Date" },
-                new AttributeMapping() {  AttributeName = "DueDate", AnchorPatterns = "Due Date" },
-                new AttributeMapping() {  AttributeName = "Total", IsAttributeLast = true },
-                new AttributeMapping() {  AttributeName = "Invoice" },
-                new AttributeMapping() {  AttributeName = "Terms" },
-                new AttributeMapping() {  AttributeName = "Attention" },
-                new AttributeMapping() {  AttributeName = "BalanceDue", AnchorPatterns = "Balance Due" },
-                new AttributeMapping() {  AttributeName = "PONumber", AnchorPatterns = "PO Number" },
-            };
+            var jsonData = File.ReadAllText("attribute-mapping.json");
+            var options = JsonConvert.DeserializeObject<List<AttributeMapping>>(jsonData);
             var navigator = new Navigator(result.Lines, options);
             return navigator.ExtractAttributes();
         }
