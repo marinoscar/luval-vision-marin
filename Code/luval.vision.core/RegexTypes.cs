@@ -11,8 +11,8 @@ namespace luval.vision.core
         public RegexTypes()
         {
             _expressions = new Dictionary<string, string>();
-            _expressions["date"] = @"([1-9]{2}[\/\.\-][0-9]{2}[\/\.\-][0-9]{4})|([1-9]{4}[\/\.\-][0-9]{2}[\/\.\-][0-9]{4})|([1-9]{2}[\/\.\-][0-9]{2}[\/\.\-][0-9]{2})";
-            _expressions["number"] = @"\b[0-9]{1,3}(,[0-9]{3})*(\.[0-9]+)?\b|\.[0-9]+\b";
+            _expressions["{date}"] = @"([1-9]{2}[\/\.\-][0-9]{2}[\/\.\-][0-9]{4})|([1-9]{4}[\/\.\-][0-9]{2}[\/\.\-][0-9]{4})|([1-9]{2}[\/\.\-][0-9]{2}[\/\.\-][0-9]{2})";
+            _expressions["{number}"] = @"\b[0-9]{1,3}(,[0-9]{3})*(\.[0-9]+)?\b|\.[0-9]+\b";
         }
         private Dictionary<string, string> _expressions;
         private static RegexTypes _i;
@@ -21,8 +21,8 @@ namespace luval.vision.core
         {
             get
             {
-                var index = item.Replace("{", "").Replace("}", "").ToLower();
-                return _expressions[index];
+                if (!_expressions.ContainsKey(item)) return item; 
+                return _expressions[item];
             }
         }
 

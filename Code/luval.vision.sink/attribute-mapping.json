@@ -10,8 +10,8 @@
     "valuePatterns": [ "{date}" ]
   },
   {
-    "attributeName": "PO Number",
-    "anchorPatterns": [ "PO requisition", "PO#", "PO Number", "P.O. #", "P.O. No." ],
+    "attributeName": "PONumber",
+    "anchorPatterns": [ "PO requisition", "PO#", "P.O.#", "P.O. #", "PO Number", "P.O. #", "P.O. No." ],
     "valuePatterns": [ "{number}" ]
   },
   {

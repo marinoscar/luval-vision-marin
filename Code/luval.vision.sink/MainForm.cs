@@ -86,7 +86,7 @@ namespace luval.vision.sink
                 Total = items["Total"].Replace("USD", "").Replace("$", "").Replace(",", "").Trim(),
                 Date = items["Date"],
                 DueDate = items["DueDate"],
-                InvoiceNumber = items["Invoice"],
+                InvoiceNumber = items["InvoiceNumber"],
                 PONumber = items["PONumber"]
             };
         }
