@@ -42,12 +42,16 @@
             this.processBtn = new System.Windows.Forms.Button();
             this.pictureBox = new System.Windows.Forms.PictureBox();
             this.splitter1 = new System.Windows.Forms.Splitter();
-            this.resultText = new System.Windows.Forms.TextBox();
             this.mainTab = new System.Windows.Forms.TabControl();
             this.tabPicture = new System.Windows.Forms.TabPage();
             this.panelPicture = new System.Windows.Forms.Panel();
             this.tabResult = new System.Windows.Forms.TabPage();
             this.resultGrid = new System.Windows.Forms.PropertyGrid();
+            this.tabVision = new System.Windows.Forms.TabControl();
+            this.tabText = new System.Windows.Forms.TabPage();
+            this.tabVisionJson = new System.Windows.Forms.TabPage();
+            this.resultText = new System.Windows.Forms.TextBox();
+            this.treeJsonVision = new System.Windows.Forms.TreeView();
             this.mainMenu.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
@@ -55,6 +59,9 @@
             this.tabPicture.SuspendLayout();
             this.panelPicture.SuspendLayout();
             this.tabResult.SuspendLayout();
+            this.tabVision.SuspendLayout();
+            this.tabText.SuspendLayout();
+            this.tabVisionJson.SuspendLayout();
             this.SuspendLayout();
             // 
             // mainMenu
@@ -170,16 +177,6 @@
             this.splitter1.TabIndex = 3;
             this.splitter1.TabStop = false;
             // 
-            // resultText
-            // 
-            this.resultText.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.resultText.Font = new System.Drawing.Font("Courier New", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.resultText.Location = new System.Drawing.Point(246, 3);
-            this.resultText.Multiline = true;
-            this.resultText.Name = "resultText";
-            this.resultText.Size = new System.Drawing.Size(572, 491);
-            this.resultText.TabIndex = 4;
-            // 
             // mainTab
             // 
             this.mainTab.Controls.Add(this.tabPicture);
@@ -214,7 +211,7 @@
             // 
             // tabResult
             // 
-            this.tabResult.Controls.Add(this.resultText);
+            this.tabResult.Controls.Add(this.tabVision);
             this.tabResult.Controls.Add(this.resultGrid);
             this.tabResult.Location = new System.Drawing.Point(4, 22);
             this.tabResult.Name = "tabResult";
@@ -231,6 +228,57 @@
             this.resultGrid.Name = "resultGrid";
             this.resultGrid.Size = new System.Drawing.Size(243, 491);
             this.resultGrid.TabIndex = 0;
+            // 
+            // tabVision
+            // 
+            this.tabVision.Controls.Add(this.tabText);
+            this.tabVision.Controls.Add(this.tabVisionJson);
+            this.tabVision.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabVision.Location = new System.Drawing.Point(246, 3);
+            this.tabVision.Name = "tabVision";
+            this.tabVision.SelectedIndex = 0;
+            this.tabVision.Size = new System.Drawing.Size(572, 491);
+            this.tabVision.TabIndex = 5;
+            // 
+            // tabText
+            // 
+            this.tabText.Controls.Add(this.resultText);
+            this.tabText.Location = new System.Drawing.Point(4, 22);
+            this.tabText.Name = "tabText";
+            this.tabText.Padding = new System.Windows.Forms.Padding(3);
+            this.tabText.Size = new System.Drawing.Size(564, 465);
+            this.tabText.TabIndex = 0;
+            this.tabText.Text = "Text";
+            this.tabText.UseVisualStyleBackColor = true;
+            // 
+            // tabVisionJson
+            // 
+            this.tabVisionJson.Controls.Add(this.treeJsonVision);
+            this.tabVisionJson.Location = new System.Drawing.Point(4, 22);
+            this.tabVisionJson.Name = "tabVisionJson";
+            this.tabVisionJson.Padding = new System.Windows.Forms.Padding(3);
+            this.tabVisionJson.Size = new System.Drawing.Size(564, 465);
+            this.tabVisionJson.TabIndex = 1;
+            this.tabVisionJson.Text = "Vision";
+            this.tabVisionJson.UseVisualStyleBackColor = true;
+            // 
+            // resultText
+            // 
+            this.resultText.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.resultText.Font = new System.Drawing.Font("Courier New", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.resultText.Location = new System.Drawing.Point(3, 3);
+            this.resultText.Multiline = true;
+            this.resultText.Name = "resultText";
+            this.resultText.Size = new System.Drawing.Size(558, 459);
+            this.resultText.TabIndex = 5;
+            // 
+            // treeJsonVision
+            // 
+            this.treeJsonVision.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeJsonVision.Location = new System.Drawing.Point(3, 3);
+            this.treeJsonVision.Name = "treeJsonVision";
+            this.treeJsonVision.Size = new System.Drawing.Size(558, 459);
+            this.treeJsonVision.TabIndex = 0;
             // 
             // MainForm
             // 
@@ -253,7 +301,10 @@
             this.panelPicture.ResumeLayout(false);
             this.panelPicture.PerformLayout();
             this.tabResult.ResumeLayout(false);
-            this.tabResult.PerformLayout();
+            this.tabVision.ResumeLayout(false);
+            this.tabText.ResumeLayout(false);
+            this.tabText.PerformLayout();
+            this.tabVisionJson.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -273,13 +324,17 @@
         private System.Windows.Forms.Button processBtn;
         private System.Windows.Forms.PictureBox pictureBox;
         private System.Windows.Forms.Splitter splitter1;
-        private System.Windows.Forms.TextBox resultText;
         private System.Windows.Forms.TabControl mainTab;
         private System.Windows.Forms.TabPage tabPicture;
         private System.Windows.Forms.Panel panelPicture;
         private System.Windows.Forms.TabPage tabResult;
         private System.Windows.Forms.PropertyGrid resultGrid;
         private System.Windows.Forms.Button btnDemo;
+        private System.Windows.Forms.TabControl tabVision;
+        private System.Windows.Forms.TabPage tabText;
+        private System.Windows.Forms.TextBox resultText;
+        private System.Windows.Forms.TabPage tabVisionJson;
+        private System.Windows.Forms.TreeView treeJsonVision;
     }
 }
 

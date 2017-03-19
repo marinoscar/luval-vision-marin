@@ -10,11 +10,11 @@ namespace luval.vision.core
     {
         public OcrLine()
         {
-            Words = new List<OcrElement>();
+            Words = new List<OcrWord>();
         }
 
         public OcrRegion ParentRegion { get; set; }
-        public List<OcrElement> Words { get; set; }
+        public List<OcrWord> Words { get; set; }
         public override string Text { get { return string.Join(" ", Words.Select(i => i.Text)); } }
     }
 }

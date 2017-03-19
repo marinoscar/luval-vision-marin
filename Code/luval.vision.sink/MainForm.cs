@@ -81,14 +81,62 @@ namespace luval.vision.sink
             ocrResult.LoadFromJsonRegion();
             var items = GetData(ocrResult);
             _presenter.DoFullProcess(ocrResult);
+            LoadVisionTree(ocrResult);
+            LoadText(ocrResult);
             resultGrid.SelectedObject = new PoData()
             {
-                Total = items["Total"].Replace("USD", "").Replace("$", "").Replace(",", "").Trim(),
+                Total = items["Total"],
                 Date = items["Date"],
                 DueDate = items["DueDate"],
                 InvoiceNumber = items["InvoiceNumber"],
                 PONumber = items["PONumber"]
             };
+        }
+
+        private void LoadText(OcrResult ocrResult)
+        {
+            resultText.Clear();
+            var sb = new StringBuilder();
+            foreach(var line in ocrResult.Lines)
+            {
+                sb.AppendLine(line.Text);
+            }
+            resultText.Text = sb.ToString();
+        }
+
+        private void LoadVisionTree(OcrResult ocrResult)
+        {
+            var root = new TreeNode("JSON Result");
+            treeJsonVision.Nodes.Clear();
+            treeJsonVision.Nodes.Add(root);
+            foreach (var region in ocrResult.Regions)
+            {
+                var regionNode = new TreeNode()
+                {
+                    Text = string.Format("Region: {0}", region.Code)
+                };
+                regionNode.Nodes.Add(region.Location.ToString());
+                foreach (var line in region.Lines)
+                {
+                    var lineNode = new TreeNode()
+                    {
+                        Text = string.Format("Line: {0}", line.Code)
+                    };
+                    var wordNodeRoot = new TreeNode("Words");
+                    lineNode.Nodes.Add(line.Location.ToString());
+                    lineNode.Nodes.Add(line.Text);
+                    lineNode.Nodes.Add(wordNodeRoot);
+                    regionNode.Nodes.Add(lineNode);
+                    foreach(var word in line.Words)
+                    {
+                        var wordNode = new TreeNode(word.Text);
+                        wordNode.Nodes.Add(word.Location.ToString());
+                        wordNode.Nodes.Add(word.DataType.ToString());
+                        wordNodeRoot.Nodes.Add(wordNode);
+                    }
+                }
+                root.Nodes.Add(regionNode);
+            }
         }
 
         private IDictionary<string, string> GetData(OcrResult result)

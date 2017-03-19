@@ -15,18 +15,34 @@ namespace luval.vision.core
             Load();
         }
 
+        private static WordDictionary _i;
+
+        public static WordDictionary I
+        {
+            get
+            {
+                if (_i == null) _i = new WordDictionary();
+                return _i;
+            }
+        }
+
         public List<Word> Words { get; private set; }
+
+        public bool IsInDictionary(Language lang, string word)
+        {
+            return Words.Any(i => i.Language == lang && i.Text.ToLowerInvariant().Equals(word.ToLowerInvariant()));
+        }
 
         private void Load()
         {
-            using (var stream = new StreamReader(@"\Resources\en-words.txt"))
+            using (var stream = new StreamReader(@"Resources\en-words.txt"))
             {
                 while (!stream.EndOfStream)
                 {
                     Words.Add(new Word()
                     {
                         Text = stream.ReadLine().ToLowerInvariant(),
-                        Language = "en"
+                        Language = Language.English
                     });
                 }
                 stream.Close();
@@ -36,7 +52,7 @@ namespace luval.vision.core
 
     public class Word
     {
-        public string Language { get; set; }
+        public Language Language { get; set; }
         public string Text { get; set; }
     }
 }

@@ -9,6 +9,7 @@ namespace luval.vision.core
 {
     public class EntityExtractor
     {
+
         
         public static bool IsNumber(OcrElement word)
         {
@@ -24,10 +25,17 @@ namespace luval.vision.core
             return result != null && result.Success;
         }
 
+        public static bool IsWord(OcrElement word)
+        {
+            return WordDictionary.I.IsInDictionary(Language.English, word.Text);
+        }
+
         public static void ClassifyWord(OcrWord word)
         {
             if (IsNumber(word)) word.DataType = DataType.Number;
             if (IsDate(word)) word.DataType = DataType.Date;
+            if (IsWord(word)) word.DataType = DataType.Word;
+            
         }
     }
 }

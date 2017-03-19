@@ -16,5 +16,10 @@ namespace luval.vision.core
         public int YBound { get { return Y + Height;  } }
         public int XBound { get { return X + Width; } }
 
+        public override string ToString()
+        {
+            return string.Format("X: {0} Y: {1} Width: {2} Height: {3}", X, Y, Width, Height);
+        }
+
     }
 }
