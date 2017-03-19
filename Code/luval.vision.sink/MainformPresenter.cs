@@ -61,14 +61,10 @@ namespace luval.vision.sink
         public void DoFullProcess(OcrResult ocrResult)
         {
             var provider = new OcrProvider();
-            var mainResult = provider.ProcessOcr(ocrResult);
             var imgManager = new ImageManager();
             var bmp = imgManager.Process(ocrResult, Presenter.PictureBox.Image);
-            if (mainResult.Lines != null && mainResult.Lines.Any())
-                bmp = imgManager.ProcessLines(mainResult.Lines, bmp);
             Presenter.PictureBox.Image = bmp;
-            Presenter.PropertyGrid.SelectedObject = mainResult.Result;
-            Presenter.ResultText = mainResult.ToText();
+            Presenter.ResultText = ocrResult.ToString();
         }
     }
 

@@ -22,17 +22,9 @@ namespace luval.vision.core
             var response = DoOcrRequest(fileName);
             if (response.StatusCode != HttpStatusCode.OK)
                 throw new InvalidOperationException("Unable to process request");
-            return JsonConvert.DeserializeObject<OcrResult>(response.Content);
-        }
-
-
-        public ProcessedOcr ProcessOcr(OcrResult ocrResult)
-        {
-            var result = new ProcessedOcr();
-            var lines = GetLines(ocrResult);
-            result.Lines = lines;
-            result.OcrValue = ocrResult;
-            result.Result = DoParseResult(lines);
+            var result = JsonConvert.DeserializeObject<OcrResult>(response.Content);
+            result.LoadFromJsonRegion();
+            result.HorizontalLines.AddRange(GetLines(result));
             return result;
         }
 
@@ -49,7 +41,7 @@ namespace luval.vision.core
             var result = new List<OcrArea>();
             var id = 1;
             var regionId = 1;
-            foreach (var region in item.RegionResult)
+            foreach (var region in item.JsonResult)
             {
                 foreach (var line in region.Value<JArray>("lines"))
                 {

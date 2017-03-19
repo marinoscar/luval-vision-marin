@@ -15,6 +15,7 @@ namespace luval.vision.core
             Regions = new List<OcrRegion>();
             Words = new List<OcrElement>();
             Lines = new List<OcrLine>();
+            HorizontalLines = new List<LineItem>();
         }
 
         [JsonProperty(PropertyName = "language")]
@@ -25,16 +26,17 @@ namespace luval.vision.core
         [JsonProperty(PropertyName = "orientation")]
         public string Orientation { get; set; }
         [JsonProperty(PropertyName = "regions")]
-        public JArray RegionResult { get; set; }
+        public JArray JsonResult { get; set; }
 
         public List<OcrRegion> Regions { get; set; }
         public List<OcrElement> Words { get; set; }
         public List<OcrLine> Lines { get; set; }
+        public List<LineItem> HorizontalLines { get; set; }
 
         public void LoadFromJsonRegion()
         {
             var regionId = 1;
-            foreach (var jRegion in RegionResult)
+            foreach (var jRegion in JsonResult)
             {
                 var region = new OcrRegion()
                 {
@@ -69,6 +71,16 @@ namespace luval.vision.core
                 Regions.Add(region);
                 regionId++;
             }
+        }
+
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+            foreach(var line in HorizontalLines)
+            {
+                sb.AppendLine(line.ToText());
+            }
+            return sb.ToString();
         }
 
         private OcrWord ParseWord(JToken token, OcrLine line)

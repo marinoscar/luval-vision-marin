@@ -18,7 +18,7 @@ namespace luval.vision.core
             var greenPen = new Pen(Color.Green, 1);
             using (var graphic = Graphics.FromImage(bmp))
             {
-                foreach(var region in ocr.RegionResult)
+                foreach(var region in ocr.JsonResult)
                 {
                     var regNum = region.Value<string>("boundingBox").Split(",".ToCharArray()).Select(i => Convert.ToInt32(i)).ToArray();
                     graphic.DrawRectangle(bluePen, regNum[0], regNum[1], regNum[2], regNum[3]);
