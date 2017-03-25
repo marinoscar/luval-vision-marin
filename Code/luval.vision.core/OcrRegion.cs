@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,5 +15,12 @@ namespace luval.vision.core
             Lines = new List<OcrLine>();
         }
         public List<OcrLine> Lines { get; set; }
+
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+            Lines.ForEach(i => sb.AppendLine(i.Text));
+            return sb.ToString();
+        }
     }
 }
