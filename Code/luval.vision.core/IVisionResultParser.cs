@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace luval.vision.core
 {
-    public class VisionManager
+    public interface IVisionResultParser
     {
-
+        OcrResult DoParse(string jsonResult);
     }
 }

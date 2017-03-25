@@ -59,7 +59,7 @@ namespace luval.vision.sink
                 MessageBox.Show("Please load an image for processing", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            var provider = new OcrProvider();
+            var provider = new OcrProvider(new MicrosoftOcrEngine(), new MicrosoftVisionLoader());
             var result = _presenter.ProcessFromFile(_fileName);
             //_presenter.DoFullProcess(result);
             DoProcess(result);
@@ -78,7 +78,6 @@ namespace luval.vision.sink
 
         private void DoProcess(OcrResult ocrResult)
         {
-            ocrResult.LoadFromJsonRegion();
             var items = GetData(ocrResult);
             _presenter.DoFullProcess(ocrResult);
             LoadVisionTree(ocrResult);

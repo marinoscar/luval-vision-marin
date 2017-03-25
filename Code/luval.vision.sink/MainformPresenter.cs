@@ -36,7 +36,7 @@ namespace luval.vision.sink
 
         public OcrResult ProcessFromFile(string fileName)
         {
-            var provider = new OcrProvider();
+            var provider = new OcrProvider(new MicrosoftOcrEngine(), new MicrosoftVisionLoader());
             var result = provider.DoOcr(fileName);
             ProcessImage(result);
             return result;
@@ -60,7 +60,7 @@ namespace luval.vision.sink
 
         public void DoFullProcess(OcrResult ocrResult)
         {
-            var provider = new OcrProvider();
+            var provider = new OcrProvider(new MicrosoftOcrEngine(), new MicrosoftVisionLoader());
             var imgManager = new ImageManager();
             var bmp = imgManager.Process(ocrResult, Presenter.PictureBox.Image);
             Presenter.PictureBox.Image = bmp;

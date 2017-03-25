@@ -6,7 +6,7 @@
   },
   {
     "attributeName": "Date",
-    "anchorPatterns": [ "Date", "Invoice Date", "Effective Date" ],
+    "anchorPatterns": [ "Date", "Invoice Date", "Effective Date", "Invoice Date:" ],
     "valuePatterns": [ "{date}" ]
   },
   {

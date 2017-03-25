@@ -17,22 +17,22 @@ namespace luval.vision.core
     public class OcrProvider
     {
 
-        public OcrResult DoOcr(string fileName)
+        public OcrProvider(IOcrEngine engine, IVisionResultParser loader)
         {
-            var response = DoOcrRequest(fileName);
-            if (response.StatusCode != HttpStatusCode.OK)
-                throw new InvalidOperationException("Unable to process request");
-            var result = JsonConvert.DeserializeObject<OcrResult>(response.Content);
-            result.LoadFromJsonRegion();
-            result.HorizontalLines.AddRange(GetLines(result));
-            return result;
+            Engine = engine;
+            Loader = loader;
         }
 
-        public ParseResult DoParseResult(IEnumerable<LineItem> lines)
+        public IOcrEngine Engine { get; private set; }
+        public IVisionResultParser Loader { get; private set; }
+
+        public OcrResult DoOcr(string fileName)
         {
-            var result = new ParseResult() {
-                Total = GetTotal(lines), Tax = GetLineNumberValue(lines,"tax")
-            };
+            var response = Engine.Execute(fileName, null);
+            if (response.StatusCode != HttpStatusCode.OK)
+                throw new InvalidOperationException("Unable to process request");
+            var result = Loader.DoParse(response.Content);
+            result.HorizontalLines.AddRange(GetLines(result));
             return result;
         }
 
@@ -41,21 +41,21 @@ namespace luval.vision.core
             var result = new List<OcrArea>();
             var id = 1;
             var regionId = 1;
-            foreach (var region in item.JsonResult)
+            foreach (var region in item.Regions)
             {
-                foreach (var line in region.Value<JArray>("lines"))
+                foreach (var line in region.Lines)
                 {
-                    var box = line.Value<string>("boundingBox").Split(",".ToCharArray()).Select(i => Convert.ToInt32(i)).ToArray();
-                    var words = line.Value<JArray>("words").Select(i => i.Value<string>("text")).ToArray();
+                    var box = line.Location;
+                    var words = line.Words;
                     result.Add(new OcrArea()
                     {
                         Id = id,
                         RegionId = regionId,
-                        X = box[0],
-                        Y = box[1],
-                        Height = box[2],
-                        Width = box[3],
-                        Words = words 
+                        X = box.X,
+                        Y = box.Y,
+                        Height = box.Height,
+                        Width = box.Width,
+                        Words = words.Select(i => i.Text).ToArray() 
                     });
                     id++;
                 }
@@ -63,34 +63,6 @@ namespace luval.vision.core
             }
             return AlignLines(result);
         }
-
-        public string GetTotal(string fileName)
-        {
-            var result = DoOcr(fileName);
-            return GetTotal(GetLines(result));
-        }
-
-        public string GetTotal(IEnumerable<LineItem> lines)
-        {
-            return GetLineNumberValue(lines, "total");
-        }
-
-        public string GetLineNumberValue(IEnumerable<LineItem> lines, string pattern)
-        {
-            var text = string.Empty;
-            foreach (var item in lines.Reverse())
-            {
-                text = item.ToText();
-                if (text.ToLowerInvariant().Contains(pattern))
-                {
-                    var amountValues = Regex.Matches(text, @"[0-9]|-|\.|,").Cast<Match>().Where(i => i.Success).Select(i => i.Value).ToList();
-                    return string.Join("", amountValues);
-                }
-            }
-            return string.Empty;
-        }
-
-
 
         private IEnumerable<LineItem> AlignLines(IEnumerable<OcrArea> items)
         {
@@ -126,18 +98,6 @@ namespace luval.vision.core
                 lineNo++;
             }
             return resultLineItems;
-        }
-
-        private IRestResponse DoOcrRequest(string fileName)
-        {
-            var apiKey = ConfigurationManager.AppSettings["azure.vision.key"];
-            var client = new RestClient("https://api.projectoxford.ai/vision/v1.0/ocr");
-            var request = new RestRequest(Method.POST);
-            request.RequestFormat = DataFormat.Json;
-            request.AddHeader("Ocp-Apim-Subscription-Key", apiKey);
-            request.AddHeader("Content-Type", "multipart/form-data");
-            request.AddFile("content", fileName);
-            return client.Execute(request);
         }
     }
 }

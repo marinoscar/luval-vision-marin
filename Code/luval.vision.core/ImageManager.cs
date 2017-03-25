@@ -18,14 +18,14 @@ namespace luval.vision.core
             var greenPen = new Pen(Color.Green, 1);
             using (var graphic = Graphics.FromImage(bmp))
             {
-                foreach(var region in ocr.JsonResult)
+                foreach(var region in ocr.Regions)
                 {
-                    var regNum = region.Value<string>("boundingBox").Split(",".ToCharArray()).Select(i => Convert.ToInt32(i)).ToArray();
-                    graphic.DrawRectangle(bluePen, regNum[0], regNum[1], regNum[2], regNum[3]);
-                    foreach (var line in region.Value<JArray>("lines"))
+                    var regNum = region.Location;
+                    graphic.DrawRectangle(bluePen, regNum.X, regNum.Y, regNum.Width, regNum.Height);
+                    foreach (var line in region.Lines)
                     {
-                        var linNum = line.Value<string>("boundingBox").Split(",".ToCharArray()).Select(i => Convert.ToInt32(i)).ToArray();
-                        graphic.DrawRectangle(redPen, linNum[0], linNum[1], linNum[2], linNum[3]);
+                        var linNum = line.Location;
+                        graphic.DrawRectangle(redPen, linNum.X, linNum.Y, linNum.Width, linNum.Height);
                         //foreach(var word in line.Value<JArray>("words"))
                         //{
                         //    var wordNum = word.Value<string>("boundingBox").Split(",".ToCharArray()).Select(i => Convert.ToInt32(i)).ToArray();

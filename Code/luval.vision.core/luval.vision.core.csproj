@@ -64,11 +64,15 @@
     <Compile Include="Extractor.cs" />
     <Compile Include="ImageManager.cs" />
     <Compile Include="InvoiceData.cs" />
+    <Compile Include="IOcrEngine.cs" />
     <Compile Include="IOcrProvider.cs" />
+    <Compile Include="IVisionResultParser.cs" />
     <Compile Include="LineItem.cs" />
+    <Compile Include="MicrosoftVisionLoader.cs" />
     <Compile Include="Navigator.cs" />
     <Compile Include="OcrArea.cs" />
     <Compile Include="OcrElement.cs" />
+    <Compile Include="MicrosoftOcrEngine.cs" />
     <Compile Include="OcrLine.cs" />
     <Compile Include="OcrLocation.cs" />
     <Compile Include="OcrProvider.cs" />
