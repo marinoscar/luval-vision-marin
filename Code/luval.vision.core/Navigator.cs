@@ -49,7 +49,7 @@ namespace luval.vision.core
                             AcceptSearch(map, result, SearchDown(item, map.ValuePatterns));
                             break;
                         case Direction.Right:
-                            AcceptSearch(map, result, SearchDown(item, map.ValuePatterns));
+                            AcceptSearch(map, result, SearchRight(item, map.ValuePatterns));
                             break;
                         default:
                             var vals = SearchRight(item, map.ValuePatterns);

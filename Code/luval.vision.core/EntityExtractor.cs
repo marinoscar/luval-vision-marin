@@ -26,7 +26,8 @@ namespace luval.vision.core
 
         public static bool IsWord(OcrElement word)
         {
-            return WordDictionary.I.IsInDictionary(Language.English, word.Text);
+            //return WordDictionary.I.IsInDictionary(Language.English, word.Text);
+            return false;
         }
 
         public static void ClassifyWord(OcrWord word)
