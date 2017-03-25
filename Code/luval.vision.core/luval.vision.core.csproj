@@ -79,11 +79,8 @@
     <Compile Include="OcrRegion.cs" />
     <Compile Include="OcrResult.cs" />
     <Compile Include="OcrWord.cs" />
-    <Compile Include="ParseResult.cs" />
-    <Compile Include="ProcessedOcr.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegexTypes.cs" />
-    <Compile Include="VisionManager.cs" />
     <Compile Include="WordDictionary.cs" />
   </ItemGroup>
   <ItemGroup>

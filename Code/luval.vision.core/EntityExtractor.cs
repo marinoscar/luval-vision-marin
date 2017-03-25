@@ -9,8 +9,7 @@ namespace luval.vision.core
 {
     public class EntityExtractor
     {
-
-        
+     
         public static bool IsNumber(OcrElement word)
         {
             var result = Regex.Matches(word.Text, RegexTypes.I.GetExpression("number")).Cast<Match>().Where(i => i.Success).FirstOrDefault();
