@@ -37,28 +37,34 @@ namespace luval.vision.core
         public IDictionary<string, string> ExtractAttributes()
         {
             var result = new Dictionary<string, string>();
-            foreach(var map in Mappings)
+            foreach (var map in Mappings)
             {
                 result[map.AttributeName] = null;
-                foreach(var pattern in map.AnchorPatterns)
+                foreach (var pattern in map.AnchorPatterns)
                 {
                     if (string.IsNullOrWhiteSpace(pattern)) continue;
                     var elements = Find(pattern);
                     if (elements == null || !elements.Any()) continue;
-                    var item = map.IsAttributeLast ? elements.LastOrDefault() : elements.FirstOrDefault();
-                    switch (map.ValueDirection)
+                    var sortedElements = map.IsAttributeLast ? elements.Reverse().ToList() : elements.ToList();
+                    var found = false;
+                    foreach (var item in sortedElements)
                     {
-                        case Direction.Down:
-                            AcceptSearch(map, result, SearchDown(item, map.ValuePatterns));
-                            break;
-                        case Direction.Right:
-                            AcceptSearch(map, result, SearchRight(item, map.ValuePatterns));
-                            break;
-                        default:
-                            var vals = SearchRight(item, map.ValuePatterns);
-                            if (vals == null || !vals.Any()) vals = SearchDown(item, map.ValuePatterns);
-                            AcceptSearch(map, result, vals);
-                            break;
+
+                        switch (map.ValueDirection)
+                        {
+                            case Direction.Down:
+                                found = AcceptSearch(map, result, SearchDown(item, map.ValuePatterns));
+                                break;
+                            case Direction.Right:
+                                found = AcceptSearch(map, result, SearchRight(item, map.ValuePatterns));
+                                break;
+                            default:
+                                var vals = SearchRight(item, map.ValuePatterns);
+                                if (vals == null || !vals.Any()) vals = SearchDown(item, map.ValuePatterns);
+                                found = AcceptSearch(map, result, vals);
+                                break;
+                        }
+                        if (found) break;
                     }
                     break;
                 }
@@ -66,11 +72,12 @@ namespace luval.vision.core
             return result;
         }
 
-        private void AcceptSearch(AttributeMapping map, IDictionary<string, string> items, IEnumerable<OcrElement> values)
+        private bool AcceptSearch(AttributeMapping map, IDictionary<string, string> items, IEnumerable<OcrElement> values)
         {
-            if (values == null || !values.Any()) return;
+            if (values == null || !values.Any()) return false;
             var val = map.IsValueLast ? values.LastOrDefault() : values.FirstOrDefault();
             items[map.AttributeName] = val.Text;
+            return !string.IsNullOrWhiteSpace(val.Text);
         }
 
         private IEnumerable<OcrElement> SearchDown(OcrElement reference, IEnumerable<string> valuePatterns)
@@ -88,7 +95,7 @@ namespace luval.vision.core
             var urMaxX = reference.Location.X;
             var underRight = subset.Where(i => i.Location.X >= urMaxX).OrderBy(i => i.Location.X);
             dataSet.AddRange(underRight);
-            return FilterByPattern(dataSet, valuePatterns); 
+            return FilterByPattern(dataSet, valuePatterns);
         }
 
         private IEnumerable<OcrElement> SearchRight(OcrElement reference, IEnumerable<string> valuePatterns)
@@ -108,7 +115,7 @@ namespace luval.vision.core
         {
             if (patterns == null || !patterns.Any()) return elements;
             var result = new List<OcrElement>();
-            foreach(var p in patterns)
+            foreach (var p in patterns)
             {
                 result.AddRange(elements.Where(i => Resolve(p, i.Text)).ToList());
             }

@@ -67,6 +67,7 @@
     <Compile Include="InvoiceData.cs" />
     <Compile Include="IOcrEngine.cs" />
     <Compile Include="IOcrProvider.cs" />
+    <Compile Include="resolvers\CodeResolver.cs" />
     <Compile Include="resolvers\DateResolver.cs" />
     <Compile Include="resolvers\IRegexResolver.cs" />
     <Compile Include="resolvers\IStringResolver.cs" />

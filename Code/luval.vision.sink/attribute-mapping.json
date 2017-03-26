@@ -12,7 +12,7 @@
   {
     "attributeName": "PONumber",
     "anchorPatterns": [ "PO requisition", "PO#", "P.O.#", "P.O. #", "PO Number", "P.O. #", "P.O. No." ],
-    "valuePatterns": [ "@number" ]
+    "valuePatterns": [ "@code" ]
   },
   {
     "attributeName": "Total",
@@ -23,6 +23,6 @@
   {
     "attributeName": "InvoiceNumber",
     "anchorPatterns": [ "Invoice", "Invoice #", "Invoice Number" ],
-    "valuePatterns": [ "\\b.*\\b" ]
+    "valuePatterns": [ "@code" ]
   }
 ]
