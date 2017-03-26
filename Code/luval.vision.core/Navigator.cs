@@ -119,7 +119,7 @@ namespace luval.vision.core
         {
             if (pattern.StartsWith("@"))
             {
-                var res = _resManager.GetByCode(pattern.Remove(1));
+                var res = _resManager.GetByCode(pattern.Replace("@", ""));
                 if (res != null) return res.IsMatch(text);
             }
             var regEx = new RegexResolver(pattern);

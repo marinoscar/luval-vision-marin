@@ -16,13 +16,14 @@
   },
   {
     "attributeName": "Total",
-    "anchorPatterns": [ "Total", "Grand Total" ],
+    "anchorPatterns": [ "\\bTotal\\b", "\\bGrand Total\\b" ],
     "valuePatterns": [ "@number" ],
     "isValueLast": true
   },
   {
     "attributeName": "InvoiceNumber",
     "anchorPatterns": [ "Invoice #", "Invoice Number", "Invoice" ],
-    "valuePatterns": ["(^\\w+)"]
+    "valuePatterns": [ "(^\\w+)" ],
+    "isValueLast": true
   }
 ]
