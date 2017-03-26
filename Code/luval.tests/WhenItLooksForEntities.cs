@@ -24,10 +24,21 @@ namespace luval.tests
         public void ItShouldFindAValidDate()
         {
             var dates = new string[] { "30/12/2017", "30-12-17", "30-12-2017", "30/12/17" };
-            var res = _resManager.Get<DateResolver>();
-            foreach(var date in dates)
+            ValidateExpressionWithArray(_resManager.Get<DateResolver>(), dates);
+        }
+
+        [Test]
+        public void ItShouldFindAValidNumber()
+        {
+            var nums = new string[] { "12345", "123456.78", "1,000.00", "1,000.000", "1,000,000,000.00" };
+            ValidateExpressionWithArray(_resManager.Get<NumberResolver>(), nums);
+        }
+
+        private void ValidateExpressionWithArray(IStringResolver res, string[] vals)
+        {
+            foreach(var val in vals)
             {
-                Assert.IsTrue(res.IsMatch(date), string.Format("Failed to match date {0}", date));
+                Assert.IsTrue(res.IsMatch(val), "Unable to parse {0}", val);
             }
         }
     }

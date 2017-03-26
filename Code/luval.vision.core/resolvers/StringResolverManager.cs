@@ -24,5 +24,10 @@ namespace luval.vision.core.resolvers
             return (T)_resolvers[typeof(T)];
         }
 
+        public IStringResolver GetByCode(string code)
+        {
+            return _resolvers.Values.Where(i => i.Code == code).FirstOrDefault();
+        }
+
     }
 }
