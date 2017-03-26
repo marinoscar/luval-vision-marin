@@ -22,8 +22,7 @@
   },
   {
     "attributeName": "InvoiceNumber",
-    "anchorPatterns": [ "Invoice #", "Invoice Number", "Invoice" ],
-    "valuePatterns": [ "(^\\w+)" ],
-    "isValueLast": true
+    "anchorPatterns": [ "Invoice", "Invoice #", "Invoice Number" ],
+    "valuePatterns": [ "\\b.*\\b" ]
   }
 ]
