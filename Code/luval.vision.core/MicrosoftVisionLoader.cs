@@ -48,7 +48,7 @@ namespace luval.vision.core
                     var wordId = 1;
                     foreach (var jWord in jLine["words"])
                     {
-                        var word = ParseWord(jWord, line);
+                        var word = ParseWord(jWord, line, result);
                         word.Code = string.Format("{0}.{1}", line.Code, wordId.ToString().PadLeft(5, '0'));
                         line.Words.Add(word);
                         EntityExtractor.ClassifyWord(word);
@@ -85,12 +85,12 @@ namespace luval.vision.core
             return result;
         }
 
-        private OcrWord ParseWord(JToken token, OcrLine line)
+        private OcrWord ParseWord(JToken token, OcrLine line, OcrResult result)
         {
             var word = new OcrWord()
             {
                 ParentLine = line,
-                Location = ParseBox(token),
+                Location = ParseBox(token, result),
                 Text = Convert.ToString(token["text"])
             };
             return word;

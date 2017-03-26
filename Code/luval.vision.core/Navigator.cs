@@ -83,7 +83,13 @@ namespace luval.vision.core
         private IEnumerable<OcrElement> SearchDown(OcrElement reference, IEnumerable<string> valuePatterns)
         {
             var dataSet = new List<OcrElement>();
-            var searchArea = this.GetBasedOnDirection(reference.Location, Direction.Down);
+            var searchArea = new OcrLocation()
+            {
+                X = reference.Location.X,
+                Y = reference.Location.YBound,
+                Width = reference.Location.Width,
+                Height = reference.Location.Height
+            };
             var under = Elements.Where(i => i != reference && i.Location.X >= searchArea.X && (i.Location.X < (searchArea.X + searchArea.Width)))
                 .OrderBy(i => i.Location.Y);
             dataSet.AddRange(under);
@@ -131,31 +137,6 @@ namespace luval.vision.core
             }
             var regEx = new RegexResolver(pattern);
             return regEx.IsMatch(text);
-        }
-
-        private OcrLocation GetBasedOnDirection(OcrLocation original, Direction direction)
-        {
-            var result = new OcrLocation() { X = original.X, Y = original.Y, Width = original.Width, Height = original.Height };
-            switch (direction)
-            {
-                case Direction.Top:
-                    result.X = original.X - (int)Math.Floor((original.X * ErrorMargin));
-                    result.Width = original.Width + (int)Math.Ceiling((original.Width * ErrorMargin));
-                    break;
-                case Direction.Down:
-                    result.X = original.X - (int)Math.Floor((original.X * ErrorMargin));
-                    result.Width = original.Width + (int)Math.Ceiling((original.Width * ErrorMargin));
-                    break;
-                case Direction.Left:
-                    result.Y = original.Y - (int)Math.Floor((original.Y * ErrorMargin));
-                    result.Height = original.Height + (int)Math.Ceiling((original.Height * ErrorMargin));
-                    break;
-                case Direction.Right:
-                    result.Y = original.Y - (int)Math.Floor((original.Y * ErrorMargin));
-                    result.Height = original.Height + (int)Math.Ceiling((original.Height * ErrorMargin));
-                    break;
-            }
-            return result;
         }
     }
 }

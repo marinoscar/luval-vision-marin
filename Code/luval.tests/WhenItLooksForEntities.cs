@@ -23,7 +23,7 @@ namespace luval.tests
         [Test]
         public void ItShouldFindAValidDate()
         {
-            var dates = new string[] { "30/12/2017", "30-12-17", "30-12-2017", "30/12/17" };
+            var dates = new string[] { "30/12/2017", "30-12-17", "30-12-2017", "30/12/17", "2017-1-1", "2017/01/01", "1/2/2017", "1/2/17" };
             ValidateExpressionWithArray(_resManager.Get<DateResolver>(), dates);
         }
 
