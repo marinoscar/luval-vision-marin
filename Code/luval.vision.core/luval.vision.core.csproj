@@ -83,10 +83,10 @@
     <Compile Include="OcrResult.cs" />
     <Compile Include="OcrWord.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RegexTypes.cs" />
     <Compile Include="resolvers\NumberResolver.cs" />
     <Compile Include="resolvers\RegexResolver.cs" />
     <Compile Include="resolvers\StringResolverManager.cs" />
+    <Compile Include="resolvers\WordResolver.cs" />
     <Compile Include="WordDictionary.cs" />
   </ItemGroup>
   <ItemGroup>

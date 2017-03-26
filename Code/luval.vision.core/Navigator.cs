@@ -1,4 +1,5 @@
-﻿using System;
+﻿using luval.vision.core.resolvers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,11 +12,13 @@ namespace luval.vision.core
     {
 
         private const double ErrorMargin = 0.015d;
+        private StringResolverManager _resManager;
 
         public Navigator(IEnumerable<OcrElement> elements, IEnumerable<AttributeMapping> mappings)
         {
             Elements = new List<OcrElement>(elements);
             Mappings = new List<AttributeMapping>(mappings);
+            _resManager = new StringResolverManager();
         }
         public List<OcrElement> Elements { get; set; }
         public List<AttributeMapping> Mappings { get; set; }
@@ -107,10 +110,20 @@ namespace luval.vision.core
             var result = new List<OcrElement>();
             foreach(var p in patterns)
             {
-                var pattern = RegexTypes.I.GetExpression(p);
-                result.AddRange(elements.Where(i => Regex.IsMatch(i.Text, pattern)).ToList());
+                result.AddRange(elements.Where(i => Resolve(p, i.Text)).ToList());
             }
             return result;
+        }
+
+        private bool Resolve(string pattern, string text)
+        {
+            if (pattern.StartsWith("@"))
+            {
+                var res = _resManager.GetByCode(pattern.Remove(1));
+                if (res != null) return res.IsMatch(text);
+            }
+            var regEx = new RegexResolver(pattern);
+            return regEx.IsMatch(text);
         }
 
         private OcrLocation GetBasedOnDirection(OcrLocation original, Direction direction)

@@ -15,7 +15,8 @@ namespace luval.vision.core.resolvers
             _resolvers = new Dictionary<Type, IStringResolver>()
             {
                 {typeof(NumberResolver), new NumberResolver()},
-                {typeof(DateResolver), new DateResolver() }
+                {typeof(DateResolver), new DateResolver() },
+                { typeof(WordResolver), new WordResolver()}
             };
         }
 

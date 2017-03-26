@@ -61,7 +61,6 @@ namespace luval.vision.sink
             }
             var provider = new OcrProvider(new MicrosoftOcrEngine(), new MicrosoftVisionLoader());
             var result = _presenter.ProcessFromFile(_fileName);
-            //_presenter.DoFullProcess(result);
             DoProcess(result);
         }
 

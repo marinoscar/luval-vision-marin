@@ -2,22 +2,22 @@
   {
     "attributeName": "DueDate",
     "anchorPatterns": [ "Due Date", "Expiration Date" ],
-    "valuePatterns": [ "{date}"]
+    "valuePatterns": [ "@date"]
   },
   {
     "attributeName": "Date",
     "anchorPatterns": [ "Date", "Invoice Date", "Effective Date", "Invoice Date:" ],
-    "valuePatterns": [ "{date}" ]
+    "valuePatterns": [ "@date" ]
   },
   {
     "attributeName": "PONumber",
     "anchorPatterns": [ "PO requisition", "PO#", "P.O.#", "P.O. #", "PO Number", "P.O. #", "P.O. No." ],
-    "valuePatterns": [ "{number}" ]
+    "valuePatterns": [ "@number" ]
   },
   {
     "attributeName": "Total",
     "anchorPatterns": [ "Total", "Grand Total" ],
-    "valuePatterns": [ "{number}" ],
+    "valuePatterns": [ "@number" ],
     "isValueLast": true
   },
   {

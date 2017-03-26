@@ -48,16 +48,6 @@ namespace luval.vision.sink
             Presenter.PictureBox.Image = bmp;
         }
 
-        public void ProcessImage(OcrResult ocrResult, IEnumerable<LineItem> lines)
-        {
-            var imgManager = new ImageManager();
-            var bmp = imgManager.Process(ocrResult, Presenter.PictureBox.Image);
-            if (lines != null && lines.Any())
-                bmp = imgManager.ProcessLines(lines, bmp);
-            Presenter.PictureBox.Image = bmp;
-
-        }
-
         public void DoFullProcess(OcrResult ocrResult)
         {
             var provider = new OcrProvider(new MicrosoftOcrEngine(), new MicrosoftVisionLoader());
