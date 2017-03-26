@@ -28,12 +28,17 @@ namespace luval.vision.core
 
         public OcrResult DoOcr(string fileName)
         {
-            var response = Engine.Execute(fileName, null);
+            var response = Engine.Execute(fileName, GetImageBytes(fileName));
             if (response.StatusCode != HttpStatusCode.OK)
                 throw new InvalidOperationException("Unable to process request");
             var result = Loader.DoParse(response.Content);
             result.HorizontalLines.AddRange(GetLines(result));
             return result;
+        }
+
+        private byte[] GetImageBytes(string fileName)
+        {
+            return File.ReadAllBytes(fileName);
         }
 
         public IEnumerable<LineItem> GetLines(OcrResult item)

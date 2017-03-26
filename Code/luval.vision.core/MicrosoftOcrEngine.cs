@@ -18,7 +18,8 @@ namespace luval.vision.core
             request.RequestFormat = DataFormat.Json;
             request.AddHeader("Ocp-Apim-Subscription-Key", apiKey);
             request.AddHeader("Content-Type", "multipart/form-data");
-            request.AddFile("content", name);
+            //request.AddFile("content", name);
+            request.AddFileBytes("content", image, name);
             return client.Execute(request);
         }
     }
