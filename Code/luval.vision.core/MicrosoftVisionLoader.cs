@@ -10,7 +10,7 @@ namespace luval.vision.core
 {
     public class MicrosoftVisionLoader : IVisionResultParser
     {
-        public OcrResult DoParse(string jsonResult)
+        public OcrResult DoParse(string jsonResult, ImageInfo info)
         {
             var json = (JObject)JsonConvert.DeserializeObject(jsonResult);
             var result = new OcrResult()
@@ -18,6 +18,7 @@ namespace luval.vision.core
                 Language = json["language"].Value<string>(),
                 Orientation = json["orientation"].Value<string>(),
                 TextAngle = json["textAngle"].Value<decimal>(),
+                Info = info
             };
             LoadFromJsonRegion(json["regions"].Value<JArray>(), result);
             return result;
@@ -32,7 +33,7 @@ namespace luval.vision.core
                 {
                     Id = regionId,
                     Code = regionId.ToString().PadLeft(3, '0'),
-                    Location = ParseBox(jRegion)
+                    Location = ParseBox(jRegion, result)
                 };
                 var lineId = 1;
                 foreach (var jLine in jRegion["lines"])
@@ -42,7 +43,7 @@ namespace luval.vision.core
                         Id = lineId,
                         Code = string.Format("{0}.{1}", region.Code, lineId.ToString().PadLeft(4, '0')),
                         ParentRegion = region,
-                        Location = ParseBox(jLine),
+                        Location = ParseBox(jLine, result),
                     };
                     var wordId = 1;
                     foreach (var jWord in jLine["words"])
@@ -63,17 +64,25 @@ namespace luval.vision.core
             }
         }
 
-        private OcrLocation ParseBox(JToken token)
+        private OcrLocation ParseBox(JToken token, OcrResult res)
         {
             if (token["boundingBox"] == null) return default(OcrLocation);
             var vals = token["boundingBox"].Value<string>().Split(",".ToCharArray());
-            return new OcrLocation()
+            var result = new OcrLocation()
             {
                 X = Convert.ToInt32(vals[0]),
                 Y = Convert.ToInt32(vals[1]),
                 Width = Convert.ToInt32(vals[2]),
                 Height = Convert.ToInt32(vals[3]),
+                RelativeLocation = new OcrLocation()
+                {
+                    X = (Convert.ToInt32(vals[0]) / res.Info.Width),
+                    Y = (Convert.ToInt32(vals[1]) / res.Info.Height),
+                    Width = (Convert.ToInt32(vals[2]) / res.Info.Width),
+                    Height = (Convert.ToInt32(vals[3]) / res.Info.Height)
+                }
             };
+            return result;
         }
 
         private OcrWord ParseWord(JToken token, OcrLine line)

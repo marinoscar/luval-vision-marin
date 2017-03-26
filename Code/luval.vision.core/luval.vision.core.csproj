@@ -62,6 +62,7 @@
     <Compile Include="EntityExtractor.cs" />
     <Compile Include="Enum.cs" />
     <Compile Include="Extractor.cs" />
+    <Compile Include="ImageInfo.cs" />
     <Compile Include="ImageManager.cs" />
     <Compile Include="InvoiceData.cs" />
     <Compile Include="IOcrEngine.cs" />

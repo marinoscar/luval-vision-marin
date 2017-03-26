@@ -4,6 +4,7 @@ using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -28,10 +29,12 @@ namespace luval.vision.core
 
         public OcrResult DoOcr(string fileName)
         {
-            var response = Engine.Execute(fileName, GetImageBytes(fileName));
+            var bytes = GetImageBytes(fileName);
+            var imgInfo = ImageInfo.Load(fileName);
+            var response = Engine.Execute(fileName, bytes);
             if (response.StatusCode != HttpStatusCode.OK)
                 throw new InvalidOperationException("Unable to process request");
-            var result = Loader.DoParse(response.Content);
+            var result = Loader.DoParse(response.Content, imgInfo);
             result.HorizontalLines.AddRange(GetLines(result));
             return result;
         }

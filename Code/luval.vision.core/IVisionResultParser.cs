@@ -8,6 +8,6 @@ namespace luval.vision.core
 {
     public interface IVisionResultParser
     {
-        OcrResult DoParse(string jsonResult);
+        OcrResult DoParse(string jsonResult, ImageInfo info);
     }
 }
