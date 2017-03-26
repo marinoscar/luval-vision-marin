@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "luval.vision.core", "luval.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "luval.vision.sink", "luval.vision.sink\luval.vision.sink.csproj", "{443E9AC3-B5FE-4F20-8B6F-87F59EBBC8F1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "luval.tests", "luval.tests\luval.tests.csproj", "{3299F628-3097-4799-A9E2-EAC16D587FB8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		CD_ROM|Any CPU = CD_ROM|Any CPU
@@ -36,6 +38,16 @@ Global
 		{443E9AC3-B5FE-4F20-8B6F-87F59EBBC8F1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{443E9AC3-B5FE-4F20-8B6F-87F59EBBC8F1}.SingleImage|Any CPU.ActiveCfg = Release|Any CPU
 		{443E9AC3-B5FE-4F20-8B6F-87F59EBBC8F1}.SingleImage|Any CPU.Build.0 = Release|Any CPU
+		{3299F628-3097-4799-A9E2-EAC16D587FB8}.CD_ROM|Any CPU.ActiveCfg = Release|Any CPU
+		{3299F628-3097-4799-A9E2-EAC16D587FB8}.CD_ROM|Any CPU.Build.0 = Release|Any CPU
+		{3299F628-3097-4799-A9E2-EAC16D587FB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3299F628-3097-4799-A9E2-EAC16D587FB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3299F628-3097-4799-A9E2-EAC16D587FB8}.DVD-5|Any CPU.ActiveCfg = Debug|Any CPU
+		{3299F628-3097-4799-A9E2-EAC16D587FB8}.DVD-5|Any CPU.Build.0 = Debug|Any CPU
+		{3299F628-3097-4799-A9E2-EAC16D587FB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3299F628-3097-4799-A9E2-EAC16D587FB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3299F628-3097-4799-A9E2-EAC16D587FB8}.SingleImage|Any CPU.ActiveCfg = Release|Any CPU
+		{3299F628-3097-4799-A9E2-EAC16D587FB8}.SingleImage|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
