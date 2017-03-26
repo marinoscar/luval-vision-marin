@@ -90,16 +90,16 @@ namespace luval.vision.core
                 Width = reference.Location.Width,
                 Height = reference.Location.Height
             };
-            var under = Elements.Where(i => i != reference && i.Location.X >= searchArea.X && (i.Location.X < (searchArea.X + searchArea.Width)))
-                .OrderBy(i => i.Location.Y);
-            dataSet.AddRange(under);
             var maxY = reference.Location.YBound + (reference.Location.Height * 5);
-            var subset = Elements.Where(i => i != reference && i.Location.YBound <= maxY).OrderBy(i => i.Location.Y);
+            var subset = Elements.Where(i => i != reference && i.Location.Y > searchArea.Y && i.Location.YBound <= maxY).OrderBy(i => i.Location.Y).ToList();
+            var under = subset.Where(i => i != reference && i.Location.X >= searchArea.X && (i.Location.X < (searchArea.X + searchArea.Width)))
+                .OrderBy(i => i.Location.Y).ToList();
+            dataSet.AddRange(under);
             var ulMaxX = reference.Location.XBound * (1 + ErrorMargin);
-            var underLeft = subset.Where(i => i.Location.X <= ulMaxX).OrderByDescending(i => i.Location.X);
+            var underLeft = subset.Where(i => i.Location.X <= ulMaxX).OrderByDescending(i => i.Location.X).ToList();
             dataSet.AddRange(underLeft);
             var urMaxX = reference.Location.X;
-            var underRight = subset.Where(i => i.Location.X >= urMaxX).OrderBy(i => i.Location.X);
+            var underRight = subset.Where(i => i.Location.X >= urMaxX).OrderBy(i => i.Location.X).ToList();
             dataSet.AddRange(underRight);
             return FilterByPattern(dataSet, valuePatterns);
         }
