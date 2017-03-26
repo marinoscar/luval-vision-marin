@@ -91,7 +91,10 @@ namespace luval.vision.core
                 Height = reference.Location.Height
             };
             var maxY = reference.Location.YBound + (reference.Location.Height * 5);
-            var subset = Elements.Where(i => i != reference && i.Location.Y > searchArea.Y && i.Location.YBound <= maxY).OrderBy(i => i.Location.Y).ToList();
+            var minX = reference.Location.X - (reference.Location.Width * 4);
+            var maxX = reference.Location.XBound + (reference.Location.Width * 4);
+            var subset = Elements.Where(i => i != reference && i.Location.Y > searchArea.Y && i.Location.YBound <= maxY && i.Location.X > minX && i.Location.XBound < maxX)
+                .OrderBy(i => i.Location.Y).ToList();
             var under = subset.Where(i => i != reference && i.Location.X >= searchArea.X && (i.Location.X < (searchArea.X + searchArea.Width)))
                 .OrderBy(i => i.Location.Y).ToList();
             dataSet.AddRange(under);

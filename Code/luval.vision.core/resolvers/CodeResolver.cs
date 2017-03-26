@@ -8,7 +8,7 @@ namespace luval.vision.core.resolvers
 {
     public class CodeResolver : RegexResolver
     {
-        private const string _exp = @"[0-9a-zA-Z\-_ ]*";
+        private const string _exp = @"[0-9a-zA-Z\-_]*";
         private const string _nums = "0123456789";
 
         public CodeResolver() : base(_exp)
