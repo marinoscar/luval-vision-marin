@@ -1,13 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.9
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "luval.vision.core", "luval.vision.core\luval.vision.core.csproj", "{E2B1CE82-40C0-4F2B-9D00-A93425D7147F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "luval.vision.sink", "luval.vision.sink\luval.vision.sink.csproj", "{443E9AC3-B5FE-4F20-8B6F-87F59EBBC8F1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "luval.tests", "luval.tests\luval.tests.csproj", "{3299F628-3097-4799-A9E2-EAC16D587FB8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "luval.vision.api", "luval.vision.api\luval.vision.api.csproj", "{BF1F6B66-703E-4064-8627-9685BDD7E0F7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "luval.vision.bll", "luval.vision.bll\luval.vision.bll.csproj", "{79E0F57B-4776-4C98-9959-E7DE120BEB84}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -48,6 +52,26 @@ Global
 		{3299F628-3097-4799-A9E2-EAC16D587FB8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3299F628-3097-4799-A9E2-EAC16D587FB8}.SingleImage|Any CPU.ActiveCfg = Release|Any CPU
 		{3299F628-3097-4799-A9E2-EAC16D587FB8}.SingleImage|Any CPU.Build.0 = Release|Any CPU
+		{BF1F6B66-703E-4064-8627-9685BDD7E0F7}.CD_ROM|Any CPU.ActiveCfg = Release|Any CPU
+		{BF1F6B66-703E-4064-8627-9685BDD7E0F7}.CD_ROM|Any CPU.Build.0 = Release|Any CPU
+		{BF1F6B66-703E-4064-8627-9685BDD7E0F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF1F6B66-703E-4064-8627-9685BDD7E0F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF1F6B66-703E-4064-8627-9685BDD7E0F7}.DVD-5|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF1F6B66-703E-4064-8627-9685BDD7E0F7}.DVD-5|Any CPU.Build.0 = Debug|Any CPU
+		{BF1F6B66-703E-4064-8627-9685BDD7E0F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF1F6B66-703E-4064-8627-9685BDD7E0F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF1F6B66-703E-4064-8627-9685BDD7E0F7}.SingleImage|Any CPU.ActiveCfg = Release|Any CPU
+		{BF1F6B66-703E-4064-8627-9685BDD7E0F7}.SingleImage|Any CPU.Build.0 = Release|Any CPU
+		{79E0F57B-4776-4C98-9959-E7DE120BEB84}.CD_ROM|Any CPU.ActiveCfg = Release|Any CPU
+		{79E0F57B-4776-4C98-9959-E7DE120BEB84}.CD_ROM|Any CPU.Build.0 = Release|Any CPU
+		{79E0F57B-4776-4C98-9959-E7DE120BEB84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79E0F57B-4776-4C98-9959-E7DE120BEB84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79E0F57B-4776-4C98-9959-E7DE120BEB84}.DVD-5|Any CPU.ActiveCfg = Debug|Any CPU
+		{79E0F57B-4776-4C98-9959-E7DE120BEB84}.DVD-5|Any CPU.Build.0 = Debug|Any CPU
+		{79E0F57B-4776-4C98-9959-E7DE120BEB84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79E0F57B-4776-4C98-9959-E7DE120BEB84}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79E0F57B-4776-4C98-9959-E7DE120BEB84}.SingleImage|Any CPU.ActiveCfg = Release|Any CPU
+		{79E0F57B-4776-4C98-9959-E7DE120BEB84}.SingleImage|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
