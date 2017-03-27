@@ -250,3 +250,19 @@ paket-files/
 # JetBrains Rider
 .idea/
 *.sln.iml
+
+# Angular ES6
+
+.tmp/
+
+coverage/
+
+dist/
+
+node_modules/
+
+.vscode/
+
+npm-debug.log
+
+.DS_Store
