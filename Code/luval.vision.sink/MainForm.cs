@@ -137,11 +137,11 @@ namespace luval.vision.sink
             }
         }
 
-        private IDictionary<string, string> GetData(OcrResult result)
+        private List<MappingResult> GetData(OcrResult result)
         {
             var jsonData = File.ReadAllText("attribute-mapping.json");
             var options = JsonConvert.DeserializeObject<List<AttributeMapping>>(jsonData);
-            var navigator = new Navigator(result.Lines, options);
+            var navigator = new Navigator(result.Info, result.Lines, options);
             return navigator.ExtractAttributes();
         }
     }
