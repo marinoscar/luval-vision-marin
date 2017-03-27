@@ -73,15 +73,9 @@ namespace luval.vision.core
                 X = Convert.ToInt32(vals[0]),
                 Y = Convert.ToInt32(vals[1]),
                 Width = Convert.ToInt32(vals[2]),
-                Height = Convert.ToInt32(vals[3]),
-                RelativeLocation = new OcrLocation()
-                {
-                    X = (Convert.ToInt32(vals[0]) / res.Info.Width),
-                    Y = (Convert.ToInt32(vals[1]) / res.Info.Height),
-                    Width = (Convert.ToInt32(vals[2]) / res.Info.Width),
-                    Height = (Convert.ToInt32(vals[3]) / res.Info.Height)
-                }
+                Height = Convert.ToInt32(vals[3])
             };
+            result.RelativeLocation = OcrRelativeLocation.Load(result, res.Info);
             return result;
         }
 

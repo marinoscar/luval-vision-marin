@@ -14,14 +14,16 @@ namespace luval.vision.core
         private const double ErrorMargin = 0.015d;
         private StringResolverManager _resManager;
 
-        public Navigator(IEnumerable<OcrElement> elements, IEnumerable<AttributeMapping> mappings)
+        public Navigator(ImageInfo info, IEnumerable<OcrElement> elements, IEnumerable<AttributeMapping> mappings)
         {
             Elements = new List<OcrElement>(elements);
             Mappings = new List<AttributeMapping>(mappings);
+            ImageInfo = info;
             _resManager = new StringResolverManager();
         }
         public List<OcrElement> Elements { get; set; }
         public List<AttributeMapping> Mappings { get; set; }
+        public ImageInfo ImageInfo { get; set; }
 
         public IEnumerable<OcrElement> FindByText(string text)
         {
@@ -34,12 +36,11 @@ namespace luval.vision.core
             return Elements.Where(i => Regex.IsMatch(i.Text, pattern)).OrderBy(i => i.Location.Y).ToList();
         }
 
-        public IDictionary<string, string> ExtractAttributes()
+        public List<MappingResult> ExtractAttributes()
         {
-            var result = new Dictionary<string, string>();
+            var result = new List<MappingResult>();
             foreach (var map in Mappings)
             {
-                result[map.AttributeName] = null;
                 foreach (var pattern in map.AnchorPatterns)
                 {
                     if (string.IsNullOrWhiteSpace(pattern)) continue;
@@ -47,12 +48,13 @@ namespace luval.vision.core
                     if (elements == null || !elements.Any()) continue;
                     var sortedElements = map.IsAttributeLast ? elements.Reverse().ToList() : elements.ToList();
                     var found = false;
+                    var isDown = false;
                     foreach (var item in sortedElements)
                     {
-
                         switch (map.ValueDirection)
                         {
                             case Direction.Down:
+                                isDown = true;
                                 found = AcceptSearch(map, result, SearchDown(item, map.ValuePatterns));
                                 break;
                             case Direction.Right:
@@ -60,7 +62,11 @@ namespace luval.vision.core
                                 break;
                             default:
                                 var vals = SearchRight(item, map.ValuePatterns);
-                                if (vals == null || !vals.Any()) vals = SearchDown(item, map.ValuePatterns);
+                                if (vals == null || !vals.Any())
+                                {
+                                    vals = SearchDown(item, map.ValuePatterns);
+                                    isDown = true;
+                                }
                                 found = AcceptSearch(map, result, vals);
                                 break;
                         }
@@ -72,12 +78,42 @@ namespace luval.vision.core
             return result;
         }
 
-        private bool AcceptSearch(AttributeMapping map, IDictionary<string, string> items, IEnumerable<OcrElement> values)
+        private bool AcceptSearch(AttributeMapping map, List<MappingResult> items, OcrElement anchor, IEnumerable<OcrElement> values, bool isDown)
         {
             if (values == null || !values.Any()) return false;
             var val = map.IsValueLast ? values.LastOrDefault() : values.FirstOrDefault();
-            items[map.AttributeName] = val.Text;
+            var loc = GetMapLocation(anchor, val, isDown);
+            var res = new MappingResult()
+            {
+                Map = map,
+                Location = loc.Item1, RelativeLocation = loc.Item2,
+                AnchorElement = anchor, ResultElement = val
+            };
+            items.Add(res);
             return !string.IsNullOrWhiteSpace(val.Text);
+        }
+
+        private Tuple<OcrLocation, OcrRelativeLocation> GetMapLocation(OcrElement anchor, OcrElement value, bool isDown)
+        {
+            
+            var res = new OcrLocation()
+            {
+                X = anchor.Location.X < value.Location.X ? anchor.Location.X : value.Location.X,
+                Y = anchor.Location.Y < value.Location.Y ? anchor.Location.Y : value.Location.Y,
+            };
+            if (isDown)
+            {
+                res.Height = value.Location.YBound - res.Y;
+                res.Width = anchor.Location.Width > value.Location.Width ? anchor.Location.Width : value.Location.Width;
+            }
+            else
+            {
+                var maxX = anchor.Location.XBound > value.Location.XBound ? anchor.Location.XBound : value.Location.XBound;
+                res.Width = maxX - res.X;
+                res.Height = anchor.Location.Height > value.Location.Height ? anchor.Location.Height : value.Location.Height;
+            }
+            var rel = OcrRelativeLocation.Load(res, ImageInfo);
+            return new Tuple<OcrLocation, OcrRelativeLocation>(res, rel);
         }
 
         private IEnumerable<OcrElement> SearchDown(OcrElement reference, IEnumerable<string> valuePatterns)

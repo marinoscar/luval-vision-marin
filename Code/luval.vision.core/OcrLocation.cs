@@ -16,7 +16,7 @@ namespace luval.vision.core
         public int YBound { get { return Y + Height;  } }
         public int XBound { get { return X + Width; } }
 
-        public OcrLocation RelativeLocation { get; set; }
+        public OcrRelativeLocation RelativeLocation { get; set; }
 
         public override string ToString()
         {
