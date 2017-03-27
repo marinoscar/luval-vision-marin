@@ -26,7 +26,6 @@ namespace luval.vision.sink
         }
 
         public PictureBox PictureBox { get { return pictureBox; } }
-        public PropertyGrid PropertyGrid { get { return resultGrid; } }
         public string ResultText
         {
             get { return resultText.Text; }
@@ -81,14 +80,11 @@ namespace luval.vision.sink
             _presenter.DoFullProcess(ocrResult);
             LoadVisionTree(ocrResult);
             LoadText(ocrResult);
-            resultGrid.SelectedObject = new PoData()
+            foreach(var item in items)
             {
-                Total = items["Total"],
-                Date = items["Date"],
-                DueDate = items["DueDate"],
-                InvoiceNumber = items["InvoiceNumber"],
-                PONumber = items["PONumber"]
-            };
+                var listItem = new ListViewItem(new string[] { item.Map.AttributeName, item.ResultElement.Text });
+                listResult.Items.Add(listItem);
+            }
         }
 
         private void LoadText(OcrResult ocrResult)

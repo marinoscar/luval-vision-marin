@@ -44,7 +44,7 @@ namespace luval.vision.sink
 
         public void ProcessImage(OcrResult ocrResult)
         {
-            var bmp = new ImageManager().Process(ocrResult, Presenter.PictureBox.Image);
+            var bmp = new ImageManager().ProcessOcrResult(ocrResult, Presenter.PictureBox.Image);
             Presenter.PictureBox.Image = bmp;
         }
 
@@ -52,7 +52,7 @@ namespace luval.vision.sink
         {
             var provider = new OcrProvider(new MicrosoftOcrEngine(), new MicrosoftVisionLoader());
             var imgManager = new ImageManager();
-            var bmp = imgManager.Process(ocrResult, Presenter.PictureBox.Image);
+            var bmp = imgManager.ProcessOcrResult(ocrResult, Presenter.PictureBox.Image);
             Presenter.PictureBox.Image = bmp;
             Presenter.ResultText = ocrResult.ToString();
         }
@@ -61,7 +61,6 @@ namespace luval.vision.sink
     public interface IMainformPresenter
     {
         PictureBox PictureBox { get; }
-        PropertyGrid PropertyGrid { get; }
         string ResultText { get; set; }
 
     }

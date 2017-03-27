@@ -55,10 +55,10 @@ namespace luval.vision.core
                         {
                             case Direction.Down:
                                 isDown = true;
-                                found = AcceptSearch(map, result, SearchDown(item, map.ValuePatterns));
+                                found = AcceptSearch(map, result, item, SearchDown(item, map.ValuePatterns), isDown);
                                 break;
                             case Direction.Right:
-                                found = AcceptSearch(map, result, SearchRight(item, map.ValuePatterns));
+                                found = AcceptSearch(map, result, item, SearchRight(item, map.ValuePatterns), isDown);
                                 break;
                             default:
                                 var vals = SearchRight(item, map.ValuePatterns);
@@ -67,7 +67,7 @@ namespace luval.vision.core
                                     vals = SearchDown(item, map.ValuePatterns);
                                     isDown = true;
                                 }
-                                found = AcceptSearch(map, result, vals);
+                                found = AcceptSearch(map, result, item, vals, isDown);
                                 break;
                         }
                         if (found) break;

@@ -46,12 +46,15 @@
             this.tabPicture = new System.Windows.Forms.TabPage();
             this.panelPicture = new System.Windows.Forms.Panel();
             this.tabResult = new System.Windows.Forms.TabPage();
-            this.resultGrid = new System.Windows.Forms.PropertyGrid();
             this.tabVision = new System.Windows.Forms.TabControl();
             this.tabText = new System.Windows.Forms.TabPage();
-            this.tabVisionJson = new System.Windows.Forms.TabPage();
             this.resultText = new System.Windows.Forms.TextBox();
+            this.tabVisionJson = new System.Windows.Forms.TabPage();
             this.treeJsonVision = new System.Windows.Forms.TreeView();
+            this.listResult = new System.Windows.Forms.ListView();
+            this.colAttribute = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colValue = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.chkOcrResult = new System.Windows.Forms.CheckBox();
             this.mainMenu.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
@@ -130,6 +133,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.chkOcrResult);
             this.panel1.Controls.Add(this.btnDemo);
             this.panel1.Controls.Add(this.processBtn);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -212,7 +216,7 @@
             // tabResult
             // 
             this.tabResult.Controls.Add(this.tabVision);
-            this.tabResult.Controls.Add(this.resultGrid);
+            this.tabResult.Controls.Add(this.listResult);
             this.tabResult.Location = new System.Drawing.Point(4, 22);
             this.tabResult.Name = "tabResult";
             this.tabResult.Padding = new System.Windows.Forms.Padding(3);
@@ -221,23 +225,15 @@
             this.tabResult.Text = "Results";
             this.tabResult.UseVisualStyleBackColor = true;
             // 
-            // resultGrid
-            // 
-            this.resultGrid.Dock = System.Windows.Forms.DockStyle.Left;
-            this.resultGrid.Location = new System.Drawing.Point(3, 3);
-            this.resultGrid.Name = "resultGrid";
-            this.resultGrid.Size = new System.Drawing.Size(243, 491);
-            this.resultGrid.TabIndex = 0;
-            // 
             // tabVision
             // 
             this.tabVision.Controls.Add(this.tabText);
             this.tabVision.Controls.Add(this.tabVisionJson);
             this.tabVision.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabVision.Location = new System.Drawing.Point(246, 3);
+            this.tabVision.Location = new System.Drawing.Point(288, 3);
             this.tabVision.Name = "tabVision";
             this.tabVision.SelectedIndex = 0;
-            this.tabVision.Size = new System.Drawing.Size(572, 491);
+            this.tabVision.Size = new System.Drawing.Size(530, 491);
             this.tabVision.TabIndex = 5;
             // 
             // tabText
@@ -246,10 +242,20 @@
             this.tabText.Location = new System.Drawing.Point(4, 22);
             this.tabText.Name = "tabText";
             this.tabText.Padding = new System.Windows.Forms.Padding(3);
-            this.tabText.Size = new System.Drawing.Size(564, 465);
+            this.tabText.Size = new System.Drawing.Size(522, 465);
             this.tabText.TabIndex = 0;
             this.tabText.Text = "Text";
             this.tabText.UseVisualStyleBackColor = true;
+            // 
+            // resultText
+            // 
+            this.resultText.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.resultText.Font = new System.Drawing.Font("Courier New", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.resultText.Location = new System.Drawing.Point(3, 3);
+            this.resultText.Multiline = true;
+            this.resultText.Name = "resultText";
+            this.resultText.Size = new System.Drawing.Size(516, 459);
+            this.resultText.TabIndex = 5;
             // 
             // tabVisionJson
             // 
@@ -262,16 +268,6 @@
             this.tabVisionJson.Text = "Vision";
             this.tabVisionJson.UseVisualStyleBackColor = true;
             // 
-            // resultText
-            // 
-            this.resultText.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.resultText.Font = new System.Drawing.Font("Courier New", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.resultText.Location = new System.Drawing.Point(3, 3);
-            this.resultText.Multiline = true;
-            this.resultText.Name = "resultText";
-            this.resultText.Size = new System.Drawing.Size(558, 459);
-            this.resultText.TabIndex = 5;
-            // 
             // treeJsonVision
             // 
             this.treeJsonVision.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -279,6 +275,37 @@
             this.treeJsonVision.Name = "treeJsonVision";
             this.treeJsonVision.Size = new System.Drawing.Size(558, 459);
             this.treeJsonVision.TabIndex = 0;
+            // 
+            // listResult
+            // 
+            this.listResult.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.colAttribute,
+            this.colValue});
+            this.listResult.Dock = System.Windows.Forms.DockStyle.Left;
+            this.listResult.Location = new System.Drawing.Point(3, 3);
+            this.listResult.Name = "listResult";
+            this.listResult.Size = new System.Drawing.Size(285, 491);
+            this.listResult.TabIndex = 6;
+            this.listResult.UseCompatibleStateImageBehavior = false;
+            this.listResult.View = System.Windows.Forms.View.Details;
+            // 
+            // colAttribute
+            // 
+            this.colAttribute.Text = "Attribute";
+            // 
+            // colValue
+            // 
+            this.colValue.Text = "Value";
+            // 
+            // chkOcrResult
+            // 
+            this.chkOcrResult.AutoSize = true;
+            this.chkOcrResult.Location = new System.Drawing.Point(12, 16);
+            this.chkOcrResult.Name = "chkOcrResult";
+            this.chkOcrResult.Size = new System.Drawing.Size(112, 17);
+            this.chkOcrResult.TabIndex = 2;
+            this.chkOcrResult.Text = "Show OCR Result";
+            this.chkOcrResult.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -295,6 +322,7 @@
             this.mainMenu.ResumeLayout(false);
             this.mainMenu.PerformLayout();
             this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             this.mainTab.ResumeLayout(false);
             this.tabPicture.ResumeLayout(false);
@@ -328,13 +356,16 @@
         private System.Windows.Forms.TabPage tabPicture;
         private System.Windows.Forms.Panel panelPicture;
         private System.Windows.Forms.TabPage tabResult;
-        private System.Windows.Forms.PropertyGrid resultGrid;
         private System.Windows.Forms.Button btnDemo;
         private System.Windows.Forms.TabControl tabVision;
         private System.Windows.Forms.TabPage tabText;
         private System.Windows.Forms.TextBox resultText;
         private System.Windows.Forms.TabPage tabVisionJson;
         private System.Windows.Forms.TreeView treeJsonVision;
+        private System.Windows.Forms.ListView listResult;
+        private System.Windows.Forms.ColumnHeader colAttribute;
+        private System.Windows.Forms.ColumnHeader colValue;
+        private System.Windows.Forms.CheckBox chkOcrResult;
     }
 }
 
