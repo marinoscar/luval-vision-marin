@@ -19,43 +19,6 @@ namespace luval.vision.sink
         }
 
         public IMainformPresenter Presenter { get; private set; }
-
-        public void DoLoadImage(string fileName)
-        {
-            if (Presenter.PictureBox.Image != null) Presenter.PictureBox.Image.Dispose();
-            Presenter.PictureBox.Image = null;
-            var img = default(Image);
-            using (var stream = new StreamReader(fileName))
-            {
-                img = Image.FromStream(stream.BaseStream);
-                stream.Close();
-            }
-            Presenter.PictureBox.Image = img;
-            Presenter.PictureBox.Refresh();
-        }
-
-        public OcrResult ProcessFromFile(string fileName)
-        {
-            var provider = new OcrProvider(new MicrosoftOcrEngine(), new MicrosoftVisionLoader());
-            var result = provider.DoOcr(fileName);
-            ProcessImage(result);
-            return result;
-        }
-
-        public void ProcessImage(OcrResult ocrResult)
-        {
-            var bmp = new ImageManager().ProcessOcrResult(ocrResult, Presenter.PictureBox.Image);
-            Presenter.PictureBox.Image = bmp;
-        }
-
-        public void DoFullProcess(OcrResult ocrResult)
-        {
-            var provider = new OcrProvider(new MicrosoftOcrEngine(), new MicrosoftVisionLoader());
-            var imgManager = new ImageManager();
-            var bmp = imgManager.ProcessOcrResult(ocrResult, Presenter.PictureBox.Image);
-            Presenter.PictureBox.Image = bmp;
-            Presenter.ResultText = ocrResult.ToString();
-        }
     }
 
     public interface IMainformPresenter

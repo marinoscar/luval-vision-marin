@@ -306,6 +306,7 @@
             this.chkOcrResult.TabIndex = 2;
             this.chkOcrResult.Text = "Show OCR Result";
             this.chkOcrResult.UseVisualStyleBackColor = true;
+            this.chkOcrResult.CheckedChanged += new System.EventHandler(this.chkOcrResult_CheckedChanged);
             // 
             // MainForm
             // 

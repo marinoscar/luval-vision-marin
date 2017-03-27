@@ -18,6 +18,9 @@ namespace luval.vision.sink
 
         private string _fileName;
         private MainformPresenter _presenter;
+        private ImageManager _imageManager;
+        private OcrResult _result;
+        private Image _resultImg;
 
         public MainForm()
         {
@@ -43,7 +46,30 @@ namespace luval.vision.sink
             };
             if (dialog.ShowDialog() == DialogResult.Cancel) return;
             _fileName = dialog.FileName;
-            _presenter.DoLoadImage(_fileName);
+            DoLoadImage(_fileName);
+        }
+
+        private void DoLoadImage(string fileName)
+        {
+            if (PictureBox.Image != null) PictureBox.Image.Dispose();
+            PictureBox.Image = null;
+            var img = default(Image);
+            using (var stream = new StreamReader(fileName))
+            {
+                img = Image.FromStream(stream.BaseStream);
+                stream.Close();
+            }
+            _imageManager = new ImageManager(img);
+            _result = null;
+            PictureBox.Image = img;
+            PictureBox.Refresh();
+        }
+
+        public OcrResult ProcessFromFile(string fileName)
+        {
+            var provider = new OcrProvider(new MicrosoftOcrEngine(), new MicrosoftVisionLoader());
+            var result = provider.DoOcr(fileName);
+            return result;
         }
 
         private void exitMenu_Click(object sender, EventArgs e)
@@ -59,7 +85,8 @@ namespace luval.vision.sink
                 return;
             }
             var provider = new OcrProvider(new MicrosoftOcrEngine(), new MicrosoftVisionLoader());
-            var result = _presenter.ProcessFromFile(_fileName);
+            var result = ProcessFromFile(_fileName);
+            _result = result;
             DoProcess(result);
         }
 
@@ -67,7 +94,7 @@ namespace luval.vision.sink
 
         private void btnDemo_Click(object sender, EventArgs e)
         {
-            _presenter.DoLoadImage(@"Demo/sample-receipt.jpg");
+            DoLoadImage(@"Demo/sample-receipt.jpg");
             var response = File.ReadAllText(@"Demo/sample-response.json");
             var ocrResult = JsonConvert.DeserializeObject<OcrResult>(response);
             DoProcess(ocrResult);
@@ -77,10 +104,11 @@ namespace luval.vision.sink
         private void DoProcess(OcrResult ocrResult)
         {
             var items = GetData(ocrResult);
-            _presenter.DoFullProcess(ocrResult);
             LoadVisionTree(ocrResult);
             LoadText(ocrResult);
-            foreach(var item in items)
+            _resultImg = _imageManager.ProcessParseResult(items);
+            PictureBox.Image = _resultImg;
+            foreach (var item in items)
             {
                 var listItem = new ListViewItem(new string[] { item.Map.AttributeName, item.ResultElement.Text });
                 listResult.Items.Add(listItem);
@@ -91,7 +119,7 @@ namespace luval.vision.sink
         {
             resultText.Clear();
             var sb = new StringBuilder();
-            foreach(var line in ocrResult.Lines)
+            foreach (var line in ocrResult.Lines)
             {
                 sb.AppendLine(line.Text);
             }
@@ -121,7 +149,7 @@ namespace luval.vision.sink
                     lineNode.Nodes.Add(line.Text);
                     lineNode.Nodes.Add(wordNodeRoot);
                     regionNode.Nodes.Add(lineNode);
-                    foreach(var word in line.Words)
+                    foreach (var word in line.Words)
                     {
                         var wordNode = new TreeNode(word.Text);
                         wordNode.Nodes.Add(word.Location.ToString());
@@ -139,6 +167,18 @@ namespace luval.vision.sink
             var options = JsonConvert.DeserializeObject<List<AttributeMapping>>(jsonData);
             var navigator = new Navigator(result.Info, result.Lines, options);
             return navigator.ExtractAttributes();
+        }
+
+        private void chkOcrResult_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkOcrResult.Checked && _result != null)
+            {
+                PictureBox.Image = _imageManager.ProcessOcrResult(_result);
+            }
+            else if (_resultImg != null)
+            {
+                PictureBox.Image = _resultImg;
+            }
         }
     }
 }

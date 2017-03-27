@@ -10,9 +10,16 @@ namespace luval.vision.core
 {
     public class ImageManager
     {
-        public Image ProcessOcrResult(OcrResult ocr, Image img)
+        public ImageManager(Image source)
         {
-            var bmp = new Bitmap(img);
+            Source = source;
+        }
+
+        public Image Source { get; private set; }
+
+        public Image ProcessOcrResult(OcrResult ocr)
+        {
+            var bmp = new Bitmap(Source);
             var redPen = new Pen(Color.Red, 2);
             var bluePen = new Pen(Color.Blue, 3);
             var greenPen = new Pen(Color.Green, 1);
@@ -27,6 +34,20 @@ namespace luval.vision.core
                         var linNum = line.Location;
                         graphic.DrawRectangle(redPen, linNum.X, linNum.Y, linNum.Width, linNum.Height);
                     }
+                }
+            }
+            return bmp;
+        }
+
+        public Image ProcessParseResult(List<MappingResult> results)
+        {
+            var bmp = new Bitmap(Source);
+            var bluePen = new Pen(Color.Blue, 3);
+            using (var graphic = Graphics.FromImage(bmp))
+            {
+                foreach(var map in results)
+                {
+                    graphic.DrawRectangle(bluePen, new Rectangle(map.Location.X, map.Location.Y, map.Location.Width, map.Location.Height));
                 }
             }
             return bmp;
