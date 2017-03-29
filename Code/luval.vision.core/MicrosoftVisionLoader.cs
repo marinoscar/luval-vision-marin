@@ -32,7 +32,7 @@ namespace luval.vision.core
                 var region = new OcrRegion()
                 {
                     Id = regionId,
-                    Code = regionId.ToString().PadLeft(3, '0'),
+                    Code = OcrLoaderHelper.GetRegionCode(regionId),
                     Location = ParseBox(jRegion, result)
                 };
                 var lineId = 1;
@@ -41,7 +41,7 @@ namespace luval.vision.core
                     var line = new OcrLine()
                     {
                         Id = lineId,
-                        Code = string.Format("{0}.{1}", region.Code, lineId.ToString().PadLeft(4, '0')),
+                        Code = OcrLoaderHelper.GetLineCode(lineId, region),
                         ParentRegion = region,
                         Location = ParseBox(jLine, result),
                     };
@@ -49,7 +49,7 @@ namespace luval.vision.core
                     foreach (var jWord in jLine["words"])
                     {
                         var word = ParseWord(jWord, line, result);
-                        word.Code = string.Format("{0}.{1}", line.Code, wordId.ToString().PadLeft(5, '0'));
+                        word.Code = OcrLoaderHelper.GetWordCode(wordId, line);
                         line.Words.Add(word);
                         EntityExtractor.ClassifyWord(word);
                         result.Words.Add(word);
