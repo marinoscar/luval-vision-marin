@@ -1,14 +1,14 @@
 import angular from 'angular';
 
-import {hello} from './app/hello';
+import receipts from './app/receipts/receipts';
 import 'angular-ui-router';
 import routesConfig from './routes';
 
 import './index.scss';
 
-export const app = 'app';
-
 angular
-  .module(app, ['ui.router'])
-  .config(routesConfig)
-  .component('app', hello);
+  .module('luval-vision', [
+    'ui.router',
+    receipts
+  ])
+  .config(routesConfig);

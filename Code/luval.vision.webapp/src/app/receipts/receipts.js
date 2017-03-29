@@ -1,12 +1,11 @@
-import ReceiptController from './receipt.controller';
-import ReceiptService from './receipt.service';
-import routes from './receipt.routes';
+import ReceiptsController from './receipts.controller';
+import ReceiptsService from './receipts.service';
+import routes from './receipts.routes';
 
 export default
   angular
     .module('luval-vision.receipt', [])
     .config(routes)
-    .controller('ReceiptController', ReceiptController)
-    .service('ReceiptService', ReceiptService)
-    .service('ReceiptService', ReceiptService)
+    .controller('ReceiptsController', ReceiptsController)
+    .service('ReceiptsService', ReceiptsService)
     .name;
