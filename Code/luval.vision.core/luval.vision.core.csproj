@@ -95,12 +95,14 @@
     <Compile Include="Enum.cs" />
     <Compile Include="Extractor.cs" />
     <Compile Include="GoogleOcrEngine.cs" />
+    <Compile Include="GoogleVisionLoader.cs" />
     <Compile Include="ImageInfo.cs" />
     <Compile Include="ImageManager.cs" />
     <Compile Include="InvoiceData.cs" />
     <Compile Include="IOcrEngine.cs" />
     <Compile Include="IOcrProvider.cs" />
     <Compile Include="MappingResult.cs" />
+    <Compile Include="OcrLoaderCodingHelper.cs" />
     <Compile Include="OcrRelativeLocation.cs" />
     <Compile Include="Pdf2Img.cs" />
     <Compile Include="resolvers\CodeResolver.cs" />
