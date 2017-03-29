@@ -12,22 +12,40 @@ namespace luval.vision.core
         public OcrResult DoParse(string jsonResult, ImageInfo info)
         {
             var json = JObject.Parse(jsonResult);
-            var result = new OcrResult();
+            var lang = default(string);
+            var result = new OcrResult() { Info = info, TextAngle = 0};
             var mainRegion = new OcrRegion()
             {
-                Id = 1, Code = OcrLoaderHelper.GetRegionCode(1)
+                Id = 1,
+                Code = OcrLoaderHelper.GetRegionCode(1)
             };
-            var annotations = json["responses"]["textAnnotations"].Value<JArray>();
+            var annotations = json["responses"].Value<JArray>()[0]["textAnnotations"].Value<JArray>();
             var lineId = 1;
             foreach (var ann in annotations)
             {
-                var line = new OcrLine()
+                if (string.IsNullOrWhiteSpace(lang)) lang = ann["locale"].Value<string>();
+                if (lineId != 1)
                 {
-                    Id = lineId, Code = OcrLoaderHelper.GetLineCode(lineId, mainRegion),
-                    Location = GetLocation(ann, info), ParentRegion = mainRegion, Text = ann["description"].Value<string>()
-                };
+                    var line = new OcrLine()
+                    {
+                        Id = lineId,
+                        Code = OcrLoaderHelper.GetLineCode(lineId, mainRegion),
+                        Location = GetLocation(ann, info),
+                        ParentRegion = mainRegion,
+                        Text = ann["description"].Value<string>()
+                    };
+                    mainRegion.Lines.Add(line);
+                    result.Lines.Add(line);
+                }
                 lineId++;
             }
+            mainRegion.Location = new OcrLocation();
+            mainRegion.Location.X = mainRegion.Lines.Min(i => i.Location.X);
+            mainRegion.Location.Width = mainRegion.Lines.Max(i => i.Location.XBound) - mainRegion.Location.X;
+            mainRegion.Location.Y = mainRegion.Lines.Min(i => i.Location.Y);
+            mainRegion.Location.Height = mainRegion.Lines.Max(i => i.Location.YBound) - mainRegion.Location.Y;
+            mainRegion.Location.RelativeLocation = OcrRelativeLocation.Load(mainRegion.Location, info);
+            result.Regions.Add(mainRegion);
             return result;
         }
 
