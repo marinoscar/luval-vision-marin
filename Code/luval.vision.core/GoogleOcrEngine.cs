@@ -18,8 +18,9 @@ namespace luval.vision.core
             var request = new RestRequest(Method.POST);
             var payload = JsonConvert.SerializeObject(new GoogleVisionPayload(image));
             request.AddHeader("Content-type", "application/json");
+            request.AddHeader("Content-Length", payload.Length.ToString());
             request.RequestFormat = DataFormat.Json;
-            request.AddParameter("application/json", new GoogleVisionPayload(image), ParameterType.RequestBody);
+            request.AddParameter("application/json; charset=utf-8", payload, ParameterType.RequestBody);
             return client.Execute(request);
         }
     }
@@ -44,7 +45,7 @@ namespace luval.vision.core
             Features = new List<GoogleRequestFeature>() { new GoogleRequestFeature() };
         }
 
-        [JsonProperty(PropertyName = "images")]
+        [JsonProperty(PropertyName = "image")]
         public GoogleRequestImage Images { get; set; }
         [JsonProperty(PropertyName = "features")]
         public List<GoogleRequestFeature> Features { get; set; }
