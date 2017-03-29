@@ -1,4 +1,4 @@
-class ReceiptService {
+class ReceiptsService {
   constructor(RequestService) {
     this.http = RequestService;
   }
@@ -12,4 +12,4 @@ class ReceiptService {
   }
 }
 
-export default ReceiptService;
+export default ReceiptsService;
