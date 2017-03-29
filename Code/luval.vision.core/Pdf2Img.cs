@@ -61,6 +61,15 @@ namespace luval.vision.core
             File.WriteAllBytes(imageFileName, memStream.ToArray());
         }
 
+        public static byte[] ConvertToImage(string pdfFileName)
+        {
+            var imgs = Convert(pdfFileName);
+            var img = MergeImages(imgs);
+            var stream = new MemoryStream();
+            img.Save(stream, ImageFormat.Jpeg);
+            return stream.ToArray();
+        }
+
         private static Image MergeImages(IEnumerable<Image> images)
         {
             var width = images.Max(i => i.Width);
