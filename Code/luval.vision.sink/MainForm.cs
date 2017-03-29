@@ -108,6 +108,7 @@ namespace luval.vision.sink
             LoadText(ocrResult);
             _resultImg = _imageManager.ProcessParseResult(items);
             PictureBox.Image = _resultImg;
+            listResult.Items.Clear();
             foreach (var item in items)
             {
                 var listItem = new ListViewItem(new string[] { item.Map.AttributeName, item.ResultElement.Text });
