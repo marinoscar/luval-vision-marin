@@ -1,7 +1,8 @@
 {
   "dependencies": {
     "angular": "^1.6.2",
-    "angular-ui-router": "1.0.0-beta.3"
+    "angular-ui-router": "1.0.0-beta.3",
+    "bootstrap": "^3.3.7"
   },
   "devDependencies": {
     "@types/angular": "^1.6.6",
