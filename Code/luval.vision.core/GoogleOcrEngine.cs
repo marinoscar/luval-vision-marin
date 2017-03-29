@@ -16,12 +16,24 @@ namespace luval.vision.core
             var apiKey = ConfigurationManager.AppSettings["google.vision.key"];
             var client = new RestClient(string.Format("https://vision.googleapis.com/v1/images:annotate?key={0}", apiKey));
             var request = new RestRequest(Method.POST);
+            var payload = JsonConvert.SerializeObject(new GoogleVisionPayload(image));
+            request.AddHeader("Content-type", "application/json");
             request.RequestFormat = DataFormat.Json;
-            //request.AddHeader("Content-Type", "multipart/form-data");
-
-            request.AddFileBytes("content", image, name);
+            request.AddParameter("application/json", new GoogleVisionPayload(image), ParameterType.RequestBody);
             return client.Execute(request);
         }
+    }
+
+    public class GoogleVisionPayload
+    {
+        public GoogleVisionPayload(byte[] image)
+        {
+            Requests = new List<GoogleRequest>()
+            { new GoogleRequest() {  Images = new GoogleRequestImage(image) } };
+        }
+
+        [JsonProperty(PropertyName = "requests")]
+        public List<GoogleRequest> Requests { get; set; }
     }
 
     public class GoogleRequest
@@ -40,8 +52,23 @@ namespace luval.vision.core
 
     public class GoogleRequestImage
     {
+
+        public GoogleRequestImage()
+        {
+
+        }
+        public GoogleRequestImage(byte[] data)
+        {
+            Load(data);
+        }
+
         [JsonProperty(PropertyName = "content")]
         public string Content { get; set; }
+
+        public void Load(byte[] data)
+        {
+            Content = Convert.ToBase64String(data);
+        }
     }
 
     public class GoogleRequestFeature
