@@ -67,7 +67,7 @@ namespace luval.vision.sink
 
         public OcrResult ProcessFromFile(string fileName)
         {
-            var provider = new OcrProvider(new GoogleOcrEngine(), new GoogleVisionLoader());
+            var provider = GetProvider(false);
             var result = provider.DoOcr(fileName);
             return result;
         }
@@ -87,6 +87,11 @@ namespace luval.vision.sink
             var result = ProcessFromFile(_fileName);
             _result = result;
             DoProcess(result);
+        }
+
+        private OcrProvider GetProvider(bool ms)
+        {
+            return !ms ? new OcrProvider(new GoogleOcrEngine(), new GoogleVisionLoader()) : new OcrProvider(new MicrosoftOcrEngine(), new MicrosoftVisionLoader());
         }
 
 

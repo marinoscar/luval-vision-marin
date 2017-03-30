@@ -8,6 +8,11 @@ namespace luval.vision.core
 {
     public class OcrElement
     {
+
+        public OcrElement()
+        {
+            Location = new OcrLocation() { RelativeLocation = new OcrRelativeLocation() };
+        }
         public int Id { get; set; }
         public string Code { get; set; }
         public virtual OcrLocation Location { get; set; }

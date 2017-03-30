@@ -13,6 +13,7 @@ namespace luval.vision.core
         public OcrLine()
         {
             Words = new List<OcrWord>();
+            ParentRegion = new OcrRegion();
         }
 
         public OcrRegion ParentRegion { get; set; }
