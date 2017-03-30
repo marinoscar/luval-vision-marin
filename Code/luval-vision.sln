@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "luval.vision.api", "luval.v
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "luval.vision.bll", "luval.vision.bll\luval.vision.bll.csproj", "{79E0F57B-4776-4C98-9959-E7DE120BEB84}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "luval.vision.entity", "luval.vision.entity\luval.vision.entity.csproj", "{1C5044F1-FB0A-4D56-899B-8B80F24FA6B7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		CD_ROM|Any CPU = CD_ROM|Any CPU
@@ -72,6 +74,16 @@ Global
 		{79E0F57B-4776-4C98-9959-E7DE120BEB84}.Release|Any CPU.Build.0 = Release|Any CPU
 		{79E0F57B-4776-4C98-9959-E7DE120BEB84}.SingleImage|Any CPU.ActiveCfg = Release|Any CPU
 		{79E0F57B-4776-4C98-9959-E7DE120BEB84}.SingleImage|Any CPU.Build.0 = Release|Any CPU
+		{1C5044F1-FB0A-4D56-899B-8B80F24FA6B7}.CD_ROM|Any CPU.ActiveCfg = Release|Any CPU
+		{1C5044F1-FB0A-4D56-899B-8B80F24FA6B7}.CD_ROM|Any CPU.Build.0 = Release|Any CPU
+		{1C5044F1-FB0A-4D56-899B-8B80F24FA6B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C5044F1-FB0A-4D56-899B-8B80F24FA6B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C5044F1-FB0A-4D56-899B-8B80F24FA6B7}.DVD-5|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C5044F1-FB0A-4D56-899B-8B80F24FA6B7}.DVD-5|Any CPU.Build.0 = Debug|Any CPU
+		{1C5044F1-FB0A-4D56-899B-8B80F24FA6B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C5044F1-FB0A-4D56-899B-8B80F24FA6B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C5044F1-FB0A-4D56-899B-8B80F24FA6B7}.SingleImage|Any CPU.ActiveCfg = Release|Any CPU
+		{1C5044F1-FB0A-4D56-899B-8B80F24FA6B7}.SingleImage|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
