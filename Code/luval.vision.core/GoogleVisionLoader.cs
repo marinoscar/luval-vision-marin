@@ -58,11 +58,11 @@ namespace luval.vision.core
             var lineId = 1;
             var lines = new List<OcrLine>();
             var horLines = Navigator.GetWordsHorizontallyAligned(words, HorizontalLineMargin);
-            foreach(var horLine in horLines)
+            foreach (var horLine in horLines)
             {
                 horLine.ParentRegion = region;
                 var newLines = ProcessLines(horLine, lineId);
-                foreach(var line in newLines)
+                foreach (var line in newLines)
                 {
                     line.ParentRegion = region;
                     line.Location.X = line.Words.Min(i => i.Location.X);
@@ -83,43 +83,42 @@ namespace luval.vision.core
             var lineId = id;
             var lines = new List<OcrLine>();
             var words = new List<OcrWord>(line.Words);
-            var newLine = default(OcrLine);
+            var currentLine = default(OcrLine);
+            var currentWord = default(OcrWord);
             while (words.Count > 0)
             {
-                if (newLine == null) newLine = GetNewLine(line.ParentRegion, lineId);
-                var word = words[0];
-                var charSize = (word.Location.Width / word.Text.ToCharArray().Count()) * 3;
-                var nextWord = words.Count > 1 ? words[1] : default(OcrWord);
-                if(nextWord != null)
+                if (currentLine == null)
                 {
-                    var distance = nextWord.Location.X - word.Location.XBound;
-                    if (distance < charSize)
-                    {
-                        newLine.Words.AddRange(new OcrWord[] { word, nextWord });
-                        words.Remove(word);
-                        words.Remove(nextWord);
-                    }
-                    else
-                    {
-                        newLine.Words.Add(word);
-                        words.Remove(word);
-                        lines.Add(newLine);
-                        lineId++;
-                        newLine = GetNewLine(line.ParentRegion, lineId);
-                        newLine.Words.Add(nextWord);
-                        words.Remove(nextWord);
-
-                    }
+                    currentLine = GetNewLine(line.ParentRegion, lineId);
+                    lines.Add(currentLine);
+                }
+                if(currentWord == null)
+                {
+                    currentWord = words[0];
+                }
+                words.Remove(currentWord);
+                if(!currentLine.Words.Contains(currentWord)) currentLine.Words.Add(currentWord);
+                if (words.Count <= 0)
+                {
+                    continue;
+                }
+                var nextWord = words[0];
+                var spaceSize = (currentWord.Location.Width / currentWord.Text.Length) * 1.5;
+                var distance = nextWord.Location.X - currentWord.Location.XBound;
+                if (distance > spaceSize)
+                {
+                    lineId++;
+                    currentLine = GetNewLine(line.ParentRegion, lineId);
+                    currentLine.Words.Add(nextWord);
+                    lines.Add(currentLine);
                 }
                 else
                 {
-                    lineId++;
-                    newLine.Words.Add(word);
-                    words.Remove(word);
-                    lines.Add(newLine);
+                    currentLine.Words.Add(nextWord);
                 }
+                words.Remove(nextWord);
+                currentWord = nextWord;
             }
-            if (!lines.Contains(newLine)) lines.Add(newLine);
             return lines;
         }
 
