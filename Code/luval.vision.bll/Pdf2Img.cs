@@ -8,11 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace luval.vision.core
+namespace luval.vision.bll
 {
-    /// <summary>
-    /// 
-    /// </summary>
     public class Pdf2Img
     {
         public static IEnumerable<Image> Convert(byte [] data)
@@ -62,15 +59,6 @@ namespace luval.vision.core
             var memStream = new MemoryStream();
             img.Save(memStream, ImageFormat.Jpeg);
             File.WriteAllBytes(imageFileName, memStream.ToArray());
-        }
-
-        public static byte[] ConverToSingleImage(byte[] pdfData)
-        {
-            var images = Convert(pdfData);
-            var img = MergeImages(images);
-            var memStream = new MemoryStream();
-            img.Save(memStream, ImageFormat.Jpeg);
-            return memStream.ToArray();
         }
 
         public static byte[] ConvertToImage(string pdfFileName)
