@@ -1,14 +1,18 @@
 class LoginController {
-  constructor(LoginService, AuthService, $state, ngNotify, $log, $location) {
+  constructor($log, $state, loginService) {
     this.$state = $state;
-    this.LoginService = LoginService;
-    this.auth = AuthService;
-    this.notify = ngNotify;
     this.log = $log;
-    this.location = $location;
+    this.loginService = loginService;
   }
 
-  authenticateUser() {
-    return null;
+  onSignIn() {
+    this.loginService.callGoogleSignIn()
+      .then(user => {
+        this.log.info(user);
+      }, function (err) {
+        this.log.info(err);
+      });
   }
 }
+
+export default LoginController;
