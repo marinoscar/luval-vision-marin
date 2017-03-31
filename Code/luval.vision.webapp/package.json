@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@types/gapi.auth2": "0.0.35",
     "angular": "^1.6.2",
     "angular-ui-router": "1.0.0-beta.3",
     "bootstrap": "^3.3.7"
@@ -63,10 +64,12 @@
   },
   "scripts": {
     "build": "gulp",
+    "watch": "gulp watch",
     "serve": "gulp serve",
     "serve:dist": "gulp serve:dist",
     "test": "gulp test",
-    "test:auto": "gulp test:auto"
+    "test:auto": "gulp test:auto",
+    "sass": "gulp sass"
   },
   "eslintConfig": {
     "globals": {
