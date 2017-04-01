@@ -14,10 +14,11 @@ namespace luval.vision.core.resolvers
         {
             _resolvers = new Dictionary<Type, IStringResolver>()
             {
-                {typeof(NumberResolver), new NumberResolver()},
+                {typeof(AmountResolver), new AmountResolver()},
                 {typeof(DateResolver), new DateResolver()},
                 {typeof(WordResolver), new WordResolver()},
-                {typeof(CodeResolver), new CodeResolver()}
+                {typeof(CodeResolver), new CodeResolver()},
+                {typeof(NumberResolver), new NumberResolver()}
 
             };
         }

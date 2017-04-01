@@ -132,7 +132,9 @@
     <Compile Include="OcrResult.cs" />
     <Compile Include="OcrWord.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="resolvers\AmountResolver.cs" />
     <Compile Include="resolvers\NumberResolver.cs" />
+    <Compile Include="resolvers\RegexHelper.cs" />
     <Compile Include="resolvers\RegexResolver.cs" />
     <Compile Include="resolvers\ResolverMatch.cs" />
     <Compile Include="resolvers\StringResolverManager.cs" />

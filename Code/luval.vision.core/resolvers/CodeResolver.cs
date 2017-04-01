@@ -9,7 +9,6 @@ namespace luval.vision.core.resolvers
 {
     public class CodeResolver : IStringResolver
     {
-        private const string _exp = @"(\b[^\s]+\b)";
 
         public CodeResolver()
         {
@@ -38,7 +37,7 @@ namespace luval.vision.core.resolvers
 
         private List<Match> GetWords(string text)
         {
-            return Regex.Matches(text, _exp).Cast<Match>().Where(i => i.Success).ToList();
+            return RegexHelper.GetWords(text).ToList();
         }
 
 
