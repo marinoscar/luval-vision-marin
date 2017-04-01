@@ -17,10 +17,9 @@ namespace luval.vision.core
         public double HorizontalResolution { get; set; }
         public double VerticalResolution { get; set; }
 
-        public static ImageInfo Load(string fileName)
+        public static ImageInfo Load(Image img, string fileName)
         {
             var fileInfo = new FileInfo(fileName);
-            var img = Image.FromFile(fileName);
             return new ImageInfo()
             {
                 Height = img.Height,

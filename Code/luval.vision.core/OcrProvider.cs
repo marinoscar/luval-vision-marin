@@ -30,7 +30,14 @@ namespace luval.vision.core
         public OcrResult DoOcr(string fileName)
         {
             var bytes = GetImageBytes(fileName);
-            var imgInfo = ImageInfo.Load(fileName);
+            return DoOcr(bytes, fileName);
+        }
+
+        public OcrResult DoOcr(byte[] bytes, string fileName)
+        {
+            var stream = new MemoryStream(bytes);
+            var img = Image.FromStream(stream);
+            var imgInfo = ImageInfo.Load(img, fileName);
             var response = Engine.Execute(fileName, bytes);
             if (response.StatusCode != HttpStatusCode.OK)
                 throw new InvalidOperationException("Unable to process request");
