@@ -2,25 +2,60 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace luval.vision.core.resolvers
 {
-    public class CodeResolver : RegexResolver
+    public class CodeResolver : IStringResolver
     {
-        private const string _exp = @"[0-9a-zA-Z\-_]*";
-        private const string _nums = "0123456789";
+        private const string _exp = @"(\b[^\s]+\b)";
 
-        public CodeResolver() : base(_exp)
+        public CodeResolver()
         {
 
         }
 
-        public override string Code { get { return "code"; } }
+        public string Code { get { return "code"; } }
 
-        public override bool IsMatch(string text)
+        public string GetValue(string text)
         {
-            return base.IsMatch(text) && text.Any(i => char.IsDigit(i));
+            var res = GetValues(text).FirstOrDefault();
+            return res != null ? res.Text : default(string);
+        }
+
+        public IEnumerable<ResolverMatch> GetValues(string text)
+        {
+            return GetWords(text).Where(i => IsValidWord(i.Value)).Select(i => ResolverMatch.Load(i));
+        }
+
+        public bool IsMatch(string text)
+        {
+            var words = GetWords(text).Select(i => i.Value).Where(IsValidWord);
+            return words.Any();
+        }
+
+
+        private List<Match> GetWords(string text)
+        {
+            return Regex.Matches(text, _exp).Cast<Match>().Where(i => i.Success).ToList();
+        }
+
+
+        private bool IsValidWord(string text)
+        {
+            var res = text.All(IsValidChar) && text.Any(char.IsNumber) && text.Count(IsCodeChar) <= 2;
+            return res;
+        }
+
+        private bool IsValidChar(char c)
+        {
+            return char.IsNumber(c) || char.IsLetter(c) || IsCodeChar(c);
+        }
+
+        private bool IsCodeChar(char c)
+        {
+            return "-_.".ToCharArray().Contains(c);
         }
     }
 }

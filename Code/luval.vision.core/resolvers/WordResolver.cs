@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace luval.vision.core.resolvers
@@ -14,6 +15,20 @@ namespace luval.vision.core.resolvers
         public string GetValue(string text)
         {
             return IsMatch(text) ? text : string.Empty;
+        }
+
+        public IEnumerable<ResolverMatch> GetValues(string text)
+        {
+            var res = new List<ResolverMatch>();
+            var val = GetValue(text);
+            if (string.IsNullOrWhiteSpace(val)) return res;
+            res.Add(new ResolverMatch()
+            {
+                Text = val,
+                Index = 0,
+                Length = val.Length
+            });
+            return res;
         }
 
         public bool IsMatch(string text)

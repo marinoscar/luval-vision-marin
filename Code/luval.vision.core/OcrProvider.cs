@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using luval.vision.core.resolvers;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RestSharp;
 using System;
@@ -18,10 +19,17 @@ namespace luval.vision.core
     public class OcrProvider
     {
 
+        private IStringResolver _dateResolver;
+        private IStringResolver _codeResolver;
+
+
         public OcrProvider(IOcrEngine engine, IVisionResultParser loader)
         {
             Engine = engine;
             Loader = loader;
+            var res = new StringResolverManager();
+            _dateResolver = res.Get<DateResolver>();
+            _codeResolver = res.Get<CodeResolver>();
         }
 
         public IOcrEngine Engine { get; private set; }
@@ -44,12 +52,22 @@ namespace luval.vision.core
             var result = Loader.DoParse(response.Content, imgInfo);
             result.HorizontalLines = Navigator.GetWordsHorizontallyAligned(result.Words, 0.025f).ToList();
             result.HorizontalLines.ForEach(i => i.Location.RelativeLocation = OcrRelativeLocation.Load(i.Location, result.Info));
+            result.Lines.ForEach(ExtractEntitiesFromLine);
+            result.Entities = result.Lines.SelectMany(i => i.Entities).ToList();
             return result;
         }
 
         private byte[] GetImageBytes(string fileName)
         {
             return File.ReadAllBytes(fileName);
+        }
+
+        private void ExtractEntitiesFromLine(OcrLine line)
+        {
+            var codes = _codeResolver.GetValues(line.Text).Select(i => new OcrEntity() { Type = DataType.Code, Text = i.Text, Element = line }).ToList();
+            var dates = _dateResolver.GetValues(line.Text).Select(i => new OcrEntity() { Type = DataType.Date, Text = i.Text, Element = line }).ToList();
+            line.Entities.AddRange(codes);
+            line.Entities.AddRange(dates);
         }
     }
 }

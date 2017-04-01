@@ -25,6 +25,12 @@ namespace luval.vision.core.resolvers
             return val.Success ? val.Value : string.Empty;
         }
 
+        public IEnumerable<ResolverMatch> GetValues(string text)
+        {
+            var vals = Regex.Matches(text, Pattern).Cast<Match>().Where(i => i.Success);
+            return vals.Select(i => ResolverMatch.Load(i));
+        }
+
         public virtual bool IsMatch(string text)
         {
             return Regex.IsMatch(text, Pattern);
