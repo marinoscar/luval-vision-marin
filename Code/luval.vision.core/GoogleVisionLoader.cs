@@ -49,6 +49,7 @@ namespace luval.vision.core
             mainRegion.Location.Height = mainRegion.Lines.Max(i => i.Location.YBound) - mainRegion.Location.Y;
             mainRegion.Location.RelativeLocation = OcrRelativeLocation.Load(mainRegion.Location, info);
             result.Regions.Add(mainRegion);
+            result.Words = words;
             result.Lines = lines;
             return result;
         }

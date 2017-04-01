@@ -10,13 +10,14 @@ namespace luval.vision.core
     {
         public static OcrRelativeLocation Load(OcrLocation location, ImageInfo info)
         {
+            var imgHalf = (info.Height / 2);
             var res = new OcrRelativeLocation()
             {
-                X = location.X / info.Width,
-                Y = location.Y  / info.Height,
-                Width = location.Width / info.Width,
-                Height = location.Height / info.Height,
-                IsTopHalf = ((info.Height / 2) <= location.Y)
+                X = Convert.ToInt32(((double)location.X / (double)info.Width) * 100),
+                Y = Convert.ToInt32(((double)location.Y / (double)info.Height) * 100),
+                Width = Convert.ToInt32(((double)location.Width / (double)info.Width) * 100),
+                Height = Convert.ToInt32(((double)location.Height / (double)info.Height) * 100),
+                IsTopHalf = (imgHalf > location.YBound)
             };
             res.Quadrant = GetQuadrant(res);
             res.HorizontalQuadrant = GetHQuadrant(res);
@@ -52,7 +53,7 @@ namespace luval.vision.core
         public bool IsTopHalf { get; set; }
         public short Quadrant { get; set; }
         public short HorizontalQuadrant { get; set; }
-        public short VerticalQuadrant { get; set; } 
+        public short VerticalQuadrant { get; set; }
 
 
     }

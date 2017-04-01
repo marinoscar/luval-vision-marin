@@ -40,7 +40,7 @@ namespace luval.vision.core
         private string GetTextToAnalyze(OcrResult ocr)
         {
             var sb = new StringBuilder();
-            ocr.Lines.Where(i => i.Location.RelativeLocation.IsTopHalf)
+            ocr.HorizontalLines.Where(i => i.Location.RelativeLocation.IsTopHalf)
                 .Select(i => i.Text).ToList().ForEach(i => sb.AppendLine(i));
             return sb.ToString();
         }

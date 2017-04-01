@@ -92,11 +92,22 @@ namespace luval.vision.core
                 wordsInLine.Insert(0, item);
                 lines.Add(new OcrLine()
                 {
-                    Id = id, Words = wordsInLine.OrderBy(i => i.Location.X).ToList()
+                    Id = id,
+                    Words = wordsInLine.OrderBy(i => i.Location.X).ToList(),
+                    Location = GetLineLocation(wordsInLine)
                 });
                 wordsInLine.ForEach(i => sorted.Remove(i));
             }
             return lines;
+        }
+
+        private static OcrLocation GetLineLocation(IEnumerable<OcrElement> items)
+        {
+            var x = items.Min(i => i.Location.X);
+            var y = items.Min(i => i.Location.Y);
+            var h = items.Max(i => i.Location.YBound) - x;
+            var w = items.Max(i => i.Location.XBound) - y;
+            return new OcrLocation() { X = x, Y = y, Height = h, Width = w };
         }
 
         private bool AcceptSearch(AttributeMapping map, List<MappingResult> items, OcrElement anchor, IEnumerable<OcrElement> values, bool isDown)
