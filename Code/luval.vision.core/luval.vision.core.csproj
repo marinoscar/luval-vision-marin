@@ -103,7 +103,6 @@
     <Compile Include="ImageManager.cs" />
     <Compile Include="INlpEngine.cs" />
     <Compile Include="INlpLoader.cs" />
-    <Compile Include="InvoiceData.cs" />
     <Compile Include="IOcrEngine.cs" />
     <Compile Include="IOcrProvider.cs" />
     <Compile Include="MappingResult.cs" />
