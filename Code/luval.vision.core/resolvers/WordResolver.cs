@@ -8,6 +8,7 @@ namespace luval.vision.core.resolvers
 {
     public class WordResolver : IStringResolver
     {
+        private const string _vowels = "aeiou";
         public string Code { get { return "word"; } }
 
         public string GetValue(string text)
@@ -17,7 +18,9 @@ namespace luval.vision.core.resolvers
 
         public bool IsMatch(string text)
         {
-            return WordDictionary.I.IsInDictionary(Language.English, text);
+            var hasAtLeastOneVowel = text.ToLowerInvariant().Any(i => _vowels.Contains(i));
+            var noDigits = !text.Any(i => char.IsNumber(i));
+            return hasAtLeastOneVowel && noDigits;
         }
     }
 }
