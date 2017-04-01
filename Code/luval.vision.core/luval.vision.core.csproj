@@ -95,6 +95,9 @@
     <Compile Include="EntityExtractor.cs" />
     <Compile Include="Enum.cs" />
     <Compile Include="Extractor.cs" />
+    <Compile Include="extractors\ExtractResult.cs" />
+    <Compile Include="extractors\IExtractor.cs" />
+    <Compile Include="extractors\TotalExtractor.cs" />
     <Compile Include="GoogleNlpEngine.cs" />
     <Compile Include="GoogleNlpLoader.cs" />
     <Compile Include="GoogleOcrEngine.cs" />

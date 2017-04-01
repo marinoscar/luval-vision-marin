@@ -1,4 +1,5 @@
-﻿using System;
+﻿using luval.vision.core.extractors;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -32,26 +33,45 @@ namespace luval.vision.core
             var nlp = NlpProvider.DoNlp(GetTextToAnalyze(ocr, mappings));
             var navigator = new Navigator(ocr.Info, ocr.Lines, mappings);
             var attributes = navigator.ExtractAttributes();
+            ValidateTotal(attributes, ocr);
             return new ProcessResult()
             {
-                NlpResult = nlp, OcrResult = ocr, TextResults = attributes
+                NlpResult = nlp,
+                OcrResult = ocr,
+                TextResults = attributes
             };
+        }
+
+        private void ValidateTotal(List<MappingResult> mappingResult, OcrResult ocrResult)
+        {
+            if (mappingResult.Any(i => i.Map.AttributeName == "Total")) return;
+            var totalExtractor = new TotalExtractor(ocrResult.Lines);
+            var val = totalExtractor.Extract();
+            if (val == null) return;
+            mappingResult.Add(new MappingResult()
+            {
+                AnchorElement = null,
+                Location = val.Element.Location,
+                ResultElement = val.Element,
+                RelativeLocation = val.Element.Location.RelativeLocation,
+                Map = new AttributeMapping() { AttributeName = "Total" }
+            });
         }
 
         private string GetTextToAnalyze(OcrResult ocr, IEnumerable<AttributeMapping> mappings)
         {
             var lines = ocr.Lines.Where(i => i.Location.RelativeLocation.HorizontalQuadrant == 1).ToList();
-            foreach(var line in lines)
+            foreach (var line in lines)
             {
                 var wordsToRemove = line.Words.Where(i => i.DataType != DataType.Word && i.DataType != DataType.None).ToList();
-                foreach(var map in mappings)
+                foreach (var map in mappings)
                 {
-                    foreach(var reg in map.AnchorPatterns)
+                    foreach (var reg in map.AnchorPatterns)
                     {
                         wordsToRemove.AddRange(line.Words.Where(i => Regex.IsMatch(i.Text, reg)).ToList());
                     }
                 }
-                foreach(var word in wordsToRemove.Distinct())
+                foreach (var word in wordsToRemove.Distinct())
                 {
                     line.Words.Remove(word);
                 }

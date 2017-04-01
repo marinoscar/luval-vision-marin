@@ -104,7 +104,7 @@ namespace luval.vision.core
                     continue;
                 }
                 var nextWord = words[0];
-                var spaceSize = (currentWord.Location.Width / currentWord.Text.Length) * 1.5;
+                var spaceSize = (currentWord.Location.Width / currentWord.Text.Length) * 1.1;
                 var distance = nextWord.Location.X - currentWord.Location.XBound;
                 if (distance > spaceSize)
                 {

@@ -17,5 +17,21 @@ namespace luval.vision.core.resolvers
 
 
         public override string Code { get { return "amount"; } }
+
+
+        public override IEnumerable<ResolverMatch> GetValues(string text)
+        {
+            return base.GetValues(text).Where(i => i.Text.Any(HasValidChar));
+        }
+
+        public override bool IsMatch(string text)
+        {
+            return base.IsMatch(text) && text.Any(HasValidChar);
+        }
+
+        private bool HasValidChar(char c)
+        {
+            return ".,".Contains(c);
+        }
     }
 }
