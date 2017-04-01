@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace luval.vision.core
@@ -28,7 +29,7 @@ namespace luval.vision.core
         public ProcessResult DoProcess(byte[] data, string fileName, IEnumerable<AttributeMapping> mappings)
         {
             var ocr = OcrProvider.DoOcr(data, fileName);
-            var nlp = NlpProvider.DoNlp(GetTextToAnalyze(ocr));
+            var nlp = NlpProvider.DoNlp(GetTextToAnalyze(ocr, mappings));
             var navigator = new Navigator(ocr.Info, ocr.Lines, mappings);
             var attributes = navigator.ExtractAttributes();
             return new ProcessResult()
@@ -37,11 +38,26 @@ namespace luval.vision.core
             };
         }
 
-        private string GetTextToAnalyze(OcrResult ocr)
+        private string GetTextToAnalyze(OcrResult ocr, IEnumerable<AttributeMapping> mappings)
         {
+            var lines = ocr.Lines.Where(i => i.Location.RelativeLocation.HorizontalQuadrant == 1).ToList();
+            foreach(var line in lines)
+            {
+                var wordsToRemove = line.Words.Where(i => i.DataType != DataType.Word && i.DataType != DataType.None).ToList();
+                foreach(var map in mappings)
+                {
+                    foreach(var reg in map.AnchorPatterns)
+                    {
+                        wordsToRemove.AddRange(line.Words.Where(i => Regex.IsMatch(i.Text, reg)).ToList());
+                    }
+                }
+                foreach(var word in wordsToRemove.Distinct())
+                {
+                    line.Words.Remove(word);
+                }
+            }
             var sb = new StringBuilder();
-            ocr.HorizontalLines.Where(i => i.Location.RelativeLocation.IsTopHalf)
-                .Select(i => i.Text).ToList().ForEach(i => sb.AppendLine(i));
+            lines.ForEach(i => sb.AppendLine(i.Text));
             return sb.ToString();
         }
     }

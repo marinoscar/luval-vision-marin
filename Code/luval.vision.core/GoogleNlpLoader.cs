@@ -24,6 +24,7 @@ namespace luval.vision.core
                     Type = MapType(jsonEnt["type"].Value<string>()),
                     Metadata = GetMetadata(jsonEnt["metadata"])
                 };
+                result.Entities.Add(ent);
             }
             return result;
         }
@@ -31,6 +32,8 @@ namespace luval.vision.core
         private EntityType MapType(string type)
         {
             if (string.IsNullOrWhiteSpace(type) || type.ToUpperInvariant().Equals("OTHER") || type.ToUpperInvariant().Equals("UNKNOWN")) return EntityType.None;
+            if (type.ToUpperInvariant().Equals("CONSUMER_GOOD")) return EntityType.ConsumerGood;
+            if (type.ToUpperInvariant().Equals("WORK_OF_ART")) return EntityType.WorkofArt;
             return (EntityType)Enum.Parse(typeof(EntityType), type, true);
 
         }

@@ -103,6 +103,7 @@ namespace luval.vision.sink
             var options = JsonConvert.DeserializeObject<List<AttributeMapping>>(jsonData);
             var provider = new DocumentProcesor(GetProvider(false), new NlpProvider(new GoogleNlpEngine(), new GoogleNlpLoader()));
             var result = provider.DoProcess(_fileName, options);
+            _result = result.OcrResult;
             LoadVisionTree(result.OcrResult);
             LoadText(result.OcrResult);
             _resultImg = _imageManager.ProcessParseResult(result.TextResults);
