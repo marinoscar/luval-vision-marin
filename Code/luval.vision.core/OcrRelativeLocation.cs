@@ -20,8 +20,15 @@ namespace luval.vision.core
                 IsTopHalf = (imgHalf > location.YBound)
             };
             res.Quadrant = GetQuadrant(res);
-            res.HorizontalQuadrant = GetHQuadrant(res);
-            res.VerticalQuadrant = GetVQuadrant(res);
+            res.HorizontalThird = GetRelativePositionIndex(res.RelativeLocation.X, 3);
+            res.HorizontalQuadrant = GetRelativePositionIndex(res.RelativeLocation.X, 4);
+            res.HorizontalSixth = GetRelativePositionIndex(res.RelativeLocation.X, 6);
+            res.HorizontalEight = GetRelativePositionIndex(res.RelativeLocation.X, 8);
+            res.VerticalQuadrant = GetRelativePositionIndex(res.RelativeLocation.Y, 4);
+            res.VerticalThird = GetRelativePositionIndex(res.RelativeLocation.Y, 3);
+            res.VerticalQuadrant = GetRelativePositionIndex(res.RelativeLocation.Y, 4);
+            res.VerticalSixth = GetRelativePositionIndex(res.RelativeLocation.Y, 6);
+            res.VerticalEight = GetRelativePositionIndex(res.RelativeLocation.Y, 8);
             return res;
         }
 
@@ -34,26 +41,23 @@ namespace luval.vision.core
             return 0;
         }
 
-        private static short GetHQuadrant(OcrRelativeLocation location)
+        private static short GetRelativePositionIndex(int location, short slices)
         {
-            if (location.X <= 25) return 1;
-            if (location.X > 25 && location.X <= 50) return 2;
-            if (location.X > 50 && location.X <= 75) return 3;
-            return 4;
-        }
-
-        private static short GetVQuadrant(OcrRelativeLocation location)
-        {
-            if (location.Y <= 25) return 1;
-            if (location.Y > 25 && location.Y <= 50) return 2;
-            if (location.Y > 50 && location.Y <= 75) return 3;
-            return 4;
+            var sliceSize = 100d / (double)slices;
+            return Convert.ToInt16(Math.Floor((double)location / sliceSize) + 1);
         }
 
         public bool IsTopHalf { get; set; }
         public short Quadrant { get; set; }
         public short HorizontalQuadrant { get; set; }
         public short VerticalQuadrant { get; set; }
+
+        public short VerticalThird { get; set; }
+        public short HorizontalThird { get; set; }
+        public short VerticalSixth { get; set; }
+        public short HorizontalSixth { get; set; }
+        public short VerticalEight { get; set; }
+        public short HorizontalEight { get; set; }
 
 
     }
