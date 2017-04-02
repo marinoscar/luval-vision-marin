@@ -53,10 +53,11 @@ namespace luval.vision.sink
         {
             if (PictureBox.Image != null) PictureBox.Image.Dispose();
             PictureBox.Image = null;
+            var data = File.ReadAllBytes(fileName);
             var img = default(Image);
-            using (var stream = new StreamReader(fileName))
+            using (var stream = new MemoryStream(Pdf2Img.CheckForPdfAndConvert(data, fileName)))
             {
-                img = Image.FromStream(stream.BaseStream);
+                img = Image.FromStream(stream);
                 stream.Close();
             }
             _imageManager = new ImageManager(img);

@@ -82,6 +82,13 @@ namespace luval.vision.core
             return stream.ToArray();
         }
 
+        public static byte[] CheckForPdfAndConvert(byte[] data, string fileName)
+        {
+            var file = new FileInfo(fileName);
+            if (!file.Extension.ToLowerInvariant().Equals(".pdf")) return data;
+            return Pdf2Img.ConvertToImage(fileName);
+        }
+
         private static Image MergeImages(IEnumerable<Image> images)
         {
             var width = images.Max(i => i.Width);

@@ -29,7 +29,8 @@ namespace luval.vision.core
 
         public ProcessResult DoProcess(byte[] data, string fileName, IEnumerable<AttributeMapping> mappings)
         {
-            var ocr = OcrProvider.DoOcr(data, fileName);
+            var imgBytes = Pdf2Img.CheckForPdfAndConvert(data, fileName);
+            var ocr = OcrProvider.DoOcr(imgBytes, fileName);
             var nlp = NlpProvider.DoNlp(GetTextToAnalyze(ocr, mappings));
             var navigator = new Navigator(ocr.Info, ocr.Lines, mappings);
             var attributes = navigator.ExtractAttributes();
