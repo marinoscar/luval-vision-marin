@@ -35,7 +35,7 @@ namespace luval.vision.core
             var nlp = NlpProvider.DoNlp(GetTextToAnalyze(ocr, mappings));
             var navigator = new Navigator(ocr.Info, ocr.Lines, mappings);
             var attributes = navigator.ExtractAttributes();
-            ValidateTotal(attributes, ocr);
+            DoExtraValidations(attributes, ocr);
             return new ProcessResult()
             {
                 NlpResult = nlp,
@@ -45,11 +45,16 @@ namespace luval.vision.core
             };
         }
 
-        private void ValidateTotal(List<MappingResult> mappingResult, OcrResult ocrResult)
+        private void DoExtraValidations(List<MappingResult> mappingResult, OcrResult ocrResult)
         {
-            if (mappingResult.Any(i => i.Map.AttributeName == "Total")) return;
-            var totalExtractor = new TotalExtractor(ocrResult.Lines);
-            var val = totalExtractor.Extract();
+            DoExtractions<double?>(mappingResult, ocrResult, "Total", new TotalExtractor(ocrResult.Lines));
+            DoExtractions<DateTime?>(mappingResult, ocrResult, "Date", new DateExtractor(ocrResult.Lines));
+        }
+
+        private void DoExtractions<T>(List<MappingResult> mappingResult, OcrResult ocrResult, string attName, IExtractor<T> extractor)
+        {
+            if (mappingResult.Any(i => i.Map.AttributeName == attName)) return;
+            var val = extractor.Extract();
             if (val == null) return;
             mappingResult.Add(new MappingResult()
             {
@@ -57,7 +62,7 @@ namespace luval.vision.core
                 Location = val.Element.Location,
                 ResultElement = val.Element,
                 RelativeLocation = val.Element.Location.RelativeLocation,
-                Map = new AttributeMapping() { AttributeName = "Total" }
+                Map = new AttributeMapping() { AttributeName = attName }
             });
         }
 
