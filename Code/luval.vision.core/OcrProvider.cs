@@ -58,6 +58,8 @@ namespace luval.vision.core
             result.HorizontalLines.ForEach(i => i.Location.RelativeLocation = OcrRelativeLocation.Load(i.Location, result.Info));
             result.Lines.ForEach(ExtractEntitiesFromLine);
             result.Entities = result.Lines.SelectMany(i => i.Entities).ToList();
+            imgInfo.WorkingHeight = result.Lines.Max(i => i.Location.YBound) - result.Lines.Min(i => i.Location.Y);
+            imgInfo.WorkingHeight = result.Lines.Max(i => i.Location.XBound) - result.Lines.Min(i => i.Location.X);
             return result;
         }
 
