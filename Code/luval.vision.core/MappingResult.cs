@@ -13,5 +13,6 @@ namespace luval.vision.core
         public OcrElement ResultElement { get; set; }
         public OcrLocation Location { get; set; }
         public OcrRelativeLocation RelativeLocation { get; set; }
+        public string Value { get; set; }
     }
 }

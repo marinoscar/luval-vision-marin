@@ -110,21 +110,27 @@ namespace luval.vision.core
             return new OcrLocation() { X = x, Y = y, Height = h, Width = w };
         }
 
-        private bool AcceptSearch(AttributeMapping map, List<MappingResult> items, OcrElement anchor, IEnumerable<OcrElement> values, bool isDown)
+        private bool AcceptSearch(AttributeMapping map, List<MappingResult> items, OcrElement anchor, IEnumerable<SearchResult> values, bool isDown)
         {
             if (values == null || !values.Any()) return false;
             var val = map.IsValueLast ? values.LastOrDefault() : values.FirstOrDefault();
-            var loc = GetMapLocation(anchor, val, isDown);
+            var loc = GetMapLocation(anchor, val.element, isDown);
+            var value = default(string);
+            if (val.success)
+            {
+                value = GetResolver(val.pattern, val.element.Text).GetValue(val.element.Text);
+            }
             var res = new MappingResult()
             {
                 Map = map,
                 Location = loc.Item1,
                 RelativeLocation = loc.Item2,
                 AnchorElement = anchor,
-                ResultElement = val
+                ResultElement = val.element,
+                Value = value
             };
             items.Add(res);
-            return !string.IsNullOrWhiteSpace(val.Text);
+            return !string.IsNullOrWhiteSpace(val.element.Text);
         }
 
         private Tuple<OcrLocation, OcrRelativeLocation> GetMapLocation(OcrElement anchor, OcrElement value, bool isDown)
@@ -150,7 +156,7 @@ namespace luval.vision.core
             return new Tuple<OcrLocation, OcrRelativeLocation>(res, rel);
         }
 
-        private IEnumerable<OcrElement> SearchDown(OcrElement reference, IEnumerable<string> valuePatterns)
+        private IEnumerable<SearchResult> SearchDown(OcrElement reference, IEnumerable<string> valuePatterns)
         {
             var dataSet = new List<OcrElement>();
             var searchArea = new OcrLocation()
@@ -177,7 +183,7 @@ namespace luval.vision.core
             return FilterByPattern(dataSet, valuePatterns);
         }
 
-        private IEnumerable<OcrElement> SearchRight(OcrElement reference, IEnumerable<string> valuePatterns)
+        private IEnumerable<SearchResult> SearchRight(OcrElement reference, IEnumerable<string> valuePatterns)
         {
             var minX = reference.Location.XBound;
             var minY = reference.Location.Y - (reference.Location.Y * ErrorMargin);
@@ -190,26 +196,32 @@ namespace luval.vision.core
             return FilterByPattern(dataSet, valuePatterns);
         }
 
-        private IEnumerable<OcrElement> FilterByPattern(IEnumerable<OcrElement> elements, IEnumerable<string> patterns)
+        private IEnumerable<SearchResult> FilterByPattern(IEnumerable<OcrElement> elements, IEnumerable<string> patterns)
         {
-            if (patterns == null || !patterns.Any()) return elements;
-            var result = new List<OcrElement>();
+            if (patterns == null || !patterns.Any()) return elements.Select(i => new SearchResult() { element = i });
+            var result = new List<SearchResult>();
             foreach (var p in patterns)
             {
-                result.AddRange(elements.Where(i => Resolve(p, i.Text)).ToList());
+                result.AddRange(elements.Where(i => Resolve(p, i.Text)).Select(t => new SearchResult() { pattern = p, element = t, success = true }));
             }
             return result;
         }
 
         private bool Resolve(string pattern, string text)
         {
+            return GetResolver(pattern, text).IsMatch(text);
+        }
+
+        private IStringResolver GetResolver(string pattern, string text)
+        {
             if (pattern.StartsWith("@"))
             {
                 var res = _resManager.GetByCode(pattern.Replace("@", ""));
-                if (res != null) return res.IsMatch(text);
+                if (res != null) return res;
             }
-            var regEx = new RegexResolver(pattern);
-            return regEx.IsMatch(text);
+            return new RegexResolver(pattern);
         }
+
+        private class SearchResult { public string pattern; public OcrElement element; public bool success; }
     }
 }
