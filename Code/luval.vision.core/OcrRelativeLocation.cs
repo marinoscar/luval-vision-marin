@@ -20,15 +20,15 @@ namespace luval.vision.core
                 IsTopHalf = (imgHalf > location.YBound)
             };
             res.Quadrant = GetQuadrant(res);
-            res.HorizontalThird = GetRelativePositionIndex(res.RelativeLocation.X, 3);
-            res.HorizontalQuadrant = GetRelativePositionIndex(res.RelativeLocation.X, 4);
-            res.HorizontalSixth = GetRelativePositionIndex(res.RelativeLocation.X, 6);
-            res.HorizontalEight = GetRelativePositionIndex(res.RelativeLocation.X, 8);
-            res.VerticalQuadrant = GetRelativePositionIndex(res.RelativeLocation.Y, 4);
-            res.VerticalThird = GetRelativePositionIndex(res.RelativeLocation.Y, 3);
-            res.VerticalQuadrant = GetRelativePositionIndex(res.RelativeLocation.Y, 4);
-            res.VerticalSixth = GetRelativePositionIndex(res.RelativeLocation.Y, 6);
-            res.VerticalEight = GetRelativePositionIndex(res.RelativeLocation.Y, 8);
+            res.HorizontalThird = GetRelativePositionIndex(res.X, 3);
+            res.HorizontalQuadrant = GetRelativePositionIndex(res.X, 4);
+            res.HorizontalSixth = GetRelativePositionIndex(res.X, 6);
+            res.HorizontalEight = GetRelativePositionIndex(res.X, 8);
+            res.VerticalQuadrant = GetRelativePositionIndex(res.Y, 4);
+            res.VerticalThird = GetRelativePositionIndex(res.Y, 3);
+            res.VerticalQuadrant = GetRelativePositionIndex(res.Y, 4);
+            res.VerticalSixth = GetRelativePositionIndex(res.Y, 6);
+            res.VerticalEight = GetRelativePositionIndex(res.Y, 8);
             return res;
         }
 

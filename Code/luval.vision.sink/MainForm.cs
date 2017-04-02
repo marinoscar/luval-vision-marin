@@ -112,7 +112,7 @@ namespace luval.vision.sink
             listResult.Items.Clear();
             foreach (var item in result.TextResults)
             {
-                var listItem = new ListViewItem(new string[] { item.Map.AttributeName, item.ResultElement.Text });
+                var listItem = new ListViewItem(new string[] { item.Map.AttributeName, item.Value });
                 listResult.Items.Add(listItem);
             }
         }
