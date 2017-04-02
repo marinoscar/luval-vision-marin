@@ -37,7 +37,7 @@ namespace luval.vision.core.resolvers
 
         private List<Match> GetWords(string text)
         {
-            return RegexHelper.GetWords(text).ToList();
+            return StringUtils.GetWords(text).ToList();
         }
 
 

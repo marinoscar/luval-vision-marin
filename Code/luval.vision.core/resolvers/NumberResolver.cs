@@ -18,7 +18,7 @@ namespace luval.vision.core.resolvers
 
         public IEnumerable<ResolverMatch> GetValues(string text)
         {
-            return RegexHelper.GetWords(text).Where(i => IsMatch(i.Value)).Select(i => ResolverMatch.Load(i)).ToList();
+            return StringUtils.GetWords(text).Where(i => IsMatch(i.Value)).Select(i => ResolverMatch.Load(i)).ToList();
         }
 
         public bool IsMatch(string text)
