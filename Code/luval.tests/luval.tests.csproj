@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WhenAPDFIsConvertedToImage.cs" />
+    <Compile Include="WhenItFileStored.cs" />
     <Compile Include="WhenItLooksForEntities.cs" />
     <Compile Include="WhenOcrEngineIsCalled.cs" />
     <Compile Include="WhenUsingStringUtils.cs" />
@@ -62,6 +63,10 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\luval.vision.bll\luval.vision.bll.csproj">
+      <Project>{79e0f57b-4776-4c98-9959-e7de120beb84}</Project>
+      <Name>luval.vision.bll</Name>
+    </ProjectReference>
     <ProjectReference Include="..\luval.vision.core\luval.vision.core.csproj">
       <Project>{e2b1ce82-40c0-4f2b-9d00-a93425d7147f}</Project>
       <Name>luval.vision.core</Name>
