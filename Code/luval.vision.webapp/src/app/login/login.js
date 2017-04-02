@@ -7,11 +7,14 @@ export default
   angular
     .module('luval-vision.login', [])
     .config(routes)
-    .config(GoogleSigninProvider => {
-      GoogleSigninProvider.init({
-        client_id: '387533728662-ovqlpu27rait2m5idsa6aadqf7qa00e4.apps.googleusercontent.com' // eslint-disable-line camelcase
-      });
-    })
+    .config(GoogleSignInConfig)
     .controller('LoginController', LoginController)
     .service('loginService', loginService)
     .name;
+
+/* ngInject */
+function GoogleSignInConfig(GoogleSigninProvider) {
+  GoogleSigninProvider.init({
+    client_id: '387533728662-ovqlpu27rait2m5idsa6aadqf7qa00e4.apps.googleusercontent.com' // eslint-disable-line camelcase
+  });
+}

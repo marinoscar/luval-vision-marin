@@ -43,6 +43,12 @@ module.exports = {
         loaders: [
           'html-loader'
         ]
+      },
+      {
+        test: /\.(png|jpg)$/, 
+        loaders: [
+          'file-loader'
+        ]
       }
     ]
   },
