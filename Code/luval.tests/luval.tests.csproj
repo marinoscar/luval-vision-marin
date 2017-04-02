@@ -53,6 +53,7 @@
     <Compile Include="WhenAPDFIsConvertedToImage.cs" />
     <Compile Include="WhenItLooksForEntities.cs" />
     <Compile Include="WhenOcrEngineIsCalled.cs" />
+    <Compile Include="WhenUsingStringUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
