@@ -1,0 +1,51 @@
+<div id="check-receipts-view">
+	<div class="container">
+		<div class="row">
+			<div id="main-header">
+				<div class="col-md-4">
+					<button id="close-this" ng-click="vm.backToReceipts()"></button>
+				</div>
+				<div class="col-md-8 col-md-offset-2">
+					<img ng-src="../../img/logo.png" class="logo" />
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="container-fluid">
+				<main class="done">
+					<aside id="image" style="width: calc(50% - 5px);">
+						<div>
+							<button id="share-button"></button>
+							<button id="hd-button"></button>
+							<div id="document-container">	
+								<img id="receipt-image" ng-src="{{vm.imageSrc}}">
+							</div>
+						</div>
+						<footer>
+							<div id="control-toggle" class="active">
+								<button id="goRotate">Rotate</button><button id="goZoom">Zoom</button>
+							</div>
+							<div id="rotate-controls" data-min="-180" data-max="180" class="active">
+								<span class="slider"></span>
+								<button class="default-value" value="0">Reset</button>
+								<span class="show-value">0</span>
+								<button class="done-control" value="0">Done</button>
+							</div>
+							<div id="zoom-controls" data-min="10" data-max="200">
+								<span class="slider" style="left: 47.3684%;"></span>
+								<button class="default-value" value="100">Reset</button>
+								<span class="show-value">100</span>
+								<button class="done-control" value="0">Done</button>
+							</div>
+						</footer>
+					</aside>
+					<div class="gutter" style="width: 10px;"></div>
+					<aside id="data" style="width: calc(50% - 5px);">
+						<div id="editor">
+						</div>
+					</aside>
+				</main>
+			</div>
+		</div>
+	</div>
+</div>
