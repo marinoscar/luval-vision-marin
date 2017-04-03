@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>luval.vision.bll</RootNamespace>
     <AssemblyName>luval.vision.bll</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -60,9 +61,8 @@
     <Reference Include="MongoDB.Driver.Core, Version=2.4.3.23, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MongoDB.Driver.Core.2.4.3\lib\net45\MongoDB.Driver.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="PdfSharp, Version=1.32.3057.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
       <HintPath>..\packages\PDFsharp.1.32.3057.0\lib\net20\PdfSharp.dll</HintPath>
@@ -93,18 +93,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Constants.cs" />
-    <Compile Include="InvoiceData.cs" />
-    <Compile Include="IOcrEngine.cs" />
-    <Compile Include="IOcrProvider.cs" />
-    <Compile Include="IVisionResultParser.cs" />
-    <Compile Include="MicrosoftOcrEngine.cs" />
-    <Compile Include="MicrosoftVisionLoader.cs" />
-    <Compile Include="Navigator.cs" />
     <Compile Include="OcrBlobStorage.cs" />
-    <Compile Include="OcrProvider.cs" />
-    <Compile Include="Pdf2Img.cs" />
-    <Compile Include="ProcessOcr.cs" />
+    <Compile Include="OcrProcess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -113,9 +103,17 @@
     <None Include="private.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\luval.vision.core\luval.vision.core.csproj">
+      <Project>{e2b1ce82-40c0-4f2b-9d00-a93425d7147f}</Project>
+      <Name>luval.vision.core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\luval.vision.entity\luval.vision.entity.csproj">
       <Project>{1c5044f1-fb0a-4d56-899b-8b80f24fa6b7}</Project>
       <Name>luval.vision.entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\luval.vision.sink\luval.vision.sink.csproj">
+      <Project>{443e9ac3-b5fe-4f20-8b6f-87f59ebbc8f1}</Project>
+      <Name>luval.vision.sink</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
