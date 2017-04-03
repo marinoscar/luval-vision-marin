@@ -80,7 +80,10 @@ namespace luval.vision.sink
                 MessageBox.Show("Please load an image for processing", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+            processBtn.Enabled = false;
             DoProcess();
+            MessageBox.Show("Process completed", "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            processBtn.Enabled = true;
         }
 
         private OcrProvider GetProvider(bool ms)
