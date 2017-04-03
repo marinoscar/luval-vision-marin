@@ -185,6 +185,9 @@ namespace luval.vision.core
 
         private IEnumerable<SearchResult> SearchRight(OcrElement reference, IEnumerable<string> valuePatterns)
         {
+            //First we check in the same element for the valaue
+            var sameElementRes = FilterByPattern(new OcrElement[] { reference }, valuePatterns);
+            if (sameElementRes != null && sameElementRes.Any()) return sameElementRes;
             var minX = reference.Location.XBound;
             var minY = reference.Location.Y - (reference.Location.Y * ErrorMargin);
             var maxY = reference.Location.YBound * (1 + ErrorMargin);
