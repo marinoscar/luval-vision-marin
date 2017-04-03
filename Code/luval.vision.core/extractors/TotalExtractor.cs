@@ -1,4 +1,5 @@
-﻿using System;
+﻿using luval.vision.core.resolvers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,11 +9,14 @@ namespace luval.vision.core.extractors
 {
     public class TotalExtractor : IExtractor<double?>
     {
+        private IStringResolver _resolver;
+
         public List<OcrLine> Lines { get; private set; }
 
         public TotalExtractor(IEnumerable<OcrLine> lines)
         {
             Lines = new List<OcrLine>(lines);
+            _resolver = (new StringResolverManager()).Get<AmountResolver>();
         }
 
         public ExtractResult<double?> Extract()
@@ -31,8 +35,9 @@ namespace luval.vision.core.extractors
 
         private double? DoParse(string text)
         {
+            var amountText = _resolver.GetValue(text);
             var val = 0d;
-            return double.TryParse(text, out val) ? val : default(double?);
+            return double.TryParse(amountText, out val) ? val : default(double?);
         }
     }
 }
