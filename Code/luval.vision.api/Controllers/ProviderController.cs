@@ -9,9 +9,11 @@ using Newtonsoft.Json;
 using luval.vision.entity;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Http.Cors;
 
 namespace luval.vision.api.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class ProviderController : ApiController
     {
         private OcrProvider providerOcr;
