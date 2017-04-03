@@ -21,6 +21,7 @@ namespace luval.vision.sink
         private OcrResult _result;
         private Image _resultImg;
         private ProcessResult _processResult;
+        private FormResult _formResult;
 
         public MainForm()
         {
@@ -40,7 +41,7 @@ namespace luval.vision.sink
             var dialog = new OpenFileDialog()
             {
                 Title = "Open Image",
-                Filter = "Image Files(*.BMP;*.JPG;*.GIF;*.PNG)|*.BMP;*.JPG;*.GIF;*.PNG|All files (*.*)|*.*",
+                Filter = "Image Files(*.BMP;*.JPG;*.GIF;*.PNG;*.PDF;*.celeris)|*.BMP;*.JPG;*.GIF;*.PNG;*.PDF;*.celeris|All files (*.*)|*.*",
                 RestoreDirectory = true
             };
             if (dialog.ShowDialog() == DialogResult.Cancel) return;
@@ -50,9 +51,20 @@ namespace luval.vision.sink
 
         private void DoLoadImage(string fileName)
         {
+            var formResult = CheckForCelerisFile(fileName);
+            if(formResult == null)
+                DoLoadImage(fileName, File.ReadAllBytes(fileName));
+            else
+            {
+                _formResult = formResult;
+                DoLoadImage(formResult.FileName, formResult.FileData);
+            }
+        }
+
+        private void DoLoadImage(string fileName, byte[] data)
+        {
             if (PictureBox.Image != null) PictureBox.Image.Dispose();
             PictureBox.Image = null;
-            var data = File.ReadAllBytes(fileName);
             var img = default(Image);
             using (var stream = new MemoryStream(Pdf2Img.CheckForPdfAndConvert(data, fileName)))
             {
@@ -63,6 +75,13 @@ namespace luval.vision.sink
             _result = null;
             PictureBox.Image = img;
             PictureBox.Refresh();
+        }
+
+        private FormResult CheckForCelerisFile(string fileName)
+        {
+            if (!fileName.ToLowerInvariant().EndsWith(".celeris")) return null;
+            _formResult = JsonConvert.DeserializeObject<FormResult>(File.ReadAllText(fileName));
+            return _formResult;
         }
 
 
@@ -105,7 +124,9 @@ namespace luval.vision.sink
             var jsonData = File.ReadAllText("attribute-mapping.json");
             var options = JsonConvert.DeserializeObject<List<AttributeMapping>>(jsonData);
             var provider = new DocumentProcesor(GetProvider(false), new NlpProvider(new GoogleNlpEngine(), new GoogleNlpLoader()));
-            var result = provider.DoProcess(_fileName, options);
+            var result = default(ProcessResult);
+            result = _formResult == null ? provider.DoProcess(_fileName, options) : 
+                provider.DoProcess(_formResult.FileData,_formResult.FileName, options, _formResult.Result.OcrResult, _formResult.Result.NlpResult);
             _result = result.OcrResult;
             _processResult = result;
             LoadVisionTree(result.OcrResult);
