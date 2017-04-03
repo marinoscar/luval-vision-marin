@@ -15,22 +15,22 @@ namespace luval.vision.dal
 {
     public class UserDAL : IUserDAO
     {
-        public User GetUser(String userId)
+        public OcrUser GetUser(String userId)
         {
-            var user = Query<User>.EQ(u => u.id, userId);
+            var user = Query<OcrUser>.EQ(u => u.id, userId);
             return MongoConn.mongoDB()
-                .GetCollection<User>("Users")
+                .GetCollection<OcrUser>("Users")
                 .FindOne(user);
         }
 
-        public IEnumerable<User> GetUsers()
+        public IEnumerable<OcrUser> GetUsers()
         {
             return MongoConn.mongoDB()
-                .GetCollection<User>("Users")
+                .GetCollection<OcrUser>("Users")
                 .FindAll();
         }
 
-        public User SaveOrUpdate(User user)
+        public OcrUser SaveOrUpdate(OcrUser user)
         {
             var usersList = MongoConn.mongoDB().GetCollection("Users");
             WriteConcernResult result;
@@ -38,7 +38,7 @@ namespace luval.vision.dal
             if(String.IsNullOrEmpty(user.id))
             {
                 user.id = ObjectId.GenerateNewId().ToString();
-                result = usersList.Insert<User>(user);
+                result = usersList.Insert<OcrUser>(user);
                 hasError = result.HasLastErrorMessage;
             }
             else

@@ -69,6 +69,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AttributeMapping.cs" />
+    <Compile Include="BlobDownloadModel.cs" />
+    <Compile Include="BlobUploadModel.cs" />
     <Compile Include="EntityExtractor.cs" />
     <Compile Include="Enum.cs" />
     <Compile Include="Extractor.cs" />
@@ -76,6 +78,7 @@
     <Compile Include="LineItem.cs" />
     <Compile Include="MappingResult.cs" />
     <Compile Include="OcrArea.cs" />
+    <Compile Include="OcrDocument.cs" />
     <Compile Include="OcrElement.cs" />
     <Compile Include="OcrLine.cs" />
     <Compile Include="OcrLocation.cs" />
@@ -93,7 +96,7 @@
     <Compile Include="Resolvers\StringResolverManager.cs" />
     <Compile Include="Resolvers\WordResolver.cs" />
     <Compile Include="TreeProcess.cs" />
-    <Compile Include="User.cs" />
+    <Compile Include="OcrUser.cs" />
     <Compile Include="WordDictionary.cs" />
   </ItemGroup>
   <ItemGroup>
