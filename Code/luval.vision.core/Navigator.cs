@@ -33,7 +33,7 @@ namespace luval.vision.core
 
         public IEnumerable<OcrElement> Find(string pattern)
         {
-            return Elements.Where(i => Regex.IsMatch(i.Text, pattern)).OrderBy(i => i.Location.Y).ToList();
+            return Elements.Where(i => !string.IsNullOrWhiteSpace(i.Text) && Regex.IsMatch(i.Text, pattern)).OrderBy(i => i.Location.Y).ToList();
         }
 
         public List<MappingResult> ExtractAttributes()
