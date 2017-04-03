@@ -52,6 +52,7 @@
     <Compile Include="WhenAPDFIsConvertedToImage.cs" />
     <Compile Include="WhenItFileStored.cs" />
     <Compile Include="WhenItLooksForEntities.cs" />
+    <Compile Include="WhenMongoDBIsStoring.cs" />
     <Compile Include="WhenOcrEngineIsCalled.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -69,6 +70,14 @@
     <ProjectReference Include="..\luval.vision.core\luval.vision.core.csproj">
       <Project>{e2b1ce82-40c0-4f2b-9d00-a93425d7147f}</Project>
       <Name>luval.vision.core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\luval.vision.dal\luval.vision.dal.csproj">
+      <Project>{9932fdcf-a432-4b33-abf5-02a9a3550839}</Project>
+      <Name>luval.vision.dal</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\luval.vision.entity\luval.vision.entity.csproj">
+      <Project>{1c5044f1-fb0a-4d56-899b-8b80f24fa6b7}</Project>
+      <Name>luval.vision.entity</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

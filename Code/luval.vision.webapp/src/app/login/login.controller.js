@@ -8,9 +8,17 @@ class LoginController {
   onSignIn() {
     this.loginService.callGoogleSignIn()
       .then(user => {
-        this.log.info(user);
+        this.saveSignIn(user);
       }, function (err) {
-        this.log.info(err);
+        this.log.error(err);
+      });
+  }
+
+  saveSignIn(user) {
+    this.loginService.saveOrUpdateUser(user)
+      .then(user => {
+        this.log.info(user);
+        this.$state.go('receipts');
       });
   }
 }
