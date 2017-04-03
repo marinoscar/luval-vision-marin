@@ -73,6 +73,7 @@ namespace luval.vision.core
                 Location = val.Element.Location,
                 ResultElement = val.Element,
                 RelativeLocation = val.Element.Location.RelativeLocation,
+                Value = Convert.ToString(val.Value),
                 Map = new AttributeMapping() { AttributeName = attName }
             });
         }
