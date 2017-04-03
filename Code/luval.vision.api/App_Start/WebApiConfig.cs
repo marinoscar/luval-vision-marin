@@ -10,12 +10,8 @@ namespace luval.vision.api
     {
         public static void Register(HttpConfiguration config)
         {
-            var enableCorsAttribute = new EnableCorsAttribute("*",
-                "Origin, Content-Type, Accept",
-                "GET, PUT, POST, DELETE, OPTIONS");
-            config.EnableCors(enableCorsAttribute);
+            config.EnableCors(new EnableCorsAttribute("*", "*", "*"));
             // Web API configuration and services
-
             // Web API routes
             config.MapHttpAttributeRoutes();
 

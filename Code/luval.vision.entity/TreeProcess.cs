@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using luval.vision.entity;
 using System.Runtime.Serialization;
+using luval.vision.core;
 
 namespace luval.vision.entity
 {
@@ -12,8 +13,18 @@ namespace luval.vision.entity
     public class TreeProcess
     {
         [DataMember]
-        public string text { get; set; }
+        public string Id { get; set; }
         [DataMember]
-        public List<string[]> mappingResult { get; set; }
+        public string UserId { get; set; }
+        [DataMember]
+        public OcrResult OcrResult { get; set; }
+        [DataMember]
+        public NlpResult NlpResult { get; set; }
+        [DataMember]
+        public List<MappingResult> TextResults { get; set; }
+        [DataMember]
+        public DateTime UtcTimestamp { get; set; }
+        [DataMember]
+        public double DurationInMs { get; set; }
     }
 }

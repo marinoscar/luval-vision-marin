@@ -1,34 +1,37 @@
-﻿using System;
+﻿using Microsoft.WindowsAzure.Storage.Blob;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Cors;
-using luval.vision.entity;
-using luval.vision.dal;
+using luval.vision.bll;
+using System.Threading.Tasks;
+using System.Web;
 
 namespace luval.vision.api.Controllers
 {
     [EnableCors(origins: "*", headers: "*", methods: "*")]
-    public class UserController : ApiController
+    public class StorageController : ApiController
     {
-        private UserDAL userDAL;
+        private OcrBlobStorage ocrBlobStorage;
 
-        public UserController()
+        public StorageController()
         {
-            userDAL = new UserDAL();
+            ocrBlobStorage = new OcrBlobStorage();
         }
 
-        public IHttpActionResult Post(OcrUser user)
+        [HttpGet]
+        public IHttpActionResult Get()
         {
             try
             {
-                OcrUser userResult = userDAL.SaveOrUpdate(user);
-                if(!userResult.Equals(null))
+                IEnumerable<IListBlobItem> blobs = ocrBlobStorage.GetFilesBlobStorage();
+                if (!blobs.Equals(null))
                 {
-                    return Ok(userResult);
+                    if(blobs.Count() > 0)
+                        return Ok(blobs);
                 }
                 return Content(HttpStatusCode.InternalServerError, "The user couldn't be registered");
             }
@@ -37,5 +40,7 @@ namespace luval.vision.api.Controllers
                 return Content(HttpStatusCode.InternalServerError, e.ToString());
             }
         }
+
+
     }
 }

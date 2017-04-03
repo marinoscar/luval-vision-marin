@@ -1,8 +1,9 @@
 class LoginController {
-  constructor($log, $state, loginService) {
+  constructor($log, $state, loginService, sessionService) {
     this.$state = $state;
     this.log = $log;
     this.loginService = loginService;
+    this.sessionService = sessionService;
   }
 
   onSignIn() {
@@ -14,10 +15,26 @@ class LoginController {
       });
   }
 
+  uploadFile() {
+    const $file = this.fileSelected[0];
+    const json = {
+      userId: this.sessionService.getAuthData().authData.id,
+      file: $file
+    };
+    this.loginService.uploadDocumenToBlobStorage(json)
+      .then(item => {
+        this.log.info(item);
+      });
+  }
+
+  onFileSelect($files) {
+    this.fileSelected = $files;
+  }
+
   saveSignIn(user) {
     this.loginService.saveOrUpdateUser(user)
       .then(user => {
-        this.log.info(user);
+        this.sessionService.setAuthData(user.data);
         this.$state.go('receipts');
       });
   }

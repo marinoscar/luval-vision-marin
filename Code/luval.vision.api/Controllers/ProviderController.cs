@@ -5,54 +5,77 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using luval.vision.bll;
+using luval.vision.core;
+using luval.vision.sink;
 using Newtonsoft.Json;
 using luval.vision.entity;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http.Cors;
+using System.IO;
 
 namespace luval.vision.api.Controllers
 {
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class ProviderController : ApiController
     {
-        private OcrProvider providerOcr;
         private OcrProcess processOcr;
-        private OcrResult _result;
+        private OcrProvider providerOcr;
+        private OcrBlobStorage blobStorageOcr;
 
         public ProviderController()
         {
-            processOcr = new OcrProcess();
             providerOcr = new OcrProvider(new MicrosoftOcrEngine(), new MicrosoftVisionLoader());
+            blobStorageOcr = new OcrBlobStorage();
+            processOcr = new OcrProcess();
         }
 
-        public async Task<HttpResponseMessage> Post()
+        public async Task<IHttpActionResult> Post()
         {
+            ProcessResult processResult = new ProcessResult();
+            string jsonResult = string.Empty;
             if (!Request.Content.IsMimeMultipartContent())
             {
-                throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
+                this.Request.CreateResponse(HttpStatusCode.UnsupportedMediaType);
             }
 
-            string root = HttpContext.Current.Server.MapPath("~/App_Data");
-            var provider = new MultipartFormDataStreamProvider(root);
-
+            var provider = GetMultipartProvider();
             try
             {
-                await Request.Content.ReadAsMultipartAsync(provider);
-
-                foreach (MultipartFileData file in provider.FileData)
+                var result = await Request.Content.ReadAsMultipartAsync(provider);
+                var originalFileName = GetDeserializedFileName(result.FileData.First());
+                var userId = result.FormData.GetValues(0).FirstOrDefault();
+                foreach (MultipartFileData file in result.FileData)
                 {
-                    var result = providerOcr.DoOcr(file.LocalFileName);
-                    _result = result;
+                    processResult = processOcr.DoProcess(file.LocalFileName);
+                    processResult.UserId = userId;
+                    blobStorageOcr.UploadFileBlobStorage(file.LocalFileName, file.Headers.ContentDisposition.FileName, processResult.Id, processResult.UserId);
+                    jsonResult = processOcr.DoSaveResult(file.LocalFileName, processResult);
                 }
-
-                return Request.CreateResponse(HttpStatusCode.OK, processOcr.DoProcess(_result));
+                return Ok(jsonResult);
             }
-            catch (System.Exception e)
+            catch (Exception exception)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e);
+                return BadRequest(exception.ToString());
             }
         }
 
+        private MultipartFormDataStreamProvider GetMultipartProvider()
+        {
+            var root = HttpContext.Current.Server.MapPath("~/App_Data");
+            Directory.CreateDirectory(root);
+            return new MultipartFormDataStreamProvider(root);
+        }
+
+        private string GetDeserializedFileName(MultipartFileData fileData)
+        {
+            var fileName = GetFileName(fileData);
+            return JsonConvert.DeserializeObject(fileName).ToString();
+        }
+
+        private string GetFileName(MultipartFileData fileData)
+        {
+            return fileData.Headers.ContentDisposition.FileName;
+        }
     }
 }
