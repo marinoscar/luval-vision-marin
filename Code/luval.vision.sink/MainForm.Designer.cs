@@ -38,6 +38,7 @@
             this.customizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.chkOcrResult = new System.Windows.Forms.CheckBox();
             this.btnDemo = new System.Windows.Forms.Button();
             this.processBtn = new System.Windows.Forms.Button();
             this.pictureBox = new System.Windows.Forms.PictureBox();
@@ -54,7 +55,7 @@
             this.listResult = new System.Windows.Forms.ListView();
             this.colAttribute = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colValue = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.chkOcrResult = new System.Windows.Forms.CheckBox();
+            this.mnuSaveResult = new System.Windows.Forms.ToolStripMenuItem();
             this.mainMenu.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
@@ -82,6 +83,7 @@
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openMenu,
+            this.mnuSaveResult,
             this.toolStripSeparator1,
             this.exitMenu});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
@@ -94,19 +96,19 @@
             this.openMenu.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.openMenu.Name = "openMenu";
             this.openMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.openMenu.Size = new System.Drawing.Size(146, 22);
+            this.openMenu.Size = new System.Drawing.Size(152, 22);
             this.openMenu.Text = "&Open";
             this.openMenu.Click += new System.EventHandler(this.openMenu_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(143, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
             // 
             // exitMenu
             // 
             this.exitMenu.Name = "exitMenu";
-            this.exitMenu.Size = new System.Drawing.Size(146, 22);
+            this.exitMenu.Size = new System.Drawing.Size(152, 22);
             this.exitMenu.Text = "E&xit";
             this.exitMenu.Click += new System.EventHandler(this.exitMenu_Click);
             // 
@@ -141,6 +143,17 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(832, 50);
             this.panel1.TabIndex = 1;
+            // 
+            // chkOcrResult
+            // 
+            this.chkOcrResult.AutoSize = true;
+            this.chkOcrResult.Location = new System.Drawing.Point(12, 16);
+            this.chkOcrResult.Name = "chkOcrResult";
+            this.chkOcrResult.Size = new System.Drawing.Size(112, 17);
+            this.chkOcrResult.TabIndex = 2;
+            this.chkOcrResult.Text = "Show OCR Result";
+            this.chkOcrResult.UseVisualStyleBackColor = true;
+            this.chkOcrResult.CheckedChanged += new System.EventHandler(this.chkOcrResult_CheckedChanged);
             // 
             // btnDemo
             // 
@@ -263,7 +276,7 @@
             this.tabVisionJson.Location = new System.Drawing.Point(4, 22);
             this.tabVisionJson.Name = "tabVisionJson";
             this.tabVisionJson.Padding = new System.Windows.Forms.Padding(3);
-            this.tabVisionJson.Size = new System.Drawing.Size(564, 465);
+            this.tabVisionJson.Size = new System.Drawing.Size(522, 465);
             this.tabVisionJson.TabIndex = 1;
             this.tabVisionJson.Text = "Vision";
             this.tabVisionJson.UseVisualStyleBackColor = true;
@@ -273,7 +286,7 @@
             this.treeJsonVision.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeJsonVision.Location = new System.Drawing.Point(3, 3);
             this.treeJsonVision.Name = "treeJsonVision";
-            this.treeJsonVision.Size = new System.Drawing.Size(558, 459);
+            this.treeJsonVision.Size = new System.Drawing.Size(516, 459);
             this.treeJsonVision.TabIndex = 0;
             // 
             // listResult
@@ -297,16 +310,12 @@
             // 
             this.colValue.Text = "Value";
             // 
-            // chkOcrResult
+            // mnuSaveResult
             // 
-            this.chkOcrResult.AutoSize = true;
-            this.chkOcrResult.Location = new System.Drawing.Point(12, 16);
-            this.chkOcrResult.Name = "chkOcrResult";
-            this.chkOcrResult.Size = new System.Drawing.Size(112, 17);
-            this.chkOcrResult.TabIndex = 2;
-            this.chkOcrResult.Text = "Show OCR Result";
-            this.chkOcrResult.UseVisualStyleBackColor = true;
-            this.chkOcrResult.CheckedChanged += new System.EventHandler(this.chkOcrResult_CheckedChanged);
+            this.mnuSaveResult.Name = "mnuSaveResult";
+            this.mnuSaveResult.Size = new System.Drawing.Size(152, 22);
+            this.mnuSaveResult.Text = "Save Result";
+            this.mnuSaveResult.Click += new System.EventHandler(this.mnuSaveResult_Click);
             // 
             // MainForm
             // 
@@ -367,6 +376,7 @@
         private System.Windows.Forms.ColumnHeader colAttribute;
         private System.Windows.Forms.ColumnHeader colValue;
         private System.Windows.Forms.CheckBox chkOcrResult;
+        private System.Windows.Forms.ToolStripMenuItem mnuSaveResult;
     }
 }
 

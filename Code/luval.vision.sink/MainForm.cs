@@ -21,6 +21,7 @@ namespace luval.vision.sink
         private ImageManager _imageManager;
         private OcrResult _result;
         private Image _resultImg;
+        private ProcessResult _processResult;
 
         public MainForm()
         {
@@ -105,6 +106,7 @@ namespace luval.vision.sink
             var provider = new DocumentProcesor(GetProvider(false), new NlpProvider(new GoogleNlpEngine(), new GoogleNlpLoader()));
             var result = provider.DoProcess(_fileName, options);
             _result = result.OcrResult;
+            _processResult = result;
             LoadVisionTree(result.OcrResult);
             LoadText(result.OcrResult);
             _resultImg = _imageManager.ProcessParseResult(result.TextResults);
@@ -181,6 +183,43 @@ namespace luval.vision.sink
             {
                 PictureBox.Image = _resultImg;
             }
+        }
+
+        private void mnuSaveResult_Click(object sender, EventArgs e)
+        {
+            if (_processResult == null)
+            {
+                MessageBox.Show("Please process a document first", "Save", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            var dlg = new SaveFileDialog()
+            {
+                DefaultExt = "celeris",
+                AddExtension = true,
+                Filter = "Celeris Files(*.celeris)|*.celeris",
+                RestoreDirectory = true,
+                Title = "Save Results",
+                OverwritePrompt = true
+            };
+            if (dlg.ShowDialog() != DialogResult.OK) return;
+            DoSaveResult(dlg.FileName);
+        }
+
+        private void DoSaveResult(string resultFileName)
+        {
+            var data = new FormResult()
+            {
+                FileName = _fileName,
+                FileData = File.ReadAllBytes(_fileName),
+                Result = _processResult
+            };
+            var json = JsonConvert.SerializeObject(data, Formatting.None, new JsonSerializerSettings() { PreserveReferencesHandling = PreserveReferencesHandling.Objects });
+            using (var stream = new StreamWriter(resultFileName, false))
+            {
+                stream.Write(json);
+                stream.Close();
+            }
+            MessageBox.Show("Result has been saved", "Save", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

@@ -33,6 +33,17 @@ namespace luval.vision.core
             var imgBytes = Pdf2Img.CheckForPdfAndConvert(data, fileName);
             var ocr = OcrProvider.DoOcr(imgBytes, fileName);
             var nlp = NlpProvider.DoNlp(GetTextToAnalyze(ocr, mappings));
+            return DoProcess(data, fileName, mappings, ocr, nlp, startedOn);
+        }
+
+        public ProcessResult DoProcess(byte[] data, string fileName, IEnumerable<AttributeMapping> mappings, OcrResult ocr, NlpResult nlp)
+        {
+            var startedOn = DateTime.UtcNow;
+            return DoProcess(data, fileName, mappings, ocr, nlp, startedOn);
+        }
+
+        private ProcessResult DoProcess(byte[] data, string fileName, IEnumerable<AttributeMapping> mappings, OcrResult ocr, NlpResult nlp, DateTime startedOn)
+        {
             var navigator = new Navigator(ocr.Info, ocr.Lines, mappings);
             var attributes = navigator.ExtractAttributes();
             DoExtraValidations(attributes, ocr);
