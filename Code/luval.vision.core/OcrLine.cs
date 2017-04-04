@@ -13,10 +13,15 @@ namespace luval.vision.core
         public OcrLine()
         {
             Words = new List<OcrWord>();
+            ParentRegion = new OcrRegion();
+            Entities = new List<OcrEntity>();
         }
 
         public OcrRegion ParentRegion { get; set; }
         public List<OcrWord> Words { get; set; }
+
+        public List<OcrEntity> Entities { get; set; }
+
         public override string Text
         {
             get

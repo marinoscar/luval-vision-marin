@@ -53,10 +53,11 @@ namespace luval.vision.sink
         {
             if (PictureBox.Image != null) PictureBox.Image.Dispose();
             PictureBox.Image = null;
+            var data = File.ReadAllBytes(fileName);
             var img = default(Image);
-            using (var stream = new StreamReader(fileName))
+            using (var stream = new MemoryStream(Pdf2Img.CheckForPdfAndConvert(data, fileName)))
             {
-                img = Image.FromStream(stream.BaseStream);
+                img = Image.FromStream(stream);
                 stream.Close();
             }
             _imageManager = new ImageManager(img);
@@ -65,12 +66,6 @@ namespace luval.vision.sink
             PictureBox.Refresh();
         }
 
-        public OcrResult ProcessFromFile(string fileName)
-        {
-            var provider = new OcrProvider(new GoogleOcrEngine(), new GoogleVisionLoader());
-            var result = provider.DoOcr(fileName);
-            return result;
-        }
 
         private void exitMenu_Click(object sender, EventArgs e)
         {
@@ -84,9 +79,12 @@ namespace luval.vision.sink
                 MessageBox.Show("Please load an image for processing", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            var result = ProcessFromFile(_fileName);
-            _result = result;
-            DoProcess(result);
+            DoProcess();
+        }
+
+        private OcrProvider GetProvider(bool ms)
+        {
+            return !ms ? new OcrProvider(new GoogleOcrEngine(), new GoogleVisionLoader()) : new OcrProvider(new MicrosoftOcrEngine(), new MicrosoftVisionLoader());
         }
 
 
@@ -96,19 +94,23 @@ namespace luval.vision.sink
             DoLoadImage(@"Demo/sample-receipt.jpg");
             var response = File.ReadAllText(@"Demo/sample-response.json");
             var ocrResult = JsonConvert.DeserializeObject<OcrResult>(response);
-            DoProcess(ocrResult);
+            //DoProcess(ocrResult);
 
         }
 
-        private void DoProcess(OcrResult ocrResult)
+        private void DoProcess()
         {
-            var items = GetData(ocrResult);
-            LoadVisionTree(ocrResult);
-            LoadText(ocrResult);
-            _resultImg = _imageManager.ProcessParseResult(items);
+            var jsonData = File.ReadAllText("attribute-mapping.json");
+            var options = JsonConvert.DeserializeObject<List<AttributeMapping>>(jsonData);
+            var provider = new DocumentProcesor(GetProvider(false), new NlpProvider(new GoogleNlpEngine(), new GoogleNlpLoader()));
+            var result = provider.DoProcess(_fileName, options);
+            _result = result.OcrResult;
+            LoadVisionTree(result.OcrResult);
+            LoadText(result.OcrResult);
+            _resultImg = _imageManager.ProcessParseResult(result.TextResults);
             PictureBox.Image = _resultImg;
             listResult.Items.Clear();
-            foreach (var item in items)
+            foreach (var item in result.TextResults)
             {
                 var listItem = new ListViewItem(new string[] { item.Map.AttributeName, item.ResultElement.Text });
                 listResult.Items.Add(listItem);

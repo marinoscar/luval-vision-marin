@@ -78,6 +78,38 @@ namespace luval.vision.core
             return result;
         }
 
+        public static IEnumerable<OcrLine> GetWordsHorizontallyAligned(IEnumerable<OcrWord> elements, float horizontalErrorMargin)
+        {
+            var lines = new List<OcrLine>();
+            var sorted = elements.OrderBy(i => i.Location.Y).ThenBy(i => i.Location.X).ToList();
+            var id = 1;
+            while (sorted.Count > 0)
+            {
+                var item = sorted.First();
+                var minY = (int)(item.Location.Y - (item.Location.Y * horizontalErrorMargin));
+                var maxY = (int)(item.Location.Y + (item.Location.Y * horizontalErrorMargin));
+                var wordsInLine = sorted.Where(i => (i.Id != item.Id) && (i.Location.Y >= minY && i.Location.Y <= maxY)).OrderBy(i => i.Location.X).ToList();
+                wordsInLine.Insert(0, item);
+                lines.Add(new OcrLine()
+                {
+                    Id = id,
+                    Words = wordsInLine.OrderBy(i => i.Location.X).ToList(),
+                    Location = GetLineLocation(wordsInLine)
+                });
+                wordsInLine.ForEach(i => sorted.Remove(i));
+            }
+            return lines;
+        }
+
+        private static OcrLocation GetLineLocation(IEnumerable<OcrElement> items)
+        {
+            var x = items.Min(i => i.Location.X);
+            var y = items.Min(i => i.Location.Y);
+            var h = items.Max(i => i.Location.YBound) - x;
+            var w = items.Max(i => i.Location.XBound) - y;
+            return new OcrLocation() { X = x, Y = y, Height = h, Width = w };
+        }
+
         private bool AcceptSearch(AttributeMapping map, List<MappingResult> items, OcrElement anchor, IEnumerable<OcrElement> values, bool isDown)
         {
             if (values == null || !values.Any()) return false;
@@ -86,8 +118,10 @@ namespace luval.vision.core
             var res = new MappingResult()
             {
                 Map = map,
-                Location = loc.Item1, RelativeLocation = loc.Item2,
-                AnchorElement = anchor, ResultElement = val
+                Location = loc.Item1,
+                RelativeLocation = loc.Item2,
+                AnchorElement = anchor,
+                ResultElement = val
             };
             items.Add(res);
             return !string.IsNullOrWhiteSpace(val.Text);
@@ -95,7 +129,7 @@ namespace luval.vision.core
 
         private Tuple<OcrLocation, OcrRelativeLocation> GetMapLocation(OcrElement anchor, OcrElement value, bool isDown)
         {
-            
+
             var res = new OcrLocation()
             {
                 X = anchor.Location.X < value.Location.X ? anchor.Location.X : value.Location.X,

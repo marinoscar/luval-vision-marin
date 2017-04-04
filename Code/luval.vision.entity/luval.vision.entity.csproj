@@ -30,6 +30,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MongoDB.Bson, Version=2.4.3.23, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MongoDB.Bson.2.4.3\lib\net45\MongoDB.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver, Version=2.4.3.23, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MongoDB.Driver.2.4.3\lib\net45\MongoDB.Driver.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver.Core, Version=2.4.3.23, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MongoDB.Driver.Core.2.4.3\lib\net45\MongoDB.Driver.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver.Legacy, Version=2.4.3.23, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\mongocsharpdriver.2.4.3\lib\net45\MongoDB.Driver.Legacy.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
     <Reference Include="PdfSharp, Version=1.32.3057.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
       <HintPath>..\packages\PDFsharp.1.32.3057.0\lib\net20\PdfSharp.dll</HintPath>
@@ -44,6 +56,9 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.0.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -54,6 +69,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AttributeMapping.cs" />
+    <Compile Include="BlobDownloadModel.cs" />
+    <Compile Include="BlobUploadModel.cs" />
     <Compile Include="EntityExtractor.cs" />
     <Compile Include="Enum.cs" />
     <Compile Include="Extractor.cs" />
@@ -61,6 +78,7 @@
     <Compile Include="LineItem.cs" />
     <Compile Include="MappingResult.cs" />
     <Compile Include="OcrArea.cs" />
+    <Compile Include="OcrDocument.cs" />
     <Compile Include="OcrElement.cs" />
     <Compile Include="OcrLine.cs" />
     <Compile Include="OcrLocation.cs" />
@@ -78,6 +96,7 @@
     <Compile Include="Resolvers\StringResolverManager.cs" />
     <Compile Include="Resolvers\WordResolver.cs" />
     <Compile Include="TreeProcess.cs" />
+    <Compile Include="OcrUser.cs" />
     <Compile Include="WordDictionary.cs" />
   </ItemGroup>
   <ItemGroup>

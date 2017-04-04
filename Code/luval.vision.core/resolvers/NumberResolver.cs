@@ -6,16 +6,24 @@ using System.Threading.Tasks;
 
 namespace luval.vision.core.resolvers
 {
-    public class NumberResolver : RegexResolver
+    public class NumberResolver : IStringResolver
     {
+        public string Code { get { return "number"; } }
 
-        private const string _exp = @"(\b[0-9]{1,3}(,[0-9]{3})*(\.[0-9]+)?\b|\.[0-9]+\b)|(\b[0-9]*\b)|(\b[0-9]*\.[0-9]*\b)";
-
-        public NumberResolver() : base(_exp)
+        public string GetValue(string text)
         {
+            var res = GetValues(text).FirstOrDefault() ?? new ResolverMatch();
+            return res.Text;
         }
 
+        public IEnumerable<ResolverMatch> GetValues(string text)
+        {
+            return StringUtils.GetWords(text).Where(i => IsMatch(i.Value)).Select(i => ResolverMatch.Load(i)).ToList();
+        }
 
-        public override string Code { get { return "number"; } }
+        public bool IsMatch(string text)
+        {
+            return text.All(char.IsNumber);
+        }
     }
 }

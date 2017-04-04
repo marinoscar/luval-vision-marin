@@ -31,7 +31,7 @@ namespace luval.tests
         public void ItShouldFindAValidNumber()
         {
             var nums = new string[] { "12345", "123456.78", "1,000.00", "1,000.000", "1,000,000,000.00" };
-            ValidateExpressionWithArray(_resManager.Get<NumberResolver>(), nums);
+            ValidateExpressionWithArray(_resManager.Get<AmountResolver>(), nums);
         }
 
         private void ValidateExpressionWithArray(IStringResolver res, string[] vals)

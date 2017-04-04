@@ -24,7 +24,7 @@ namespace luval.vision.core
 
         public static bool IsNumber(OcrElement word)
         {
-            return ResolverManager.Get<NumberResolver>().IsMatch(word.Text);
+            return ResolverManager.Get<AmountResolver>().IsMatch(word.Text);
 
         }
 
