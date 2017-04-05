@@ -127,7 +127,7 @@
     font-weight: 700;
   }
   #image footer {
-    background: #3f51b5;
+    background: #e0ae48;
     position: absolute;
     bottom: 0;
     width: 100%;
@@ -156,7 +156,7 @@
     padding: 24px;
   }
   #control-toggle button:hover {
-    background: #3949ab;
+    background: #cf9d3a;
   }
   #control-toggle button {
     width: 50%;
@@ -164,7 +164,7 @@
   }
   #rotate-controls, 
   #zoom-controls {
-    border-top: 6px solid #536dfe;
+    border-top: 6px solid #cf9d3a;
   }
   #image footer div .slider {
     position: absolute;
@@ -173,7 +173,7 @@
     height: 32px;
     margin-top: -20px;
     margin-left: -16px;
-    background: #536dfe;
+    background: #e0ae48;
     border-radius: 50%;
     z-index: 5;
     box-shadow: 0px 2px 6px rgba(0,0,0,.3);
@@ -222,5 +222,57 @@
     background-color: #e0e0e0;
     box-shadow: inset 0px 2px 6px rgba(0,0,0,.2);
     text-align: center;
+  }
+  #data header {
+    width: 100%;
+    background: #e0ae48;
+    height: 75px;
+    overflow: hidden;
+    color: #fff;
+    z-index: 2;
+    position: relative;
+    border-bottom: 1px solid #e0ae48;
+  }
+  #guidDisplay, #memberName {
+    margin: 0 auto;
+    max-width: 540px;
+    padding: 6px 12px;
+    color: #757575;
+  }
+  #editor > h2 {
+    color: #424242;
+    max-width: 540px;
+    margin: 0 auto;
+    text-transform: uppercase;
+    font-size: .9em;
+    font-weight: 700;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    display: block;
+    width: 100%;
+    padding: 12px 36px;
+    text-align: left;
+    background-color: #fafafa;
+    cursor: pointer;
+  }
+  #editor > h2.hidden:before {
+    -webkit-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+  }
+  #editor > h2:before {
+    content: "\25bc";
+    position: absolute;
+    left: 12px;
+    -webkit-transition: .218s ease;
+    transition: .218s ease;
+  }
+  #editor > section {
+    text-align: left;
+    max-width: 540px;
+    margin: 0 auto;
+    background: #fafafa;
+    padding: 12px;
+    border-bottom: 1px solid #eee;
   }
 }

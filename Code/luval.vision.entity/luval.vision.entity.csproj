@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>luval.vision.entity</RootNamespace>
     <AssemblyName>luval.vision.entity</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -68,40 +69,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AttributeMapping.cs" />
-    <Compile Include="EntityExtractor.cs" />
-    <Compile Include="Enum.cs" />
-    <Compile Include="Extractor.cs" />
-    <Compile Include="ImageInfo.cs" />
-    <Compile Include="LineItem.cs" />
-    <Compile Include="MappingResult.cs" />
-    <Compile Include="OcrArea.cs" />
-    <Compile Include="OcrElement.cs" />
-    <Compile Include="OcrLine.cs" />
-    <Compile Include="OcrLocation.cs" />
-    <Compile Include="OcrRegion.cs" />
-    <Compile Include="OcrRelativeLocation.cs" />
-    <Compile Include="OcrResult.cs" />
-    <Compile Include="OcrWord.cs" />
+    <Compile Include="BlobDownloadModel.cs" />
+    <Compile Include="BlobUploadModel.cs" />
+    <Compile Include="OcrDocument.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resolvers\CodeResolver.cs" />
-    <Compile Include="Resolvers\DateResolver.cs" />
-    <Compile Include="Resolvers\IRegexResolver.cs" />
-    <Compile Include="Resolvers\IStringResolver.cs" />
-    <Compile Include="Resolvers\NumberResolver.cs" />
-    <Compile Include="Resolvers\RegexResolver.cs" />
-    <Compile Include="Resolvers\StringResolverManager.cs" />
-    <Compile Include="Resolvers\WordResolver.cs" />
     <Compile Include="TreeProcess.cs" />
-    <Compile Include="User.cs" />
-    <Compile Include="WordDictionary.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Resources\en-words.txt" />
+    <Compile Include="OcrUser.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="key.snk" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\luval.vision.core\luval.vision.core.csproj">
+      <Project>{e2b1ce82-40c0-4f2b-9d00-a93425d7147f}</Project>
+      <Name>luval.vision.core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\luval.vision.sink\luval.vision.sink.csproj">
+      <Project>{443e9ac3-b5fe-4f20-8b6f-87f59ebbc8f1}</Project>
+      <Name>luval.vision.sink</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

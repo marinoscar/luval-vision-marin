@@ -10,9 +10,9 @@ namespace luval.vision.dal
 {
     public interface IUserDAO
     {
-        User SaveOrUpdate(User user);
-        IEnumerable<User> GetUsers();
-        User GetUser(String userId);
+        OcrUser SaveOrUpdate(OcrUser user);
+        IEnumerable<OcrUser> GetUsers();
+        OcrUser GetUser(String userId);
 
     }
 }

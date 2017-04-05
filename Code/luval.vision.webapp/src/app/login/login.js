@@ -1,15 +1,18 @@
 import LoginController from './login.controller';
 import loginService from './login.service';
+import sessionService from '../services/session.service';
 import routes from './login.routes';
 import 'ng-google-signin/dist/ng-google-signin';
+import 'ng-file-upload/dist/ng-file-upload.js';
 
 export default
   angular
-    .module('luval-vision.login', [])
+    .module('luval-vision.login', ['ngFileUpload'])
     .config(routes)
     .config(GoogleSignInConfig)
     .controller('LoginController', LoginController)
     .service('loginService', loginService)
+    .service('sessionService', sessionService)
     .name;
 
 /* ngInject */
