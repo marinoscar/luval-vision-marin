@@ -4,7 +4,11 @@ class ReceiptsService {
   }
 
   getAllReceipts() {
-    return this.http.get('receipts/');
+    return this.http.get('http://localhost:55993/api/v1/Storage/');
+  }
+
+  postReceipt() {
+    return null;
   }
 
   getReceipt(id) {
