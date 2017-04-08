@@ -1,24 +1,4 @@
-#check-receipts-view {
-  #main-header {
-    width: 100%;
-    text-align: center;
-    height: 90px;
-  }
-  #main-header > .col-md-4 > button, 
-  #main-header > .col-md-4 > a {
-    padding: 12px;
-    margin: 8px;
-    text-decoration: none;
-    position: absolute;
-    top: 0;
-    cursor: pointer;
-    height: 72px;
-    width: 72px;
-    opacity: 1;
-    filter: alpha(opacity=100);
-    -webkit-transition: .218s ease;
-    transition: .218s ease;
-  }
+#check-invoice-view {
   #go-back, 
   #close-this {
     left: 0;
@@ -29,38 +9,15 @@
     font-size: 2em;
     color: #706f73;
   }
-	.logo {
-    width: 13em;
-    margin-top: 3%;
-  }
-  main.done {
-    height: calc(100vh - 90px);
-    overflow: auto;
-  }
-  main {
-    width: 100%;
-    max-width: 1600px;
-    min-height: 0;
-    background: none;
-    display: block;
-    z-index: 10;
-    margin: 0 auto;
-    box-shadow: 0px 2px 5px rgba(0,0,0,.5);
-    transition: height .400s ease;
-    &:before, 
-    &:after {
-        content: "";
-        display: block;
-        height: 0;
-        overflow: hidden;
-    }
-  }
   #document-container {
-    top: 22px; 
-    left: 124px; 
     transform: rotate(0deg) scale(1);
+    display: block;
+    position: absolute;
+    width: 100%;
+    max-width: 500px;
   }
   .gutter {
+    width: 10px;
     position: relative;
     height: 80vh;
     float: left;
@@ -71,6 +28,10 @@
   }
   #image {
     overflow: hidden;
+    img {
+      box-shadow: 0px 2px 5px rgba(0,0,0,.5);
+      width: inherit;
+    }
   }
   aside {
     height: 100%;
@@ -132,16 +93,6 @@
     bottom: 0;
     width: 100%;
   }
-  article, 
-  aside, 
-  footer, 
-  header, 
-  hgroup, 
-  main, 
-  nav, 
-  section {
-    display: block;
-  }
   #image footer div.active {
     display: block;
   }
@@ -162,7 +113,7 @@
     width: 50%;
     padding: 24px;
   }
-  #rotate-controls, 
+  #rotate-controls,
   #zoom-controls {
     border-top: 6px solid #cf9d3a;
   }
@@ -182,7 +133,7 @@
   .slider {
     left: 50%;
   }
-  #rotate-controls > *, 
+  #rotate-controls > *,
   #zoom-controls > * {
     width: 33.3%;
     display: inline-block;
@@ -194,25 +145,6 @@
   #image footer div .show-value {
       font-size: 2em;
       font-weight: 700;
-  }
-  footer button {
-    font-size: .9em;
-    text-transform: uppercase;
-    color: #fff;
-    padding: 12px;
-    position: relative;
-    -webkit-transition: .218s ease;
-    transition: .218s ease;
-  }
-  input, button, select, option {
-    background: none;
-    border: none;
-    border-radius: 0;
-    font-family: Lato, Arial, sans-serif;
-    font-size: 1em;
-    font-weight: 300;
-    padding: 0;
-    color: inherit;
   }
   #editor {
     overflow-y: auto;
@@ -274,5 +206,9 @@
     background: #fafafa;
     padding: 12px;
     border-bottom: 1px solid #eee;
+  }
+  .logo {
+    width: 13em;
+    margin-top: 3%;
   }
 }
