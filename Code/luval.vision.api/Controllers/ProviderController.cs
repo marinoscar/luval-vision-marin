@@ -49,7 +49,7 @@ namespace luval.vision.api.Controllers
                 {
                     processResult = processOcr.DoProcess(file.LocalFileName);
                     processResult.UserId = userId;
-                    blobStorageOcr.UploadFileBlobStorage(file.LocalFileName, file.Headers.ContentDisposition.FileName, processResult.Id, processResult.UserId);
+                    blobStorageOcr.UploadFileBlobStorage(file.LocalFileName, file.Headers.ContentDisposition.FileName, processResult);
                     jsonResult = processOcr.DoSaveResult(file.LocalFileName, processResult);
                 }
                 return Ok(jsonResult);

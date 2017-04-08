@@ -1,28 +1,41 @@
 class loginService {
-  constructor($log, GoogleSignin, $http, Upload, CORE) { // eslint-disable-line max-params
+  constructor($log, $rootScope, $location, GoogleSignin, documentService, $http, CORE) { // eslint-disable-line max-params
     this.log = $log;
+    this.$rootScope = $rootScope;
+    this.$location = $location;
     this.GoogleSignin = GoogleSignin;
+    this.documentService = documentService;
     this.$http = $http;
-    this.upload = Upload;
     this.CORE = CORE;
   }
 
+  isLoggedIn() {
+    const authData = this.sessionService.getAuthData();
+    const sessionDefined = angular.isDefined(authData);
+    const authDataDefined = authData !== null;
+    return sessionDefined && authDataDefined;
+  }
+
+  verifyAccess() {
+    this.$rootScope.$on('$stateChangeStart', toState => {
+      if (!this.isLoggedIn() && toState.name !== 'login') {
+        this.$location.path('login');
+      }
+    });
+  }
+
+  logOut() {
+  //  this.log.info(this.GoogleSignin.getBasicProfile());
+    return this.GoogleSignin.signOut();
+  }
+
   callGoogleSignIn() {
+  //  this.log.info(this.GoogleSignin.getBasicProfile());
     return this.GoogleSignin.signIn();
   }
 
-  uploadDocumenToBlobStorage(blob) {
-    const upload = this.upload.upload({
-      url: 'http://localhost:55993/api/v1/Provider',
-      method: 'POST',
-      data: blob,
-      file: blob.file
-    });
-    return upload;
-  }
-
   saveOrUpdateUser(user) {
-    const post = {
+    const postRequest = {
       method: 'POST',
       url: this.CORE.URL + 'User',
       headers: {
@@ -30,12 +43,12 @@ class loginService {
       },
       data: this.buildUserJSON(user)
     };
-    return this.$http(post);
+    return this.$http(postRequest);
   }
 
   buildUserJSON(user) {
     return {
-      token_id: user.Zi.id_token // eslint-disable-line camelcase
+      token_id: this.documentService.replaceSpecialCharacters(user.w3.U3) // eslint-disable-line camelcase
     };
   }
 }

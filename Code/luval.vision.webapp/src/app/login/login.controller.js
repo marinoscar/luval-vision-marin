@@ -1,8 +1,10 @@
+
 class LoginController {
-  constructor($log, $state, loginService, sessionService) {
+  constructor($log, $state, loginService, sessionService, documentService) {
     this.$state = $state;
     this.log = $log;
     this.loginService = loginService;
+    this.documentService = documentService;
     this.sessionService = sessionService;
   }
 
@@ -15,27 +17,12 @@ class LoginController {
       });
   }
 
-  uploadFile() {
-    const $file = this.fileSelected[0];
-    const json = {
-      userId: this.sessionService.getAuthData().authData.id,
-      file: $file
-    };
-    this.loginService.uploadDocumenToBlobStorage(json)
-      .then(item => {
-        this.log.info(item);
-      });
-  }
-
-  onFileSelect($files) {
-    this.fileSelected = $files;
-  }
-
   saveSignIn(user) {
+    const tokenId = this.documentService.replaceSpecialCharacters(user.w3.U3);
+    this.sessionService.setAuthData(tokenId); // eslint-disable-line no-useless-escape
     this.loginService.saveOrUpdateUser(user)
-      .then(user => {
-        this.sessionService.setAuthData(user.data);
-        this.$state.go('receipts');
+      .then(function () {
+        this.$state.go('invoices');
       });
   }
 }

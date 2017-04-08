@@ -1,0 +1,74 @@
+<div id="check-invoice-view">
+  <div class="container">
+    <div class="row">
+      <div id="main-header">
+        <div class="col-md-4">
+          <button id="close-this" ng-click="vm.backToInvoices()"></button>
+        </div>
+        <div class="col-md-8 col-md-offset-2">
+          <img ng-src="../../img/logo.png" class="logo" />
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="container-fluid">
+        <main class="done">
+          <aside id="image" style="width: calc(50% - 5px);">
+            <div>
+              <button id="share-button"></button>
+              <button id="hd-button"></button>
+              <div id="document-container">	
+                <img id="invoice-image" src="data:image/jpg;base64,{{vm.imageSrc}}" />
+              </div>
+            </div>
+            <footer>
+              <div id="control-toggle" class="active">
+                <button id="goRotate">Rotate</button><button id="goZoom">Zoom</button>
+              </div>
+            </footer>
+          </aside>
+          <div class="gutter"></div>
+          <aside id="data" style="width: calc(50% - 5px);">
+            <header>
+              <section>
+                <div style="background-image: url(&quot;http://i.imgur.com/G18NbfO.png&quot;);">
+                </div>
+                <!--<p class="humanDate">March 12, 2017</p>-->
+              </section>
+            </header>
+            <div id="editor">
+              <p id="guidDisplay">Receipt ID:{{vm.metadata.Result.Id}}</p>
+              <section id="primaryInformation">
+                <h2 class="hidden">Primary Information</h2>
+                <div class="panel-group">
+                  <div class="panel panel-default">
+                    <div class="panel-heading">
+                      <h4 class="panel-title">
+                      <a class="cursor-pointer" data-toggle="collapse" data-target="#collapse1">Primary Information</a>
+                      </h4>
+                    </div>
+                    <div id="collapse1" class="panel-collapse collapse">
+                      <div class="panel-body" ng-if="!vm.primaryData">
+                        <h3>Invoice doesn't have primary data</h3>
+                      </div>
+                      <div class="panel-body" ng-if="vm.primaryData" ng-repeat="metadata in vm.primaryData">
+                        <div class="row">
+                          <div class="col-md-6">
+                            {{ metadata.Map.attributeName }}
+                          </div>
+                          <div class="col-md-6">
+                            {{ metadata.Value }}
+                          </div>
+                        </div> 
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            </div>
+          </aside>
+        </main>
+      </div>
+    </div>
+  </div>
+</div>

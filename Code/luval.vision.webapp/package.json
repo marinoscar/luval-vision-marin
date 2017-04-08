@@ -2,6 +2,7 @@
   "dependencies": {
     "@types/gapi.auth2": "0.0.35",
     "angular": "^1.6.2",
+    "angular-ui-bootstrap": "^2.5.0",
     "angular-ui-router": "1.0.0-beta.3",
     "bootstrap": "^3.3.7",
     "interactjs": "^1.2.8",

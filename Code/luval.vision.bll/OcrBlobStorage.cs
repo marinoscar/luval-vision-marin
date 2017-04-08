@@ -7,6 +7,9 @@ using Microsoft.Azure;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 using System.IO;
+using luval.vision.core;
+using luval.vision.entity;
+using System.Text.RegularExpressions;
 
 namespace luval.vision.bll
 {
@@ -23,22 +26,18 @@ namespace luval.vision.bll
             blobClient = storage.CreateCloudBlobClient();
         }
 
-        public void UploadFileBlobStorage(string path, string blockName, string guid, string userId)
+        public void UploadFileBlobStorage(string path, string blockName, ProcessResult processResult)
         {
-            BlobStorageConfiguration(userId);
-            AddContainerMetadata("Id", guid);
-            AddContainerMetadata("UserId", userId);
+            string ocrUser = Constants.prefix + processResult.UserId;
+            BlobStorageConfiguration(ocrUser);
+            AddContainerMetadata("Id", processResult.Id);
+            AddContainerMetadata("UserId", ocrUser);
+            setProcessResulToMetadata(processResult);
             blockBlob = blobContainer.GetBlockBlobReference(blockName);
             using (var fileStream = System.IO.File.OpenRead(path))
             {
                 blockBlob.UploadFromStream(fileStream);
             }
-        }
-
-        private void AddContainerMetadata(string key, string value)
-        {
-            blobContainer.Metadata.Add(key, value);
-            blobContainer.SetMetadata();
         }
 
         public string DownloadFileBlobStorage(string path, string blockName)
@@ -55,7 +54,10 @@ namespace luval.vision.bll
 
         public IEnumerable<IListBlobItem> GetFilesBlobStorage(string userId)
         {
-            BlobStorageConfiguration(userId);
+            string ocrUser = Constants.prefix + userId;
+            BlobStorageConfiguration(ocrUser);
+            blobContainer.FetchAttributes();
+
             List<IListBlobItem> blobs = new List<IListBlobItem>();
             BlobContinuationToken token = null;
             do
@@ -63,36 +65,36 @@ namespace luval.vision.bll
                 BlobResultSegment resultSegment = blobContainer.ListBlobsSegmented(token);
                 token = resultSegment.ContinuationToken;
 
-                foreach (IListBlobItem item in resultSegment.Results)
+                foreach (IListBlobItem blob in resultSegment.Results)
                 {
-                    blobs.Add(item);
-                    if (item.GetType() == typeof(CloudBlockBlob))
+                    foreach (var metadata in blobContainer.Metadata)
                     {
-                        CloudBlockBlob blob = (CloudBlockBlob)item;
-                        Console.WriteLine("Block blob of length {0}: {1}", blob.Properties.Length, blob.Uri);
+                        blob.Container.Metadata.Add(metadata.Key, metadata.Value);
                     }
-
-                    else if (item.GetType() == typeof(CloudPageBlob))
-                    {
-                        CloudPageBlob pageBlob = (CloudPageBlob)item;
-
-                        Console.WriteLine("Page blob of length {0}: {1}", pageBlob.Properties.Length, pageBlob.Uri);
-                    }
-
-                    else if (item.GetType() == typeof(CloudBlobDirectory))
-                    {
-                        CloudBlobDirectory directory = (CloudBlobDirectory)item;
-
-                        Console.WriteLine("Directory: {0}", directory.Uri);
-                    }
+                    blobs.Add(blob);
                 }
             } while (token != null);
             return blobs;
         }
 
+        private void AddContainerMetadata(string key, string value)
+        {
+            blobContainer.Metadata.Add(key, value);
+            blobContainer.SetMetadata();
+        }
+
+        private void setProcessResulToMetadata(ProcessResult processResult)
+        {
+            foreach (var result in processResult.TextResults)
+            {
+                blobContainer.Metadata.Add(result.Map.AttributeName, result.Value);
+            }
+            blobContainer.SetMetadata();
+        }
+
         private void BlobStorageConfiguration(string userId)
         {
-            blobContainer = blobClient.GetContainerReference(userId);
+            blobContainer = blobClient.GetContainerReference(userId.ToLower());
             blobContainer.CreateIfNotExists();
             blobContainer.SetPermissions(new BlobContainerPermissions
             {

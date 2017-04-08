@@ -5,6 +5,10 @@ class sessionService {
     this.$window = $window;
   }
 
+  destroy() {
+    this.setAuthData(null);
+  }
+
   getAuthData() {
     const session = this.$window.localStorage.getItem('user-session');
     if (session) {

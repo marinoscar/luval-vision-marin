@@ -9,6 +9,8 @@ using System.Web.Http.Cors;
 using luval.vision.bll;
 using System.Threading.Tasks;
 using System.Web;
+using luval.vision.entity;
+using luval.vision.core;
 
 namespace luval.vision.api.Controllers
 {
@@ -16,24 +18,26 @@ namespace luval.vision.api.Controllers
     public class StorageController : ApiController
     {
         private OcrBlobStorage ocrBlobStorage;
+        private OcrProcess processOcr;
 
         public StorageController()
         {
             ocrBlobStorage = new OcrBlobStorage();
+            processOcr = new OcrProcess();
         }
 
-        [HttpGet]
-        public IHttpActionResult Get()
+        public IHttpActionResult Post(OcrUser ocrUser)
         {
             try
             {
-                IEnumerable<IListBlobItem> blobs = ocrBlobStorage.GetFilesBlobStorage();
+                ProcessResult processResult = new ProcessResult();
+                IEnumerable<IListBlobItem> blobs = ocrBlobStorage.GetFilesBlobStorage(ocrUser.id);
                 if (!blobs.Equals(null))
                 {
                     if(blobs.Count() > 0)
                         return Ok(blobs);
                 }
-                return Content(HttpStatusCode.InternalServerError, "The user couldn't be registered");
+                return InternalServerError();
             }
             catch (System.Exception e)
             {
