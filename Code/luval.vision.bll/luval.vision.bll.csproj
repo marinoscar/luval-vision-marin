@@ -93,6 +93,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants.cs" />
     <Compile Include="OcrBlobStorage.cs" />
     <Compile Include="OcrProcess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

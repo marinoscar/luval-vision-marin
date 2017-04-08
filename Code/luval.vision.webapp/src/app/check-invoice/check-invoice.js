@@ -1,20 +1,23 @@
-import CheckReceiptsController from './check-receipts.controller';
-import checkReceiptsService from './check-receipts.service';
-import routes from './check-receipts.routes';
+import CheckInvoicesController from './check-invoice.controller';
+import checkInvoicesService from './check-invoice.service';
+import documentService from '../services/document.service';
+import routes from './check-invoice.routes';
 import interact from 'interactjs/dist/interact';
 
 export default
   angular
-    .module('luval-vision.check-receipts', [])
+    .module('luval-vision.check-invoice', [])
     .config(routes)
     .config(interactiveConfig)
-    .controller('CheckReceiptsController', CheckReceiptsController)
-    .service('checkReceiptsService', checkReceiptsService)
+    .controller('CheckInvoicesController', CheckInvoicesController)
+    .service('checkInvoicesService', checkInvoicesService)
+    .service('documentService', documentService)
     .name;
 
 /* ngInject */
 function interactiveConfig() {
-  interact('#receipt-image')
+  // TODO: use canvas-viewer // eslint-disable-line no-warning-comments
+  interact('#document-container')
     .draggable({
       inertia: true,
       restrict: {

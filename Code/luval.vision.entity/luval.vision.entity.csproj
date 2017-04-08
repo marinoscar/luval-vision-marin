@@ -73,7 +73,6 @@
     <Compile Include="BlobUploadModel.cs" />
     <Compile Include="OcrDocument.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TreeProcess.cs" />
     <Compile Include="OcrUser.cs" />
   </ItemGroup>
   <ItemGroup>
