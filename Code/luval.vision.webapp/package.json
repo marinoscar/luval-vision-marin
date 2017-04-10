@@ -7,7 +7,8 @@
     "bootstrap": "^3.3.7",
     "interactjs": "^1.2.8",
     "ng-file-upload": "^12.2.13",
-    "ng-google-signin": "^0.1.0"
+    "ng-google-signin": "^0.1.0",
+    "ng-notify": "^0.7.1"
   },
   "devDependencies": {
     "@types/angular": "^1.6.6",

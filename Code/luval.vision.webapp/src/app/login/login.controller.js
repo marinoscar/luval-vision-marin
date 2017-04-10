@@ -1,8 +1,9 @@
 
 class LoginController {
-  constructor($log, $state, loginService, sessionService, documentService) {
+  constructor($log, $state, ngNotify, loginService, sessionService, documentService) {
     this.$state = $state;
     this.log = $log;
+    this.ngNotify = ngNotify;
     this.loginService = loginService;
     this.documentService = documentService;
     this.sessionService = sessionService;
@@ -10,20 +11,28 @@ class LoginController {
 
   onSignIn() {
     this.loginService.callGoogleSignIn()
-      .then(user => {
-        this.saveSignIn(user);
-      }, function (err) {
-        this.log.error(err);
-      });
+      .then(this.signInHandler.bind(this),
+      this.signInRejected);
+  }
+
+  signInHandler(user) {
+    this.ngNotify.set('Success Google Sign In', {
+      duration: 2000
+    });
+    this.saveSignIn(user);
+  }
+
+  signInRejected() {
+    this.ngNotify.set('Error Google sign in.', {
+      type: 'error',
+      duration: 2000
+    });
   }
 
   saveSignIn(user) {
     const tokenId = this.documentService.replaceSpecialCharacters(user.w3.U3);
     this.sessionService.setAuthData(tokenId); // eslint-disable-line no-useless-escape
-    this.loginService.saveOrUpdateUser(user)
-      .then(function () {
-        this.$state.go('invoices');
-      });
+    this.$state.go('documents');
   }
 }
 

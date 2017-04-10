@@ -30,20 +30,8 @@ class loginService {
   }
 
   callGoogleSignIn() {
-  //  this.log.info(this.GoogleSignin.getBasicProfile());
+    this.log.info(this.GoogleSignin.getBasicProfile());
     return this.GoogleSignin.signIn();
-  }
-
-  saveOrUpdateUser(user) {
-    const postRequest = {
-      method: 'POST',
-      url: this.CORE.URL + 'User',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      data: this.buildUserJSON(user)
-    };
-    return this.$http(postRequest);
   }
 
   buildUserJSON(user) {
