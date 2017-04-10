@@ -59,10 +59,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IUserDAO.cs" />
+    <Compile Include="IDocumentDAO.cs" />
     <Compile Include="MongoConn.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UserDAL.cs" />
+    <Compile Include="DocumentDAL.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -70,6 +70,10 @@
     <None Include="private.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\luval.vision.core\luval.vision.core.csproj">
+      <Project>{e2b1ce82-40c0-4f2b-9d00-a93425d7147f}</Project>
+      <Name>luval.vision.core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\luval.vision.entity\luval.vision.entity.csproj">
       <Project>{1c5044f1-fb0a-4d56-899b-8b80f24fa6b7}</Project>
       <Name>luval.vision.entity</Name>

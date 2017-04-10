@@ -1,24 +1,21 @@
-﻿using System;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
-using Newtonsoft.Json;
 
 namespace luval.vision.entity
 {
     public class OcrDocument
     {
         [BsonId]
-        [JsonProperty("id")]
-        public String id { get; set; }
+        public string Id { get; set; }
         [BsonElement("user_id")]
-        [JsonProperty("user_id")]
-        public String userId { get; set; }
-        [BsonElement("document_id")]
-        [JsonProperty("document_id")]
-        public String documentId { get; set; }
+        public string UserId { get; set; }
+        [BsonElement("duration_inms")]
+        public double DurationInMs { get; set; }
+        [BsonElement("process_result")]
+        public string Content { get; set; }
     }
 }

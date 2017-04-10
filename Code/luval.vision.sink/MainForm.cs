@@ -56,7 +56,7 @@ namespace luval.vision.sink
             PictureBox.Image = null;
             var data = File.ReadAllBytes(fileName);
             var img = default(Image);
-            using (var stream = new MemoryStream(Pdf2Img.CheckForPdfAndConvert(data, fileName)))
+            using (var stream = new MemoryStream(Pdf2Img.CheckForPdfAndConvert(data, fileName, "")))
             {
                 img = Image.FromStream(stream);
                 stream.Close();
@@ -86,7 +86,7 @@ namespace luval.vision.sink
             processBtn.Enabled = true;
         }
 
-        private OcrProvider GetProvider(bool ms)
+        public OcrProvider GetProvider(bool ms)
         {
             return !ms ? new OcrProvider(new GoogleOcrEngine(), new GoogleVisionLoader()) : new OcrProvider(new MicrosoftOcrEngine(), new MicrosoftVisionLoader());
         }
@@ -107,7 +107,7 @@ namespace luval.vision.sink
             var jsonData = File.ReadAllText("attribute-mapping.json");
             var options = JsonConvert.DeserializeObject<List<AttributeMapping>>(jsonData);
             var provider = new DocumentProcesor(GetProvider(false), new NlpProvider(new GoogleNlpEngine(), new GoogleNlpLoader()));
-            var result = provider.DoProcess(_fileName, options);
+            var result = provider.DoProcess(_fileName, options, "");
             _result = result.OcrResult;
             _processResult = result;
             LoadVisionTree(result.OcrResult);

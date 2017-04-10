@@ -9,6 +9,7 @@ using luval.vision.core;
 using luval.vision.sink;
 using Newtonsoft.Json;
 using luval.vision.entity;
+using luval.vision.dal;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http.Cors;
@@ -20,14 +21,15 @@ namespace luval.vision.api.Controllers
     public class ProviderController : ApiController
     {
         private OcrProcess processOcr;
-        private OcrProvider providerOcr;
         private OcrBlobStorage blobStorageOcr;
+        private DocumentDAL documentDAL;
 
         public ProviderController()
         {
-            providerOcr = new OcrProvider(new MicrosoftOcrEngine(), new MicrosoftVisionLoader());
+            processOcr = new OcrProcess();
             blobStorageOcr = new OcrBlobStorage();
             processOcr = new OcrProcess();
+            documentDAL = new DocumentDAL();
         }
 
         public async Task<IHttpActionResult> Post()
@@ -47,10 +49,12 @@ namespace luval.vision.api.Controllers
                 var userId = result.FormData.GetValues(0).FirstOrDefault();
                 foreach (MultipartFileData file in result.FileData)
                 {
-                    processResult = processOcr.DoProcess(file.LocalFileName);
+                    processResult = processOcr.DoProcess(file.LocalFileName, originalFileName);
+                    var bytes = Pdf2Img.CheckForPdfAndConvert(File.ReadAllBytes(file.LocalFileName), file.LocalFileName, file.Headers.ContentDisposition.FileName);
                     processResult.UserId = userId;
+                    documentDAL.SaveOrUpdate(getOcrDocument(processResult, processOcr, file.LocalFileName));
                     blobStorageOcr.UploadFileBlobStorage(file.LocalFileName, file.Headers.ContentDisposition.FileName, processResult);
-                    jsonResult = processOcr.DoSaveResult(file.LocalFileName, processResult);
+                    jsonResult = processOcr.DoSaveResult(bytes, file.LocalFileName, processResult);
                 }
                 return Ok(jsonResult);
             }
@@ -60,9 +64,20 @@ namespace luval.vision.api.Controllers
             }
         }
 
+        private OcrDocument getOcrDocument(ProcessResult result, OcrProcess process, string path)
+        {
+            return new OcrDocument
+            {
+                Id = result.Id,
+                UserId = result.UserId,
+                DurationInMs = result.DurationInMs,
+                Content = process.DoSaveResult(path, result)
+            };
+        }
+
         private MultipartFormDataStreamProvider GetMultipartProvider()
         {
-            var root = HttpContext.Current.Server.MapPath("~/App_Data");
+            var root = HttpContext.Current.Server.MapPath("~/App_Data/documents/");
             Directory.CreateDirectory(root);
             return new MultipartFormDataStreamProvider(root);
         }

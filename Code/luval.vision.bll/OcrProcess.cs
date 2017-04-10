@@ -17,7 +17,7 @@ namespace luval.vision.bll
         {
         }
 
-        private OcrProvider GetProvider(bool ms)
+        public OcrProvider GetProvider(bool ms)
         {
             return !ms ? new OcrProvider(new GoogleOcrEngine(), new GoogleVisionLoader()) : new OcrProvider(new MicrosoftOcrEngine(), new MicrosoftVisionLoader());
         }
@@ -34,12 +34,24 @@ namespace luval.vision.bll
             return json;
         }
 
-        public ProcessResult DoProcess(string fileName)
+        public string DoSaveResult(byte[] stream, string fileName, ProcessResult processResult)
+        {
+            var data = new FormResult()
+            {
+                FileName = fileName,
+                FileData = stream,
+                Result = processResult
+            };
+            var json = JsonConvert.SerializeObject(data, Formatting.None, new JsonSerializerSettings() { PreserveReferencesHandling = PreserveReferencesHandling.Objects });
+            return json;
+        }
+
+        public ProcessResult DoProcess(string fileName, string extension)
         {
             var jsonData = File.ReadAllText(HttpContext.Current.Server.MapPath("~/App_Data/attribute-mapping.json"));
-            var options = JsonConvert.DeserializeObject<List<AttributeMapping>>(jsonData);
+            var options = JsonConvert.DeserializeObject<List<AttributeMapping>>(jsonData); // TODO USE THIS OPTIONS
             var provider = new DocumentProcesor(GetProvider(false), new NlpProvider(new GoogleNlpEngine(), new GoogleNlpLoader()));
-            var result = provider.DoProcess(fileName, options);
+            var result = provider.DoProcess(fileName, options, extension);
             return result;
         }
 

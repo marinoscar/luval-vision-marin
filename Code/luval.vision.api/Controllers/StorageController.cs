@@ -10,6 +10,7 @@ using luval.vision.bll;
 using System.Threading.Tasks;
 using System.Web;
 using luval.vision.entity;
+using luval.vision.dal;
 using luval.vision.core;
 
 namespace luval.vision.api.Controllers
@@ -18,28 +19,30 @@ namespace luval.vision.api.Controllers
     public class StorageController : ApiController
     {
         private OcrBlobStorage ocrBlobStorage;
+        private DocumentDAL documentDAL;
         private OcrProcess processOcr;
 
         public StorageController()
         {
             ocrBlobStorage = new OcrBlobStorage();
+            documentDAL = new DocumentDAL();
             processOcr = new OcrProcess();
         }
 
-        public IHttpActionResult Post(OcrUser ocrUser)
+        public IHttpActionResult Post(OcrUser user)
         {
             try
             {
                 ProcessResult processResult = new ProcessResult();
-                IEnumerable<IListBlobItem> blobs = ocrBlobStorage.GetFilesBlobStorage(ocrUser.id);
-                if (!blobs.Equals(null))
+                IEnumerable<OcrDocument> documents = documentDAL.GetProcessResultByUserId(user.id);
+                if (!documents.Equals(null))
                 {
-                    if(blobs.Count() > 0)
-                        return Ok(blobs);
+                    if(documents.Count() > 0)
+                        return Ok(documents);
                 }
                 return InternalServerError();
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
                 return Content(HttpStatusCode.InternalServerError, e.ToString());
             }

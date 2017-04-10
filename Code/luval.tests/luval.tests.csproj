@@ -73,7 +73,7 @@
     <Compile Include="WhenAPDFIsConvertedToImage.cs" />
     <Compile Include="WhenItFileStored.cs" />
     <Compile Include="WhenItLooksForEntities.cs" />
-    <Compile Include="WhenMongoDBIsStoring.cs" />
+    <Compile Include="WhenItMongoStore.cs" />
     <Compile Include="WhenOcrEngineIsCalled.cs" />
     <Compile Include="WhenUsingStringUtils.cs" />
   </ItemGroup>

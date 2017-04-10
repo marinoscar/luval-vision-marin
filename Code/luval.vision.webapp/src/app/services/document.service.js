@@ -1,6 +1,13 @@
 class documentService {
-  constructor() {
+  constructor($window, $log) {
     this.metadata = {};
+    this.$window = $window;
+    this.$log = $log;
+  }
+
+  setDocumentParsed(json) {
+    this.file = angular.toJson(json.Result, true);
+    return this.file;
   }
 
   getMetadata() {
@@ -21,6 +28,16 @@ class documentService {
 
   replaceSpecialCharacters(source) {
     return source.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '') // eslint-disable-line
+  }
+
+  base64ToArrayBuffer(base64) {
+    const binaryString = this.$window.atob(base64);
+    const len = binaryString.length;
+    const bytes = new Uint8Array(len);
+    for (let i = 0; i < len; i++) {
+      bytes[i] = binaryString.charCodeAt(i);
+    }
+    return bytes.buffer;
   }
 }
 

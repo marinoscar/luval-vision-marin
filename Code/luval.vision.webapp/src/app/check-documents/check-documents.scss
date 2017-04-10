@@ -1,4 +1,4 @@
-#check-invoice-view {
+#check-document-view {
   #go-back, 
   #close-this {
     left: 0;
@@ -87,16 +87,16 @@
     color: #fff;
     font-weight: 700;
   }
-  #image footer {
+  footer {
     background: #e0ae48;
     position: absolute;
     bottom: 0;
     width: 100%;
   }
-  #image footer div.active {
+  footer div.active {
     display: block;
   }
-  #image footer div {
+  footer div {
     width: 100%;
     display: none;
     text-align: center;

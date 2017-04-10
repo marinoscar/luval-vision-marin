@@ -22,15 +22,15 @@ namespace luval.vision.core
         public NlpProvider NlpProvider { get; private set; }
 
 
-        public ProcessResult DoProcess(string fileName, IEnumerable<AttributeMapping> mappings)
+        public ProcessResult DoProcess(string fileName, IEnumerable<AttributeMapping> mappings, string extension)
         {
-            return DoProcess(File.ReadAllBytes(fileName), fileName, mappings);
+            return DoProcess(File.ReadAllBytes(fileName), fileName, mappings, extension);
         }
-
-        public ProcessResult DoProcess(byte[] data, string fileName, IEnumerable<AttributeMapping> mappings)
+        // TODO USE THIS METHOD
+        public ProcessResult DoProcess(byte[] data, string fileName, IEnumerable<AttributeMapping> mappings, string extension)
         {
             var startedOn = DateTime.UtcNow;
-            var imgBytes = Pdf2Img.CheckForPdfAndConvert(data, fileName);
+            var imgBytes = Pdf2Img.CheckForPdfAndConvert(data, fileName, extension);
             var ocr = OcrProvider.DoOcr(imgBytes, fileName);
             var nlp = NlpProvider.DoNlp(GetTextToAnalyze(ocr, mappings));
             return DoProcess(data, fileName, mappings, ocr, nlp, startedOn);
