@@ -1,4 +1,5 @@
 class DocumentsController {
+  /* @ngInject */
   constructor($q, $log, $state, ngNotify, $uibModal, documentsService, documentService) {
     this.$q = $q;
     this.log = $log;
@@ -10,7 +11,7 @@ class DocumentsController {
     this.documentService = documentService;
     this.documentsService.getDocumentsStored()
       .then(this.documentStoredHandler.bind(this),
-      this.documentsStoredRejected);
+      this.documentStoredRejected);
   }
 
   uploadFile($files) {
@@ -19,7 +20,8 @@ class DocumentsController {
         this.serializeDocument = angular.fromJson(documents.data);
         this.documentService.setMetadata(this.serializeDocument);
         this.documentService.setFileData(this.serializeDocument.FileData);
-        this.$state.go('check-documents', {tokenId: this.serializeDocument.Id});
+        this.documentsService.resetDocumentsList();
+        this.$state.go('check-documents', {tokenId: this.serializeDocument.Result.Id});
       });
   }
 
@@ -89,31 +91,17 @@ class DocumentsController {
   }
 
   openDocumentModal() {
-    const modalInstance = this.$uibModal.open({
+    this.$uibModal.open({
       animation: true,
       templateUrl: 'app/documents/documents-modal/documents-modal.html',
       controller: 'DocumentsModalController',
       controllerAs: 'vm',
       size: 'sm'
     });
-
-    modalInstance.result
-      .then(this.modalHandler.bind(this),
-      this.modalRejected.bind(this));
   }
 
-  modalHandler() {
-    // TODO
-  }
-
-  modalRejected() {
-    this.ngNotify.set('Modal is not available', {
-      type: 'error',
-      duration: 2000
-    });
-  }
-
-  documentsStoredRejected() {
+  documentStoredRejected() {
+    this.loading = false;
     this.ngNotify.set('Documents are not available', {
       type: 'error',
       duration: 2000

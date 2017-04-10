@@ -1,4 +1,5 @@
 class sessionService {
+  /* @ngInject */
   constructor($log, $state, $window) {
     this.log = $log;
     this.$state = $state;

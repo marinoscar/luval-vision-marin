@@ -1,4 +1,5 @@
 class documentService {
+  /* @ngInject */
   constructor($window, $log) {
     this.metadata = {};
     this.$window = $window;

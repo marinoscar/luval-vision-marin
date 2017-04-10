@@ -38,25 +38,39 @@ namespace luval.vision.dal
                 .FindAll();
         }
 
+        public bool Delete(OcrDocument document)
+        {
+            try
+            {
+                var documentsList = MongoConn.mongoDB().GetCollection("documents");
+                IMongoQuery query = Query.EQ("_id", document.Id);
+                documentsList.Remove(query);
+                return true;
+            }
+            catch(Exception ex)
+            {
+                return false;
+            }
+        }
+
         public OcrDocument SaveOrUpdate(OcrDocument document)
         {
-            var usersList = MongoConn.mongoDB().GetCollection("documents");
+            var documentsList = MongoConn.mongoDB().GetCollection("documents");
             WriteConcernResult result;
-            bool hasError = false;
             if(!String.IsNullOrEmpty(document.Id))
             {
-                String existingItem = null;
-                if(existingItem == null)
+                var existingItem = GetProcessResult(document.Id);
+                if (existingItem == null)
                 {
-                    result = usersList.Insert<OcrDocument>(document);
-                    hasError = result.HasLastErrorMessage;
+                    result = documentsList.Insert<OcrDocument>(document);
                 }
                 else
                 {
                     IMongoQuery query = Query.EQ("_id", document.Id);
-                    IMongoUpdate update = Update.Set("user_id", document.UserId);
-                    result = usersList.Update(query, update);
-                    hasError = result.HasLastErrorMessage;
+                    IMongoUpdate update = Update.Set("user_id", document.UserId)
+                        .Set("duration_inms", document.DurationInMs)
+                        .Set("process_result", document.Content);
+                    result = documentsList.Update(query, update);
                 }
             }
             return document;
