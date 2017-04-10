@@ -1,11 +1,24 @@
-class invoicesService {
+class documentsService {
   constructor($log, $http, $window, Upload, CORE, sessionService) {
+    this.documents = [];
     this.log = $log;
     this.$http = $http;
     this.$window = $window;
     this.upload = Upload;
     this.CORE = CORE;
     this.sessionService = sessionService;
+  }
+
+  addDocument(document) {
+    this.documents.push(document);
+  }
+
+  getDocumentsList() {
+    return this.documents;
+  }
+
+  resetDocumentsList() {
+    this.documents = [];
   }
 
   uploadDocumenToBlobStorage(blob) {
@@ -18,7 +31,7 @@ class invoicesService {
     return upload;
   }
 
-  getFilesStored() {
+  getDocumentsStored() {
     const getRequest = {
       method: 'POST',
       url: this.CORE.URL + 'Storage',
@@ -31,11 +44,10 @@ class invoicesService {
   }
 
   buildUserJSON() {
-    this.log.info(this.sessionService.getAuthData());
     return {
       id: this.sessionService.getAuthData().authData
     };
   }
 }
 
-export default invoicesService;
+export default documentsService;

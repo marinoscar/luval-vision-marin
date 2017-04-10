@@ -1,4 +1,4 @@
-class InvoicesModalController {
+class DocumentsModalController {
   constructor($log, $state, $uibModalStack, loginService, sessionService) {
     this.log = $log;
     this.$state = $state;
@@ -19,4 +19,4 @@ class InvoicesModalController {
   }
 }
 
-export default InvoicesModalController;
+export default DocumentsModalController;

@@ -82,10 +82,10 @@ namespace luval.vision.core
             return stream.ToArray();
         }
 
-        public static byte[] CheckForPdfAndConvert(byte[] data, string fileName)
+        public static byte[] CheckForPdfAndConvert(byte[] data, string fileName, string extension)
         {
             var file = new FileInfo(fileName);
-            if (!file.Extension.ToLowerInvariant().Equals(".pdf")) return data;
+            if (!extension.Contains(".pdf")) return data;
             return Pdf2Img.ConvertToImage(fileName);
         }
 

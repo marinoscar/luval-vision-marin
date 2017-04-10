@@ -32,7 +32,6 @@ namespace luval.vision.bll
             BlobStorageConfiguration(ocrUser);
             AddContainerMetadata("Id", processResult.Id);
             AddContainerMetadata("UserId", ocrUser);
-            setProcessResulToMetadata(processResult);
             blockBlob = blobContainer.GetBlockBlobReference(blockName);
             using (var fileStream = System.IO.File.OpenRead(path))
             {
@@ -67,28 +66,23 @@ namespace luval.vision.bll
 
                 foreach (IListBlobItem blob in resultSegment.Results)
                 {
-                    foreach (var metadata in blobContainer.Metadata)
-                    {
-                        blob.Container.Metadata.Add(metadata.Key, metadata.Value);
-                    }
                     blobs.Add(blob);
                 }
             } while (token != null);
             return blobs;
         }
 
+        public void DeleteFile(string userId)
+        {
+            string ocrUser = Constants.prefix + userId;
+            BlobStorageConfiguration(ocrUser);
+            var blob = this.blobContainer.GetBlockBlobReference(ocrUser);
+            blob.DeleteIfExists();
+        }
+
         private void AddContainerMetadata(string key, string value)
         {
             blobContainer.Metadata.Add(key, value);
-            blobContainer.SetMetadata();
-        }
-
-        private void setProcessResulToMetadata(ProcessResult processResult)
-        {
-            foreach (var result in processResult.TextResults)
-            {
-                blobContainer.Metadata.Add(result.Map.AttributeName, result.Value);
-            }
             blobContainer.SetMetadata();
         }
 

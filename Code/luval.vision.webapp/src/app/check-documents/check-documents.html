@@ -1,9 +1,9 @@
-<div id="check-invoice-view">
+<div id="check-document-view">
   <div class="container">
     <div class="row">
       <div id="main-header">
         <div class="col-md-4">
-          <button id="close-this" ng-click="vm.backToInvoices()"></button>
+          <button id="close-this" ng-click="vm.backToDocuments()"></button>
         </div>
         <div class="col-md-8 col-md-offset-2">
           <img ng-src="../../img/logo.png" class="logo" />
@@ -15,15 +15,13 @@
         <main class="done">
           <aside id="image" style="width: calc(50% - 5px);">
             <div>
-              <button id="share-button"></button>
-              <button id="hd-button"></button>
               <div id="document-container">	
                 <img id="invoice-image" src="data:image/jpg;base64,{{vm.imageSrc}}" />
               </div>
             </div>
             <footer>
-              <div id="control-toggle" class="active">
-                <button id="goRotate">Rotate</button><button id="goZoom">Zoom</button>
+              <div id="control-toggle" class="active" ng-if="vm.imageSrc">
+                <button ng-click="vm.downloadImage(vm.imageSrc)">Download Document</button>
               </div>
             </footer>
           </aside>
@@ -33,21 +31,20 @@
               <section>
                 <div style="background-image: url(&quot;http://i.imgur.com/G18NbfO.png&quot;);">
                 </div>
-                <!--<p class="humanDate">March 12, 2017</p>-->
               </section>
             </header>
             <div id="editor">
-              <p id="guidDisplay">Receipt ID:{{vm.metadata.Result.Id}}</p>
+              <p id="guidDisplay">Document ID:{{vm.metadata.Result.Id}}</p>
               <section id="primaryInformation">
                 <h2 class="hidden">Primary Information</h2>
                 <div class="panel-group">
                   <div class="panel panel-default">
                     <div class="panel-heading">
                       <h4 class="panel-title">
-                      <a class="cursor-pointer" data-toggle="collapse" data-target="#collapse1">Primary Information</a>
+                      <a class="cursor-pointer" data-toggle="collapse" data-target="#collapse1">Document Information</a>
                       </h4>
                     </div>
-                    <div id="collapse1" class="panel-collapse collapse">
+                    <div id="collapse1" class="panel-collapse collapse in">
                       <div class="panel-body" ng-if="!vm.primaryData">
                         <h3>Invoice doesn't have primary data</h3>
                       </div>
@@ -66,6 +63,11 @@
                 </div>
               </section>
             </div>
+            <footer>
+              <div id="control-toggle" class="active" ng-if="vm.imageSrc">
+                <button ng-click="vm.openDocumentViewer()">View Json</button>
+              </div>
+            </footer>
           </aside>
         </main>
       </div>

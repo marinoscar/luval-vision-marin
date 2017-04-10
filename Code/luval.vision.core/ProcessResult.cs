@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace luval.vision.core
 {
@@ -13,6 +15,7 @@ namespace luval.vision.core
             Id = Guid.NewGuid().ToString().Replace("-", "").ToLowerInvariant();
             UtcTimestamp = DateTime.UtcNow;
         }
+
         public string Id { get; set; }
         public string UserId { get; set; }
         public OcrResult OcrResult { get; set; }

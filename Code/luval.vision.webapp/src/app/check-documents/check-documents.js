@@ -1,16 +1,17 @@
-import CheckInvoicesController from './check-invoice.controller';
-import checkInvoicesService from './check-invoice.service';
+import CheckDocumentsController from './check-documents.controller';
+import checkDocumentsService from './check-documents.service';
 import documentService from '../services/document.service';
-import routes from './check-invoice.routes';
+import routes from './check-documents.routes';
 import interact from 'interactjs/dist/interact';
+import viewer from './view-json/view-json';
 
 export default
   angular
-    .module('luval-vision.check-invoice', [])
+    .module('luval-vision.check-documents', [viewer])
     .config(routes)
     .config(interactiveConfig)
-    .controller('CheckInvoicesController', CheckInvoicesController)
-    .service('checkInvoicesService', checkInvoicesService)
+    .controller('CheckDocumentsController', CheckDocumentsController)
+    .service('checkDocumentsService', checkDocumentsService)
     .service('documentService', documentService)
     .name;
 

@@ -17,14 +17,14 @@ namespace luval.tests
         {
             OcrBlobStorage blobStorage = new OcrBlobStorage();
             String guid = Guid.NewGuid().ToString();
-            blobStorage.UploadFileBlobStorage(@"C:\Users\hmuir\Documents\Pernix\luval-vision\Docs\Sample1.jpg", "Sample1.jpg", "","");
+            blobStorage.UploadFileBlobStorage(@"C:\Users\hmuir\Documents\Pernix\luval-vision\Docs\Sample1.jpg", "Sample1.jpg", null);
         }
 
         [Test]
         public void ItShouldGetFilesStored()
         {
             OcrBlobStorage blobStorage = new OcrBlobStorage();
-            IEnumerable<IListBlobItem> blobs = blobStorage.GetFilesBlobStorage();
+            IEnumerable<IListBlobItem> blobs = blobStorage.GetFilesBlobStorage("");
             Assert.IsTrue(blobs.Count() > 0);
         }
 
