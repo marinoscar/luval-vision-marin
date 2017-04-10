@@ -15,7 +15,7 @@ export default
     .service('sessionService', sessionService)
     .name;
 
-/* ngInject */
+/* @ngInject */
 function GoogleSignInConfig(GoogleSigninProvider) {
   GoogleSigninProvider.init({
     client_id: '387533728662-ovqlpu27rait2m5idsa6aadqf7qa00e4.apps.googleusercontent.com' // eslint-disable-line camelcase

@@ -1,4 +1,5 @@
 class loginService {
+  /* @ngInject */
   constructor($log, $rootScope, $location, GoogleSignin, documentService, $http, CORE) { // eslint-disable-line max-params
     this.log = $log;
     this.$rootScope = $rootScope;

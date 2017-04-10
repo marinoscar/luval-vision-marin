@@ -4,7 +4,8 @@ function routes($stateProvider) {
     .state('view-json', {
       url: '/view-json/tokenId=:tokenId',
       template: require('./view-json.html'),
-      controller: ('ViewJsonController as vm')
+      controller: ('ViewJsonController as vm'),
+      cache: false
     });
 }
 

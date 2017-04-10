@@ -1,5 +1,5 @@
-
 class LoginController {
+  /* @ngInject */
   constructor($log, $state, ngNotify, loginService, sessionService, documentService) {
     this.$state = $state;
     this.log = $log;
@@ -12,12 +12,13 @@ class LoginController {
   onSignIn() {
     this.loginService.callGoogleSignIn()
       .then(this.signInHandler.bind(this),
-      this.signInRejected);
+      this.signInRejected.bind(this));
   }
 
   signInHandler(user) {
     this.ngNotify.set('Success Google Sign In', {
-      duration: 2000
+      duration: 2000,
+      position: 'bottom'
     });
     this.saveSignIn(user);
   }

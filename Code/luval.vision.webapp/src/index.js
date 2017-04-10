@@ -6,7 +6,7 @@ import checkDocuments from './app/check-documents/check-documents';
 import 'angular-ui-router';
 import 'angular-ui-bootstrap';
 import routesConfig from './routes';
-import 'ng-notify/dist/ng-notify.min.js';
+import 'ng-notify/dist/ng-notify.min';
 
 import './index.scss';
 import './app/login/login.scss';
@@ -28,11 +28,11 @@ angular
   .config(routesConfig)
   .run(initialiazeConfig);
 
-/* ngInject */
+/* @ngInject */
 function initialiazeConfig(ngNotify) {
   const notifyConfig = {
     theme: 'pure',
-    position: 'top',
+    position: 'bottom',
     duration: 3000,
     type: 'info',
     sticky: false,

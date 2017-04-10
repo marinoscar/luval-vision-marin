@@ -1,5 +1,4 @@
 import CheckDocumentsController from './check-documents.controller';
-import checkDocumentsService from './check-documents.service';
 import documentService from '../services/document.service';
 import routes from './check-documents.routes';
 import interact from 'interactjs/dist/interact';
@@ -11,11 +10,9 @@ export default
     .config(routes)
     .config(interactiveConfig)
     .controller('CheckDocumentsController', CheckDocumentsController)
-    .service('checkDocumentsService', checkDocumentsService)
     .service('documentService', documentService)
     .name;
 
-/* ngInject */
 function interactiveConfig() {
   // TODO: use canvas-viewer // eslint-disable-line no-warning-comments
   interact('#document-container')

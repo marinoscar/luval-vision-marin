@@ -1,4 +1,5 @@
 class documentsService {
+  /* @ngInject */
   constructor($log, $http, $window, Upload, CORE, sessionService) {
     this.documents = [];
     this.log = $log;

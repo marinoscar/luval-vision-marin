@@ -78,5 +78,9 @@ module.exports = {
   entry: {
     app: `./${conf.path.src('index')}`,
     vendor: Object.keys(pkg.dependencies)
+  },
+  node: {
+    fs: "empty",
+    net: "empty"
   }
 };

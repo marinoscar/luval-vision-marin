@@ -1,4 +1,5 @@
 class ViewJsonController {
+  /* @ngInject */
   constructor($window, $state, documentService) {
     this.$state = $state;
     this.$window = $window;
