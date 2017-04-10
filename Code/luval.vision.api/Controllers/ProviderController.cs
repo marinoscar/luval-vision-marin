@@ -52,7 +52,7 @@ namespace luval.vision.api.Controllers
                     processResult = processOcr.DoProcess(file.LocalFileName, originalFileName);
                     var bytes = Pdf2Img.CheckForPdfAndConvert(File.ReadAllBytes(file.LocalFileName), file.LocalFileName, file.Headers.ContentDisposition.FileName);
                     processResult.UserId = userId;
-                    documentDAL.SaveOrUpdate(getOcrDocument(processResult, processOcr, file.LocalFileName));
+                    documentDAL.SaveOrUpdate(getOcrDocument(processResult, processOcr, file.LocalFileName, originalFileName, bytes));
                     blobStorageOcr.UploadFileBlobStorage(file.LocalFileName, file.Headers.ContentDisposition.FileName, processResult);
                     jsonResult = processOcr.DoSaveResult(bytes, file.LocalFileName, processResult);
                 }
@@ -64,14 +64,15 @@ namespace luval.vision.api.Controllers
             }
         }
 
-        private OcrDocument getOcrDocument(ProcessResult result, OcrProcess process, string path)
+        private OcrDocument getOcrDocument(ProcessResult result, OcrProcess process, string path, string fileName, byte[] data)
         {
             return new OcrDocument
             {
-                Id = result.Id,
+                Id = fileName,
+                DocumentId = result.Id,
                 UserId = result.UserId,
                 DurationInMs = result.DurationInMs,
-                Content = process.DoSaveResult(path, result)
+                Content = process.DoSaveResult(data, path, result)
             };
         }
 

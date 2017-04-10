@@ -4,7 +4,8 @@ function routes($stateProvider) {
     .state('documents', {
       url: '/documents',
       template: require('./documents.html'),
-      controller: ('DocumentsController as vm')
+      controller: ('DocumentsController as vm'),
+      cache: false
     });
 }
 

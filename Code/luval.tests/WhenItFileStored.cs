@@ -35,5 +35,12 @@ namespace luval.tests
             string text = blobStorage.DownloadFileBlobStorage(@"C:\Users\hmuir\Documents\Pernix\luval-vision\Docs\Sample1.jpg", "Sample1.jpg");
             Assert.IsNotEmpty(text);
         }
+
+        [Test]
+        public void ItShouldDeleteFile()
+        {
+            OcrBlobStorage blobStorage = new OcrBlobStorage();
+            blobStorage.DeleteFile("harry182894gmailcom");
+        }
     }
 }

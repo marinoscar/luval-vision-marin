@@ -4,7 +4,8 @@ function routes($stateProvider) {
     .state('check-documents', {
       url: '/check-documents/tokenId=:tokenId',
       template: require('./check-documents.html'),
-      controller: ('CheckDocumentsController as vm')
+      controller: ('CheckDocumentsController as vm'),
+      cache: false
     });
 }
 

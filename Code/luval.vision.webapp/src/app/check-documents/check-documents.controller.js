@@ -1,4 +1,5 @@
 class CheckDocumentsController {
+  /* @ngInject */
   constructor($state, $window, $log, documentService) {
     this.$state = $state;
     this.log = $log;
