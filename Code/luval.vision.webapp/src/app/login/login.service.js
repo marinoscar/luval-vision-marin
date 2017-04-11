@@ -1,37 +1,27 @@
 class loginService {
   /* @ngInject */
-  constructor($log, $rootScope, $location, GoogleSignin, documentService, $http, CORE) { // eslint-disable-line max-params
+  constructor($log, $location, GoogleSignin, documentService, sessionService, $http, CORE) { // eslint-disable-line max-params
     this.log = $log;
-    this.$rootScope = $rootScope;
     this.$location = $location;
     this.GoogleSignin = GoogleSignin;
     this.documentService = documentService;
+    this.sessionService = sessionService;
     this.$http = $http;
     this.CORE = CORE;
   }
 
   isLoggedIn() {
     const authData = this.sessionService.getAuthData();
-    const sessionDefined = angular.isDefined(authData);
+    const sessionDefined = typeof authData !== 'undefined'; // eslint-disable-line
     const authDataDefined = authData !== null;
     return sessionDefined && authDataDefined;
   }
 
-  verifyAccess() {
-    this.$rootScope.$on('$stateChangeStart', toState => {
-      if (!this.isLoggedIn() && toState.name !== 'login') {
-        this.$location.path('login');
-      }
-    });
-  }
-
   logOut() {
-  //  this.log.info(this.GoogleSignin.getBasicProfile());
     return this.GoogleSignin.signOut();
   }
 
   callGoogleSignIn() {
-    this.log.info(this.GoogleSignin.getBasicProfile());
     return this.GoogleSignin.signIn();
   }
 

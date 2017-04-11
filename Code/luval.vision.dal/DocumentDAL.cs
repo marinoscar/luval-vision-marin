@@ -47,7 +47,7 @@ namespace luval.vision.dal
                 documentsList.Remove(query);
                 return true;
             }
-            catch(Exception ex)
+            catch
             {
                 return false;
             }

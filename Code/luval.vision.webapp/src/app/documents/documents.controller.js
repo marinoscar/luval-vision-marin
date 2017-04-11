@@ -11,7 +11,7 @@ class DocumentsController {
     this.documentService = documentService;
     this.documentsService.getDocumentsStored()
       .then(this.documentStoredHandler.bind(this),
-      this.documentStoredRejected);
+      this.documentStoredRejected.bind(this));
   }
 
   uploadFile($files) {

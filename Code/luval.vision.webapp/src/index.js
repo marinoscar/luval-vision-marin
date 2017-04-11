@@ -4,8 +4,9 @@ import documents from './app/documents/documents';
 import core from './app/core/core.constants';
 import checkDocuments from './app/check-documents/check-documents';
 import 'angular-ui-router';
+import 'angular-ui-router/release/stateEvents';
 import 'angular-ui-bootstrap';
-import routesConfig from './routes';
+import {routesConfig, blockPrivateAccess} from './routes';
 import 'ng-notify/dist/ng-notify.min';
 
 import './index.scss';
@@ -17,6 +18,7 @@ import 'ng-notify/dist/ng-notify.min.css';
 angular
   .module('luval-vision', [
     'ui.router',
+    'ui.router.state.events',
     'ui.bootstrap',
     'google-signin',
     'ngNotify',
@@ -26,18 +28,4 @@ angular
     login
   ])
   .config(routesConfig)
-  .run(initialiazeConfig);
-
-/* @ngInject */
-function initialiazeConfig(ngNotify) {
-  const notifyConfig = {
-    theme: 'pure',
-    position: 'bottom',
-    duration: 3000,
-    type: 'info',
-    sticky: false,
-    button: true,
-    html: false
-  };
-  ngNotify.config(notifyConfig); // eslint-disable-line angular/module-getter
-}
+  .run(blockPrivateAccess);

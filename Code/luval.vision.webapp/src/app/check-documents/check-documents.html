@@ -34,7 +34,9 @@
               </section>
             </header>
             <div id="editor">
-              <p id="guidDisplay">Document ID:{{vm.metadata.Result.Id}}</p>
+              <p id="guidDisplay" ng-if="vm.metadata">
+                Document ID:{{vm.metadata.Result.Id}}
+              </p>
               <section id="primaryInformation">
                 <h2 class="hidden">Primary Information</h2>
                 <div class="panel-group">
@@ -46,7 +48,7 @@
                     </div>
                     <div id="collapse1" class="panel-collapse collapse in">
                       <div class="panel-body" ng-if="!vm.primaryData">
-                        <h3>Invoice doesn't have primary data</h3>
+                        <h3 class="text-danger">Don't exist have document data</h3>
                       </div>
                       <div class="panel-body" ng-if="vm.primaryData" ng-repeat="metadata in vm.primaryData">
                         <div class="row">
