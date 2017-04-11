@@ -5,6 +5,9 @@ class CheckDocumentsController {
     this.log = $log;
     this.$window = $window;
     this.documentService = documentService;
+  }
+
+  setCheckDocumentProperties() {
     this.metadata = this.documentService.getMetadata();
     this.imageSrc = this.documentService.getFileData();
     this.primaryData = this.metadata.Result.TextResults;

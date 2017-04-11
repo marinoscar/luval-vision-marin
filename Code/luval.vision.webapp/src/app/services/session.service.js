@@ -13,7 +13,7 @@ class sessionService {
   getAuthData() {
     const session = this.$window.localStorage.getItem('user-session');
     if (session) {
-      return angular.fromJson(session);
+      return angular.fromJson(session).authData;
   	} // eslint-disable-line no-mixed-spaces-and-tabs
   }
 
