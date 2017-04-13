@@ -3,10 +3,11 @@ import login from './app/login/login';
 import documents from './app/documents/documents';
 import core from './app/core/core.constants';
 import checkDocuments from './app/check-documents/check-documents';
+import {routesConfig, blockPrivateAccess} from './routes';
 import 'angular-ui-router';
 import 'angular-ui-router/release/stateEvents';
 import 'angular-ui-bootstrap';
-import {routesConfig, blockPrivateAccess} from './routes';
+import 'angular-spinner/dist/angular-spinner.min';
 import 'ng-notify/dist/ng-notify.min';
 
 import './index.scss';
@@ -22,6 +23,7 @@ angular
     'ui.bootstrap',
     'google-signin',
     'ngNotify',
+    'angularSpinner',
     core,
     documents,
     checkDocuments,

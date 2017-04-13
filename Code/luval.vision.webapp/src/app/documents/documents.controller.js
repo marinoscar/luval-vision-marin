@@ -1,22 +1,25 @@
 class DocumentsController {
   /* @ngInject */
-  constructor($q, $log, $state, ngNotify, $uibModal, documentsService, documentService) {
+  constructor($q, $log, $state, ngNotify, $uibModal, documentsService, usSpinnerService, documentService) {
     this.$q = $q;
     this.log = $log;
     this.$state = $state;
     this.$uibModal = $uibModal;
     this.ngNotify = ngNotify;
-    this.loading = true;
     this.documentsService = documentsService;
     this.documentService = documentService;
+    this.usSpinnerService = usSpinnerService;
+    this.loading = true;
     this.documentsService.getDocumentsStored()
       .then(this.documentStoredHandler.bind(this),
       this.documentStoredRejected.bind(this));
   }
 
   uploadFile($files) {
+    this.loading = true;
     this.documentsService.uploadDocumenToBlobStorage(this.objectBlobStorage($files))
       .then(documents => {
+        this.loading = false;
         this.serializeDocument = angular.fromJson(documents.data);
         this.documentService.setMetadata(this.serializeDocument);
         this.documentService.setFileData(this.serializeDocument.FileData);
