@@ -1,17 +1,25 @@
 class CheckDocumentsController {
   /* @ngInject */
-  constructor($state, $window, $log, documentService) {
+  constructor($state, $window, $log, ngNotify, documentService) {
     this.$state = $state;
     this.log = $log;
     this.$window = $window;
+    this.ngNotify = ngNotify;
     this.documentService = documentService;
     this.setCheckDocumentProperties();
   }
 
   setCheckDocumentProperties() {
     this.metadata = this.documentService.getMetadata();
-    this.imageSrc = this.documentService.getFileData();
-    this.primaryData = this.metadata.Result.TextResults;
+    if (Object.keys(this.metadata).length !== 0) { // eslint-disable-line no-negated-condition
+      this.imageSrc = this.documentService.getFileData();
+      this.primaryData = this.metadata.Result.TextResults;
+    } else {
+      this.ngNotify.set('Please select or upload some document!', {
+        type: 'error',
+        duration: 3000
+      });
+    }
   }
 
   downloadImage(imageBuffer) {

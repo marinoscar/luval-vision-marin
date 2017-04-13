@@ -40,7 +40,6 @@ class DocumentsController {
   }
 
   documentStoredHandler(documents) {
-    this.log.info(documents);
     this.documents = documents.data;
     this.serializeDocumentsContent(this.documents)
       .then(this.serializeDocumentsHandler.bind(this));
