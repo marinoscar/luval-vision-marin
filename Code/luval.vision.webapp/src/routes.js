@@ -1,7 +1,7 @@
 /* @ngInject */
 function routesConfig($stateProvider, $urlRouterProvider, $locationProvider) {
   $locationProvider.html5Mode(false);
-  $urlRouterProvider.otherwise('/login');
+  $urlRouterProvider.otherwise('/documents');
 }
 
 /* @ngInject */
