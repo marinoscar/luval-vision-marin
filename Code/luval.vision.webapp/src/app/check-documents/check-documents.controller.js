@@ -5,6 +5,7 @@ class CheckDocumentsController {
     this.log = $log;
     this.$window = $window;
     this.documentService = documentService;
+    this.setCheckDocumentProperties();
   }
 
   setCheckDocumentProperties() {
