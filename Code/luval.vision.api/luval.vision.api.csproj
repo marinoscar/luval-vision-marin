@@ -256,13 +256,17 @@
     <Content Include="App_Data\attribute-mapping.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\CustomProfile1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -311,10 +315,6 @@
     <ProjectReference Include="..\luval.vision.entity\luval.vision.entity.csproj">
       <Project>{1C5044F1-FB0A-4D56-899B-8B80F24FA6B7}</Project>
       <Name>luval.vision.entity</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\luval.vision.sink\luval.vision.sink.csproj">
-      <Project>{443e9ac3-b5fe-4f20-8b6f-87f59ebbc8f1}</Project>
-      <Name>luval.vision.sink</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

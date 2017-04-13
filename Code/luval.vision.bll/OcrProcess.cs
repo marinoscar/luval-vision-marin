@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using luval.vision.core;
-using luval.vision.sink;
+using luval.vision.entity;
 using Newtonsoft.Json;
 using System.IO;
 using System.Web;

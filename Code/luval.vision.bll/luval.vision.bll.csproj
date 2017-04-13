@@ -112,10 +112,6 @@
       <Project>{1c5044f1-fb0a-4d56-899b-8b80f24fa6b7}</Project>
       <Name>luval.vision.entity</Name>
     </ProjectReference>
-    <ProjectReference Include="..\luval.vision.sink\luval.vision.sink.csproj">
-      <Project>{443e9ac3-b5fe-4f20-8b6f-87f59ebbc8f1}</Project>
-      <Name>luval.vision.sink</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
