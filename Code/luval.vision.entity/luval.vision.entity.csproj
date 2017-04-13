@@ -71,6 +71,7 @@
   <ItemGroup>
     <Compile Include="BlobDownloadModel.cs" />
     <Compile Include="BlobUploadModel.cs" />
+    <Compile Include="FormResult.cs" />
     <Compile Include="OcrDocument.cs" />
     <Compile Include="OcrUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -84,10 +85,6 @@
     <ProjectReference Include="..\luval.vision.core\luval.vision.core.csproj">
       <Project>{e2b1ce82-40c0-4f2b-9d00-a93425d7147f}</Project>
       <Name>luval.vision.core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\luval.vision.sink\luval.vision.sink.csproj">
-      <Project>{443e9ac3-b5fe-4f20-8b6f-87f59ebbc8f1}</Project>
-      <Name>luval.vision.sink</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

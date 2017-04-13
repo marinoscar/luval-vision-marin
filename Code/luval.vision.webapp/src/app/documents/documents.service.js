@@ -46,7 +46,7 @@ class documentsService {
 
   buildUserJSON() {
     return {
-      id: this.sessionService.getAuthData().authData
+      id: this.sessionService.getAuthData()
     };
   }
 }
