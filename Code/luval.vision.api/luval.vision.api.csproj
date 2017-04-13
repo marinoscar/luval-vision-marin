@@ -241,8 +241,9 @@
     <Content Include="App_Data\attribute-mapping.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Metadata\deploymentTemplates\apiappconfig.azureresource.json" />
+    <None Include="Properties\PublishProfiles\celeris-api-dev - FTP %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\celeris-api-dev - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\celeris-api-dev - Web Deploy %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\celeris-api-dev - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\PublishProfiles\CustomProfile1.pubxml" />
