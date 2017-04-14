@@ -70,6 +70,7 @@ namespace luval.vision.core
             mappingResult.Add(new MappingResult()
             {
                 AnchorElement = null,
+                Value = Convert.ToString(val.Value),
                 Location = val.Element.Location,
                 ResultElement = val.Element,
                 RelativeLocation = val.Element.Location.RelativeLocation,
