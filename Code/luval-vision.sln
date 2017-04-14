@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26228.9
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "luval.vision.core", "luval.vision.core\luval.vision.core.csproj", "{E2B1CE82-40C0-4F2B-9D00-A93425D7147F}"
 EndProject
@@ -14,6 +14,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "luval.vision.entity", "luval.vision.entity\luval.vision.entity.csproj", "{1C5044F1-FB0A-4D56-899B-8B80F24FA6B7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "luval.vision.dal", "luval.vision.dal\luval.vision.dal.csproj", "{9932FDCF-A432-4B33-ABF5-02A9A3550839}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "luval.vision.sink", "luval.vision.sink\luval.vision.sink.csproj", "{443E9AC3-B5FE-4F20-8B6F-87F59EBBC8F1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -84,6 +86,16 @@ Global
 		{9932FDCF-A432-4B33-ABF5-02A9A3550839}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9932FDCF-A432-4B33-ABF5-02A9A3550839}.SingleImage|Any CPU.ActiveCfg = Release|Any CPU
 		{9932FDCF-A432-4B33-ABF5-02A9A3550839}.SingleImage|Any CPU.Build.0 = Release|Any CPU
+		{443E9AC3-B5FE-4F20-8B6F-87F59EBBC8F1}.CD_ROM|Any CPU.ActiveCfg = Release|Any CPU
+		{443E9AC3-B5FE-4F20-8B6F-87F59EBBC8F1}.CD_ROM|Any CPU.Build.0 = Release|Any CPU
+		{443E9AC3-B5FE-4F20-8B6F-87F59EBBC8F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{443E9AC3-B5FE-4F20-8B6F-87F59EBBC8F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{443E9AC3-B5FE-4F20-8B6F-87F59EBBC8F1}.DVD-5|Any CPU.ActiveCfg = Debug|Any CPU
+		{443E9AC3-B5FE-4F20-8B6F-87F59EBBC8F1}.DVD-5|Any CPU.Build.0 = Debug|Any CPU
+		{443E9AC3-B5FE-4F20-8B6F-87F59EBBC8F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{443E9AC3-B5FE-4F20-8B6F-87F59EBBC8F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{443E9AC3-B5FE-4F20-8B6F-87F59EBBC8F1}.SingleImage|Any CPU.ActiveCfg = Release|Any CPU
+		{443E9AC3-B5FE-4F20-8B6F-87F59EBBC8F1}.SingleImage|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
