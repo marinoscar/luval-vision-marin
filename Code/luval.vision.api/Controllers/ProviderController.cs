@@ -67,8 +67,7 @@ namespace luval.vision.api.Controllers
         {
             return new OcrDocument
             {
-                Id = fileName,
-                DocumentId = result.Id,
+                Id = result.Id,
                 UserId = result.UserId,
                 DurationInMs = result.DurationInMs,
                 Content = process.DoSaveResult(data, path, result)

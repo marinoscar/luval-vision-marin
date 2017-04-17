@@ -11,8 +11,6 @@ namespace luval.vision.entity
     {
         [BsonId]
         public string Id { get; set; }
-        [BsonElement("document_id")]
-        public string DocumentId { get; set; }
         [BsonElement("user_id")]
         public string UserId { get; set; }
         [BsonElement("duration_inms")]
