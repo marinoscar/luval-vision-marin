@@ -1,60 +1,74 @@
-﻿using System;
+﻿using luval.vision.core;
+using luval.vision.entity;
+using luval.vision.bll;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Web.Http;
-using luval.vision.bll;
-using luval.vision.core;
-using Newtonsoft.Json;
-using luval.vision.entity;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Http;
 using System.Web.Http.Cors;
-using System.IO;
 
 namespace luval.vision.api.Controllers
 {
     [EnableCors(origins: "*", headers: "*", methods: "*")]
-    public class ProviderController : ApiController
+    public class SettingsController : ApiController
     {
-        private ProcessLogic processOcr;
-        private BlobStorageLogic blobStorageLogic;
-        private DocumentLogic documentLogic;
+        private SettingsLogic settingsLogic;
 
-        public ProviderController()
+        public SettingsController()
         {
-            processOcr = new ProcessLogic();
-            blobStorageLogic = new BlobStorageLogic();
-            processOcr = new ProcessLogic();
-            documentLogic = new DocumentLogic();
+            settingsLogic = new SettingsLogic();
+        }
+
+        public IHttpActionResult Get(string userId)
+        {
+            try
+            {
+                OcrSettings settings = settingsLogic.GetSettingsByUserId(userId);
+                if (settings != null)
+                {
+                    return Ok(settings.attributeMapping);
+                }
+                else
+                {
+                    var jsonData = File.ReadAllText(HttpContext.Current.Server.MapPath("~/App_Data/attribute-mapping.json"));
+                    var options = JsonConvert.DeserializeObject<AttributeMapping[]>(jsonData);
+                    return Ok(options);
+                }
+            }
+            catch (Exception e)
+            {
+                return Content(HttpStatusCode.InternalServerError, e.ToString());
+            }
         }
 
         public async Task<IHttpActionResult> Post()
         {
-            ProcessResult processResult = new ProcessResult();
-            string jsonResult = string.Empty;
             if (!Request.Content.IsMimeMultipartContent())
             {
                 this.Request.CreateResponse(HttpStatusCode.UnsupportedMediaType);
             }
 
+            AttributeMapping[] attributeMapping = null;
             var provider = GetMultipartProvider();
             try
-            { 
+            {
                 var result = await Request.Content.ReadAsMultipartAsync(provider);
                 var originalFileName = GetDeserializedFileName(result.FileData.First());
                 var userId = result.FormData.GetValues(0).FirstOrDefault();
                 foreach (MultipartFileData file in result.FileData)
                 {
-                    processResult = processOcr.DoProcess(file.LocalFileName, originalFileName, userId);
+                    var jsonData = File.ReadAllText(file.LocalFileName);
+                    attributeMapping = JsonConvert.DeserializeObject<AttributeMapping[]>(jsonData);
                     var bytes = Pdf2Img.CheckForPdfAndConvert(File.ReadAllBytes(file.LocalFileName), file.LocalFileName, file.Headers.ContentDisposition.FileName);
-                    processResult.UserId = userId;
-                    documentLogic.Save(getOcrDocument(processResult, processOcr, file.LocalFileName, originalFileName, bytes));
-                    blobStorageLogic.UploadFileBlobStorage(file.LocalFileName, file.Headers.ContentDisposition.FileName, processResult);
-                    jsonResult = processOcr.DoSaveResult(bytes, file.LocalFileName, processResult);
+                    settingsLogic.SaveOrUpdate(userId, attributeMapping, Constants.defaultProfile);
                 }
-                return Ok(jsonResult);
+                return Ok(attributeMapping);
             }
             catch (Exception exception)
             {
@@ -62,20 +76,9 @@ namespace luval.vision.api.Controllers
             }
         }
 
-        private OcrDocument getOcrDocument(ProcessResult result, ProcessLogic process, string path, string fileName, byte[] data)
-        {
-            return new OcrDocument
-            {
-                Id = result.Id,
-                UserId = result.UserId,
-                DurationInMs = result.DurationInMs,
-                Content = process.DoSaveResult(data, path, result)
-            };
-        }
-
         private MultipartFormDataStreamProvider GetMultipartProvider()
         {
-            var root = HttpContext.Current.Server.MapPath("~/App_Data/documents/");
+            var root = HttpContext.Current.Server.MapPath("~/App_Data/documents");
             Directory.CreateDirectory(root);
             return new MultipartFormDataStreamProvider(root);
         }

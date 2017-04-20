@@ -17,22 +17,17 @@ class DocumentsController {
 
   uploadFile($files) {
     this.loading = true;
-    this.documentsService.uploadDocumenToBlobStorage(this.objectBlobStorage($files))
-      .then(documents => {
-        this.loading = false;
-        this.serializeDocument = angular.fromJson(documents.data);
-        this.documentService.setMetadata(this.serializeDocument);
-        this.documentService.setFileData(this.serializeDocument.FileData);
-        this.documentsService.resetDocumentsList();
-        this.$state.go('check-documents', {tokenId: this.serializeDocument.Result.Id});
-      });
+    this.documentsService.uploadDocumenToBlobStorage(this.documentService.objectBlobStorage($files))
+      .then(this.fileUploadedHandler.bind(this));
   }
 
-  objectBlobStorage(files) {
-    return {
-      userId: this.documentsService.buildUserJSON().id,
-      file: files[0]
-    };
+  fileUploadedHandler(documents) {
+    this.loading = false;
+    this.serializeDocument = angular.fromJson(documents.data);
+    this.documentService.setMetadata(this.serializeDocument);
+    this.documentService.setFileData(this.serializeDocument.FileData);
+    this.documentsService.resetDocumentsList();
+    this.$state.go('check-documents', {tokenId: this.serializeDocument.Result.Id});
   }
 
   showDocument(file) {

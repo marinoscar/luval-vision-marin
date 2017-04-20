@@ -9,5 +9,6 @@ namespace luval.vision.bll
     public class Constants
     {
         public static string prefix = "doc-";
+        public static string defaultProfile = "invoice";
     }
 }

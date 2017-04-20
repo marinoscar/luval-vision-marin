@@ -71,9 +71,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IDocumentDAO.cs" />
+    <Compile Include="ISettingsDAO.cs" />
     <Compile Include="MongoConn.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DocumentDAL.cs" />
+    <Compile Include="SettingsDAL.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
