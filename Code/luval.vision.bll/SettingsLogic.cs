@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using luval.vision.dal;
 using luval.vision.entity;
 using luval.vision.core;
+using MongoDB.Bson;
 
 namespace luval.vision.bll
 {
@@ -27,6 +28,7 @@ namespace luval.vision.bll
         {
             return settingsDAL.SaveOrUpdate(new OcrSettings
             {
+                Id = ObjectId.GenerateNewId().ToString(),
                 userId = userId,
                 attributeMapping = attributeMapping,
                 profileName = profileName

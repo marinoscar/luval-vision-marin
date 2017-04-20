@@ -67,5 +67,15 @@ namespace luval.tests
             var be = settingsDAL.DeleteByUserId(settingsOcr);
             Assert.IsTrue(be);
         }
+
+        [Test]
+        public void ItShouldUpdateRecord()
+        {
+            SettingsDAL settingsDAL = new SettingsDAL();
+            OcrSettings settingsOcr = new OcrSettings();
+            settingsOcr.userId = "harry182894gmailcom";
+            var be = settingsDAL.SaveOrUpdate(settingsOcr);
+            Assert.IsNotNull(be);
+        }
     }
 }
