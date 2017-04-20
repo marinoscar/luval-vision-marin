@@ -18,7 +18,7 @@ class DocumentsController {
   uploadFile($files) {
     this.loading = true;
     this.documentsService.uploadDocumenToBlobStorage(this.documentService.objectBlobStorage($files))
-      .then(this.fileUploadedHandler.bind(this));
+      .then(this.fileUploadedHandler.bind(this), this.fileUploadedRejected.bind(this));
   }
 
   fileUploadedHandler(documents) {
@@ -28,6 +28,18 @@ class DocumentsController {
     this.documentService.setFileData(this.serializeDocument.FileData);
     this.documentsService.resetDocumentsList();
     this.$state.go('check-documents', {tokenId: this.serializeDocument.Result.Id});
+    this.ngNotify.set('Successful Loaded', {
+      duration: 2000,
+      position: 'bottom'
+    });
+  }
+
+  fileUploadedRejected() {
+    this.ngNotify.set('Falied Load', {
+      duration: 2000,
+      position: 'bottom',
+      type: 'error'
+    });
   }
 
   showDocument(file) {
@@ -35,6 +47,10 @@ class DocumentsController {
     this.documentService.setFileData(file.FileData);
     this.documentsService.resetDocumentsList();
     this.$state.go('check-documents', {tokenId: file.Id});
+    this.ngNotify.set('Successful Loaded', {
+      duration: 2000,
+      position: 'bottom'
+    });
   }
 
   documentStoredHandler(documents) {
