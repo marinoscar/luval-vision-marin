@@ -58,10 +58,16 @@ namespace luval.vision.dal
             var settingsList = MongoConn.mongoDB().GetCollection("settings");
             WriteConcernResult result;
             var existingItem = GetSettingsByUserId(settings.userId);
+
             if (existingItem == null)
+            {
                 result = settingsList.Insert<OcrSettings>(settings);
+            }
             else
-                result = settingsList.Save(existingItem);
+            {
+                settings.Id = existingItem.Id;
+                result = settingsList.Save<OcrSettings>(settings);
+            }
             return settings;
         }
     }
