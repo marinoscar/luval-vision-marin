@@ -13,14 +13,14 @@ using System.Text.RegularExpressions;
 
 namespace luval.vision.bll
 {
-    public class OcrBlobStorage
+    public class BlobStorageLogic
     {
         private CloudStorageAccount storage;
         private CloudBlobClient blobClient;
         private CloudBlobContainer blobContainer;
         private CloudBlockBlob blockBlob;
 
-        public OcrBlobStorage()
+        public BlobStorageLogic()
         {
             storage = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("azure.service.blob.storage.key"));
             blobClient = storage.CreateCloudBlobClient();

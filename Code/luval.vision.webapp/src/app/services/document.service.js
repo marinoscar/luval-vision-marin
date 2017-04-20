@@ -1,9 +1,10 @@
 class documentService {
   /* @ngInject */
-  constructor($window, $log) {
+  constructor($window, $log, sessionService) {
     this.metadata = {};
     this.$window = $window;
     this.$log = $log;
+    this.sessionService = sessionService;
   }
 
   setDocumentParsed(json) {
@@ -29,6 +30,13 @@ class documentService {
 
   replaceSpecialCharacters(source) {
     return source.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '') // eslint-disable-line
+  }
+
+  objectBlobStorage(files) {
+    return {
+      userId: this.sessionService.buildUserJSON().userId,
+      file: files[0]
+    };
   }
 
   base64ToArrayBuffer(base64) {

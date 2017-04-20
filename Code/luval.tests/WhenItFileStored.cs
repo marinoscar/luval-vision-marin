@@ -15,7 +15,7 @@ namespace luval.tests
         [Test]
         public void ItShouldStoreFile()
         {
-            OcrBlobStorage blobStorage = new OcrBlobStorage();
+            BlobStorageLogic blobStorage = new BlobStorageLogic();
             String guid = Guid.NewGuid().ToString();
             blobStorage.UploadFileBlobStorage(@"C:\Users\hmuir\Documents\Pernix\luval-vision\Docs\Sample1.jpg", "Sample1.jpg", null);
         }
@@ -23,7 +23,7 @@ namespace luval.tests
         [Test]
         public void ItShouldGetFilesStored()
         {
-            OcrBlobStorage blobStorage = new OcrBlobStorage();
+            BlobStorageLogic blobStorage = new BlobStorageLogic();
             IEnumerable<IListBlobItem> blobs = blobStorage.GetFilesBlobStorage("");
             Assert.IsTrue(blobs.Count() > 0);
         }
@@ -31,7 +31,7 @@ namespace luval.tests
         [Test]
         public void ItShouldDownloadFilesStored()
         {
-            OcrBlobStorage blobStorage = new OcrBlobStorage();
+            BlobStorageLogic blobStorage = new BlobStorageLogic();
             string text = blobStorage.DownloadFileBlobStorage(@"C:\Users\hmuir\Documents\Pernix\luval-vision\Docs\Sample1.jpg", "Sample1.jpg");
             Assert.IsNotEmpty(text);
         }
@@ -39,7 +39,7 @@ namespace luval.tests
         [Test]
         public void ItShouldDeleteFile()
         {
-            OcrBlobStorage blobStorage = new OcrBlobStorage();
+            BlobStorageLogic blobStorage = new BlobStorageLogic();
             blobStorage.DeleteFile("harry182894gmailcom");
         }
     }

@@ -38,7 +38,7 @@ namespace luval.vision.dal
                 .FindAll();
         }
 
-        public bool Delete(OcrDocument document)
+        public bool DeleteByDocument(OcrDocument document)
         {
             try
             {
@@ -53,25 +53,13 @@ namespace luval.vision.dal
             }
         }
 
-        public OcrDocument SaveOrUpdate(OcrDocument document)
+        public OcrDocument Save(OcrDocument document)
         {
             var documentsList = MongoConn.mongoDB().GetCollection("documents");
             WriteConcernResult result;
             if(!String.IsNullOrEmpty(document.Id))
             {
-                var existingItem = GetProcessResult(document.Id);
-                if (existingItem == null)
-                {
-                    result = documentsList.Insert<OcrDocument>(document);
-                }
-                else
-                {
-                    IMongoQuery query = Query.EQ("_id", document.Id);
-                    IMongoUpdate update = Update.Set("user_id", document.UserId)
-                        .Set("duration_inms", document.DurationInMs)
-                        .Set("process_result", document.Content);
-                    result = documentsList.Update(query, update);
-                }
+                result = documentsList.Insert<OcrDocument>(document);
             }
             return document;
         }

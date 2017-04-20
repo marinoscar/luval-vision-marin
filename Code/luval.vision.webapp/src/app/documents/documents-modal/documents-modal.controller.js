@@ -9,6 +9,12 @@ class DocumentsModalController {
     this.loginService = loginService;
   }
 
+  goToSettings() {
+    this.$state.go('settings');
+    this.$uibModalStack.dismissAll();
+    this.documentsService.resetDocumentsList();
+  }
+
   logOut() {
     this.loginService.logOut()
       .then(this.redirectToLogin.bind(this));

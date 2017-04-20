@@ -34,20 +34,14 @@ class documentsService {
 
   getDocumentsStored() {
     const getRequest = {
-      method: 'POST',
+      method: 'GET',
       url: this.CORE.URL + 'Storage',
       headers: {
         'Content-Type': 'application/json'
       },
-      data: this.buildUserJSON()
+      params: this.sessionService.buildUserJSON()
     };
     return this.$http(getRequest);
-  }
-
-  buildUserJSON() {
-    return {
-      id: this.sessionService.getAuthData()
-    };
   }
 }
 

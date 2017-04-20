@@ -21,6 +21,12 @@ class sessionService {
     const session = angular.toJson({authData: user});
     this.$window.localStorage.setItem('user-session', session);
   }
+
+  buildUserJSON() {
+    return {
+      userId: this.getAuthData()
+    };
+  }
 }
 
 export default sessionService;

@@ -1,0 +1,32 @@
+<div id="settings-view">
+  <div class="container">
+    <div class="row">
+      <div id="main-header">
+        <div class="col-md-4">
+          <button id="close-this" ng-click="vm.backToDocuments()"></button>
+        </div>
+        <div class="col-md-8 col-md-offset-2">
+          <img ng-src="../../img/logo.png" class="logo" />
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="container-fluid">
+        <main class="done">
+          <aside id="image" style="width: calc(100%);">
+            <div>
+              <div id="document-container">	
+                <pre>{{vm.jsonSrc | json}}</pre>
+              </div>
+            </div>
+            <footer>
+              <div id="control-toggle" class="active">
+                <button ngf-select="vm.uploadSettingsFile($files)">Upload Configuration File</button>
+              </div>
+            </footer>
+          </aside>
+        </main>
+      </div>
+    </div>
+  </div>
+</div>

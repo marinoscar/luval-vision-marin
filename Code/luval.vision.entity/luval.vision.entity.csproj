@@ -75,6 +75,7 @@
     <Compile Include="BlobDownloadModel.cs" />
     <Compile Include="BlobUploadModel.cs" />
     <Compile Include="FormResult.cs" />
+    <Compile Include="OcrSettings.cs" />
     <Compile Include="OcrDocument.cs" />
     <Compile Include="OcrUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
