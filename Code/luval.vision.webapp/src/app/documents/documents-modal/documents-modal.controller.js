@@ -12,7 +12,6 @@ class DocumentsModalController {
   goToSettings() {
     this.$state.go('settings');
     this.$uibModalStack.dismissAll();
-    this.documentsService.resetDocumentsList();
   }
 
   logOut() {
@@ -23,7 +22,6 @@ class DocumentsModalController {
   redirectToLogin() {
     this.$state.go('login');
     this.sessionService.destroy();
-    this.documentsService.resetDocumentsList();
     this.$uibModalStack.dismissAll();
   }
 }

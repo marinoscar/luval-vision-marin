@@ -30,6 +30,14 @@ namespace luval.vision.api.Controllers
             documentLogic = new DocumentLogic();
         }
 
+        public IHttpActionResult Get(string id)
+        {
+            var ocrDocument = documentLogic.GetProcessResultById(id);
+            if (ocrDocument != null)
+                return Ok(ocrDocument);
+            return BadRequest();
+        }
+
         public async Task<IHttpActionResult> Post()
         {
             ProcessResult processResult = new ProcessResult();

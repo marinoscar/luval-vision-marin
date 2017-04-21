@@ -4,6 +4,7 @@ import documents from './app/documents/documents';
 import core from './app/core/core.constants';
 import checkDocuments from './app/check-documents/check-documents';
 import settings from './app/settings/settings';
+import viewJSON from './app/view-json/view-json';
 import {routesConfig, blockPrivateAccess} from './routes';
 import 'angular-ui-router';
 import 'angular-ui-router/release/stateEvents';
@@ -32,6 +33,7 @@ angular
     settings,
     documents,
     checkDocuments,
+    viewJSON,
     login
   ])
   .config(routesConfig)

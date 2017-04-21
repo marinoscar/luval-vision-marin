@@ -17,7 +17,7 @@
             <div class="headinfo">
               <h2 class="list-title">All Documents</h2>
               <div class="expense-actions">
-                <div class="add-expense">
+                <div class="add-expense" ng-if="!vm.loading">
                   <div class="button" ngf-select="vm.uploadFile($files)">Upload Document</div>
                 </div>
                 <button id="sendClip" style="display:none;">
@@ -49,24 +49,24 @@
                 </tr>
               </thead>
               <tbody ng-repeat="document in vm.documents">
-                <tr>
+                <tr ng-click="vm.showDocument(document)">
                   <th>
-                    <button ng-click="vm.showDocument(document)">{{document.Id}}</button>
+                    {{document.Id}}
                   </th>
                   <th>
-                    {{document.date}}
+                    {{document.attributes[0]}}
                   </th>
                   <th>
-                    {{document.dueDate}}
+                    {{document.attributes[1]}}
                   </th>
                   <th>
-                    {{document.poNumber}}
+                    {{document.attributes[2]}}
                   </th>
                   <th>
-                    {{document.total}}
+                    {{document.attributes[3]}}
                   </th>
                   <th>
-                    {{document.invoiceNumber}}
+                    {{document.attributes[4]}}
                   </th>
                 </tr>
               </tbody>

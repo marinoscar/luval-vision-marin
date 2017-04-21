@@ -2,7 +2,7 @@ class DocumentsController {
   /* @ngInject */
   constructor($q, $log, $state, ngNotify, $uibModal, documentsService, usSpinnerService, documentService) {
     this.$q = $q;
-    this.log = $log;
+    this.$log = $log;
     this.$state = $state;
     this.$uibModal = $uibModal;
     this.ngNotify = ngNotify;
@@ -10,6 +10,7 @@ class DocumentsController {
     this.documentService = documentService;
     this.usSpinnerService = usSpinnerService;
     this.loading = true;
+    this.documentsService.resetDocumentsList();
     this.documentsService.getDocumentsStored()
       .then(this.documentStoredHandler.bind(this),
       this.documentStoredRejected.bind(this));
@@ -26,7 +27,6 @@ class DocumentsController {
     this.serializeDocument = angular.fromJson(documents.data);
     this.documentService.setMetadata(this.serializeDocument);
     this.documentService.setFileData(this.serializeDocument.FileData);
-    this.documentsService.resetDocumentsList();
     this.$state.go('check-documents', {tokenId: this.serializeDocument.Result.Id});
     this.ngNotify.set('Successful Loaded', {
       duration: 2000,
@@ -45,7 +45,6 @@ class DocumentsController {
   showDocument(file) {
     this.documentService.setMetadata(file);
     this.documentService.setFileData(file.FileData);
-    this.documentsService.resetDocumentsList();
     this.$state.go('check-documents', {tokenId: file.Id});
     this.ngNotify.set('Successful Loaded', {
       duration: 2000,
@@ -56,7 +55,12 @@ class DocumentsController {
   documentStoredHandler(documents) {
     this.documents = documents.data;
     this.serializeDocumentsContent(this.documents)
-      .then(this.serializeDocumentsHandler.bind(this));
+      .then(this.serializeDocumentsHandler.bind(this),
+      this.serializeDocumentsRejected.bind(this));
+  }
+
+  serializeDocumentsRejected() {
+    this.loading = false;
   }
 
   serializeDocumentsHandler(documents) {
@@ -79,23 +83,14 @@ class DocumentsController {
   setDocumentContent(documentContent) {
     this.initilizeDocumentInfo(documentContent);
     angular.forEach(documentContent.Result.TextResults, index => {
-      if (index.Map.attributeName === 'DueDate') {
-        this.documentsInfo.date = index.Value;
-      } else if (index.Map.attributeName === 'Date') {
-        this.documentsInfo.dueDate = index.Value;
-      } else if (index.Map.attributeName === 'Total') {
-        this.documentsInfo.total = index.Value;
-      } else if (index.Map.attributeName === 'InvoiceNumber') {
-        this.documentsInfo.invoiceNumber = index.Value;
-      } else if (index.Map.attributeName === 'PONumber') {
-        this.documentsInfo.poNumber = index.Value;
-      }
+      this.documentsInfo.attributes.push(index.Value);
     });
     this.documentsService.addDocument(this.documentsInfo);
   }
 
   initilizeDocumentInfo(documentContent) {
     this.documentsInfo = {};
+    this.documentsInfo.attributes = [];
     this.documentsInfo.Id = documentContent.Result.Id;
     this.documentsInfo.UserId = documentContent.Result.UserId;
     this.documentsInfo.FileName = documentContent.FileName;

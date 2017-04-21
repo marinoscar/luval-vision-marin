@@ -1,0 +1,15 @@
+<div class="container">
+  <div ng-if="vm.loading">
+    <span us-spinner></span>
+  </div>
+  <div class="row" ng-if="!vm.loading">
+    <div class="document-container">
+      <pre ng-if="vm.viewer">{{vm.viewer | json}}</pre>
+      <span ng-if="!vm.viewer">    
+        Document selected is not available!
+		    Try with another document,
+		    Thanks,
+      </span>
+    </div>
+  </div>
+</div>

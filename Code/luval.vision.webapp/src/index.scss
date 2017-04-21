@@ -95,6 +95,9 @@ main {
       overflow: hidden;
   }
 }
+table > tbody > tr {
+  cursor: pointer;
+}
 #main-header {
   width: 100%;
   text-align: center;

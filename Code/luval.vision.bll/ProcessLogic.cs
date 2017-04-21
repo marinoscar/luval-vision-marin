@@ -84,7 +84,6 @@ namespace luval.vision.bll
             }
         }
 
-
         private List<MappingResult> GetData(OcrResult result)
         {
             var jsonData = File.ReadAllText("attribute-mapping.json");
