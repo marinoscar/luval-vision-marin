@@ -2,11 +2,10 @@ import CheckDocumentsController from './check-documents.controller';
 import documentService from '../services/document.service';
 import routes from './check-documents.routes';
 import interact from 'interactjs/dist/interact';
-import viewer from './view-json/view-json';
 
 export default
   angular
-    .module('luval-vision.check-documents', [viewer])
+    .module('luval-vision.check-documents', [])
     .config(routes)
     .config(interactiveConfig)
     .controller('CheckDocumentsController', CheckDocumentsController)

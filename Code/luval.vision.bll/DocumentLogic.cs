@@ -22,6 +22,11 @@ namespace luval.vision.bll
             return documentDAL.GetProcessResultByUserId(userId);
         }
 
+        public OcrDocument GetProcessResultById(string id)
+        {
+            return documentDAL.GetProcessResult(id);
+        }
+
         public OcrDocument Save(OcrDocument document)
         {
             return documentDAL.Save(document);

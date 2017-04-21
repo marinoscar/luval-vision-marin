@@ -7,11 +7,6 @@ class documentService {
     this.sessionService = sessionService;
   }
 
-  setDocumentParsed(json) {
-    this.file = angular.toJson(json.Result, true);
-    return this.file;
-  }
-
   getMetadata() {
     return this.metadata;
   }

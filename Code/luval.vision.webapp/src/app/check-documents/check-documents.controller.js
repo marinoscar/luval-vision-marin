@@ -2,7 +2,7 @@ class CheckDocumentsController {
   /* @ngInject */
   constructor($state, $window, $log, ngNotify, documentService) {
     this.$state = $state;
-    this.log = $log;
+    this.$log = $log;
     this.$window = $window;
     this.ngNotify = ngNotify;
     this.documentService = documentService;
@@ -33,10 +33,8 @@ class CheckDocumentsController {
   }
 
   openDocumentViewer() {
-    const url = this.$state.href('view-json', {tokenId: this.metadata.Id});
-    const documentParsed = this.documentService.setDocumentParsed(this.metadata);
-    this.$window.localStorage.setItem('document-json', documentParsed);
-    this.$window.open(url);
+    const url = this.$state.href('view-json', {tokenId: this.$state.params.tokenId});
+    this.$window.open(url, '_blank');
   }
 
   backToDocuments() {
