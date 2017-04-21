@@ -10,9 +10,14 @@ class CheckDocumentsController {
   }
 
   setCheckDocumentProperties() {
-    this.metadata = this.documentService.getMetadata();
+    this.documentService.getMetaDataFile(this.$state.params.tokenId)
+      .then(this.getMetadataHandler.bind(this));
+  }
+
+  getMetadataHandler(metadata) {
+    this.metadata = angular.fromJson(metadata.data.Content);
     if (Object.keys(this.metadata).length !== 0) { // eslint-disable-line no-negated-condition
-      this.imageSrc = this.documentService.getFileData();
+      this.imageSrc = this.metadata.FileData;
       this.primaryData = this.metadata.Result.TextResults;
     } else {
       this.ngNotify.set('Please select or upload some document!', {
