@@ -25,8 +25,6 @@ class DocumentsController {
   fileUploadedHandler(documents) {
     this.loading = false;
     this.serializeDocument = angular.fromJson(documents.data);
-    this.documentService.setMetadata(this.serializeDocument);
-    this.documentService.setFileData(this.serializeDocument.FileData);
     this.$state.go('check-documents', {tokenId: this.serializeDocument.Result.Id});
     this.ngNotify.set('Successful Loaded', {
       duration: 2000,
@@ -43,8 +41,6 @@ class DocumentsController {
   }
 
   showDocument(file) {
-    this.documentService.setMetadata(file);
-    this.documentService.setFileData(file.FileData);
     this.$state.go('check-documents', {tokenId: file.Id});
     this.ngNotify.set('Successful Loaded', {
       duration: 2000,
@@ -55,17 +51,12 @@ class DocumentsController {
   documentStoredHandler(documents) {
     this.documents = documents.data;
     this.serializeDocumentsContent(this.documents)
-      .then(this.serializeDocumentsHandler.bind(this),
-      this.serializeDocumentsRejected.bind(this));
+      .then(this.stopLoading.bind(this),
+      this.stopLoading.bind(this));
   }
 
-  serializeDocumentsRejected() {
+  stopLoading() {
     this.loading = false;
-  }
-
-  serializeDocumentsHandler(documents) {
-    this.loading = false;
-    this.documentService.setMetadata(documents);
   }
 
   serializeDocumentsContent(documents) {
