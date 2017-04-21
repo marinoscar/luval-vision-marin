@@ -1,17 +1,16 @@
 class ViewJsonController {
   /* @ngInject */
-  constructor($window, $state, $log, documentService, viewJsonService) {
+  constructor($window, $state, $log, documentService) {
     this.$state = $state;
     this.$window = $window;
     this.$log = $log;
     this.loading = true;
     this.documentService = documentService;
-    this.viewJsonService = viewJsonService;
     this.initializeMetadataViewer();
   }
 
   initializeMetadataViewer() {
-    this.viewJsonService.getMetaDataFile(this.$state.params.tokenId)
+    this.documentService.getMetaDataFile(this.$state.params.tokenId)
       .then(this.getMetadataHandler.bind(this),
       this.getMetadataRejected.bind(this));
   }

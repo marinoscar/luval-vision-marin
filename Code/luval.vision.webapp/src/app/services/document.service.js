@@ -1,26 +1,21 @@
 class documentService {
   /* @ngInject */
-  constructor($window, $log, sessionService) {
+  constructor($window, $log, $http, sessionService, CORE) {
     this.metadata = {};
     this.$window = $window;
     this.$log = $log;
+    this.$http = $http;
     this.sessionService = sessionService;
+    this.CORE = CORE;
   }
 
-  getMetadata() {
-    return this.metadata;
-  }
-
-  setMetadata(metadata) {
-    this.metadata = metadata;
-  }
-
-  setFileData(fileData) {
-    this.fileData = fileData;
-  }
-
-  getFileData() {
-    return this.fileData;
+  getMetaDataFile(fileId) {
+    const getRequest = {
+      method: 'GET',
+      url: this.CORE.URL + 'Provider',
+      params: {id: fileId}
+    };
+    return this.$http(getRequest);
   }
 
   replaceSpecialCharacters(source) {
