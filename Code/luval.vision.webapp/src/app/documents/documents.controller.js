@@ -6,19 +6,33 @@ class DocumentsController {
     this.$state = $state;
     this.$uibModal = $uibModal;
     this.ngNotify = ngNotify;
+    this.profiles = [];
     this.documentsService = documentsService;
     this.documentService = documentService;
     this.usSpinnerService = usSpinnerService;
     this.loading = true;
     this.documentsService.resetDocumentsList();
+    this.activate();
+  }
+
+  activate() {
     this.documentsService.getDocumentsStored()
       .then(this.documentStoredHandler.bind(this),
       this.documentStoredRejected.bind(this));
+    this.documentsService.getProfiles()
+      .then(this.profilesLoadedHandler.bind(this));
   }
 
-  uploadFile($files) {
+  profilesLoadedHandler(profiles) {
+    this.profilesName = [];
+    angular.forEach(profiles.data, profile => {
+      this.profilesName.push(profile);
+    });
+  }
+
+  uploadFile($files, profileName) {
     this.loading = true;
-    this.documentsService.uploadDocumenToBlobStorage(this.documentService.objectBlobStorage($files))
+    this.documentsService.uploadDocumenToBlobStorage(this.documentService.objectBlobStorage($files, profileName))
       .then(this.fileUploadedHandler.bind(this), this.fileUploadedRejected.bind(this));
   }
 

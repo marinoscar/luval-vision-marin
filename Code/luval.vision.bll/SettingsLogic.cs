@@ -19,7 +19,12 @@ namespace luval.vision.bll
             settingsDAL = new SettingsDAL();
         }
 
-        public OcrSettings GetSettingsByUserId(String userId)
+        public OcrSettings GetSettingFileByUserId(String userId)
+        {
+            return settingsDAL.GetSettingFileByUserId(userId);
+        }
+
+        public IEnumerable<OcrSettings> GetSettingsByUserId(String userId)
         {
             return settingsDAL.GetSettingsByUserId(userId);
         }

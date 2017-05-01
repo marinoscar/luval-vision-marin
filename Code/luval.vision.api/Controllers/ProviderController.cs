@@ -52,10 +52,11 @@ namespace luval.vision.api.Controllers
             { 
                 var result = await Request.Content.ReadAsMultipartAsync(provider);
                 var originalFileName = GetDeserializedFileName(result.FileData.First());
-                var userId = result.FormData.GetValues(0).FirstOrDefault();
+                var userId = result.FormData.GetValues(1).FirstOrDefault();
+                var profileName = result.FormData.GetValues(0).FirstOrDefault();
                 foreach (MultipartFileData file in result.FileData)
                 {
-                    processResult = processOcr.DoProcess(file.LocalFileName, originalFileName, userId);
+                    processResult = processOcr.DoProcess(file.LocalFileName, originalFileName, userId, profileName);
                     var bytes = Pdf2Img.CheckForPdfAndConvert(File.ReadAllBytes(file.LocalFileName), file.LocalFileName, file.Headers.ContentDisposition.FileName);
                     processResult.UserId = userId;
                     documentLogic.Save(getOcrDocument(processResult, processOcr, file.LocalFileName, originalFileName, bytes));

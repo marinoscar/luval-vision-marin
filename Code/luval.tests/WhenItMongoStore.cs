@@ -54,7 +54,7 @@ namespace luval.tests
         public void ItShouldLoadSettingsRecords()
         {
             SettingsDAL settingsDAL = new SettingsDAL();
-            OcrSettings settingsOcr = settingsDAL.GetSettingsByUserId("harry182894gmailcom");
+            OcrSettings settingsOcr = settingsDAL.GetSettingFileByUserId("harry182894gmailcom");
             Assert.IsNotNull(settingsOcr);
         }
 

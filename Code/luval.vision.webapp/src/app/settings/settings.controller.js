@@ -6,12 +6,26 @@ class SettingsController {
     this.ngNotify = ngNotify;
     this.settingsService = settingsService;
     this.documentService = documentService;
+    this.disable = true;
     this.loadDefaultSettings();
   }
 
-  uploadSettingsFile($files) {
-    this.settingsService.uploadAttributeMappingConfig(this.documentService.objectBlobStorage($files))
-      .then(this.configFileUploadedHandler.bind(this));
+  loadFile($files) {
+    this.disable = false;
+    this.$files = $files;
+  }
+
+  uploadSettingsFile() {
+    if (!this.disable) { // eslint-disable-line
+      this.settingsService.uploadAttributeMappingConfig(this.documentService.objectBlobStorage(this.$files, this.profileName))
+        .then(this.configFileUploadedHandler.bind(this));
+    } else {
+      this.ngNotify.set('Please Upload a Settings File!', {
+        type: 'error',
+        duration: 2000,
+        position: 'bottom'
+      });
+    }
   }
 
   loadDefaultSettings() {
@@ -33,6 +47,7 @@ class SettingsController {
 
   configFileUploadedHandler(fileConfig) {
     this.jsonSrc = fileConfig.data;
+    this.profileName = '';
     this.ngNotify.set('Successful Uploaded', {
       duration: 2000,
       position: 'bottom'
