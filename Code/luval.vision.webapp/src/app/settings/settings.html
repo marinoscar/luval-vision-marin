@@ -12,20 +12,33 @@
     </div>
     <div class="row">
       <div class="container-fluid">
-        <main class="done">
-          <aside id="image" style="width: calc(100%);">
-            <div>
-              <div id="document-container">	
-                <pre>{{vm.jsonSrc | json}}</pre>
+        <div class="col-md-6">
+          <main class="done">
+            <aside id="image" style="width: calc(100%);">
+              <div>
+                <div id="document-container">	
+                  <pre>{{vm.jsonSrc | json}}</pre>
+                </div>
               </div>
+              <footer>
+                <div id="control-toggle" class="active">
+                  <button ngf-select="vm.loadFile($files)">Upload Configuration File</button>
+                </div>
+              </footer>
+            </aside>
+          </main>
+        </div>
+        <div class="col-md-6">
+          <form name="settingsForm">
+            <div class="form-group">
+              <label>Profile name:</label>
+              <input type="text" class="form-control" ng-model="vm.profileName" required id="profileName" />
             </div>
-            <footer>
-              <div id="control-toggle" class="active">
-                <button ngf-select="vm.uploadSettingsFile($files)">Upload Configuration File</button>
-              </div>
-            </footer>
-          </aside>
-        </main>
+            <div class="form-group">
+              <button class="btn btn-success" ng-disabled="settingsForm.$invalid" ng-click="vm.uploadSettingsFile()">Update</button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   </div>

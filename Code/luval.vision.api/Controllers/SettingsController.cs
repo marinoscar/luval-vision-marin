@@ -25,11 +25,33 @@ namespace luval.vision.api.Controllers
             settingsLogic = new SettingsLogic();
         }
 
+        [Route("api/v1/Settings/GetProfiles")]
+        [HttpGet]
+        public IHttpActionResult GetProfiles(string userId)
+        {
+            try
+            {
+                var settingsList = settingsLogic.GetSettingsByUserId(userId);
+                if(settingsList.Count() > 0)
+                {
+                    return Ok(settingsList);
+                }
+                return Ok(new OcrSettings
+                {
+                    profileName = "invoice"
+                });
+            }
+            catch (Exception e)
+            {
+                return Content(HttpStatusCode.InternalServerError, e.ToString());
+            }
+        }
+
         public IHttpActionResult Get(string userId)
         {
             try
             {
-                OcrSettings settings = settingsLogic.GetSettingsByUserId(userId);
+                OcrSettings settings = settingsLogic.GetSettingFileByUserId(userId);
                 if (settings != null)
                 {
                     return Ok(settings.attributeMapping);
@@ -60,13 +82,14 @@ namespace luval.vision.api.Controllers
             {
                 var result = await Request.Content.ReadAsMultipartAsync(provider);
                 var originalFileName = GetDeserializedFileName(result.FileData.First());
-                var userId = result.FormData.GetValues(0).FirstOrDefault();
+                var userId = result.FormData.GetValues(1).FirstOrDefault();
+                var profileName = result.FormData.GetValues(0).FirstOrDefault();
                 foreach (MultipartFileData file in result.FileData)
                 {
                     var jsonData = File.ReadAllText(file.LocalFileName);
                     attributeMapping = JsonConvert.DeserializeObject<AttributeMapping[]>(jsonData);
                     var bytes = Pdf2Img.CheckForPdfAndConvert(File.ReadAllBytes(file.LocalFileName), file.LocalFileName, file.Headers.ContentDisposition.FileName);
-                    settingsLogic.SaveOrUpdate(userId, attributeMapping, Constants.defaultProfile);
+                    settingsLogic.SaveOrUpdate(userId, attributeMapping, profileName);
                 }
                 return Ok(attributeMapping);
             }

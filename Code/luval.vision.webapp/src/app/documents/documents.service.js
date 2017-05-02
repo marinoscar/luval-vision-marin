@@ -32,6 +32,18 @@ class documentsService {
     return upload;
   }
 
+  getProfiles() {
+    const getRequest = {
+      method: 'GET',
+      url: this.CORE.URL + 'Settings/GetProfiles',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      params: this.sessionService.buildUserJSON()
+    };
+    return this.$http(getRequest);
+  }
+
   getDocumentsStored() {
     const getRequest = {
       method: 'GET',

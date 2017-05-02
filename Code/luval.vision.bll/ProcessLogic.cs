@@ -50,9 +50,9 @@ namespace luval.vision.bll
             return json;
         }
 
-        public ProcessResult DoProcess(string fileName, string extension, string userId)
+        public ProcessResult DoProcess(string fileName, string extension, string userId, string profileName)
         {
-            var existingItem = settingsDAL.GetSettingsByUserId(userId);
+            var existingItem = settingsDAL.GetSettingsByProfileName(profileName);
             if(null != existingItem)
                 return DoProcessSettings(fileName, extension, existingItem.attributeMapping);
             return DoProcessWithoutSettings(fileName, extension);            

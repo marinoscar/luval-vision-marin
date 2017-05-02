@@ -15,9 +15,17 @@ namespace luval.vision.dal
 {
     public class SettingsDAL : ISettingsDAO
     {
-        public OcrSettings GetSettingsByUserId(String userId)
+        public OcrSettings GetSettingFileByUserId(String userId)
         {
             var settings = Query<OcrSettings>.EQ(u => u.userId, userId);
+            return MongoConn.mongoDB()
+                .GetCollection<OcrSettings>("settings")
+                .FindOne(settings);
+        }
+
+        public OcrSettings GetSettingsByProfileName(String profileName)
+        {
+            var settings = Query<OcrSettings>.EQ(p => p.profileName, profileName);
             return MongoConn.mongoDB()
                 .GetCollection<OcrSettings>("settings")
                 .FindOne(settings);
@@ -29,6 +37,15 @@ namespace luval.vision.dal
             return MongoConn.mongoDB()
                 .GetCollection<OcrSettings>("settings")
                 .FindOne(settings);
+        }
+
+        public IEnumerable<OcrSettings> GetSettingsByUserId(String userId)
+        {
+            var settingList = MongoConn.mongoDB()
+                .GetCollection<OcrSettings>("settings")
+                .FindAll();
+            
+            return settingList.Where(s => s.userId == userId).ToList();
         }
 
         public IEnumerable<OcrSettings> GetSettings()
@@ -57,7 +74,7 @@ namespace luval.vision.dal
         {
             var settingsList = MongoConn.mongoDB().GetCollection("settings");
             WriteConcernResult result;
-            var existingItem = GetSettingsByUserId(settings.userId);
+            var existingItem = GetSettingsByProfileName(settings.profileName);
 
             if (existingItem == null)
             {

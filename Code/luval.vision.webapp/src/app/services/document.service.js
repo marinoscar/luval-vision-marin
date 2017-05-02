@@ -22,8 +22,9 @@ class documentService {
     return source.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '') // eslint-disable-line
   }
 
-  objectBlobStorage(files) {
+  objectBlobStorage(files, profileName) {
     return {
+      profile: profileName,
       userId: this.sessionService.buildUserJSON().userId,
       file: files[0]
     };
