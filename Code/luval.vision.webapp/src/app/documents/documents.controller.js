@@ -26,7 +26,13 @@ class DocumentsController {
   profilesLoadedHandler(profiles) {
     this.profilesName = [];
     angular.forEach(profiles.data, profile => {
-      this.profilesName.push(profile);
+      if (profile !== null) {
+        if (angular.isDefined(profile.profileName)) {
+          this.profilesName.push(profile.profileName);
+        } else {
+          this.profilesName.push(profile);
+        }
+      }
     });
   }
 

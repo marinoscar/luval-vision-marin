@@ -20,7 +20,7 @@ class settingsService {
   getDefaultSettings() {
     const getRequest = {
       method: 'GET',
-      url: this.CORE.URL + 'Settings',
+      url: this.CORE.URL + 'Settings/GetProfiles',
       headers: {
         'Content-Type': 'application/json'
       },
