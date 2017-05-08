@@ -53,6 +53,7 @@ class DocumentsController {
   }
 
   fileUploadedRejected() {
+    this.loading = false;
     this.ngNotify.set('Falied Load', {
       duration: 2000,
       position: 'bottom',
