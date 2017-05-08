@@ -18,21 +18,17 @@
               <h2 class="list-title">All Documents</h2>
               <div class="expense-actions">
                 <div class="add-expense" ng-if="!vm.loading">
-                  <div class="dropdown">
-                    <div class="button dropdown-toggle"
-                    data-toggle="dropdown">Upload Document
+                  <div class="dropdown" uib-dropdown>
+                    <div uib-dropdown-toggle class="button dropdown-toggle" data-toggle="dropdown">Upload Document
                       <span class="caret"></span>
                     </div>
-                    <ul class="dropdown-menu">
+                    <ul class="dropdown-menu" uib-dropdown-menu>
                       <li ng-repeat="profile in vm.profilesName">
                         <a tabindex="-1" ngf-select="vm.uploadFile($files, profile)">{{profile}}</a>
                       </li>
                     </ul>
                   </div>
                 </div>
-                <button id="sendClip" style="display:none;">
-                  <span>Submit Payperclip</span>
-                </button>
               </div>
             </div>
           </div>
