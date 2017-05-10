@@ -46,7 +46,7 @@ class DocumentsController {
     this.loading = false;
     this.serializeDocument = angular.fromJson(documents.data);
     this.$state.go('check-documents', {tokenId: this.serializeDocument.Result.Id});
-    this.ngNotify.set('Successful Loaded', {
+    this.ngNotify.set('Successfully Loaded', {
       duration: 2000,
       position: 'bottom'
     });
@@ -54,7 +54,7 @@ class DocumentsController {
 
   fileUploadedRejected() {
     this.loading = false;
-    this.ngNotify.set('Falied Load', {
+    this.ngNotify.set('Falied to Load', {
       duration: 2000,
       position: 'bottom',
       type: 'error'
@@ -63,7 +63,7 @@ class DocumentsController {
 
   showDocument(file) {
     this.$state.go('check-documents', {tokenId: file.Id});
-    this.ngNotify.set('Successful Loaded', {
+    this.ngNotify.set('Successfully Loaded', {
       duration: 2000,
       position: 'bottom'
     });

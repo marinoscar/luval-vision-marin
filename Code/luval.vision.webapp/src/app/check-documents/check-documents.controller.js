@@ -20,7 +20,7 @@ class CheckDocumentsController {
       this.imageSrc = this.metadata.FileData;
       this.primaryData = this.metadata.Result.TextResults;
     } else {
-      this.ngNotify.set('Please select or upload some document!', {
+      this.ngNotify.set('Please upload a document!', {
         type: 'error',
         duration: 3000
       });
