@@ -9,7 +9,7 @@ function blockPrivateAccess($rootScope, $state, $log, ngNotify, loginService) {
   const deregistration = $rootScope.$on('$stateChangeStart', (evt, targetState) => {
     if (!targetState.public && !loginService.isLoggedIn()) {
       evt.preventDefault();
-      ngNotify.set('Please use Google Sign In again.', 'info');
+      ngNotify.set('Please Sign In with Google', 'info');
       $state.go('login');
     }
   });

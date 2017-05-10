@@ -16,7 +16,7 @@ class LoginController {
   }
 
   signInHandler(user) {
-    this.ngNotify.set('Success Google Sign In', {
+    this.ngNotify.set('Google Sign In Success', {
       duration: 2000,
       position: 'bottom'
     });
@@ -24,7 +24,7 @@ class LoginController {
   }
 
   signInRejected() {
-    this.ngNotify.set('Error Google sign in.', {
+    this.ngNotify.set('Google Sign In Error ', {
       type: 'error',
       duration: 2000
     });

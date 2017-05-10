@@ -39,7 +39,7 @@ class SettingsController {
 
   settingsLoadHandler(settings) {
     this.jsonSrc = settings.data;
-    this.ngNotify.set('Successful Loaded', {
+    this.ngNotify.set('Successfully Loaded', {
       duration: 2000,
       position: 'bottom'
     });
@@ -48,7 +48,7 @@ class SettingsController {
   configFileUploadedHandler(fileConfig) {
     this.jsonSrc = fileConfig.data;
     this.profileName = '';
-    this.ngNotify.set('Successful Uploaded', {
+    this.ngNotify.set('Successfully Uploaded', {
       duration: 2000,
       position: 'bottom'
     });
