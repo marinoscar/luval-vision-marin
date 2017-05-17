@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.6
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "luval.vision.core", "luval.vision.core\luval.vision.core.csproj", "{E2B1CE82-40C0-4F2B-9D00-A93425D7147F}"
 EndProject
@@ -16,6 +16,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "luval.vision.dal", "luval.vision.dal\luval.vision.dal.csproj", "{9932FDCF-A432-4B33-ABF5-02A9A3550839}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "luval.vision.sink", "luval.vision.sink\luval.vision.sink.csproj", "{443E9AC3-B5FE-4F20-8B6F-87F59EBBC8F1}"
+EndProject
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "luval.vision.web", "luval.vision.web\luval.vision.web.njsproj", "{B488F431-C794-417B-9643-29C5FDC5CF7B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -96,6 +98,16 @@ Global
 		{443E9AC3-B5FE-4F20-8B6F-87F59EBBC8F1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{443E9AC3-B5FE-4F20-8B6F-87F59EBBC8F1}.SingleImage|Any CPU.ActiveCfg = Release|Any CPU
 		{443E9AC3-B5FE-4F20-8B6F-87F59EBBC8F1}.SingleImage|Any CPU.Build.0 = Release|Any CPU
+		{B488F431-C794-417B-9643-29C5FDC5CF7B}.CD_ROM|Any CPU.ActiveCfg = Release|Any CPU
+		{B488F431-C794-417B-9643-29C5FDC5CF7B}.CD_ROM|Any CPU.Build.0 = Release|Any CPU
+		{B488F431-C794-417B-9643-29C5FDC5CF7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B488F431-C794-417B-9643-29C5FDC5CF7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B488F431-C794-417B-9643-29C5FDC5CF7B}.DVD-5|Any CPU.ActiveCfg = Debug|Any CPU
+		{B488F431-C794-417B-9643-29C5FDC5CF7B}.DVD-5|Any CPU.Build.0 = Debug|Any CPU
+		{B488F431-C794-417B-9643-29C5FDC5CF7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B488F431-C794-417B-9643-29C5FDC5CF7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B488F431-C794-417B-9643-29C5FDC5CF7B}.SingleImage|Any CPU.ActiveCfg = Release|Any CPU
+		{B488F431-C794-417B-9643-29C5FDC5CF7B}.SingleImage|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
