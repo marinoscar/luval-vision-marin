@@ -69,6 +69,23 @@ namespace luval.vision.api.Controllers
             }
         }
 
+        public IHttpActionResult Delete(string profile)
+        {
+            try
+            {
+                bool isDeleted = settingsLogic.DeleteByProfileName(profile);
+                if (isDeleted)
+                {
+                    return Ok();
+                }
+                return InternalServerError();
+            }
+            catch (Exception e)
+            {
+                return Content(HttpStatusCode.InternalServerError, e.ToString());
+            }
+        }
+
         public async Task<IHttpActionResult> Post()
         {
             if (!Request.Content.IsMimeMultipartContent())

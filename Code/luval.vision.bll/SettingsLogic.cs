@@ -29,6 +29,11 @@ namespace luval.vision.bll
             return settingsDAL.GetSettingsByUserId(userId);
         }
 
+        public bool DeleteByProfileName(string profileName)
+        {
+            return settingsDAL.DeleteByProfileName(profileName);
+        }
+
         public OcrSettings SaveOrUpdate(string userId, AttributeMapping[] attributeMapping, string profileName)
         {
             return settingsDAL.SaveOrUpdate(new OcrSettings

@@ -70,6 +70,21 @@ namespace luval.vision.dal
             }
         }
 
+        public bool DeleteByProfileName(string profileName)
+        {
+            try
+            {
+                var settingsList = MongoConn.mongoDB().GetCollection("settings");
+                IMongoQuery query = Query.EQ("profile_name", profileName);
+                settingsList.Remove(query);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         public OcrSettings SaveOrUpdate(OcrSettings settings)
         {
             var settingsList = MongoConn.mongoDB().GetCollection("settings");
