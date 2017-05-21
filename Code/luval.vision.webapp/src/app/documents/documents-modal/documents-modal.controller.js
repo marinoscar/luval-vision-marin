@@ -10,7 +10,7 @@ class DocumentsModalController {
   }
 
   goToSettings() {
-    this.$state.go('settings');
+    this.$state.go('profiles-show');
     this.$uibModalStack.dismissAll();
   }
 

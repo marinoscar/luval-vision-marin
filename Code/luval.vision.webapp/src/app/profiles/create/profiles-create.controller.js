@@ -1,10 +1,10 @@
-class SettingsController {
+class ProfilesCreateController {
   /* @ngInject */
-  constructor($log, $state, ngNotify, settingsService, documentService) {
+  constructor($log, $state, ngNotify, profilesService, documentService) {
     this.$log = $log;
     this.$state = $state;
     this.ngNotify = ngNotify;
-    this.settingsService = settingsService;
+    this.profilesService = profilesService;
     this.documentService = documentService;
     this.disable = true;
     this.loadDefaultSettings();
@@ -17,7 +17,7 @@ class SettingsController {
 
   uploadSettingsFile() {
     if (!this.disable) { // eslint-disable-line
-      this.settingsService.uploadAttributeMappingConfig(this.documentService.objectBlobStorage(this.$files, this.profileName))
+      this.profilesService.uploadAttributeMappingConfig(this.documentService.objectBlobStorage(this.$files, this.profileName))
         .then(this.configFileUploadedHandler.bind(this));
     } else {
       this.ngNotify.set('Please Upload a Settings File!', {
@@ -29,7 +29,7 @@ class SettingsController {
   }
 
   loadDefaultSettings() {
-    this.settingsService.getDefaultSettings()
+    this.profilesService.getDefaultSettings()
       .then(this.settingsLoadHandler.bind(this), this.settingsLoadRejected.bind(this));
   }
 
@@ -54,9 +54,9 @@ class SettingsController {
     });
   }
 
-  backToDocuments() {
-    this.$state.go('documents');
+  backToShowProfiles() {
+    this.$state.go('profiles-show');
   }
 }
 
-export default SettingsController;
+export default ProfilesCreateController;

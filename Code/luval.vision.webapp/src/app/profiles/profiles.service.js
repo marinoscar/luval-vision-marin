@@ -1,4 +1,5 @@
-class settingsService {
+class profilesService {
+  /* @ngInject */
   constructor($log, $http, sessionService, Upload, CORE) {
     this.$log = $log;
     this.$http = $http;
@@ -17,6 +18,18 @@ class settingsService {
     return upload;
   }
 
+  deleteProfile(profileName) {
+    const deleteRequest = {
+      method: 'DELETE',
+      url: this.CORE.URL + 'Settings',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      params: {profile: profileName}
+    };
+    return this.$http(deleteRequest);
+  }
+
   getDefaultSettings() {
     const getRequest = {
       method: 'GET',
@@ -30,4 +43,4 @@ class settingsService {
   }
 }
 
-export default settingsService;
+export default profilesService;

@@ -1,0 +1,62 @@
+<div id="profile-show-view">
+  <div class="container-fluid">
+<!--    <main> -->
+      <div class="row">
+        <div id="main-header">
+					<div class="col-md-4">
+						<button id="close-this" ng-click="vm.backToDocuments()"></button>
+					</div>
+					<div class="col-md-8 col-md-offset-2">
+						<img ng-src="../../img/logo.png" class="logo" />
+					</div>
+        </div>
+      </div>
+      <div class="row">
+        <header>
+          <div class="subheader">
+            <div class="headinfo">
+              <h2 class="list-title">All Profiles</h2>
+              <div class="expense-actions">
+                <div class="add-expense" ng-if="!vm.loading">
+									<div class="button dropdown-toggle"  ng-click="vm.createProfile()">Add</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
+      </div>
+      <div class="row text-center" ng-if="vm.loading">
+        <span us-spinner></span>
+      </div>
+      <div class="row" ng-if="!vm.loading">
+        <div class="col-md-12">
+          <div ng-if="!vm.settings" class="text-center">
+            <h3 class="text-danger">No profiles are available</h3>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-hover" ng-if="vm.settings">
+							<thead>
+								<tr>
+									<th></th>
+									<th></th>
+								</tr>
+							</thead>
+              <tbody ng-repeat="profile in vm.settings.data">
+                <tr>
+                  <th>
+                    {{profile.profileName}}
+                  </th>
+									<th>
+										<button ng-click="vm.deleteProfile(profile.profileName)">
+											<i class="glyphicon glyphicon-trash"></i>
+										</button>
+									</th>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    <!--</main>-->
+  </div>
+</div>

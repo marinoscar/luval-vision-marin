@@ -1,4 +1,4 @@
-#settings-view {
+#profile-create-view {
   #close-this {
     left: 0;
     &:before {
@@ -161,8 +161,87 @@
     padding: 12px;
     border-bottom: 1px solid #eee;
   }
-  .logo {
-    width: 13em;
-    margin-top: 3%;
+}
+#profile-show-view {
+  #close-this {
+    left: 0;
+    &:before {
+      content: "\f00d";
+      font-family: fontawesome;
+      font-size: 2em;
+      color: #706f73;
+    }
   }
+	.subheader {
+    text-align: left;
+    position: relative;
+    padding: 24px;
+    max-width: 1600px;
+    width: 100%;
+    margin: 0 auto;
+    background: #fff;
+    border-bottom: 1px solid #e0e0e0;
+		h2 {
+			color: #757575;
+			font-weight: 400;
+			margin: 0;
+			font-size: 1.6em;
+			display: inline-block;
+			vertical-align: middle;
+		}
+		.list-title {
+			&:before {
+				content: attr(data-status);
+				margin-right: .5ex;
+			}
+		}
+		.add-expense {
+			float: right;
+			display: none;
+			& button,
+			& input {
+				opacity: 0;
+				filter: alpha(opacity=0);
+    		width: 100%;
+				cursor: pointer;
+				position: absolute;
+				height: inherit;
+				top: 0;
+				left: 0;
+			}
+		}
+		.clip-actions {
+			float: right;
+			display: none;
+		}
+		.expense-actions {
+			display: block;
+			& > *, 
+			.clip-actions > *,
+			.change-view button {
+				filter: alpha(opacity=50);
+				margin: 0 12px;
+				vertical-align: middle;
+				font-weight: 700;
+				color: #757575;
+				position: relative;
+				display: inline-block;
+				cursor: pointer;
+			}
+		}
+		.headinfo {
+			&:after {
+				clear: both;
+			}
+			&:before,
+			&:after {
+				content: "";
+				display: table;
+			}
+		}
+	}
+}
+.logo {
+  width: 13em;
+  margin-top: 3%;
 }
