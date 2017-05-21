@@ -15,6 +15,7 @@ namespace luval.vision.dal
         OcrSettings GetSettingsByProfileName(String userId);
         IEnumerable<OcrSettings> GetSettings();
         bool DeleteByUserId(OcrSettings settings);
+        bool DeleteByProfileName(string profileName);
         OcrSettings SaveOrUpdate(OcrSettings settings);
     }
 }

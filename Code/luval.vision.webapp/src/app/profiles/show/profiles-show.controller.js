@@ -20,7 +20,6 @@ class ProfilesShowController {
 
   gotDefaultSettingsHandler(settings) {
     this.settings = settings;
-    this.$log.info(settings);
     this.loading = false;
   }
 
@@ -33,8 +32,10 @@ class ProfilesShowController {
       .then(this.profileDeletedHandler.bind(this));
   }
 
-  profileDeletedHandler(status) {
-    this.$log.info(status);
+  profileDeletedHandler() {
+    this.profilesService.getDefaultSettings()
+      .then(this.gotDefaultSettingsHandler.bind(this),
+      this.gotDefaultSettingsError.bind(this));
   }
 
   backToDocuments() {

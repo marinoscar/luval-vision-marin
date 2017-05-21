@@ -21,7 +21,7 @@ class profilesService {
   deleteProfile(profileName) {
     const deleteRequest = {
       method: 'DELETE',
-      url: this.CORE.URL + 'Settings',
+      url: this.CORE.URL + 'Settings/Delete',
       headers: {
         'Content-Type': 'application/json'
       },
