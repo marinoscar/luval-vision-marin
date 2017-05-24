@@ -1,10 +1,11 @@
 class documentService {
   /* @ngInject */
-  constructor($window, $log, $http, sessionService, CORE) {
+  constructor($state, $window, $log, $http, sessionService, CORE) {
     this.metadata = {};
     this.$window = $window;
     this.$log = $log;
     this.$http = $http;
+    this.$state = $state;
     this.sessionService = sessionService;
     this.CORE = CORE;
   }
@@ -39,6 +40,22 @@ class documentService {
     }
     return bytes.buffer;
   }
+
+  downloadImage(imageBuffer) {
+    const anchor = angular.element('<a/>');
+    const blob = new Blob([this.base64ToArrayBuffer(imageBuffer)]);
+    anchor.attr({
+      href: this.$window.URL.createObjectURL(blob),
+      target: '_blank',
+      download: 'document.jpg'
+    })[0].click();
+  }
+
+  openDocumentViewer(fileId) {
+    const url = this.$state.href('view-json', {tokenId: fileId});
+    this.$window.open(url, '_blank');
+  }
+
 }
 
 export default documentService;

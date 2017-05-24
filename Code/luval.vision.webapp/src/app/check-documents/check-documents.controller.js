@@ -7,6 +7,8 @@ class CheckDocumentsController {
     this.ngNotify = ngNotify;
     this.documentService = documentService;
     this.setCheckDocumentProperties();
+    this.downloadImage = documentService.downloadImage.bind(documentService);
+    this.viewJSON = documentService.openDocumentViewer.bind(documentService);
   }
 
   setCheckDocumentProperties() {
@@ -25,21 +27,6 @@ class CheckDocumentsController {
         duration: 3000
       });
     }
-  }
-
-  downloadImage(imageBuffer) {
-    const anchor = angular.element('<a/>');
-    const blob = new Blob([this.documentService.base64ToArrayBuffer(imageBuffer)]);
-    anchor.attr({
-      href: this.$window.URL.createObjectURL(blob),
-      target: '_blank',
-      download: 'document.jpg'
-    })[0].click();
-  }
-
-  openDocumentViewer() {
-    const url = this.$state.href('view-json', {tokenId: this.$state.params.tokenId});
-    this.$window.open(url, '_blank');
   }
 
   backToDocuments() {

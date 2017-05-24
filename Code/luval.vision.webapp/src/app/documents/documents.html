@@ -46,33 +46,28 @@
             <table class="table table-hover" ng-if="vm.documents">
               <thead>
                 <tr>
-                  <th></th>
-                  <th>Date</th>
-                  <th>Due Date</th>
-                  <th>PO Number</th>
-                  <th>Total</th>
-                  <th>Invoice Number</th>
+                  <th>Document ID</th>
+                  <th>Processing Date</th>
+                  <th></th> <!-- view result -->
+                  <th></th> <!-- download -->
+                  <th></th> <!-- view json -->
                 </tr>
               </thead>
               <tbody ng-repeat="document in vm.documents">
-                <tr ng-click="vm.showDocument(document)">
+                <tr>
                   <th>
                     {{document.Id}}
                   </th>
                   <th>
-                    {{document.attributes[0]}}
+                    {{document.Result.UtcTimestamp}}
                   </th>
                   <th>
-                    {{document.attributes[1]}}
+                    <button type="button" class="btn btn-primary" ng-click="vm.showDocument(document)">View Result</button>
+                  <th>
+                    <button type="button" class="btn btn-primary" ng-click="vm.downloadImage(document.FileData)">Download</button>
                   </th>
                   <th>
-                    {{document.attributes[2]}}
-                  </th>
-                  <th>
-                    {{document.attributes[3]}}
-                  </th>
-                  <th>
-                    {{document.attributes[4]}}
+                    <button type="button" class="btn btn-primary" ng-click="vm.viewJSON(document.Id)">View JSON</button>
                   </th>
                 </tr>
               </tbody>
