@@ -11,7 +11,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>b488f431-c794-417b-9643-29c5fdc5cf7b</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>gulpfile.js</StartupFile>
+    <StartupFile>Gulpfile.js</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -36,7 +36,7 @@
     <Compile Include="conf\webpack-dist.conf.js" />
     <Compile Include="conf\webpack-test.conf.js" />
     <Compile Include="conf\webpack.conf.js" />
-    <Compile Include="gulpfile.js" />
+    <Compile Include="Gulpfile.js" />
     <Compile Include="gulp_tasks\browsersync.js" />
     <Compile Include="gulp_tasks\karma.js" />
     <Compile Include="gulp_tasks\misc.js" />

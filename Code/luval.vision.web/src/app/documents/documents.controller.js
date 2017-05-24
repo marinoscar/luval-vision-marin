@@ -1,4 +1,4 @@
-class DocumentsController {
+﻿class DocumentsController {
   /* @ngInject */
   constructor($q, $log, $state, ngNotify, $uibModal, documentsService, usSpinnerService, documentService) {
     this.$q = $q;

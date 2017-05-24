@@ -1,4 +1,4 @@
-class CheckDocumentsController {
+﻿class CheckDocumentsController {
   /* @ngInject */
   constructor($state, $window, $log, ngNotify, documentService) {
     this.$state = $state;
@@ -7,6 +7,7 @@ class CheckDocumentsController {
     this.ngNotify = ngNotify;
     this.documentService = documentService;
     this.setCheckDocumentProperties();
+    this.primaryData = [];
   }
 
   setCheckDocumentProperties() {
@@ -19,6 +20,9 @@ class CheckDocumentsController {
     if (Object.keys(this.metadata).length !== 0) { // eslint-disable-line no-negated-condition
       this.imageSrc = this.metadata.FileData;
       this.primaryData = this.metadata.Result.TextResults;
+      if (this.primaryData.length === 0) {
+        this.primaryData = null;
+      }
     } else {
       this.ngNotify.set('Please upload a document!', {
         type: 'error',
