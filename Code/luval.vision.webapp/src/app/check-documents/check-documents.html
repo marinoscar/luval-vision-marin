@@ -15,7 +15,7 @@
         <main class="done">
           <aside id="image" style="width: calc(50% - 5px);">
             <div>
-              <div id="document-container">	
+              <div id="document-container">
                 <img id="invoice-image" src="data:image/jpg;base64,{{vm.imageSrc}}" />
               </div>
             </div>
@@ -58,7 +58,7 @@
                           <div class="col-md-6">
                             {{ metadata.Value }}
                           </div>
-                        </div> 
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -67,7 +67,7 @@
             </div>
             <footer>
               <div id="control-toggle" class="active" ng-if="vm.imageSrc">
-                <button ng-click="vm.openDocumentViewer()">View Json</button>
+                <button ng-click="vm.viewJSON(vm.metadata.Result.Id)">View Json</button>
               </div>
             </footer>
           </aside>

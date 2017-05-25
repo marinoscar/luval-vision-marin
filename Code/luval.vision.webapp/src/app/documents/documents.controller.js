@@ -12,6 +12,8 @@ class DocumentsController {
     this.usSpinnerService = usSpinnerService;
     this.loading = true;
     this.documentsService.resetDocumentsList();
+    this.downloadImage = documentService.downloadImage.bind(documentService);
+    this.viewJSON = documentService.openDocumentViewer.bind(documentService);
     this.activate();
   }
 
