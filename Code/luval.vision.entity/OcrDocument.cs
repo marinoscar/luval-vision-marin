@@ -17,5 +17,7 @@ namespace luval.vision.entity
         public double DurationInMs { get; set; }
         [BsonElement("process_result")]
         public string Content { get; set; }
+        [BsonElement("profile_name")]
+        public string ProfileName { get; set; }
     }
 }
