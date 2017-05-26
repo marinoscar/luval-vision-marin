@@ -87,6 +87,7 @@ class DocumentsController {
     angular.forEach(documents, index => {
       index.Content = angular.fromJson(index.Content);
       const documentsContent = index;
+      documentsContent.Content.ProfileName = index.ProfileName;
       this.setDocumentContent(documentsContent.Content);
     });
     this.documents = this.documentsService.getDocumentsList();
@@ -110,6 +111,7 @@ class DocumentsController {
     this.documentsInfo.FileName = documentContent.FileName;
     this.documentsInfo.FileData = documentContent.FileData;
     this.documentsInfo.Result = documentContent.Result;
+    this.documentsInfo.ProfileName = documentContent.ProfileName;
   }
 
   openDocumentModal() {

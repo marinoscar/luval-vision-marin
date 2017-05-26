@@ -46,8 +46,8 @@
             <table class="table table-hover" ng-if="vm.documents">
               <thead>
                 <tr>
-                  <th>Document ID</th>
                   <th>Processing Date</th>
+                  <th>Profile Type</th>
                   <th></th> <!-- view result -->
                   <th></th> <!-- download -->
                   <th></th> <!-- view json -->
@@ -56,10 +56,10 @@
               <tbody ng-repeat="document in vm.documents">
                 <tr>
                   <th>
-                    {{document.Id}}
+                    {{document.Result.UtcTimestamp | date : 'MM/dd/yy HH:mm'}}
                   </th>
                   <th>
-                    {{document.Result.UtcTimestamp}}
+                    {{document.ProfileName}}
                   </th>
                   <th>
                     <button type="button" class="btn btn-primary" ng-click="vm.showDocument(document)">View Result</button>
