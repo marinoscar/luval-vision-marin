@@ -44,7 +44,7 @@ namespace luval.vision.dal
             var settingList = MongoConn.mongoDB()
                 .GetCollection<OcrSettings>("settings")
                 .FindAll();
-            
+
             return settingList.Where(s => s.userId == userId).ToList();
         }
 
