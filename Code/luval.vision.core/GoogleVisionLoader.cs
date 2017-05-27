@@ -23,7 +23,9 @@ namespace luval.vision.core
                 Id = 1,
                 Code = OcrLoaderHelper.GetRegionCode(1)
             };
-            var annotations = json["responses"].Value<JArray>()[0]["textAnnotations"].Value<JArray>();
+            var responses = json["responses"].Value<JArray>();
+            CheckForErrors(responses);
+            var annotations = responses[0]["textAnnotations"].Value<JArray>();
             var wordId = 1;
             foreach (var ann in annotations)
             {
@@ -52,6 +54,15 @@ namespace luval.vision.core
             result.Words = words;
             result.Lines = lines;
             return result;
+        }
+
+        private void CheckForErrors(JArray responses)
+        {
+            if(responses.Count > 0 && responses[0]["error"] != null)
+            {
+                var message = string.Format("Code: {0} - {1}", responses[0]["error"]["code"], responses[0]["error"]["message"]);
+                throw new LuvalException(message);
+            }
         }
 
         private List<OcrLine> GetLines(List<OcrWord> words, OcrRegion region, ImageInfo info)

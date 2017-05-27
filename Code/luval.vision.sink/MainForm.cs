@@ -40,7 +40,7 @@ namespace luval.vision.sink
             var dialog = new OpenFileDialog()
             {
                 Title = "Open Image",
-                Filter = "Image Files(*.BMP;*.JPG;*.GIF;*.PNG)|*.BMP;*.JPG;*.GIF;*.PNG|All files (*.*)|*.*",
+                Filter = "Image Files(*.BMP;*.JPG;*.GIF;*.PNG; *.TIF)|*.BMP;*.JPG;*.GIF;*.PNG;*.TIF|All files (*.*)|*.*",
                 RestoreDirectory = true
             };
             if (dialog.ShowDialog() == DialogResult.Cancel) return;

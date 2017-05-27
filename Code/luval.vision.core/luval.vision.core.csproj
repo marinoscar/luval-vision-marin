@@ -120,6 +120,7 @@
     <Compile Include="INlpLoader.cs" />
     <Compile Include="IOcrEngine.cs" />
     <Compile Include="IOcrProvider.cs" />
+    <Compile Include="LuvalException.cs" />
     <Compile Include="MappingResult.cs" />
     <Compile Include="NlpEntity.cs" />
     <Compile Include="NlpProvider.cs" />
