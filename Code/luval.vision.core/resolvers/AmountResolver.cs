@@ -26,7 +26,7 @@ namespace luval.vision.core.resolvers
 
         public override bool IsMatch(string text)
         {
-            return base.IsMatch(text) && text.Any(HasValidChar);
+            return base.IsMatch(text) && text.Any(HasValidChar) && text.Any(c => char.IsNumber(c));
         }
 
         private bool HasValidChar(char c)
