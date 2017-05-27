@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "luval.vision.core", "luval.vision.core\luval.vision.core.csproj", "{E2B1CE82-40C0-4F2B-9D00-A93425D7147F}"
 EndProject
@@ -16,6 +16,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "luval.vision.dal", "luval.vision.dal\luval.vision.dal.csproj", "{9932FDCF-A432-4B33-ABF5-02A9A3550839}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "luval.vision.sink", "luval.vision.sink\luval.vision.sink.csproj", "{443E9AC3-B5FE-4F20-8B6F-87F59EBBC8F1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "luval.vision.utils", "luval.vision.utils\luval.vision.utils.csproj", "{7CD18006-6660-4CCA-B196-A8C1A3BF7CAB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -96,6 +98,16 @@ Global
 		{443E9AC3-B5FE-4F20-8B6F-87F59EBBC8F1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{443E9AC3-B5FE-4F20-8B6F-87F59EBBC8F1}.SingleImage|Any CPU.ActiveCfg = Release|Any CPU
 		{443E9AC3-B5FE-4F20-8B6F-87F59EBBC8F1}.SingleImage|Any CPU.Build.0 = Release|Any CPU
+		{7CD18006-6660-4CCA-B196-A8C1A3BF7CAB}.CD_ROM|Any CPU.ActiveCfg = Release|Any CPU
+		{7CD18006-6660-4CCA-B196-A8C1A3BF7CAB}.CD_ROM|Any CPU.Build.0 = Release|Any CPU
+		{7CD18006-6660-4CCA-B196-A8C1A3BF7CAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CD18006-6660-4CCA-B196-A8C1A3BF7CAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CD18006-6660-4CCA-B196-A8C1A3BF7CAB}.DVD-5|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CD18006-6660-4CCA-B196-A8C1A3BF7CAB}.DVD-5|Any CPU.Build.0 = Debug|Any CPU
+		{7CD18006-6660-4CCA-B196-A8C1A3BF7CAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CD18006-6660-4CCA-B196-A8C1A3BF7CAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CD18006-6660-4CCA-B196-A8C1A3BF7CAB}.SingleImage|Any CPU.ActiveCfg = Release|Any CPU
+		{7CD18006-6660-4CCA-B196-A8C1A3BF7CAB}.SingleImage|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

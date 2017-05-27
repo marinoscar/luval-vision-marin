@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -58,7 +60,7 @@ namespace luval.vision.core
             var bmp = new Bitmap(source);
             using (var graphic = Graphics.FromImage(bmp))
             {
-                foreach(var el in elements)
+                foreach (var el in elements)
                 {
                     graphic.DrawRectangle(pen, new Rectangle(el.Location.X, el.Location.Y, el.Location.Width, el.Location.Height));
                 }
@@ -74,6 +76,32 @@ namespace luval.vision.core
         public static Image ProcessElements(Image source, IEnumerable<OcrElement> elements)
         {
             return ProcessElements(source, elements, Color.Blue);
+        }
+
+        public static void ChangeFormat(string imageFile, string destinationDir, ImageFormat format)
+        {
+            var desDir = new DirectoryInfo(destinationDir);
+            var fileName = new FileInfo(imageFile);
+            if (!fileName.Exists) return;
+            try
+            {
+                var bmp = new Bitmap(imageFile);
+                bmp.Save(GetNewFileNameAfterConversion(fileName, desDir, format), format);
+            }
+            catch (Exception ex)
+            {
+                throw new LuvalException(string.Format("Unable to convert file {0}", fileName.FullName), ex);
+            }
+
+        }
+
+        private static string GetNewFileNameAfterConversion(FileInfo file, DirectoryInfo desDir, ImageFormat format)
+        {
+            var ex = ".jpg";
+            var fileName = file.Name.Replace(file.Extension, "");
+            if (format == ImageFormat.Gif) ex = ".gif";
+            if (format == ImageFormat.Png) ex = ".png";
+            return string.Format(@"{0}\{1}", desDir.FullName, fileName + ex);
         }
     }
 }
