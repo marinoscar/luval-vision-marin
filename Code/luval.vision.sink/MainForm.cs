@@ -17,7 +17,6 @@ namespace luval.vision.sink
     {
 
         private string _fileName;
-        private MainformPresenter _presenter;
         private ImageManager _imageManager;
         private OcrResult _result;
         private Image _resultImg;
@@ -26,7 +25,6 @@ namespace luval.vision.sink
         public MainForm()
         {
             InitializeComponent();
-            _presenter = new MainformPresenter(this);
         }
 
         public PictureBox PictureBox { get { return pictureBox; } }
