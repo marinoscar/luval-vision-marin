@@ -80,13 +80,20 @@ namespace luval.vision.core
 
         public static void ChangeFormat(string imageFile, string destinationDir, ImageFormat format)
         {
+            ChangeFormat(imageFile, destinationDir, format, 0);
+
+        }
+
+        public static void ChangeFormat(string imageFile, string destinationDir, ImageFormat format, int maxWidth)
+        {
             var desDir = new DirectoryInfo(destinationDir);
             var fileName = new FileInfo(imageFile);
             if (!fileName.Exists) return;
             try
             {
-                var bmp = new Bitmap(imageFile);
-                bmp.Save(GetNewFileNameAfterConversion(fileName, desDir, format), format);
+                var img = Image.FromFile(imageFile);
+                if (maxWidth > 0) img = ScaleImage(img, maxWidth);
+                img.Save(GetNewFileNameAfterConversion(fileName, desDir, format), format);
             }
             catch (Exception ex)
             {
@@ -102,6 +109,29 @@ namespace luval.vision.core
             if (format == ImageFormat.Gif) ex = ".gif";
             if (format == ImageFormat.Png) ex = ".png";
             return string.Format(@"{0}\{1}", desDir.FullName, fileName + ex);
+        }
+
+        public static Image ScaleImage(Image image, int maxWidth)
+        {
+            var adjustedHeight = (double)maxWidth * (double)image.Height / (double)image.Width;
+            return ScaleImage(image, maxWidth, (int)adjustedHeight);
+        }
+
+        public static Image ScaleImage(Image image, int maxWidth, int maxHeight)
+        {
+            var ratioX = (double)maxWidth / image.Width;
+            var ratioY = (double)maxHeight / image.Height;
+            var ratio = Math.Min(ratioX, ratioY);
+
+            var newWidth = (int)(image.Width * ratio);
+            var newHeight = (int)(image.Height * ratio);
+
+            var newImage = new Bitmap(newWidth, newHeight);
+
+            using (var graphics = Graphics.FromImage(newImage))
+                graphics.DrawImage(image, 0, 0, newWidth, newHeight);
+
+            return newImage;
         }
     }
 }

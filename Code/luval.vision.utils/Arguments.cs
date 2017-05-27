@@ -27,10 +27,18 @@ namespace luval.vision.utils
             return GetVal(_args.IndexOf("-f"));
         }
 
-        public string GetDestinationFolder()
+        public string GetDestinationDir()
         {
             if (!_args.Contains("-d")) return null;
             return GetVal(_args.IndexOf("-d"));
+        }
+
+        public int GetMaxWidth()
+        {
+            if (!_args.Contains("-mw")) return 0;
+            var result = 0;
+            int.TryParse(GetVal(_args.IndexOf("-mw")), out result);
+            return result;
         }
 
         public bool DoDirConvert()

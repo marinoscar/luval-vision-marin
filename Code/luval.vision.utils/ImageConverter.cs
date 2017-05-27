@@ -29,7 +29,7 @@ namespace luval.vision.utils
             var cnt = 1;
             foreach(var file in files)
             {
-                ImageManager.ChangeFormat(file.FullName, _destination.FullName, ImageFormat.Jpeg);
+                ImageManager.ChangeFormat(file.FullName, _destination.FullName, ImageFormat.Jpeg, _args.GetMaxWidth());
                 ConsoleHelper.ShowProgress(files.Length, cnt);
                 cnt++;
             }
@@ -43,7 +43,7 @@ namespace luval.vision.utils
             _source = new DirectoryInfo(_args.GetSourceDir());
             if (!_source.Exists) throw ex;
             _filter = _args.GetFilter() ?? "*.*";
-            var des = _args.GetDestinationFolder() ?? _source.FullName + @"Converted";
+            var des = _args.GetDestinationDir() ?? _source.FullName + @"Converted";
             _destination = new DirectoryInfo(des);
         }
     }
