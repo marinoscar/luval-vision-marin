@@ -12,6 +12,7 @@ namespace luval.vision.core.extractors
 
         private CultureInfo _es;
         private CultureInfo _en;
+        private List<string> _formats;
 
         public DateExtractor(IEnumerable<OcrLine> lines)
         {
@@ -38,7 +39,7 @@ namespace luval.vision.core.extractors
         private DateTime? ParseDate(string text)
         {    
             var dt = default(DateTime);
-            var res = DateTime.TryParse(text, _en, DateTimeStyles.AssumeLocal, out dt);
+            var res = DateTime.TryParse(text, _en, DateTimeStyles.AssumeLocal | DateTimeStyles.AllowInnerWhite | DateTimeStyles.AllowLeadingWhite | DateTimeStyles.AllowWhiteSpaces, out dt);
             if (res) return dt;
             res = DateTime.TryParse(text, _es, DateTimeStyles.AssumeLocal, out dt);
             return res ? dt : default(DateTime?);

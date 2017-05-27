@@ -19,7 +19,7 @@ namespace luval.vision.sink
         private string _fileName;
         private ImageManager _imageManager;
         private OcrResult _result;
-        private Image _resultImg;
+        private Image _originalImg;
         private ProcessResult _processResult;
 
         public MainForm()
@@ -63,6 +63,7 @@ namespace luval.vision.sink
             _result = null;
             PictureBox.Image = img;
             PictureBox.Refresh();
+            _originalImg = img;
         }
 
 
@@ -110,14 +111,16 @@ namespace luval.vision.sink
             _processResult = result;
             LoadVisionTree(result.OcrResult);
             LoadText(result.OcrResult);
-            _resultImg = _imageManager.ProcessParseResult(result.TextResults);
-            PictureBox.Image = _resultImg;
+            ShowParseResult();
             listResult.Items.Clear();
             foreach (var item in result.TextResults)
             {
                 var listItem = new ListViewItem(new string[] { item.Map.AttributeName, item.Value });
                 listResult.Items.Add(listItem);
             }
+            rdResult.Checked = true;
+            grpResults.Enabled = true;
+            btnClear.Enabled = true;
         }
 
         private void LoadText(OcrResult ocrResult)
@@ -174,18 +177,6 @@ namespace luval.vision.sink
             return navigator.ExtractAttributes();
         }
 
-        private void chkOcrResult_CheckedChanged(object sender, EventArgs e)
-        {
-            if (chkOcrResult.Checked && _result != null)
-            {
-                PictureBox.Image = _imageManager.ProcessOcrResult(_result);
-            }
-            else if (_resultImg != null)
-            {
-                PictureBox.Image = _resultImg;
-            }
-        }
-
         private void mnuSaveResult_Click(object sender, EventArgs e)
         {
             if (_processResult == null)
@@ -221,6 +212,108 @@ namespace luval.vision.sink
                 stream.Close();
             }
             MessageBox.Show("Result has been saved", "Save", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+
+
+        private void LoadImg(Image img)
+        {
+            PictureBox.Image = img;
+            PictureBox.Refresh();
+        }
+
+        private void DoClear()
+        {
+            if (_originalImg == null) return;
+            LoadImg(_originalImg);
+        }
+
+        private void ShowParseResult()
+        {
+            if (_processResult == null) return;
+            DoClear();
+            LoadImg(_imageManager.ProcessParseResult(_processResult.TextResults));
+
+        }
+
+        private void ShowVisionResult()
+        {
+            if (_result == null) return;
+            DoClear();
+            LoadImg(_imageManager.ProcessOcrResult(_result));
+
+        }
+
+        private void ShowWords()
+        {
+            if (_result == null || _originalImg == null) return;
+            LoadImg(ImageManager.ProcessElements(PictureBox.Image, _result.Words.Where(i => i.DataType == DataType.Word).ToList(), Color.LightGray));
+        }
+
+        private void ShowDates()
+        {
+            if (_result == null || _originalImg == null) return;
+            LoadImg(ImageManager.ProcessElements(PictureBox.Image, _result.Words.Where(i => i.DataType == DataType.Date).ToList(), Color.Red));
+        }
+
+        private void ShowNumbers()
+        {
+            if (_result == null || _originalImg == null) return;
+            LoadImg(ImageManager.ProcessElements(PictureBox.Image, _result.Words.Where(i => i.DataType == DataType.Number).ToList(), Color.Blue));
+        }
+
+        private void ShowAmounts()
+        {
+            if (_result == null || _originalImg == null) return;
+            LoadImg(ImageManager.ProcessElements(PictureBox.Image, _result.Words.Where(i => i.DataType == DataType.Amount).ToList(), Color.Black));
+        }
+
+        private void ShowCodes()
+        {
+            if (_result == null || _originalImg == null) return;
+            LoadImg(ImageManager.ProcessElements(PictureBox.Image, _result.Words.Where(i => i.DataType == DataType.Code).ToList(), Color.Orange));
+        }
+
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            DoClear();
+        }
+
+        private void rdResult_Click(object sender, EventArgs e)
+        {
+            ShowParseResult();
+        }
+
+        private void rdVision_Click(object sender, EventArgs e)
+        {
+            ShowVisionResult();
+        }
+
+        private void rdAmounts_Click(object sender, EventArgs e)
+        {
+            ShowAmounts();
+        }
+
+        private void rdDates_Click(object sender, EventArgs e)
+        {
+            ShowDates();
+        }
+
+        private void rdCodes_Click(object sender, EventArgs e)
+        {
+            ShowCodes();
+        }
+
+        private void rdWords_Click(object sender, EventArgs e)
+        {
+            ShowWords();
+
+        }
+
+        private void rdNumbers_Click(object sender, EventArgs e)
+        {
+            ShowNumbers();
         }
     }
 }

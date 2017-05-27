@@ -25,7 +25,7 @@ namespace luval.vision.core
             var greenPen = new Pen(Color.Green, 1);
             using (var graphic = Graphics.FromImage(bmp))
             {
-                foreach(var region in ocr.Regions)
+                foreach (var region in ocr.Regions)
                 {
                     var regNum = region.Location;
                     graphic.DrawRectangle(bluePen, regNum.X, regNum.Y, regNum.Width, regNum.Height);
@@ -45,12 +45,35 @@ namespace luval.vision.core
             var bluePen = new Pen(Color.Blue, 3);
             using (var graphic = Graphics.FromImage(bmp))
             {
-                foreach(var map in results)
+                foreach (var map in results)
                 {
                     graphic.DrawRectangle(bluePen, new Rectangle(map.Location.X, map.Location.Y, map.Location.Width, map.Location.Height));
                 }
             }
             return bmp;
+        }
+
+        public static Image ProcessElements(Image source, IEnumerable<OcrElement> elements, Pen pen)
+        {
+            var bmp = new Bitmap(source);
+            using (var graphic = Graphics.FromImage(bmp))
+            {
+                foreach(var el in elements)
+                {
+                    graphic.DrawRectangle(pen, new Rectangle(el.Location.X, el.Location.Y, el.Location.Width, el.Location.Height));
+                }
+            }
+            return bmp;
+        }
+
+        public static Image ProcessElements(Image source, IEnumerable<OcrElement> elements, Color color)
+        {
+            return ProcessElements(source, elements, new Pen(color, 3));
+        }
+
+        public static Image ProcessElements(Image source, IEnumerable<OcrElement> elements)
+        {
+            return ProcessElements(source, elements, Color.Blue);
         }
     }
 }
