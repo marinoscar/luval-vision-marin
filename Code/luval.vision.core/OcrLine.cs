@@ -24,6 +24,10 @@ namespace luval.vision.core
 
         public List<OcrEntity> Entities { get; set; }
 
+        public bool HasCode { get; set; }
+        public bool HasDate { get; set; }
+        public bool HasAmount { get; set; }
+
         public override string Text
         {
             get

@@ -35,13 +35,32 @@ namespace luval.vision.core.resolvers
 
         public DataType Classify(string text)
         {
-            if (Get<DateResolver>().IsMatch(text)) return DataType.Date;
-            if (Get<AmountResolver>().IsMatch(text)) return DataType.Amount;
-            if (Get<NumberResolver>().IsMatch(text)) return DataType.Number;
-            if (Get<CodeResolver>().IsMatch(text)) return DataType.Code;
+            if (ContainsDate(text)) return DataType.Date;
+            if (ContainsAmount(text)) return DataType.Amount;
+            if (ContainsNumber(text)) return DataType.Number;
+            if (ContainsCode(text)) return DataType.Code;
             if (Get<WordResolver>().IsMatch(text)) return DataType.Word;
             return DataType.None;
         }
 
+        public bool ContainsDate(string text)
+        {
+            return Get<DateResolver>().IsMatch(text);
+        } 
+
+        public bool ContainsAmount(string text)
+        {
+            return Get<AmountResolver>().IsMatch(text);
+        }
+
+        private bool ContainsNumber(string text)
+        {
+            return Get<NumberResolver>().IsMatch(text);
+        }
+
+        public bool ContainsCode(string text)
+        {
+            return Get<CodeResolver>().IsMatch(text);
+        }
     }
 }
