@@ -54,6 +54,7 @@ namespace luval.vision.core
             if (response.StatusCode != HttpStatusCode.OK)
                 throw new InvalidOperationException("Unable to process request");
             var result = Loader.DoParse(response.Content, imgInfo);
+            ClassifyWords(result.Words);
             result.HorizontalLines = Navigator.GetWordsHorizontallyAligned(result.Words, 0.025f).ToList();
             result.HorizontalLines.ForEach(i => i.Location.RelativeLocation = OcrRelativeLocation.Load(i.Location, result.Info));
             result.Lines.ForEach(ExtractEntitiesFromLine);
@@ -61,6 +62,15 @@ namespace luval.vision.core
             imgInfo.WorkingHeight = result.Lines.Max(i => i.Location.YBound) - result.Lines.Min(i => i.Location.Y);
             imgInfo.WorkingHeight = result.Lines.Max(i => i.Location.XBound) - result.Lines.Min(i => i.Location.X);
             return result;
+        }
+
+        private void ClassifyWords(IEnumerable<OcrWord> words)
+        {
+            var res = new StringResolverManager();
+            foreach(var word in words)
+            {
+                word.DataType = res.Classify(word.Text);
+            }
         }
 
         private byte[] GetImageBytes(string fileName)

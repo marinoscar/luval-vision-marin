@@ -14,11 +14,11 @@ namespace luval.vision.core.resolvers
         {
             _resolvers = new Dictionary<Type, IStringResolver>()
             {
-                {typeof(AmountResolver), new AmountResolver()},
                 {typeof(DateResolver), new DateResolver()},
-                {typeof(WordResolver), new WordResolver()},
+                {typeof(AmountResolver), new AmountResolver()},
+                {typeof(NumberResolver), new NumberResolver()},
                 {typeof(CodeResolver), new CodeResolver()},
-                {typeof(NumberResolver), new NumberResolver()}
+                {typeof(WordResolver), new WordResolver()}
 
             };
         }
@@ -31,6 +31,16 @@ namespace luval.vision.core.resolvers
         public IStringResolver GetByCode(string code)
         {
             return _resolvers.Values.Where(i => i.Code == code).FirstOrDefault();
+        }
+
+        public DataType Classify(string text)
+        {
+            if (Get<DateResolver>().IsMatch(text)) return DataType.Date;
+            if (Get<AmountResolver>().IsMatch(text)) return DataType.Amount;
+            if (Get<NumberResolver>().IsMatch(text)) return DataType.Number;
+            if (Get<CodeResolver>().IsMatch(text)) return DataType.Code;
+            if (Get<WordResolver>().IsMatch(text)) return DataType.Word;
+            return DataType.None;
         }
 
     }
