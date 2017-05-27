@@ -13,7 +13,7 @@ using System.Windows.Forms;
 
 namespace luval.vision.sink
 {
-    public partial class MainForm : Form, IMainformPresenter
+    public partial class MainForm : Form
     {
 
         private string _fileName;
