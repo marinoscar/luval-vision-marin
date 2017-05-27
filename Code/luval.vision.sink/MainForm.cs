@@ -253,7 +253,7 @@ namespace luval.vision.sink
         private void ShowDates()
         {
             if (_result == null || _originalImg == null) return;
-            LoadImg(ImageManager.ProcessElements(PictureBox.Image, _result.Words.Where(i => i.DataType == DataType.Date).ToList(), Color.Red));
+            LoadImg(ImageManager.ProcessElements(PictureBox.Image, _result.Lines.Where(i => i.HasDate).ToList(), Color.Red));
         }
 
         private void ShowNumbers()
@@ -265,13 +265,13 @@ namespace luval.vision.sink
         private void ShowAmounts()
         {
             if (_result == null || _originalImg == null) return;
-            LoadImg(ImageManager.ProcessElements(PictureBox.Image, _result.Words.Where(i => i.DataType == DataType.Amount).ToList(), Color.Black));
+            LoadImg(ImageManager.ProcessElements(PictureBox.Image, _result.Lines.Where(i => i.HasAmount).ToList(), Color.Black));
         }
 
         private void ShowCodes()
         {
             if (_result == null || _originalImg == null) return;
-            LoadImg(ImageManager.ProcessElements(PictureBox.Image, _result.Words.Where(i => i.DataType == DataType.Code).ToList(), Color.Orange));
+            LoadImg(ImageManager.ProcessElements(PictureBox.Image, _result.Lines.Where(i => i.HasCode).ToList(), Color.Orange));
         }
 
 

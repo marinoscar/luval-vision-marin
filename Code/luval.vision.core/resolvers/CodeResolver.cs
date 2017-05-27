@@ -10,9 +10,12 @@ namespace luval.vision.core.resolvers
     public class CodeResolver : IStringResolver
     {
 
+        private AmountResolver _amount;
+        private NumberResolver _number;
+
         public CodeResolver()
         {
-
+            _amount = new AmountResolver();
         }
 
         public string Code { get { return "code"; } }
@@ -43,7 +46,7 @@ namespace luval.vision.core.resolvers
 
         private bool IsValidWord(string text)
         {
-            var res = text.All(IsValidChar) && text.Any(char.IsNumber) && text.Count(IsCodeChar) <= 2;
+            var res = (text.All(IsValidChar) && text.Any(char.IsNumber) && text.Count(IsCodeChar) <= 2) && !_amount.IsMatch(text) && !_number.IsMatch(text);
             return res;
         }
 
