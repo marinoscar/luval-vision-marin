@@ -316,5 +316,20 @@ namespace luval.vision.sink
         {
             ShowNumbers();
         }
+
+        private void mnuSaveImage_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(_fileName)) return;
+            var file = new FileInfo(_fileName);
+            var filter = "Image File|*" + file.Extension;
+            var saveDlg = new SaveFileDialog()
+            {
+                Filter = filter,
+                Title = "Save Output Image",
+                RestoreDirectory = true
+            };
+            if (saveDlg.ShowDialog() == DialogResult.Cancel) return;
+            PictureBox.Image.Save(saveDlg.FileName);
+        }
     }
 }

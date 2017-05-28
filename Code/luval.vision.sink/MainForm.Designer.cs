@@ -41,6 +41,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnClear = new System.Windows.Forms.Button();
             this.grpResults = new System.Windows.Forms.GroupBox();
+            this.rdNumbers = new System.Windows.Forms.RadioButton();
             this.rdWords = new System.Windows.Forms.RadioButton();
             this.rdCodes = new System.Windows.Forms.RadioButton();
             this.rdDates = new System.Windows.Forms.RadioButton();
@@ -63,7 +64,8 @@
             this.listResult = new System.Windows.Forms.ListView();
             this.colAttribute = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colValue = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.rdNumbers = new System.Windows.Forms.RadioButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.mnuSaveImage = new System.Windows.Forms.ToolStripMenuItem();
             this.mainMenu.SuspendLayout();
             this.panel1.SuspendLayout();
             this.grpResults.SuspendLayout();
@@ -93,8 +95,10 @@
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openMenu,
             this.mnuSaveResult,
+            this.mnuSaveImage,
             this.toolStripSeparator1,
-            this.exitMenu});
+            this.exitMenu,
+            this.toolStripSeparator2});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "&File";
@@ -105,26 +109,26 @@
             this.openMenu.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.openMenu.Name = "openMenu";
             this.openMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.openMenu.Size = new System.Drawing.Size(146, 22);
+            this.openMenu.Size = new System.Drawing.Size(152, 22);
             this.openMenu.Text = "&Open";
             this.openMenu.Click += new System.EventHandler(this.openMenu_Click);
             // 
             // mnuSaveResult
             // 
             this.mnuSaveResult.Name = "mnuSaveResult";
-            this.mnuSaveResult.Size = new System.Drawing.Size(146, 22);
+            this.mnuSaveResult.Size = new System.Drawing.Size(152, 22);
             this.mnuSaveResult.Text = "Save Result";
             this.mnuSaveResult.Click += new System.EventHandler(this.mnuSaveResult_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(143, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
             // 
             // exitMenu
             // 
             this.exitMenu.Name = "exitMenu";
-            this.exitMenu.Size = new System.Drawing.Size(146, 22);
+            this.exitMenu.Size = new System.Drawing.Size(152, 22);
             this.exitMenu.Text = "E&xit";
             this.exitMenu.Click += new System.EventHandler(this.exitMenu_Click);
             // 
@@ -192,6 +196,18 @@
             this.grpResults.TabIndex = 5;
             this.grpResults.TabStop = false;
             this.grpResults.Text = "Result Options";
+            // 
+            // rdNumbers
+            // 
+            this.rdNumbers.AutoSize = true;
+            this.rdNumbers.Location = new System.Drawing.Point(260, 17);
+            this.rdNumbers.Name = "rdNumbers";
+            this.rdNumbers.Size = new System.Drawing.Size(67, 17);
+            this.rdNumbers.TabIndex = 11;
+            this.rdNumbers.TabStop = true;
+            this.rdNumbers.Text = "Numbers";
+            this.rdNumbers.UseVisualStyleBackColor = true;
+            this.rdNumbers.Click += new System.EventHandler(this.rdNumbers_Click);
             // 
             // rdWords
             // 
@@ -420,17 +436,17 @@
             // 
             this.colValue.Text = "Value";
             // 
-            // rdNumbers
+            // toolStripSeparator2
             // 
-            this.rdNumbers.AutoSize = true;
-            this.rdNumbers.Location = new System.Drawing.Point(260, 17);
-            this.rdNumbers.Name = "rdNumbers";
-            this.rdNumbers.Size = new System.Drawing.Size(67, 17);
-            this.rdNumbers.TabIndex = 11;
-            this.rdNumbers.TabStop = true;
-            this.rdNumbers.Text = "Numbers";
-            this.rdNumbers.UseVisualStyleBackColor = true;
-            this.rdNumbers.Click += new System.EventHandler(this.rdNumbers_Click);
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
+            // 
+            // mnuSaveImage
+            // 
+            this.mnuSaveImage.Name = "mnuSaveImage";
+            this.mnuSaveImage.Size = new System.Drawing.Size(152, 22);
+            this.mnuSaveImage.Text = "Save Image";
+            this.mnuSaveImage.Click += new System.EventHandler(this.mnuSaveImage_Click);
             // 
             // MainForm
             // 
@@ -501,6 +517,8 @@
         private System.Windows.Forms.RadioButton rdDates;
         private System.Windows.Forms.RadioButton rdAmounts;
         private System.Windows.Forms.RadioButton rdNumbers;
+        private System.Windows.Forms.ToolStripMenuItem mnuSaveImage;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
     }
 }
 
