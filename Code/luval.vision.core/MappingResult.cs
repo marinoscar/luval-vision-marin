@@ -18,6 +18,7 @@ namespace luval.vision.core
         public double OffsetX { get; set; }
         public double RelativeOffsetY { get; set; }
         public double RelativeOffsetX { get; set; }
+        public double ScalarRank { get; set; }
 
         public static MappingResult Create(ImageInfo info, AttributeMapping map, OcrElement anchor, OcrElement result)
         {

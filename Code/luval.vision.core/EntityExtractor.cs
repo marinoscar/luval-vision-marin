@@ -39,14 +39,27 @@ namespace luval.vision.core
                     if (elements == null || !elements.Any()) continue;
                     foreach (var el in elements)
                     {
-                        var upRes = SearchUp(map, el);
+                        var left = SearchLeft(map, el);
+                        var item = default(MappingResult);
+                        if (left.Any())
+                            item = left.First();
+                        else
+                        {
+                            var up = SearchUp(map, el);
+                            if (up.Any()) item = up.First();
+                        }
+                        if(item != null)
+                        {
+                            item.Value = GetResolver(pattern, el.Text).GetValue(el.Text);
+                            result.Add(item);
+                        }
                     }
                 }
             }
             return result;
         }
 
-        public IEnumerable<OcrElement> Find(string pattern)
+        private IEnumerable<OcrElement> Find(string pattern)
         {
             return Elements.Where(i => !string.IsNullOrWhiteSpace(i.Text) && Resolve(pattern, i.Text)).OrderBy(i => i.Location.Y).ToList();
         }
@@ -61,7 +74,20 @@ namespace luval.vision.core
             return FilterByPattern(map, reference, subset);
         }
 
-        private IEnumerable<MappingResult> FilterByPattern(AttributeMapping map, OcrElement valueElement,  IEnumerable<OcrLine> elements)
+        private IEnumerable<MappingResult> SearchLeft(AttributeMapping map, OcrElement valueElement)
+        {
+            var minX = valueElement.Location.X;
+            var minY = valueElement.Location.Y - (valueElement.Location.Y * ErrorMargin);
+            var maxY = valueElement.Location.YBound * (1 + ErrorMargin);
+            var middleLine = (valueElement.Location.Y + (valueElement.Location.Height / 3));
+            var dataSet = Elements.Where(i => i.Location.X < minX &&
+               i.Location.Y > minY &&
+               i.Location.YBound < maxY)
+               .ToList();
+            return FilterByPattern(map, valueElement, dataSet);
+        }
+
+        private IEnumerable<MappingResult> FilterByPattern(AttributeMapping map, OcrElement valueElement, IEnumerable<OcrLine> elements)
         {
             var patterns = map.AnchorPatterns;
             if (patterns == null || !patterns.Any()) return elements.Select(i => new MappingResult() { AnchorElement = valueElement, ResultElement = i });
@@ -69,7 +95,7 @@ namespace luval.vision.core
             foreach (var p in patterns)
             {
                 var items = elements.Where(i => Resolve(p, i.Text)).Select(i => MappingResult.Create(Info, map, i, valueElement)).ToList();
-                foreach(var item in items)
+                foreach (var item in items)
                 {
                     if (!result.Select(i => i.AnchorElement.Id).Contains(item.AnchorElement.Id))
                         result.Add(item);
