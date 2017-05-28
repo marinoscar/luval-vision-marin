@@ -34,7 +34,7 @@ namespace luval.vision.core.resolvers
         public virtual bool IsMatch(string text)
         {
             if (string.IsNullOrWhiteSpace(Pattern) || string.IsNullOrWhiteSpace(text)) return false;
-            return Regex.IsMatch(text, Pattern);
+            return Regex.IsMatch(text, Pattern, RegexOptions.IgnoreCase);
         }
     }
 }
