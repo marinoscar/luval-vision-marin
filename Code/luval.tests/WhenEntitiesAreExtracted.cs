@@ -26,8 +26,9 @@ namespace luval.tests
         [Test]
         public void ItShouldNavigateTheAttributes()
         {
-            var navigator = new Navigator(_data.Item1.Info, _data.Item1.Lines, _data.Item2);
-            navigator.DoExtract();
+            //var navigator = new Navigator(_data.Item1.Info, _data.Item1.Lines, _data.Item2);
+            var extractor = new EntityExtractor(_data.Item1, _data.Item2);
+            extractor.DoExtract();
         }
     }
 }

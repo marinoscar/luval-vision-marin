@@ -103,6 +103,7 @@
   <ItemGroup>
     <Compile Include="AttributeMapping.cs" />
     <Compile Include="DocumentProcesor.cs" />
+    <Compile Include="EntityExtractor.cs" />
     <Compile Include="Enum.cs" />
     <Compile Include="Extractor.cs" />
     <Compile Include="extractors\DateExtractor.cs" />
