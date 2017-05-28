@@ -14,6 +14,11 @@ class ProfilesShowController {
       this.gotDefaultSettingsError.bind(this));
   }
 
+  showProfileJSON(profile) {
+    this.profilesService.setProfile(profile);
+    this.$state.go('profiles-edit');
+  }
+
   gotDefaultSettingsError() {
     this.loading = false;
   }

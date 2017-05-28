@@ -1,11 +1,24 @@
 class profilesService {
   /* @ngInject */
   constructor($log, $http, sessionService, Upload, CORE) {
+    this.profile = {};
     this.$log = $log;
     this.$http = $http;
     this.CORE = CORE;
     this.upload = Upload;
     this.sessionService = sessionService;
+  }
+
+  updateProfile(profile) {
+    const putRequest = {
+      method: 'PUT',
+      url: this.CORE.URL + 'Settings/Put',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      data: profile
+    };
+    return this.$http(putRequest);
   }
 
   uploadAttributeMappingConfig(blob) {
@@ -40,6 +53,14 @@ class profilesService {
       params: this.sessionService.buildUserJSON()
     };
     return this.$http(getRequest);
+  }
+
+  setProfile(profile) {
+    this.profile = profile;
+  }
+
+  getProfile() {
+    return this.profile;
   }
 }
 

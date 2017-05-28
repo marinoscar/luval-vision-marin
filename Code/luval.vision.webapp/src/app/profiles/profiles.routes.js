@@ -12,6 +12,12 @@ function routes($stateProvider) {
       template: require('./create/profiles-create.html'),
       controller: ('ProfilesCreateController as vm'),
       cache: false
+    })
+    .state('profiles-edit', {
+      url: '/profiles-edit',
+      template: require('./edit/profiles-edit.html'),
+      controller: ('ProfilesEditController as vm'),
+      cache: false
     });
 }
 

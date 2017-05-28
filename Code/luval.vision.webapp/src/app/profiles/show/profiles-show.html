@@ -3,12 +3,12 @@
 <!--    <main> -->
       <div class="row">
         <div id="main-header">
-					<div class="col-md-4">
-						<button id="close-this" ng-click="vm.backToDocuments()"></button>
-					</div>
-					<div class="col-md-8 col-md-offset-2">
-						<img ng-src="../../img/logo.png" class="logo" />
-					</div>
+          <div class="col-md-4">
+            <button id="close-this" ng-click="vm.backToDocuments()"></button>
+          </div>
+          <div class="col-md-8 col-md-offset-2">
+            <img ng-src="../../img/logo.png" class="logo" />
+          </div>
         </div>
       </div>
       <div class="row">
@@ -18,7 +18,7 @@
               <h2 class="list-title">All Profiles</h2>
               <div class="expense-actions">
                 <div class="add-expense" ng-if="!vm.loading">
-									<div class="button dropdown-toggle"  ng-click="vm.createProfile()">Add</div>
+                  <div class="button dropdown-toggle"  ng-click="vm.createProfile()">Add</div>
                 </div>
               </div>
             </div>
@@ -35,22 +35,28 @@
           </div>
           <div class="table-responsive">
             <table class="table table-hover" ng-if="vm.settings">
-							<thead>
-								<tr>
-									<th></th>
-									<th></th>
-								</tr>
-							</thead>
+              <thead>
+                <tr>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                </tr>
+              </thead>
               <tbody ng-repeat="profile in vm.settings.data">
                 <tr>
                   <th>
                     {{profile.profileName}}
                   </th>
-									<th>
-										<button ng-click="vm.deleteProfile(profile.profileName)">
-											<i class="glyphicon glyphicon-trash"></i>
-										</button>
-									</th>
+                  <th>
+                    <button type="button" class="btn btn-primary" ng-click="vm.showProfileJSON(profile)">
+                      View Profile
+                    </button>
+                  </th>
+                  <th>
+                    <button class="btn btn-primary" ng-click="vm.deleteProfile(profile.profileName)">
+                      Delete Profile
+                    </button>
+                  </th>
                 </tr>
               </tbody>
             </table>
