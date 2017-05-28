@@ -32,6 +32,7 @@ namespace luval.vision.core
             var result = new List<MappingResult>();
             foreach (var map in Mappings)
             {
+                var mapResult = new List<MappingResult>();
                 foreach (var pattern in map.ValuePatterns)
                 {
                     if (string.IsNullOrWhiteSpace(pattern)) continue;
@@ -51,9 +52,15 @@ namespace luval.vision.core
                         if(item != null)
                         {
                             item.Value = GetResolver(pattern, el.Text).GetValue(el.Text);
-                            result.Add(item);
+                            mapResult.Add(item);
                         }
                     }
+                }
+
+                if (mapResult.Any())
+                {
+                    //we add the closest item
+                    result.Add(mapResult.OrderBy(i => i.OffsetX).ThenBy(i => i.OffsetY).First());
                 }
             }
             return result;
