@@ -202,7 +202,7 @@ namespace luval.vision.core
             var result = new List<SearchResult>();
             foreach (var p in patterns)
             {
-                result.AddRange(elements.Where(i => Resolve(p, i.Text)).Select(t => new SearchResult() { pattern = p, element = t, success = true }));
+                result.AddRange(elements.Where(i => !string.IsNullOrWhiteSpace(i.Text) && Resolve(p, i.Text)).Select(t => new SearchResult() { pattern = p, element = t, success = true }));
             }
             return result;
         }

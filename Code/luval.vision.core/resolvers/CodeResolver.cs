@@ -16,6 +16,7 @@ namespace luval.vision.core.resolvers
         public CodeResolver()
         {
             _amount = new AmountResolver();
+            _number = new NumberResolver();
         }
 
         public string Code { get { return "code"; } }
