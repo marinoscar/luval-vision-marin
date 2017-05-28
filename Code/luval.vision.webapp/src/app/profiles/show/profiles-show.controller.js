@@ -25,6 +25,9 @@ class ProfilesShowController {
 
   gotDefaultSettingsHandler(settings) {
     this.settings = settings;
+    if (this.settings.data.Id === null) {
+      this.settings = undefined;
+    }
     this.loading = false;
   }
 
