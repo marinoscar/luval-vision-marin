@@ -16,7 +16,7 @@
   },
   {
     "attributeName": "Total",
-    "anchorPatterns": [ "Amount Due","\\bTotal\\b", "\\bGrand Total\\b" ],
+    "anchorPatterns": [ "Amount Due","Total", "Grand Total", "Total Amount" ],
     "valuePatterns": [ "@amount" ],
     "isAttributeLast": true
   },
