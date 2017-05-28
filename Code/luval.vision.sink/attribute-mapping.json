@@ -22,7 +22,7 @@
   },
   {
     "attributeName": "InvoiceNumber",
-    "anchorPatterns": [ "Invoice", "Invoice #", "Invoice Number" ],
+    "anchorPatterns": [ "Invoice", "Invoice #", "Invoice Number", "Invoice No." ],
     "valuePatterns": [ "@code", "@number" ]
   }
 ]
