@@ -33,7 +33,7 @@ namespace luval.vision.core
 
         public IEnumerable<OcrElement> Find(string pattern)
         {
-            return Elements.Where(i => !string.IsNullOrWhiteSpace(i.Text) && Regex.IsMatch(i.Text, pattern)).OrderBy(i => i.Location.Y).ToList();
+            return Elements.Where(i => !string.IsNullOrWhiteSpace(i.Text) && Resolve(pattern, i.Text)).OrderBy(i => i.Location.Y).ToList();
         }
 
         public List<MappingResult> ExtractAttributes()
@@ -77,6 +77,25 @@ namespace luval.vision.core
             }
             return result;
         }
+
+        public void DoExtract()
+        {
+            foreach(var map in Mappings)
+            {
+                foreach(var pattern in map.ValuePatterns)
+                {
+                    if (string.IsNullOrWhiteSpace(pattern)) continue;
+                    var elements = Find(pattern);
+                    if (elements == null || !elements.Any()) continue;
+                    foreach(var el in elements)
+                    {
+                        var upRes = SearchUp(el, map.AnchorPatterns);
+                    }
+                }
+            }
+        }
+
+
 
         public static IEnumerable<OcrLine> GetWordsHorizontallyAligned(IEnumerable<OcrWord> elements, float horizontalErrorMargin)
         {
@@ -156,7 +175,7 @@ namespace luval.vision.core
             return new Tuple<OcrLocation, OcrRelativeLocation>(res, rel);
         }
 
-        private IEnumerable<SearchResult> SearchDown(OcrElement reference, IEnumerable<string> valuePatterns)
+        private IEnumerable<SearchResult> SearchDown(OcrElement reference, IEnumerable<string> patterns)
         {
             var dataSet = new List<OcrElement>();
             var searchArea = new OcrLocation()
@@ -180,8 +199,37 @@ namespace luval.vision.core
             var urMaxX = reference.Location.X;
             var underRight = subset.Where(i => i.Location.X >= urMaxX).OrderBy(i => i.Location.X).ToList();
             dataSet.AddRange(underRight);
-            return FilterByPattern(dataSet, valuePatterns);
+            return FilterByPattern(dataSet, patterns);
         }
+
+        private IEnumerable<SearchResult> SearchUp(OcrElement reference, IEnumerable<string> patterns)
+        {
+            var dataSet = new List<OcrElement>();
+            var searchArea = new OcrLocation()
+            {
+                X = reference.Location.X,
+                Y = reference.Location.Y, //Changed
+                Width = reference.Location.Width,
+                Height = reference.Location.Height
+            };
+            //Changed
+            var minY = reference.Location.Y - (reference.Location.Height * 5);
+            //Same
+            var minX = reference.Location.X - (reference.Location.Width * 4);
+            var maxX = reference.Location.XBound + (reference.Location.Width * 4);
+            
+            //Changed
+            var subset = Elements.Where(i => i != reference && i.Location.Y < searchArea.Y && i.Location.YBound >= minY && i.Location.X > minX && i.Location.XBound < maxX)
+                .OrderByDescending(i => i.Location.Y).ThenByDescending(i => i.Location.X).ToList();
+
+            var newList = subset.Select(i => new t { Element = i, XOffset = (reference.Location.X - i.Location.X), YOffset = (reference.Location.Y - i.Location.YBound)  })
+                .ToList();
+            var ordered = newList.OrderBy(i => i.YOffset).ThenBy(i => i.XOffset).ToList();
+            var res =  FilterByPattern(ordered.Select(i => i.Element).ToList(), patterns);
+            return res;
+        }
+
+        private class t { public OcrElement Element; public double YOffset; public double XOffset; }
 
         private IEnumerable<SearchResult> SearchRight(OcrElement reference, IEnumerable<string> valuePatterns)
         {
@@ -204,7 +252,7 @@ namespace luval.vision.core
             {
                 result.AddRange(elements.Where(i => !string.IsNullOrWhiteSpace(i.Text) && Resolve(p, i.Text)).Select(t => new SearchResult() { pattern = p, element = t, success = true }));
             }
-            return result;
+            return result.Distinct().ToList();
         }
 
         private bool Resolve(string pattern, string text)
@@ -222,6 +270,6 @@ namespace luval.vision.core
             return new RegexResolver(pattern);
         }
 
-        private class SearchResult { public string pattern; public OcrElement element; public bool success; }
+        private class SearchResult { public string pattern; public OcrElement element; public bool success; public double YOffset; public double XOffset; }
     }
 }

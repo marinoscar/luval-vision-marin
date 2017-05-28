@@ -18,7 +18,8 @@ namespace luval.tests
         [OneTimeSetUp]
         public void Setup()
         {
-            var json = File.ReadAllText(@"TestFiles\ocr-result-and-mappings.json");
+            var fileName = TestContext.CurrentContext.TestDirectory + @"\TestFiles\ocr-result-and-mappings.json";
+            var json = File.ReadAllText(fileName);
             _data = JsonConvert.DeserializeObject<Tuple<OcrResult, List<AttributeMapping>>>(json);
         } 
 
@@ -26,7 +27,7 @@ namespace luval.tests
         public void ItShouldNavigateTheAttributes()
         {
             var navigator = new Navigator(_data.Item1.Info, _data.Item1.Lines, _data.Item2);
-            navigator.ExtractAttributes();
+            navigator.DoExtract();
         }
     }
 }
