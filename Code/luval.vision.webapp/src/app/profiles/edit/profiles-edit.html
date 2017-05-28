@@ -1,0 +1,39 @@
+<div id="profile-edit-view">
+  <div class="container">
+    <div class="row">
+      <div id="main-header">
+        <div class="col-md-4">
+          <button id="close-this" ng-click="vm.backToShowProfiles()"></button>
+        </div>
+        <div class="col-md-8 col-md-offset-2">
+          <img ng-src="../../img/logo.png" class="logo" />
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="container-fluid">
+        <div class="col-md-12">
+          <main class="done">
+            <aside id="image" style="width: calc(100%);">
+              <div>
+                <div id="document-container">
+									<div ng-repeat="profile in vm.profiles.attributeMapping track by $index">
+                    <angular-jsoneditor ng-model="vm.profiles.attributeMapping[$index]" options="vm.jsonEditor.options" on-change="{{vm.onChangeProfile(profile, $index)}}" class="profile-editor"></angular-jsoneditor>
+                  </div>	
+                </div>
+              </div>
+              <footer>
+                <div class="control-toggle active">
+                  <button ng-click="vm.editProfileJSON(vm.profiles)">Edit</button>
+                </div>
+                <div class="control-toggle active">
+                  <button ng-click="vm.changeJSONView()">Change View</button>
+                </div>
+              </footer>
+            </aside>
+          </main>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

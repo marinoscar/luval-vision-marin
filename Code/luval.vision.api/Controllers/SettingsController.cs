@@ -86,6 +86,27 @@ namespace luval.vision.api.Controllers
             }
         }
 
+        public IHttpActionResult Put(OcrSettings profile)
+        {
+            try
+            {
+                if(profile != null)
+                {
+                    var item = settingsLogic.SaveOrUpdate(profile.userId, profile.attributeMapping, profile.profileName);
+                    if(null != item)
+                    {
+                        return Ok(item);
+                    }
+                    return InternalServerError();
+                }
+                return InternalServerError();
+            }
+            catch (Exception e)
+            {
+                return Content(HttpStatusCode.InternalServerError, e.ToString());
+            }
+        }
+
         public async Task<IHttpActionResult> Post()
         {
             if (!Request.Content.IsMimeMultipartContent())
