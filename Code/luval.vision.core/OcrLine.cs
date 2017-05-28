@@ -10,7 +10,7 @@ namespace luval.vision.core
     public class OcrLine : OcrElement
     {
 
-        private string  _text;
+        private string _text;
         public OcrLine()
         {
             Words = new List<OcrWord>();
