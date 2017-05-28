@@ -66,7 +66,7 @@ namespace luval.vision.core
             return result;
         }
 
-        private IEnumerable<OcrElement> Find(string pattern)
+        private IEnumerable<OcrLine> Find(string pattern)
         {
             return Elements.Where(i => !string.IsNullOrWhiteSpace(i.Text) && Resolve(pattern, i.Text)).OrderBy(i => i.Location.Y).ToList();
         }
@@ -81,7 +81,7 @@ namespace luval.vision.core
             return FilterByPattern(map, reference, subset);
         }
 
-        private IEnumerable<MappingResult> SearchLeft(AttributeMapping map, OcrElement valueElement)
+        private IEnumerable<MappingResult> SearchLeft(AttributeMapping map, OcrLine valueElement)
         {
             var minX = valueElement.Location.X;
             var minY = valueElement.Location.Y - (valueElement.Location.Y * ErrorMargin);
@@ -91,6 +91,8 @@ namespace luval.vision.core
                i.Location.Y > minY &&
                i.Location.YBound < maxY)
                .ToList();
+            //check the value as a potential option
+            dataSet.Insert(0, valueElement);
             return FilterByPattern(map, valueElement, dataSet);
         }
 
