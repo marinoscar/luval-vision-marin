@@ -56,7 +56,7 @@ namespace luval.vision.core
 
         public static string CleanText(string text)
         {
-            return string.Join(" ", GetWords(text).Select(i => i.Value.ToLowerInvariant().Replace(".", "").Replace(":", "")));
+            return string.Join(" ", GetWordsSimple(text).Select(i => i.ToLowerInvariant().Replace(".", "").Replace(":", "")));
         }
 
         public static double RankSearch(string input, string pattern)
