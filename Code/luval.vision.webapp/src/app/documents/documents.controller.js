@@ -138,11 +138,11 @@ class DocumentsController {
   }
 
   getPaginationLowerBound() {
-    return (this.currentPage - 1) * this.itemsPerPage
+    return (this.currentPage - 1) * this.itemsPerPage;
   }
 
   getPaginationUpperBound() {
-    return this.currentPage * this.itemsPerPage
+    return this.currentPage * this.itemsPerPage;
   }
 }
 
