@@ -1,0 +1,22 @@
+﻿[
+  {
+    "attributeName": "Amount",
+    "anchorPatterns": [ "Check Amount", "Well Net Revenue" ],
+    "valuePatterns": [ "@amount" ]
+  },
+  {
+    "attributeName": "Date",
+    "anchorPatterns": [ "Statement Date", "Deposit Date" ],
+    "valuePatterns": [ "@date" ]
+  },
+  {
+    "attributeName": "AccountNumber",
+    "anchorPatterns": [ "Check Account Number", "Check Number" ],
+    "valuePatterns": [ "@code", "@number" ]
+  },
+  {
+    "attributeName": "CheckNumber",
+    "anchorPatterns": [ "Statement Number", "Account" ],
+    "valuePatterns": [ "@code", "@number" ]
+  }
+]
