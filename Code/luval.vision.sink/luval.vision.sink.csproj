@@ -128,10 +128,8 @@
     <EmbeddedResource Include="ShowMap.resx">
       <DependentUpon>ShowMap.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="..\..\Docs\check-profile.json" />
     <None Include="Demo\sample-response.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="attribute-mapping.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />

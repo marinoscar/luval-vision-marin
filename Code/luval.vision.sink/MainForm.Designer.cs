@@ -331,6 +331,7 @@
             this.btnClear.TabIndex = 10;
             this.btnClear.Text = "&Clear";
             this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
             // grpResults
             // 
@@ -362,6 +363,7 @@
             this.rdNumbers.TabStop = true;
             this.rdNumbers.Text = "Numbers";
             this.rdNumbers.UseVisualStyleBackColor = true;
+            this.rdNumbers.Click += new System.EventHandler(this.rdNumbers_Click);
             // 
             // rdWords
             // 
@@ -373,6 +375,7 @@
             this.rdWords.TabStop = true;
             this.rdWords.Text = "Words";
             this.rdWords.UseVisualStyleBackColor = true;
+            this.rdWords.Click += new System.EventHandler(this.rdWords_Click);
             // 
             // rdCodes
             // 
@@ -384,6 +387,7 @@
             this.rdCodes.TabStop = true;
             this.rdCodes.Text = "Codes";
             this.rdCodes.UseVisualStyleBackColor = true;
+            this.rdCodes.Click += new System.EventHandler(this.rdCodes_Click);
             // 
             // rdDates
             // 
@@ -395,6 +399,7 @@
             this.rdDates.TabStop = true;
             this.rdDates.Text = "Dates";
             this.rdDates.UseVisualStyleBackColor = true;
+            this.rdDates.Click += new System.EventHandler(this.rdDates_Click);
             // 
             // rdAmounts
             // 
@@ -406,6 +411,7 @@
             this.rdAmounts.TabStop = true;
             this.rdAmounts.Text = "Amounts";
             this.rdAmounts.UseVisualStyleBackColor = true;
+            this.rdAmounts.Click += new System.EventHandler(this.rdAmounts_Click);
             // 
             // rdVision
             // 
@@ -417,6 +423,7 @@
             this.rdVision.TabStop = true;
             this.rdVision.Text = "Vision Result";
             this.rdVision.UseVisualStyleBackColor = true;
+            this.rdVision.Click += new System.EventHandler(this.rdVision_Click);
             // 
             // rdResult
             // 
@@ -428,6 +435,7 @@
             this.rdResult.TabStop = true;
             this.rdResult.Text = "Parse Result";
             this.rdResult.UseVisualStyleBackColor = true;
+            this.rdResult.Click += new System.EventHandler(this.rdResult_Click);
             // 
             // btnDemo
             // 
@@ -438,6 +446,7 @@
             this.btnDemo.TabIndex = 8;
             this.btnDemo.Text = "&Demo";
             this.btnDemo.UseVisualStyleBackColor = true;
+            this.btnDemo.Click += new System.EventHandler(this.btnDemo_Click);
             // 
             // processBtn
             // 
@@ -448,6 +457,7 @@
             this.processBtn.TabIndex = 7;
             this.processBtn.Text = "Process";
             this.processBtn.UseVisualStyleBackColor = true;
+            this.processBtn.Click += new System.EventHandler(this.processBtn_Click);
             // 
             // statusStrip
             // 
