@@ -13,13 +13,9 @@ class ProfilesEditController {
     this.profiles = this.profilesService.getProfile();
     this.jsonEditor = {
       options: {
-        mode: 'tree'
+        mode: 'code'
       }
     };
-  }
-
-  onChangeProfile(profile, index) {
-    this.profiles.attributeMapping[index] = profile;
   }
 
   changeJSONView() {
