@@ -113,15 +113,23 @@ namespace luval.vision.sink
             LoadVisionTree(result.OcrResult);
             LoadText(result.OcrResult);
             ShowParseResult();
+            listResult.Tag = null;
             listResult.Items.Clear();
-            foreach (var item in result.TextResults)
+            listResult.Tag = new Tuple<ProcessResult, List<AttributeMapping>>(result, options);
+            foreach (var map in options)
             {
-                var listItem = new ListViewItem(new string[] { item.Map.AttributeName, item.Value });
+                var value = default(string);
+                var item = result.TextResults.FirstOrDefault(i => i.Map.AttributeName == map.AttributeName);
+                if (item != null) value = item.Value ;
+                var listItem = new ListViewItem(new string[] { map.AttributeName, value });
+                if(!string.IsNullOrWhiteSpace(value))
+                    listItem.Tag = item;
                 listResult.Items.Add(listItem);
             }
             rdResult.Checked = true;
             grpResults.Enabled = true;
             btnClear.Enabled = true;
+            ListViewHelper.Prepare(listResult);
         }
 
         private void LoadText(OcrResult ocrResult)
@@ -330,6 +338,16 @@ namespace luval.vision.sink
             };
             if (saveDlg.ShowDialog() == DialogResult.Cancel) return;
             PictureBox.Image.Save(saveDlg.FileName);
+        }
+
+        private void listResult_DoubleClick(object sender, EventArgs e)
+        {
+            if (listResult.SelectedItems.Count <= 0) return;
+            var item = listResult.SelectedItems[0];
+            var mapping = default(MappingResult);
+            if (item.Tag != null) mapping = (MappingResult)item.Tag;
+            var frm = new ShowMap() { OcrResult = _processResult.OcrResult, MappingResult = mapping };
+            frm.ShowDialog();
         }
     }
 }

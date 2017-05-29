@@ -33,8 +33,10 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuSaveResult = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuSaveImage = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.exitMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.customizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -64,8 +66,6 @@
             this.listResult = new System.Windows.Forms.ListView();
             this.colAttribute = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colValue = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.mnuSaveImage = new System.Windows.Forms.ToolStripMenuItem();
             this.mainMenu.SuspendLayout();
             this.panel1.SuspendLayout();
             this.grpResults.SuspendLayout();
@@ -109,28 +109,40 @@
             this.openMenu.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.openMenu.Name = "openMenu";
             this.openMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.openMenu.Size = new System.Drawing.Size(152, 22);
+            this.openMenu.Size = new System.Drawing.Size(146, 22);
             this.openMenu.Text = "&Open";
             this.openMenu.Click += new System.EventHandler(this.openMenu_Click);
             // 
             // mnuSaveResult
             // 
             this.mnuSaveResult.Name = "mnuSaveResult";
-            this.mnuSaveResult.Size = new System.Drawing.Size(152, 22);
+            this.mnuSaveResult.Size = new System.Drawing.Size(146, 22);
             this.mnuSaveResult.Text = "Save Result";
             this.mnuSaveResult.Click += new System.EventHandler(this.mnuSaveResult_Click);
+            // 
+            // mnuSaveImage
+            // 
+            this.mnuSaveImage.Name = "mnuSaveImage";
+            this.mnuSaveImage.Size = new System.Drawing.Size(146, 22);
+            this.mnuSaveImage.Text = "Save Image";
+            this.mnuSaveImage.Click += new System.EventHandler(this.mnuSaveImage_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(143, 6);
             // 
             // exitMenu
             // 
             this.exitMenu.Name = "exitMenu";
-            this.exitMenu.Size = new System.Drawing.Size(152, 22);
+            this.exitMenu.Size = new System.Drawing.Size(146, 22);
             this.exitMenu.Text = "E&xit";
             this.exitMenu.Click += new System.EventHandler(this.exitMenu_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(143, 6);
             // 
             // toolsToolStripMenuItem
             // 
@@ -421,32 +433,25 @@
             this.colAttribute,
             this.colValue});
             this.listResult.Dock = System.Windows.Forms.DockStyle.Left;
+            this.listResult.FullRowSelect = true;
             this.listResult.Location = new System.Drawing.Point(3, 3);
+            this.listResult.MultiSelect = false;
             this.listResult.Name = "listResult";
             this.listResult.Size = new System.Drawing.Size(285, 491);
             this.listResult.TabIndex = 6;
             this.listResult.UseCompatibleStateImageBehavior = false;
             this.listResult.View = System.Windows.Forms.View.Details;
+            this.listResult.DoubleClick += new System.EventHandler(this.listResult_DoubleClick);
             // 
             // colAttribute
             // 
             this.colAttribute.Text = "Attribute";
+            this.colAttribute.Width = 51;
             // 
             // colValue
             // 
             this.colValue.Text = "Value";
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
-            // 
-            // mnuSaveImage
-            // 
-            this.mnuSaveImage.Name = "mnuSaveImage";
-            this.mnuSaveImage.Size = new System.Drawing.Size(152, 22);
-            this.mnuSaveImage.Text = "Save Image";
-            this.mnuSaveImage.Click += new System.EventHandler(this.mnuSaveImage_Click);
+            this.colValue.Width = 230;
             // 
             // MainForm
             // 

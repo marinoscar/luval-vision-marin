@@ -20,6 +20,7 @@ namespace luval.vision.core
         public double RelativeOffsetX { get; set; }
         public double ScalarRank { get; set; }
         public double AnchorRankMath { get; set; }
+        public bool IsAnchorOnLeft { get; set; }
 
         public static MappingResult Create(ImageInfo info, AttributeMapping map, OcrElement anchor, OcrElement result)
         {

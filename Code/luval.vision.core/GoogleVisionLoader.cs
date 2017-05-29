@@ -94,7 +94,7 @@ namespace luval.vision.core
         {
             var lineId = id;
             var lines = new List<OcrLine>();
-            var words = new List<OcrWord>(line.Words);
+            var words = new List<OcrWord>(line.Words.Where(i => !string.IsNullOrWhiteSpace(i.Text)));
             var currentLine = default(OcrLine);
             var currentWord = default(OcrWord);
             while (words.Count > 0)

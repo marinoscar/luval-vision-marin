@@ -43,7 +43,10 @@ namespace luval.vision.core
                         var left = SearchLeft(map, el);
                         var item = default(MappingResult);
                         if (left.Any())
+                        {
                             item = left.First();
+                            item.IsAnchorOnLeft = true;
+                        }
                         else
                         {
                             var up = SearchUp(map, el);

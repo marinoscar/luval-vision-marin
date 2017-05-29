@@ -88,17 +88,33 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FormResult.cs" />
+    <Compile Include="ListViewHelper.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="MappingSelector.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MappingSelector.Designer.cs">
+      <DependentUpon>MappingSelector.cs</DependentUpon>
+    </Compile>
     <Compile Include="PoData.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ShowMap.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ShowMap.Designer.cs">
+      <DependentUpon>ShowMap.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MappingSelector.resx">
+      <DependentUpon>MappingSelector.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -109,6 +125,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ShowMap.resx">
+      <DependentUpon>ShowMap.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Demo\sample-response.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
