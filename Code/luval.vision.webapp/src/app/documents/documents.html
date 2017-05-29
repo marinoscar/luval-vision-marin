@@ -53,7 +53,7 @@
                   <th></th> <!-- view json -->
                 </tr>
               </thead>
-              <tbody ng-repeat="document in vm.documents">
+              <tbody ng-repeat="document in vm.documents.slice(vm.getPaginationLowerBound(), vm.getPaginationUpperBound())">
                 <tr>
                   <th>
                     {{document.Result.UtcTimestamp | date : 'MM/dd/yy HH:mm'}}
@@ -72,6 +72,9 @@
                 </tr>
               </tbody>
             </table>
+          </div>
+          <div class="text-center">
+            <ul uib-pagination total-items="vm.totalItems" items-per-page="vm.itemsPerPage" ng-model="vm.currentPage"></ul>
           </div>
         </div>
       </div>

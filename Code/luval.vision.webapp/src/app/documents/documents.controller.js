@@ -18,6 +18,9 @@ class DocumentsController {
   }
 
   activate() {
+    this.currentPage = 1;
+    this.itemsPerPage = 10;
+
     this.documentsService.getDocumentsStored()
       .then(this.documentStoredHandler.bind(this),
       this.documentStoredRejected.bind(this));
@@ -76,6 +79,8 @@ class DocumentsController {
     this.serializeDocumentsContent(this.documents)
       .then(this.stopLoading.bind(this),
       this.stopLoading.bind(this));
+
+    this.totalItems = this.documents.length;
   }
 
   stopLoading() {
@@ -130,6 +135,14 @@ class DocumentsController {
       type: 'error',
       duration: 2000
     });
+  }
+
+  getPaginationLowerBound() {
+    return (this.currentPage - 1) * this.itemsPerPage;
+  }
+
+  getPaginationUpperBound() {
+    return this.currentPage * this.itemsPerPage;
   }
 }
 

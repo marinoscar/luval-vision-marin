@@ -17,14 +17,12 @@
             <aside id="image" style="width: calc(100%);">
               <div>
                 <div id="document-container">
-									<div ng-repeat="profile in vm.profiles.attributeMapping track by $index">
-                    <angular-jsoneditor ng-model="vm.profiles.attributeMapping[$index]" options="vm.jsonEditor.options" on-change="{{vm.onChangeProfile(profile, $index)}}" class="profile-editor"></angular-jsoneditor>
-                  </div>	
+                  <angular-jsoneditor ng-model="vm.profiles.attributeMapping" options="vm.jsonEditor.options" class="profile-editor"></angular-jsoneditor>
                 </div>
               </div>
               <footer>
                 <div class="control-toggle active">
-                  <button ng-click="vm.editProfileJSON(vm.profiles)">Edit</button>
+                  <button ng-click="vm.editProfileJSON(vm.profiles)">Save Changes</button>
                 </div>
                 <div class="control-toggle active">
                   <button ng-click="vm.changeJSONView()">Change View</button>
