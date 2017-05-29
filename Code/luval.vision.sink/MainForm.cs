@@ -374,13 +374,43 @@ namespace luval.vision.sink
 
         private List<AttributeMapping> GetProfile()
         {
-            if(_profiles == null)
+            if (_profiles == null)
             {
                 var jsonData = File.ReadAllText("attribute-mapping.json");
                 _profiles = JsonConvert.DeserializeObject<List<AttributeMapping>>(jsonData);
                 lblProfile.Text = "Profile: Default Profile";
             }
             return _profiles;
+        }
+
+        private void pictureBox_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            FindElement(e.Location);
+
+        }
+
+        private void FindElement(Point location)
+        {
+            if (_result == null) return;
+            var item = _result.Lines.Where(i => !string.IsNullOrWhiteSpace(i.Text)).FirstOrDefault(i => i.Text == "Amount Due");
+            var p = location;
+            var res = _result.Lines.Where(i => (p.X >= i.Location.X && p.X <= i.Location.XBound) && (p.Y >= i.Location.Y && p.Y <= i.Location.YBound)).ToList();
+            if (!res.Any())
+            {
+                MessageBox.Show("Nothing");
+                return;
+            }
+            MessageBox.Show(string.Format("Count: {0}\n\n{1}", res.Count, string.Join("\n", res.Select(i => i.Text))));
+        }
+
+        private void pictureBox_MouseHover(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox_MouseMove(object sender, MouseEventArgs e)
+        {
+            lblMouseCoordinates.Text = string.Format("X: {0} Y: {1}", e.Location.X, e.Location.Y);
         }
     }
 }

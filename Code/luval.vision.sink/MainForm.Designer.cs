@@ -52,9 +52,6 @@
             this.resultText = new System.Windows.Forms.TextBox();
             this.tabVisionJson = new System.Windows.Forms.TabPage();
             this.treeJsonVision = new System.Windows.Forms.TreeView();
-            this.listResult = new System.Windows.Forms.ListView();
-            this.colAttribute = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.colValue = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnClear = new System.Windows.Forms.Button();
             this.grpResults = new System.Windows.Forms.GroupBox();
             this.rdNumbers = new System.Windows.Forms.RadioButton();
@@ -69,6 +66,13 @@
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.lblProfile = new System.Windows.Forms.ToolStripStatusLabel();
             this.mnuLoadProfile = new System.Windows.Forms.ToolStripMenuItem();
+            this.panelResult = new System.Windows.Forms.Panel();
+            this.splitterPicture = new System.Windows.Forms.Splitter();
+            this.listResult = new System.Windows.Forms.ListView();
+            this.colAttribute = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colValue = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.panelResultHeader = new System.Windows.Forms.Panel();
+            this.lblMouseCoordinates = new System.Windows.Forms.ToolStripStatusLabel();
             this.mainMenu.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
@@ -81,6 +85,7 @@
             this.tabVisionJson.SuspendLayout();
             this.grpResults.SuspendLayout();
             this.statusStrip.SuspendLayout();
+            this.panelResult.SuspendLayout();
             this.SuspendLayout();
             // 
             // mainMenu
@@ -185,12 +190,15 @@
             // 
             // pictureBox
             // 
-            this.pictureBox.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox.Location = new System.Drawing.Point(-1, 0);
             this.pictureBox.Name = "pictureBox";
-            this.pictureBox.Size = new System.Drawing.Size(988, 485);
+            this.pictureBox.Size = new System.Drawing.Size(700, 490);
             this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pictureBox.TabIndex = 2;
             this.pictureBox.TabStop = false;
+            this.pictureBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseDoubleClick);
+            this.pictureBox.MouseHover += new System.EventHandler(this.pictureBox_MouseHover);
+            this.pictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseMove);
             // 
             // splitter1
             // 
@@ -214,6 +222,8 @@
             // tabPicture
             // 
             this.tabPicture.Controls.Add(this.panelPicture);
+            this.tabPicture.Controls.Add(this.splitterPicture);
+            this.tabPicture.Controls.Add(this.panelResult);
             this.tabPicture.Location = new System.Drawing.Point(4, 22);
             this.tabPicture.Name = "tabPicture";
             this.tabPicture.Padding = new System.Windows.Forms.Padding(3);
@@ -229,17 +239,16 @@
             this.panelPicture.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelPicture.Location = new System.Drawing.Point(3, 3);
             this.panelPicture.Name = "panelPicture";
-            this.panelPicture.Size = new System.Drawing.Size(991, 494);
+            this.panelPicture.Size = new System.Drawing.Size(701, 494);
             this.panelPicture.TabIndex = 0;
             // 
             // tabResult
             // 
             this.tabResult.Controls.Add(this.tabVision);
-            this.tabResult.Controls.Add(this.listResult);
             this.tabResult.Location = new System.Drawing.Point(4, 22);
             this.tabResult.Name = "tabResult";
             this.tabResult.Padding = new System.Windows.Forms.Padding(3);
-            this.tabResult.Size = new System.Drawing.Size(997, 497);
+            this.tabResult.Size = new System.Drawing.Size(997, 500);
             this.tabResult.TabIndex = 1;
             this.tabResult.Text = "Results";
             this.tabResult.UseVisualStyleBackColor = true;
@@ -249,10 +258,10 @@
             this.tabVision.Controls.Add(this.tabText);
             this.tabVision.Controls.Add(this.tabVisionJson);
             this.tabVision.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabVision.Location = new System.Drawing.Point(288, 3);
+            this.tabVision.Location = new System.Drawing.Point(3, 3);
             this.tabVision.Name = "tabVision";
             this.tabVision.SelectedIndex = 0;
-            this.tabVision.Size = new System.Drawing.Size(706, 491);
+            this.tabVision.Size = new System.Drawing.Size(991, 494);
             this.tabVision.TabIndex = 5;
             // 
             // tabText
@@ -261,7 +270,7 @@
             this.tabText.Location = new System.Drawing.Point(4, 22);
             this.tabText.Name = "tabText";
             this.tabText.Padding = new System.Windows.Forms.Padding(3);
-            this.tabText.Size = new System.Drawing.Size(698, 465);
+            this.tabText.Size = new System.Drawing.Size(983, 468);
             this.tabText.TabIndex = 0;
             this.tabText.Text = "Text";
             this.tabText.UseVisualStyleBackColor = true;
@@ -273,7 +282,7 @@
             this.resultText.Location = new System.Drawing.Point(3, 3);
             this.resultText.Multiline = true;
             this.resultText.Name = "resultText";
-            this.resultText.Size = new System.Drawing.Size(692, 459);
+            this.resultText.Size = new System.Drawing.Size(977, 462);
             this.resultText.TabIndex = 5;
             // 
             // tabVisionJson
@@ -282,7 +291,7 @@
             this.tabVisionJson.Location = new System.Drawing.Point(4, 22);
             this.tabVisionJson.Name = "tabVisionJson";
             this.tabVisionJson.Padding = new System.Windows.Forms.Padding(3);
-            this.tabVisionJson.Size = new System.Drawing.Size(698, 465);
+            this.tabVisionJson.Size = new System.Drawing.Size(698, 468);
             this.tabVisionJson.TabIndex = 1;
             this.tabVisionJson.Text = "Vision";
             this.tabVisionJson.UseVisualStyleBackColor = true;
@@ -292,34 +301,8 @@
             this.treeJsonVision.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeJsonVision.Location = new System.Drawing.Point(3, 3);
             this.treeJsonVision.Name = "treeJsonVision";
-            this.treeJsonVision.Size = new System.Drawing.Size(692, 459);
+            this.treeJsonVision.Size = new System.Drawing.Size(692, 462);
             this.treeJsonVision.TabIndex = 0;
-            // 
-            // listResult
-            // 
-            this.listResult.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.colAttribute,
-            this.colValue});
-            this.listResult.Dock = System.Windows.Forms.DockStyle.Left;
-            this.listResult.FullRowSelect = true;
-            this.listResult.Location = new System.Drawing.Point(3, 3);
-            this.listResult.MultiSelect = false;
-            this.listResult.Name = "listResult";
-            this.listResult.Size = new System.Drawing.Size(285, 491);
-            this.listResult.TabIndex = 6;
-            this.listResult.UseCompatibleStateImageBehavior = false;
-            this.listResult.View = System.Windows.Forms.View.Details;
-            this.listResult.DoubleClick += new System.EventHandler(this.listResult_DoubleClick);
-            // 
-            // colAttribute
-            // 
-            this.colAttribute.Text = "Attribute";
-            this.colAttribute.Width = 51;
-            // 
-            // colValue
-            // 
-            this.colValue.Text = "Value";
-            this.colValue.Width = 230;
             // 
             // btnClear
             // 
@@ -462,7 +445,8 @@
             // statusStrip
             // 
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.lblProfile});
+            this.lblProfile,
+            this.lblMouseCoordinates});
             this.statusStrip.Location = new System.Drawing.Point(0, 66);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Size = new System.Drawing.Size(1008, 22);
@@ -481,6 +465,65 @@
             this.mnuLoadProfile.Size = new System.Drawing.Size(152, 22);
             this.mnuLoadProfile.Text = "Load Profile";
             this.mnuLoadProfile.Click += new System.EventHandler(this.mnuLoadProfile_Click);
+            // 
+            // panelResult
+            // 
+            this.panelResult.Controls.Add(this.listResult);
+            this.panelResult.Controls.Add(this.panelResultHeader);
+            this.panelResult.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panelResult.Location = new System.Drawing.Point(707, 3);
+            this.panelResult.Name = "panelResult";
+            this.panelResult.Size = new System.Drawing.Size(287, 494);
+            this.panelResult.TabIndex = 1;
+            // 
+            // splitterPicture
+            // 
+            this.splitterPicture.Dock = System.Windows.Forms.DockStyle.Right;
+            this.splitterPicture.Location = new System.Drawing.Point(704, 3);
+            this.splitterPicture.Name = "splitterPicture";
+            this.splitterPicture.Size = new System.Drawing.Size(3, 494);
+            this.splitterPicture.TabIndex = 2;
+            this.splitterPicture.TabStop = false;
+            // 
+            // listResult
+            // 
+            this.listResult.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.colAttribute,
+            this.colValue});
+            this.listResult.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listResult.FullRowSelect = true;
+            this.listResult.Location = new System.Drawing.Point(0, 52);
+            this.listResult.MultiSelect = false;
+            this.listResult.Name = "listResult";
+            this.listResult.Size = new System.Drawing.Size(287, 442);
+            this.listResult.TabIndex = 8;
+            this.listResult.UseCompatibleStateImageBehavior = false;
+            this.listResult.View = System.Windows.Forms.View.Details;
+            this.listResult.DoubleClick += new System.EventHandler(this.listResult_DoubleClick);
+            // 
+            // colAttribute
+            // 
+            this.colAttribute.Text = "Attribute";
+            this.colAttribute.Width = 51;
+            // 
+            // colValue
+            // 
+            this.colValue.Text = "Value";
+            this.colValue.Width = 230;
+            // 
+            // panelResultHeader
+            // 
+            this.panelResultHeader.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelResultHeader.Location = new System.Drawing.Point(0, 0);
+            this.panelResultHeader.Name = "panelResultHeader";
+            this.panelResultHeader.Size = new System.Drawing.Size(287, 52);
+            this.panelResultHeader.TabIndex = 9;
+            // 
+            // lblMouseCoordinates
+            // 
+            this.lblMouseCoordinates.Name = "lblMouseCoordinates";
+            this.lblMouseCoordinates.Size = new System.Drawing.Size(118, 17);
+            this.lblMouseCoordinates.Text = "toolStripStatusLabel1";
             // 
             // MainForm
             // 
@@ -512,6 +555,7 @@
             this.grpResults.PerformLayout();
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
+            this.panelResult.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -539,9 +583,6 @@
         private System.Windows.Forms.TextBox resultText;
         private System.Windows.Forms.TabPage tabVisionJson;
         private System.Windows.Forms.TreeView treeJsonVision;
-        private System.Windows.Forms.ListView listResult;
-        private System.Windows.Forms.ColumnHeader colAttribute;
-        private System.Windows.Forms.ColumnHeader colValue;
         private System.Windows.Forms.ToolStripMenuItem mnuSaveResult;
         private System.Windows.Forms.ToolStripMenuItem mnuSaveImage;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
@@ -559,6 +600,13 @@
         private System.Windows.Forms.Button btnDemo;
         private System.Windows.Forms.Button processBtn;
         private System.Windows.Forms.ToolStripMenuItem mnuLoadProfile;
+        private System.Windows.Forms.Splitter splitterPicture;
+        private System.Windows.Forms.Panel panelResult;
+        private System.Windows.Forms.ListView listResult;
+        private System.Windows.Forms.ColumnHeader colAttribute;
+        private System.Windows.Forms.ColumnHeader colValue;
+        private System.Windows.Forms.Panel panelResultHeader;
+        private System.Windows.Forms.ToolStripStatusLabel lblMouseCoordinates;
     }
 }
 
