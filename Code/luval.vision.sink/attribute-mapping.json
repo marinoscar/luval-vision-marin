@@ -11,8 +11,9 @@
   },
   {
     "attributeName": "PONumber",
-    "anchorPatterns": [ "PO requisition", "PO#", "P.O.#", "P.O. #", "PO Number", "P.O. #", "P.O. No." ],
-    "valuePatterns": [ "@code", "@number" ]
+    "anchorPatterns": [ "PO requisition", "PO #", "PO Number", "PO No" ],
+    "valuePatterns": [ "@code", "@number" ],
+    "anchorBlackList": [ "PO Box"]
   },
   {
     "attributeName": "Total",

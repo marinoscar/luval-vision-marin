@@ -9,6 +9,13 @@ namespace luval.vision.core
 {
     public class AttributeMapping
     {
+        public AttributeMapping()
+        {
+            AnchorPatterns = new string[] { };
+            ValuePatterns = new string[] { };
+            AnchorBlackList = new string[] { };
+        }
+
         [JsonProperty(PropertyName = "attributeName")]
         public string AttributeName { get; set; }
         [JsonProperty(PropertyName = "anchorPatterns")]
@@ -21,5 +28,7 @@ namespace luval.vision.core
         public bool IsAttributeLast { get; set; }
         [JsonProperty(PropertyName = "isValueLast")]
         public bool IsValueLast { get; set; }
+        [JsonProperty(PropertyName = "anchorBlackList")]
+        public string[] AnchorBlackList { get; set; }
     }
 }
