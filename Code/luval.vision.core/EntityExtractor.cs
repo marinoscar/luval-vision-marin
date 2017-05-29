@@ -76,7 +76,7 @@ namespace luval.vision.core
             var minY = reference.Location.Y - (reference.Location.Height * 5);
             var minX = reference.Location.X - (reference.Location.Width * 4);
             var maxX = reference.Location.XBound + (reference.Location.Width * 4);
-            var subset = Elements.Where(i => i != reference && i.Location.Y < reference.Location.Y && i.Location.YBound >= minY && i.Location.X > minX && i.Location.XBound < maxX)
+            var subset = Elements.Where(i => i != reference && !string.IsNullOrWhiteSpace(i.Text) && i.Location.Y < reference.Location.Y && i.Location.YBound >= minY && i.Location.X > minX && i.Location.XBound < maxX)
                 .OrderByDescending(i => i.Location.Y).ThenByDescending(i => i.Location.X).ToList();
             return MarryToAnchor(map, reference, subset);
         }
@@ -87,7 +87,7 @@ namespace luval.vision.core
             var minY = valueElement.Location.Y - (valueElement.Location.Y * ErrorMargin);
             var maxY = valueElement.Location.YBound * (1 + ErrorMargin);
             var middleLine = (valueElement.Location.Y + (valueElement.Location.Height / 3));
-            var dataSet = Elements.Where(i => i.Location.X < minX &&
+            var dataSet = Elements.Where(i => !string.IsNullOrWhiteSpace(i.Text) && i.Location.X < minX &&
                i.Location.Y > minY &&
                i.Location.YBound < maxY)
                .ToList();
@@ -104,7 +104,7 @@ namespace luval.vision.core
             var result = new List<MappingResult>();
             foreach (var p in map.AnchorPatterns)
             {
-                var items = elements.Where(i => RankMatch(p, i.Text) > 0.8d).Select(i => MappingResult.Create(Info, map, i, valueElement, null, RankMatch(p, i.Text))).ToList();
+                var items = elements.Where(i => RankMatch(p, i.Text, map.AnchorBlackList) > 0.9d).Select(i => MappingResult.Create(Info, map, i, valueElement, null, RankMatch(p, i.Text, map.AnchorBlackList))).ToList();
                 foreach (var item in items)
                 {
                     if (!result.Select(i => i.AnchorElement.Id).Contains(item.AnchorElement.Id))
@@ -121,13 +121,18 @@ namespace luval.vision.core
             return GetResolver(pattern, text).IsMatch(text);
         }
 
-        private double RankMatch(string pattern, string text)
+        private double RankMatch(string pattern, string text, IEnumerable<string> blackList)
         {
             var p = StringUtils.CleanText(pattern);
             var t = StringUtils.CleanText(text);
+            foreach (var bl in blackList.Select(StringUtils.CleanText))
+            {
+                if (t.Contains(bl)) return 0;
+            }
             var result = GetResolver(p, t).IsMatch(t);
             if (result) return 1d;
-            return 1d - StringUtils.RankSearch(t, p);
+            var rank =  1d - StringUtils.RankSearch(t, p);
+            return rank;
         }
 
         private IStringResolver GetResolver(string pattern, string text)
