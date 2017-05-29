@@ -14,6 +14,18 @@ namespace luval.vision.core
             return Regex.Matches(text, @"(\b[^\s]+\b)").Cast<Match>().Where(i => i.Success).ToList();
         }
 
+        public static string RemoveMultipleSpaces(string text)
+        {
+            var options = RegexOptions.None;
+            var regex = new Regex("[ ]{2,}", options);
+            return regex.Replace(text, " ");
+        }
+
+        public static IEnumerable<string> GetWordsSimple(string text)
+        {
+            return RemoveMultipleSpaces(text).Split(" ".ToCharArray());
+        }
+
         public static string SanatizeToLowerInvariant(string text)
         {
             return string.Join(" ", GetWords(text)).ToLowerInvariant();
