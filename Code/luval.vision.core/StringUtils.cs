@@ -14,6 +14,11 @@ namespace luval.vision.core
             return Regex.Matches(text, @"(\b[^\s]+\b)").Cast<Match>().Where(i => i.Success).ToList();
         }
 
+        public static string SanatizeToLowerInvariant(string text)
+        {
+            return string.Join(" ", GetWords(text)).ToLowerInvariant();
+        }
+
         public static int CalculateLevenshteinDistance(string a, string b)
         {
             if (string.IsNullOrEmpty(a) || string.IsNullOrEmpty(b)) return 0;
@@ -35,6 +40,21 @@ namespace luval.vision.core
                         );
                 }
             return distances[lengthA, lengthB];
+        }
+
+        public static string CleanText(string text)
+        {
+            return string.Join(" ", GetWords(text).Select(i => i.Value.ToLowerInvariant().Replace(".", "").Replace(":", "")));
+        }
+
+        public static double RankSearch(string input, string pattern)
+        {
+            var i = CleanText(input).Replace(" ", "");
+            var p = CleanText(pattern).Replace(" ", "");
+            var tot = i.Length + p.Length;
+            var res = CalculateLevenshteinDistance(i, p);
+            if (res == 0) return 1d;
+            return (double)res / (double)tot;
         }
     }
 }

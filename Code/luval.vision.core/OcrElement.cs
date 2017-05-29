@@ -30,12 +30,9 @@ namespace luval.vision.core
 
         private string CleanText(string text)
         {
-            var options = RegexOptions.None;
-            var regex = new Regex("[ ]{2,}", options);
-            text = text.Trim();
-            text = text.Replace(":", "");
-            text = regex.Replace(text, " ");
-            return text;
+            if (string.IsNullOrWhiteSpace(text)) return text;
+            var words = StringUtils.GetWords(text);
+            return string.Join(" ", words).Replace(":", "");
         }
 
     }

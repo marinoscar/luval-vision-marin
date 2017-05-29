@@ -17,6 +17,10 @@ namespace luval.tests
             var res1 = StringUtils.CalculateLevenshteinDistance("total", "tota");
             var res2 = StringUtils.CalculateLevenshteinDistance("Facebook", "Facebok");
             var res3 = StringUtils.CalculateLevenshteinDistance("Invoice", "Marin Saenz");
+            var res4 = StringUtils.CalculateLevenshteinDistance("Invoice", "Invoice");
+            var res5 = StringUtils.CalculateLevenshteinDistance("Invoice", "lnvoice");
+            var res6 = StringUtils.CalculateLevenshteinDistance("Expiration Date", "Date");
+            var res7 = StringUtils.CalculateLevenshteinDistance("Date", "Expiration Date");
         }
 
     }
