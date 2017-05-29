@@ -21,6 +21,7 @@ namespace luval.vision.sink
         private OcrResult _result;
         private Image _originalImg;
         private ProcessResult _processResult;
+        private List<AttributeMapping> _profiles;
 
         public MainForm()
         {
@@ -103,8 +104,7 @@ namespace luval.vision.sink
 
         private void DoProcess()
         {
-            var jsonData = File.ReadAllText("attribute-mapping.json");
-            var options = JsonConvert.DeserializeObject<List<AttributeMapping>>(jsonData);
+            var options = GetProfile();
             var provider = new DocumentProcesor(GetProvider(false), new NlpProvider(new GoogleNlpEngine(), new GoogleNlpLoader()));
             var result = provider.DoProcess(_fileName, options, "");
             var tuple = new Tuple<OcrResult, List<AttributeMapping>>(result.OcrResult, options);
@@ -120,9 +120,9 @@ namespace luval.vision.sink
             {
                 var value = default(string);
                 var item = result.TextResults.FirstOrDefault(i => i.Map.AttributeName == map.AttributeName);
-                if (item != null) value = item.Value ;
+                if (item != null) value = item.Value;
                 var listItem = new ListViewItem(new string[] { map.AttributeName, value });
-                if(!string.IsNullOrWhiteSpace(value))
+                if (!string.IsNullOrWhiteSpace(value))
                     listItem.Tag = item;
                 listResult.Items.Add(listItem);
             }
@@ -348,6 +348,39 @@ namespace luval.vision.sink
             if (item.Tag != null) mapping = (MappingResult)item.Tag;
             var frm = new ShowMap() { OcrResult = _processResult.OcrResult, MappingResult = mapping };
             frm.ShowDialog();
+        }
+
+        private void mnuLoadProfile_Click(object sender, EventArgs e)
+        {
+            var openDlg = new OpenFileDialog()
+            {
+                Filter = "json files *.json|*.json",
+                Title = "Load Profile",
+                RestoreDirectory = true,
+            };
+            if (openDlg.ShowDialog() == DialogResult.Cancel) return;
+            try
+            {
+                _profiles = JsonConvert.DeserializeObject<List<AttributeMapping>>(File.ReadAllText(openDlg.FileName));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Invalid profile file", "Error Loading", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _profiles = null;
+                return;
+            }
+            lblProfile.Text = "Profile: " + new FileInfo(openDlg.FileName).Name;
+        }
+
+        private List<AttributeMapping> GetProfile()
+        {
+            if(_profiles == null)
+            {
+                var jsonData = File.ReadAllText("attribute-mapping.json");
+                _profiles = JsonConvert.DeserializeObject<List<AttributeMapping>>(jsonData);
+                lblProfile.Text = "Profile: Default Profile";
+            }
+            return _profiles;
         }
     }
 }
