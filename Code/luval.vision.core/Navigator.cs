@@ -38,56 +38,61 @@ namespace luval.vision.core
 
         public List<MappingResult> ExtractAttributes()
         {
-            var result = new List<MappingResult>();
-            foreach (var map in Mappings)
+            var extractor = new EntityExtractor(new OcrResult()
             {
-                foreach (var pattern in map.AnchorPatterns)
-                {
-                    if (string.IsNullOrWhiteSpace(pattern)) continue;
-                    var elements = Find(pattern);
-                    if (elements == null || !elements.Any()) continue;
-                    var sortedElements = map.IsAttributeLast ? elements.Reverse().ToList() : elements.ToList();
-                    var found = false;
-                    var isDown = false;
-                    foreach (var item in sortedElements)
-                    {
-                        switch (map.ValueDirection)
-                        {
-                            case Direction.Down:
-                                isDown = true;
-                                found = AcceptSearch(map, result, item, SearchDown(item, map.ValuePatterns), isDown);
-                                break;
-                            case Direction.Right:
-                                found = AcceptSearch(map, result, item, SearchRight(item, map.ValuePatterns), isDown);
-                                break;
-                            default:
-                                var vals = SearchRight(item, map.ValuePatterns);
-                                if (vals == null || !vals.Any())
-                                {
-                                    vals = SearchDown(item, map.ValuePatterns);
-                                    isDown = true;
-                                }
-                                found = AcceptSearch(map, result, item, vals, isDown);
-                                break;
-                        }
-                        if (found) break;
-                    }
-                    break;
-                }
-            }
-            return result;
+                Info = ImageInfo, Lines = Elements.Select(i => (OcrLine)i).ToList()
+            }, Mappings);
+            return extractor.DoExtract().ToList();
+            //var result = new List<MappingResult>();
+            //foreach (var map in Mappings)
+            //{
+            //    foreach (var pattern in map.AnchorPatterns)
+            //    {
+            //        if (string.IsNullOrWhiteSpace(pattern)) continue;
+            //        var elements = Find(pattern);
+            //        if (elements == null || !elements.Any()) continue;
+            //        var sortedElements = map.IsAttributeLast ? elements.Reverse().ToList() : elements.ToList();
+            //        var found = false;
+            //        var isDown = false;
+            //        foreach (var item in sortedElements)
+            //        {
+            //            switch (map.ValueDirection)
+            //            {
+            //                case Direction.Down:
+            //                    isDown = true;
+            //                    found = AcceptSearch(map, result, item, SearchDown(item, map.ValuePatterns), isDown);
+            //                    break;
+            //                case Direction.Right:
+            //                    found = AcceptSearch(map, result, item, SearchRight(item, map.ValuePatterns), isDown);
+            //                    break;
+            //                default:
+            //                    var vals = SearchRight(item, map.ValuePatterns);
+            //                    if (vals == null || !vals.Any())
+            //                    {
+            //                        vals = SearchDown(item, map.ValuePatterns);
+            //                        isDown = true;
+            //                    }
+            //                    found = AcceptSearch(map, result, item, vals, isDown);
+            //                    break;
+            //            }
+            //            if (found) break;
+            //        }
+            //        break;
+            //    }
+            //}
+            //return result;
         }
 
         public void DoExtract()
         {
-            foreach(var map in Mappings)
+            foreach (var map in Mappings)
             {
-                foreach(var pattern in map.ValuePatterns)
+                foreach (var pattern in map.ValuePatterns)
                 {
                     if (string.IsNullOrWhiteSpace(pattern)) continue;
                     var elements = Find(pattern);
                     if (elements == null || !elements.Any()) continue;
-                    foreach(var el in elements)
+                    foreach (var el in elements)
                     {
                         var upRes = SearchUp(el, map.AnchorPatterns);
                     }
@@ -217,15 +222,15 @@ namespace luval.vision.core
             //Same
             var minX = reference.Location.X - (reference.Location.Width * 4);
             var maxX = reference.Location.XBound + (reference.Location.Width * 4);
-            
+
             //Changed
             var subset = Elements.Where(i => i != reference && i.Location.Y < searchArea.Y && i.Location.YBound >= minY && i.Location.X > minX && i.Location.XBound < maxX)
                 .OrderByDescending(i => i.Location.Y).ThenByDescending(i => i.Location.X).ToList();
 
-            var newList = subset.Select(i => new t { Element = i, XOffset = (reference.Location.X - i.Location.X), YOffset = (reference.Location.Y - i.Location.YBound)  })
+            var newList = subset.Select(i => new t { Element = i, XOffset = (reference.Location.X - i.Location.X), YOffset = (reference.Location.Y - i.Location.YBound) })
                 .ToList();
             var ordered = newList.OrderBy(i => i.YOffset).ThenBy(i => i.XOffset).ToList();
-            var res =  FilterByPattern(ordered.Select(i => i.Element).ToList(), patterns);
+            var res = FilterByPattern(ordered.Select(i => i.Element).ToList(), patterns);
             return res;
         }
 
