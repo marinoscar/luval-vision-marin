@@ -23,7 +23,7 @@ namespace luval.vision.core
 
         public static MappingResult Create(ImageInfo info, AttributeMapping map, OcrElement anchor, OcrElement result)
         {
-            return Create(info, map, anchor, result, null);
+            return Create(info, map, anchor, result, null, 0d);
         }
 
         public static MappingResult Create(ImageInfo info, AttributeMapping map, OcrElement anchor, OcrElement result, string value, double rankMatch)
