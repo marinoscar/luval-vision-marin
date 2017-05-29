@@ -1,22 +1,29 @@
 ﻿[
   {
-    "attributeName": "Amount",
-    "anchorPatterns": [ "Check Amount", "Well Net Revenue" ],
-    "valuePatterns": [ "@amount" ]
+    "attributeName": "DueDate",
+    "anchorPatterns": [ "Due Date", "Expiration Date" ],
+    "valuePatterns": [ "@date"]
   },
   {
     "attributeName": "Date",
-    "anchorPatterns": [ "Statement Date", "Deposit Date" ],
+    "anchorPatterns": [ "Date", "Invoice Date", "Effective Date" ],
     "valuePatterns": [ "@date" ]
   },
   {
-    "attributeName": "AccountNumber",
-    "anchorPatterns": [ "Check Account Number", "Check Number" ],
-    "valuePatterns": [ "@code", "@number" ]
+    "attributeName": "PONumber",
+    "anchorPatterns": [ "PO requisition", "PO #", "PO Number", "PO No" ],
+    "valuePatterns": [ "@code", "@number" ],
+    "anchorBlackList": [ "PO Box"]
   },
   {
-    "attributeName": "CheckNumber",
-    "anchorPatterns": [ "Statement Number", "Account" ],
+    "attributeName": "Total",
+    "anchorPatterns": [ "Amount Due", "Total", "Grand Total", "Total Amount" ],
+    "valuePatterns": [ "@amount" ],
+    "isAttributeLast": true
+  },
+  {
+    "attributeName": "InvoiceNumber",
+    "anchorPatterns": [ "Invoice", "Invoice #", "Invoice Number", "Invoice No." ],
     "valuePatterns": [ "@code", "@number" ]
   }
 ]
