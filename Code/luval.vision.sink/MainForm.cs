@@ -16,6 +16,8 @@ namespace luval.vision.sink
     public partial class MainForm : Form
     {
 
+        private bool _isEditingMapping;
+        private bool _isSelectingValue;
         private string _fileName;
         private ImageManager _imageManager;
         private OcrResult _result;
@@ -130,6 +132,7 @@ namespace luval.vision.sink
             grpResults.Enabled = true;
             btnClear.Enabled = true;
             ListViewHelper.Prepare(listResult);
+            lblInstructions.Text = "Double Click on the Result Item to edit the mapping";
         }
 
         private void LoadText(OcrResult ocrResult)
@@ -343,11 +346,9 @@ namespace luval.vision.sink
         private void listResult_DoubleClick(object sender, EventArgs e)
         {
             if (listResult.SelectedItems.Count <= 0) return;
-            var item = listResult.SelectedItems[0];
-            var mapping = default(MappingResult);
-            if (item.Tag != null) mapping = (MappingResult)item.Tag;
-            var frm = new ShowMap() { OcrResult = _processResult.OcrResult, MappingResult = mapping };
-            frm.ShowDialog();
+            lblInstructions.Text = "Double click on the item to picture to select the value";
+            _isEditingMapping = true;
+            _isSelectingValue = true;
         }
 
         private void mnuLoadProfile_Click(object sender, EventArgs e)
@@ -389,18 +390,38 @@ namespace luval.vision.sink
 
         }
 
-        private void FindElement(Point location)
+        private void FindElement(Point p)
         {
             if (_result == null) return;
-            var item = _result.Lines.Where(i => !string.IsNullOrWhiteSpace(i.Text)).FirstOrDefault(i => i.Text == "Amount Due");
-            var p = location;
             var res = _result.Lines.Where(i => (p.X >= i.Location.X && p.X <= i.Location.XBound) && (p.Y >= i.Location.Y && p.Y <= i.Location.YBound)).ToList();
             if (!res.Any())
             {
-                MessageBox.Show("Nothing");
+                MessageBox.Show("Nothing Found");
                 return;
             }
-            MessageBox.Show(string.Format("Count: {0}\n\n{1}", res.Count, string.Join("\n", res.Select(i => i.Text))));
+            LoadFoundElement(res.First());
+        }
+
+        private void LoadFoundElement(OcrLine element)
+        {
+            if (_isSelectingValue)
+            {
+                var extractor = new EntityExtractor(_result, _profiles);
+                var mapping = GetMapping();
+                txtLineText.Text = element.Text;
+                txtLineText.Tag = element;
+                txtLineValue.Text = extractor.GetElementValue(mapping, element);
+                _isSelectingValue = false;
+                lblInstructions.Text = "Now double click on the anchor element";
+            }
+            else
+            {
+                txtAnchorText.Tag = element;
+                txtAnchorText.Text = element.Text;
+                lblInstructions.Text = "Now click on Apply Mapping to apply the changes";
+                btnApplyMap.Enabled = true;
+                _isEditingMapping = false;
+            }
         }
 
         private void pictureBox_MouseHover(object sender, EventArgs e)
@@ -411,6 +432,39 @@ namespace luval.vision.sink
         private void pictureBox_MouseMove(object sender, MouseEventArgs e)
         {
             lblMouseCoordinates.Text = string.Format("X: {0} Y: {1}", e.Location.X, e.Location.Y);
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            _isEditingMapping = false;
+            _isSelectingValue = false;
+            lblInstructions.Text = "";
+        }
+
+        private void btnApplyMap_Click(object sender, EventArgs e)
+        {
+            _isEditingMapping = false;
+            _isSelectingValue = false;
+            var res = MappingResult.Create(_result.Info, GetMapping(), (OcrElement)txtAnchorText.Tag, (OcrElement)txtLineText.Tag);
+            listResult.SelectedItems[0].SubItems[1].Text = txtLineValue.Text;
+            listResult.SelectedItems[0].Tag = res;
+            txtLineValue.Text = null;
+            txtLineValue.Tag = null;
+            txtAnchorText.Text = null;
+            txtAnchorText.Tag = null;
+            txtLineText.Text = null;
+            txtLineText.Tag = null;
+            _isEditingMapping = false;
+            _isSelectingValue = false;
+            btnApplyMap.Enabled = false;
+            lblInstructions.Text = "Double click on list element to edit";
+            DoClear();
+            LoadImg(ImageManager.ProcessElements(PictureBox.Image, new OcrLocation[] { res.Location }, new Pen(Color.Blue, 4)));
+        }
+
+        private AttributeMapping GetMapping()
+        {
+            return _profiles.FirstOrDefault(i => i.AttributeName == listResult.SelectedItems[0].Text);
         }
     }
 }

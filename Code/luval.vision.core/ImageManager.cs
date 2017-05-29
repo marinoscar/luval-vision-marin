@@ -57,12 +57,17 @@ namespace luval.vision.core
 
         public static Image ProcessElements(Image source, IEnumerable<OcrElement> elements, Pen pen)
         {
+            return ProcessElements(source, elements.Select(i => i.Location), pen);
+        }
+
+        public static Image ProcessElements(Image source, IEnumerable<OcrLocation> locations, Pen pen)
+        {
             var bmp = new Bitmap(source);
             using (var graphic = Graphics.FromImage(bmp))
             {
-                foreach (var el in elements)
+                foreach (var loc in locations)
                 {
-                    graphic.DrawRectangle(pen, new Rectangle(el.Location.X, el.Location.Y, el.Location.Width, el.Location.Height));
+                    graphic.DrawRectangle(pen, new Rectangle(loc.X, loc.Y, loc.Width, loc.Height));
                 }
             }
             return bmp;

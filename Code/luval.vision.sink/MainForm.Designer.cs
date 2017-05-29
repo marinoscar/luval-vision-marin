@@ -73,6 +73,15 @@
             this.colValue = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.panelResultHeader = new System.Windows.Forms.Panel();
             this.lblMouseCoordinates = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lblInstructions = new System.Windows.Forms.Label();
+            this.txtLineText = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.txtLineValue = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtAnchorText = new System.Windows.Forms.TextBox();
+            this.btnApplyMap = new System.Windows.Forms.Button();
+            this.btnCancel = new System.Windows.Forms.Button();
             this.mainMenu.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
@@ -86,6 +95,7 @@
             this.grpResults.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.panelResult.SuspendLayout();
+            this.panelResultHeader.SuspendLayout();
             this.SuspendLayout();
             // 
             // mainMenu
@@ -183,7 +193,7 @@
             this.panel1.Controls.Add(this.btnDemo);
             this.panel1.Controls.Add(this.processBtn);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 550);
+            this.panel1.Location = new System.Drawing.Point(0, 655);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1008, 88);
             this.panel1.TabIndex = 1;
@@ -192,7 +202,7 @@
             // 
             this.pictureBox.Location = new System.Drawing.Point(-1, 0);
             this.pictureBox.Name = "pictureBox";
-            this.pictureBox.Size = new System.Drawing.Size(700, 490);
+            this.pictureBox.Size = new System.Drawing.Size(700, 595);
             this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pictureBox.TabIndex = 2;
             this.pictureBox.TabStop = false;
@@ -204,7 +214,7 @@
             // 
             this.splitter1.Location = new System.Drawing.Point(0, 24);
             this.splitter1.Name = "splitter1";
-            this.splitter1.Size = new System.Drawing.Size(3, 526);
+            this.splitter1.Size = new System.Drawing.Size(3, 631);
             this.splitter1.TabIndex = 3;
             this.splitter1.TabStop = false;
             // 
@@ -216,7 +226,7 @@
             this.mainTab.Location = new System.Drawing.Point(3, 24);
             this.mainTab.Name = "mainTab";
             this.mainTab.SelectedIndex = 0;
-            this.mainTab.Size = new System.Drawing.Size(1005, 526);
+            this.mainTab.Size = new System.Drawing.Size(1005, 631);
             this.mainTab.TabIndex = 6;
             // 
             // tabPicture
@@ -227,7 +237,7 @@
             this.tabPicture.Location = new System.Drawing.Point(4, 22);
             this.tabPicture.Name = "tabPicture";
             this.tabPicture.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPicture.Size = new System.Drawing.Size(997, 500);
+            this.tabPicture.Size = new System.Drawing.Size(997, 605);
             this.tabPicture.TabIndex = 0;
             this.tabPicture.Text = "Document";
             this.tabPicture.UseVisualStyleBackColor = true;
@@ -239,7 +249,7 @@
             this.panelPicture.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelPicture.Location = new System.Drawing.Point(3, 3);
             this.panelPicture.Name = "panelPicture";
-            this.panelPicture.Size = new System.Drawing.Size(701, 494);
+            this.panelPicture.Size = new System.Drawing.Size(701, 599);
             this.panelPicture.TabIndex = 0;
             // 
             // tabResult
@@ -248,9 +258,9 @@
             this.tabResult.Location = new System.Drawing.Point(4, 22);
             this.tabResult.Name = "tabResult";
             this.tabResult.Padding = new System.Windows.Forms.Padding(3);
-            this.tabResult.Size = new System.Drawing.Size(997, 500);
+            this.tabResult.Size = new System.Drawing.Size(997, 605);
             this.tabResult.TabIndex = 1;
-            this.tabResult.Text = "Results";
+            this.tabResult.Text = "Metadata";
             this.tabResult.UseVisualStyleBackColor = true;
             // 
             // tabVision
@@ -261,7 +271,7 @@
             this.tabVision.Location = new System.Drawing.Point(3, 3);
             this.tabVision.Name = "tabVision";
             this.tabVision.SelectedIndex = 0;
-            this.tabVision.Size = new System.Drawing.Size(991, 494);
+            this.tabVision.Size = new System.Drawing.Size(991, 599);
             this.tabVision.TabIndex = 5;
             // 
             // tabText
@@ -270,7 +280,7 @@
             this.tabText.Location = new System.Drawing.Point(4, 22);
             this.tabText.Name = "tabText";
             this.tabText.Padding = new System.Windows.Forms.Padding(3);
-            this.tabText.Size = new System.Drawing.Size(983, 468);
+            this.tabText.Size = new System.Drawing.Size(983, 573);
             this.tabText.TabIndex = 0;
             this.tabText.Text = "Text";
             this.tabText.UseVisualStyleBackColor = true;
@@ -282,7 +292,7 @@
             this.resultText.Location = new System.Drawing.Point(3, 3);
             this.resultText.Multiline = true;
             this.resultText.Name = "resultText";
-            this.resultText.Size = new System.Drawing.Size(977, 462);
+            this.resultText.Size = new System.Drawing.Size(977, 567);
             this.resultText.TabIndex = 5;
             // 
             // tabVisionJson
@@ -473,7 +483,7 @@
             this.panelResult.Dock = System.Windows.Forms.DockStyle.Right;
             this.panelResult.Location = new System.Drawing.Point(707, 3);
             this.panelResult.Name = "panelResult";
-            this.panelResult.Size = new System.Drawing.Size(287, 494);
+            this.panelResult.Size = new System.Drawing.Size(287, 599);
             this.panelResult.TabIndex = 1;
             // 
             // splitterPicture
@@ -481,7 +491,7 @@
             this.splitterPicture.Dock = System.Windows.Forms.DockStyle.Right;
             this.splitterPicture.Location = new System.Drawing.Point(704, 3);
             this.splitterPicture.Name = "splitterPicture";
-            this.splitterPicture.Size = new System.Drawing.Size(3, 494);
+            this.splitterPicture.Size = new System.Drawing.Size(3, 599);
             this.splitterPicture.TabIndex = 2;
             this.splitterPicture.TabStop = false;
             // 
@@ -492,10 +502,10 @@
             this.colValue});
             this.listResult.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listResult.FullRowSelect = true;
-            this.listResult.Location = new System.Drawing.Point(0, 52);
+            this.listResult.Location = new System.Drawing.Point(0, 237);
             this.listResult.MultiSelect = false;
             this.listResult.Name = "listResult";
-            this.listResult.Size = new System.Drawing.Size(287, 442);
+            this.listResult.Size = new System.Drawing.Size(287, 362);
             this.listResult.TabIndex = 8;
             this.listResult.UseCompatibleStateImageBehavior = false;
             this.listResult.View = System.Windows.Forms.View.Details;
@@ -513,10 +523,19 @@
             // 
             // panelResultHeader
             // 
+            this.panelResultHeader.Controls.Add(this.btnCancel);
+            this.panelResultHeader.Controls.Add(this.btnApplyMap);
+            this.panelResultHeader.Controls.Add(this.label3);
+            this.panelResultHeader.Controls.Add(this.txtAnchorText);
+            this.panelResultHeader.Controls.Add(this.label2);
+            this.panelResultHeader.Controls.Add(this.txtLineValue);
+            this.panelResultHeader.Controls.Add(this.label1);
+            this.panelResultHeader.Controls.Add(this.txtLineText);
+            this.panelResultHeader.Controls.Add(this.lblInstructions);
             this.panelResultHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelResultHeader.Location = new System.Drawing.Point(0, 0);
             this.panelResultHeader.Name = "panelResultHeader";
-            this.panelResultHeader.Size = new System.Drawing.Size(287, 52);
+            this.panelResultHeader.Size = new System.Drawing.Size(287, 237);
             this.panelResultHeader.TabIndex = 9;
             // 
             // lblMouseCoordinates
@@ -525,11 +544,96 @@
             this.lblMouseCoordinates.Size = new System.Drawing.Size(118, 17);
             this.lblMouseCoordinates.Text = "toolStripStatusLabel1";
             // 
+            // lblInstructions
+            // 
+            this.lblInstructions.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblInstructions.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblInstructions.ForeColor = System.Drawing.Color.Blue;
+            this.lblInstructions.Location = new System.Drawing.Point(6, 0);
+            this.lblInstructions.Name = "lblInstructions";
+            this.lblInstructions.Size = new System.Drawing.Size(276, 75);
+            this.lblInstructions.TabIndex = 0;
+            this.lblInstructions.Text = "Waiting for results";
+            this.lblInstructions.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // txtLineText
+            // 
+            this.txtLineText.Location = new System.Drawing.Point(9, 91);
+            this.txtLineText.Name = "txtLineText";
+            this.txtLineText.ReadOnly = true;
+            this.txtLineText.Size = new System.Drawing.Size(273, 20);
+            this.txtLineText.TabIndex = 1;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 75);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(51, 13);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "Item Text";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 118);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(57, 13);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "Item Value";
+            // 
+            // txtLineValue
+            // 
+            this.txtLineValue.Location = new System.Drawing.Point(9, 134);
+            this.txtLineValue.Name = "txtLineValue";
+            this.txtLineValue.ReadOnly = true;
+            this.txtLineValue.Size = new System.Drawing.Size(273, 20);
+            this.txtLineValue.TabIndex = 3;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(6, 166);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(65, 13);
+            this.label3.TabIndex = 6;
+            this.label3.Text = "Anchor Text";
+            // 
+            // txtAnchorText
+            // 
+            this.txtAnchorText.Location = new System.Drawing.Point(9, 182);
+            this.txtAnchorText.Name = "txtAnchorText";
+            this.txtAnchorText.ReadOnly = true;
+            this.txtAnchorText.Size = new System.Drawing.Size(273, 20);
+            this.txtAnchorText.TabIndex = 5;
+            // 
+            // btnApplyMap
+            // 
+            this.btnApplyMap.Enabled = false;
+            this.btnApplyMap.Location = new System.Drawing.Point(187, 208);
+            this.btnApplyMap.Name = "btnApplyMap";
+            this.btnApplyMap.Size = new System.Drawing.Size(95, 23);
+            this.btnApplyMap.TabIndex = 7;
+            this.btnApplyMap.Text = "Apply Mapping";
+            this.btnApplyMap.UseVisualStyleBackColor = true;
+            this.btnApplyMap.Click += new System.EventHandler(this.btnApplyMap_Click);
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.Location = new System.Drawing.Point(120, 208);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(61, 23);
+            this.btnCancel.TabIndex = 8;
+            this.btnCancel.Text = "Cancel";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1008, 638);
+            this.ClientSize = new System.Drawing.Size(1008, 743);
             this.Controls.Add(this.mainTab);
             this.Controls.Add(this.splitter1);
             this.Controls.Add(this.panel1);
@@ -556,6 +660,8 @@
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
             this.panelResult.ResumeLayout(false);
+            this.panelResultHeader.ResumeLayout(false);
+            this.panelResultHeader.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -607,6 +713,15 @@
         private System.Windows.Forms.ColumnHeader colValue;
         private System.Windows.Forms.Panel panelResultHeader;
         private System.Windows.Forms.ToolStripStatusLabel lblMouseCoordinates;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox txtLineValue;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox txtLineText;
+        private System.Windows.Forms.Label lblInstructions;
+        private System.Windows.Forms.Button btnApplyMap;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox txtAnchorText;
+        private System.Windows.Forms.Button btnCancel;
     }
 }
 

@@ -27,6 +27,7 @@ namespace luval.vision.core
         public bool HasCode { get; set; }
         public bool HasDate { get; set; }
         public bool HasAmount { get; set; }
+        public bool HasNumber { get; set; }
 
         public override string Text
         {

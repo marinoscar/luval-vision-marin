@@ -69,6 +69,17 @@ namespace luval.vision.core
             return result;
         }
 
+        public string GetElementValue(AttributeMapping map, OcrElement element)
+        {
+            foreach(var p in map.ValuePatterns)
+            {
+                var res = GetResolver(p, element.Text);
+                var val = res.GetValue(element.Text);
+                if (!string.IsNullOrWhiteSpace(val)) return val;
+            }
+            return default(string);
+        }
+
         private IEnumerable<OcrLine> Find(string pattern)
         {
             return Elements.Where(i => !string.IsNullOrWhiteSpace(i.Text) && Resolve(pattern, i.Text)).OrderBy(i => i.Location.Y).ToList();

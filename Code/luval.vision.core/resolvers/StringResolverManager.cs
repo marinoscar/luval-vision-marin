@@ -53,7 +53,7 @@ namespace luval.vision.core.resolvers
             return Get<AmountResolver>().IsMatch(text);
         }
 
-        private bool ContainsNumber(string text)
+        public bool ContainsNumber(string text)
         {
             return Get<NumberResolver>().IsMatch(text);
         }

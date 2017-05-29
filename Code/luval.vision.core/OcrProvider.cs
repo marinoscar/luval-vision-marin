@@ -82,6 +82,7 @@ namespace luval.vision.core
                 ln.HasAmount = res.ContainsAmount(ln.Text);
                 ln.HasCode = res.ContainsCode(ln.Text);
                 ln.HasDate = res.ContainsDate(ln.Text);
+                ln.HasNumber = res.ContainsNumber(ln.Text);
             }
         }
 
