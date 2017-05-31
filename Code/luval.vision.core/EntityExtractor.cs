@@ -62,8 +62,9 @@ namespace luval.vision.core
 
                 if (mapResult.Any())
                 {
-                    //we add the closest item
-                    result.Add(mapResult.OrderBy(i => i.OffsetX).ThenBy(i => i.OffsetY).First());
+                    //we add the closest item, first by looking at the left
+                    var orderItems = mapResult.OrderBy(i => i.OffsetX).ThenBy(i => i.OffsetY);
+                    result.Add(orderItems.FirstOrDefault(i => i.IsAnchorOnLeft) ?? orderItems.First());
                 }
             }
             return result;
@@ -71,7 +72,7 @@ namespace luval.vision.core
 
         public string GetElementValue(AttributeMapping map, OcrElement element)
         {
-            foreach(var p in map.ValuePatterns)
+            foreach (var p in map.ValuePatterns)
             {
                 var res = GetResolver(p);
                 var val = res.GetValue(element.Text);
@@ -107,7 +108,7 @@ namespace luval.vision.core
                i.Location.YBound < maxY)
                .ToList();
             //check the value as a potential option
-            if(IsValidAnchor(valueElement.Text))
+            if (IsValidAnchor(valueElement.Text))
                 dataSet.Insert(0, valueElement);
             return MarryToAnchor(map, valueElement, dataSet);
         }
