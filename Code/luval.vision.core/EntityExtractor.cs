@@ -54,7 +54,7 @@ namespace luval.vision.core
                         }
                         if (item != null)
                         {
-                            item.Value = GetResolver(pattern, el.Text).GetValue(el.Text);
+                            item.Value = GetResolver(pattern).GetValue(el.Text);
                             mapResult.Add(item);
                         }
                     }
@@ -73,7 +73,7 @@ namespace luval.vision.core
         {
             foreach(var p in map.ValuePatterns)
             {
-                var res = GetResolver(p, element.Text);
+                var res = GetResolver(p);
                 var val = res.GetValue(element.Text);
                 if (!string.IsNullOrWhiteSpace(val)) return val;
             }
@@ -90,7 +90,7 @@ namespace luval.vision.core
             var minY = reference.Location.Y - (reference.Location.Height * 5);
             var minX = reference.Location.X - (reference.Location.Width * 4);
             var maxX = reference.Location.XBound + (reference.Location.Width * 4);
-            var subset = Elements.Where(i => i != reference && !string.IsNullOrWhiteSpace(i.Text) && i.Location.Y < reference.Location.Y && i.Location.YBound >= minY && i.Location.X > minX && i.Location.XBound < maxX)
+            var subset = Elements.Where(i => i != reference && !string.IsNullOrWhiteSpace(i.Text) && IsValidAnchor(i.Text) && i.Location.Y < reference.Location.Y && i.Location.YBound >= minY && i.Location.X > minX && i.Location.XBound < maxX)
                 .OrderByDescending(i => i.Location.Y).ThenByDescending(i => i.Location.X).ToList();
             return MarryToAnchor(map, reference, subset);
         }
@@ -101,13 +101,22 @@ namespace luval.vision.core
             var minY = valueElement.Location.Y - (valueElement.Location.Y * ErrorMargin);
             var maxY = valueElement.Location.YBound * (1 + ErrorMargin);
             var middleLine = (valueElement.Location.Y + (valueElement.Location.Height / 3));
-            var dataSet = Elements.Where(i => !string.IsNullOrWhiteSpace(i.Text) && i.Location.X < minX &&
+            var dataSet = Elements.Where(i => !string.IsNullOrWhiteSpace(i.Text) && IsValidAnchor(i.Text) &&
+               i.Location.X < minX &&
                i.Location.Y > minY &&
                i.Location.YBound < maxY)
                .ToList();
             //check the value as a potential option
-            dataSet.Insert(0, valueElement);
+            if(IsValidAnchor(valueElement.Text))
+                dataSet.Insert(0, valueElement);
             return MarryToAnchor(map, valueElement, dataSet);
+        }
+
+        private bool IsValidAnchor(string text)
+        {
+            var biggerThan4Chars = text.Length >= 4;
+            var isDifferentThanNumbers = !text.ToCharArray().All(char.IsNumber);
+            return biggerThan4Chars && isDifferentThanNumbers;
         }
 
         private IEnumerable<MappingResult> MarryToAnchor(AttributeMapping map, OcrElement valueElement, IEnumerable<OcrLine> elements)
@@ -132,7 +141,8 @@ namespace luval.vision.core
 
         private bool Resolve(string pattern, string text)
         {
-            return GetResolver(pattern, text).IsMatch(text);
+            var res = GetResolver(pattern).IsMatch(text);
+            return res;
         }
 
         private double RankMatch(string pattern, string text, IEnumerable<string> blackList)
@@ -143,13 +153,10 @@ namespace luval.vision.core
             {
                 if (t.Contains(bl)) return 0;
             }
-            var result = GetResolver(p, t).IsMatch(t);
-            if (result) return 1d;
-            var rank =  1d - StringUtils.RankSearch(t, p);
-            return rank;
+            return StringUtils.RankSearch(t, p);
         }
 
-        private IStringResolver GetResolver(string pattern, string text)
+        private IStringResolver GetResolver(string pattern)
         {
             if (pattern.StartsWith("@"))
             {
