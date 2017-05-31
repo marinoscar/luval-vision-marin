@@ -45,9 +45,13 @@ namespace luval.vision.core
         private ProcessResult DoProcess(byte[] data, string fileName, IEnumerable<AttributeMapping> mappings, OcrResult ocr, NlpResult nlp, DateTime startedOn)
         {
             var extractor = new EntityExtractor(ocr, mappings);
-            //var navigator = new Navigator(ocr.Info, ocr.Lines, mappings);
-            //var attributes = navigator.ExtractAttributes();
             var attributes = extractor.DoExtract().ToList();
+            var orgAtt = mappings.FirstOrDefault(i => i.AttributeName == "Organization");
+            if(orgAtt != null)
+            {
+                var org = extractor.ExtractOrganization(nlp, orgAtt);
+                if (org != null) attributes.Insert(0, org);
+            }
             DoExtraValidations(attributes, ocr);
             return new ProcessResult()
             {

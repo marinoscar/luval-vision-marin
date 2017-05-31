@@ -30,7 +30,7 @@ namespace luval.vision.core
         public IEnumerable<MappingResult> DoExtract()
         {
             var result = new List<MappingResult>();
-            foreach (var map in Mappings)
+            foreach (var map in Mappings.Where(i => i.AttributeName != "Organization"))
             {
                 var mapResult = new List<MappingResult>();
                 foreach (var pattern in map.ValuePatterns)
@@ -70,6 +70,28 @@ namespace luval.vision.core
             return result;
         }
 
+        public MappingResult ExtractOrganization(NlpResult nlp, AttributeMapping map)
+        {
+            var values = map.AnchorPatterns.Select(i => StringUtils.CleanText(i)).ToList();
+            var orgs = nlp.Entities.Where(i => i.Type == EntityType.Organization).Select(i => i.Name).ToList();
+            var orgName = default(string);
+            foreach(var org in orgs)
+            {
+                foreach(var val in values)
+                {
+                    if(org.Contains(val))
+                    {
+                        orgName = org;
+                        break;
+                    }
+                }
+            }
+            if (string.IsNullOrWhiteSpace(orgName)) return null;
+            var el = Elements.FirstOrDefault(i => i.Text == orgName);
+            if (el == null) return null;
+            return MappingResult.Create(Info, map, el, el, orgName, 0);
+        }
+
         public string GetElementValue(AttributeMapping map, OcrElement element)
         {
             foreach (var p in map.ValuePatterns)
@@ -78,7 +100,7 @@ namespace luval.vision.core
                 var val = res.GetValue(element.Text);
                 if (!string.IsNullOrWhiteSpace(val)) return val;
             }
-            return default(string);
+            return element.Text;
         }
 
         private IEnumerable<OcrLine> Find(string pattern)

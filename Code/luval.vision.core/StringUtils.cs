@@ -64,6 +64,7 @@ namespace luval.vision.core
             var i = CleanText(input).Replace(" ", "");
             var p = CleanText(pattern).Replace(" ", "");
             var tot = i.Length + p.Length;
+            if (input.Contains(pattern)) return 1d;
             var res = CalculateLevenshteinDistance(i, p);
             if (res == 0) return 1d;
             return (double)res / (double)tot;
