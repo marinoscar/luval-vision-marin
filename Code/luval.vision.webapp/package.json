@@ -86,6 +86,9 @@
       "expect": true
     },
     "root": true,
+    "rules": {
+      "linebreak-style": "warn"
+    },
     "env": {
       "browser": true,
       "jasmine": true
