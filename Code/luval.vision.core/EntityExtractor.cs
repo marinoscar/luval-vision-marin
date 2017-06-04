@@ -16,7 +16,7 @@ namespace luval.vision.core
         public EntityExtractor(OcrResult ocrResult, IEnumerable<AttributeMapping> mappings)
         {
             Info = ocrResult.Info;
-            Elements = ocrResult.Lines;
+            Elements = ocrResult.Lines.Where(i => !string.IsNullOrWhiteSpace(i.Text)).ToList();
             Mappings = new List<AttributeMapping>(mappings);
             OcrResult = ocrResult;
             _resManager = new StringResolverManager();
@@ -94,6 +94,7 @@ namespace luval.vision.core
 
         public string GetElementValue(AttributeMapping map, OcrElement element)
         {
+            if (element == null || string.IsNullOrWhiteSpace(element.Text)) return string.Empty;
             foreach (var p in map.ValuePatterns)
             {
                 var res = GetResolver(p);
