@@ -62,6 +62,8 @@ namespace luval.vision.core
             imgInfo.WorkingHeight = result.Lines.Max(i => i.Location.XBound) - result.Lines.Min(i => i.Location.X);
             ClassifyWords(result.Words);
             ClassifyLines(result.Lines);
+            result.Words = result.Words.Where(i => !string.IsNullOrWhiteSpace(i.Text)).ToList();
+            result.Lines = result.Lines.Where(i => !string.IsNullOrWhiteSpace(i.Text)).ToList();
             return result;
         }
 
