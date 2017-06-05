@@ -53,12 +53,15 @@ namespace luval.vision.core
                 if (org != null) attributes.Insert(0, org);
             }
             DoExtraValidations(attributes, ocr);
+            ocr.Info.ImageHash = StringUtils.GetHash(data);
             return new ProcessResult()
             {
                 NlpResult = nlp,
                 OcrResult = ocr,
                 TextResults = attributes,
-                DurationInMs = DateTime.UtcNow.Subtract(startedOn).TotalMilliseconds
+                DurationInMs = DateTime.UtcNow.Subtract(startedOn).TotalMilliseconds,
+                Mappings = mappings.ToList(),
+                ImageInfo = ocr.Info
             };
         }
 
