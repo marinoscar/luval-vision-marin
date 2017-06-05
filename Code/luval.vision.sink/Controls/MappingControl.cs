@@ -90,7 +90,7 @@ namespace luval.vision.sink.Controls
 
         private void CheckForMappingResultContent()
         {
-            if (!(SelectedMapping != null && SelectedMapping.AnchorElement != null && SelectedMapping.ResultElement != null)) return;
+            if (!(SelectedMapping != null && SelectedMapping.ResultElement != null)) return;
             SelectedMapping = MappingResult.Create(Result.ImageInfo, SelectedMapping.Map, SelectedMapping.AnchorElement, SelectedMapping.ResultElement, SelectedMapping.Value, 0d);
             LoadMapping(SelectedMapping.Map.AttributeName);
         }

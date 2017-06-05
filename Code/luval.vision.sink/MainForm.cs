@@ -131,6 +131,8 @@ namespace luval.vision.sink
             grpResults.Enabled = true;
             btnClear.Enabled = true;
             ListViewHelper.Prepare(listResult);
+            mappingControl.Enabled = true;
+            mappingControl.Initialize(result);
         }
 
         private void LoadText(OcrResult ocrResult)
@@ -440,12 +442,12 @@ namespace luval.vision.sink
 
         private void mappingControl_ValueMappingSelected(object sender, EventArgs e)
         {
-            onPictureDoubleClick = 1;
+            _onPictureDoubleClick = 1;
         }
 
         private void mappingControl_AnchorMappingSelected(object sender, EventArgs e)
         {
-            onPictureDoubleClick = 2;
+            _onPictureDoubleClick = 2;
         }
     }
 }
