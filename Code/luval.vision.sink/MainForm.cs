@@ -66,6 +66,7 @@ namespace luval.vision.sink
             PictureBox.Image = img;
             PictureBox.Refresh();
             _originalImg = img;
+            _fileName = fileName;
         }
 
 
@@ -427,10 +428,10 @@ namespace luval.vision.sink
             return null;
         }
 
-        private void mnuLoadForMapping_Click(object sender, EventArgs e)
+        private void LoadFromWorkingDir()
         {
             var file = GetImageFileFromWorkingDir();
-            if(file == null)
+            if (file == null)
             {
                 MessageBox.Show(string.Format("Images not found on the working directory {0}", WorkingDir.Image.FullName), "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -438,6 +439,16 @@ namespace luval.vision.sink
             lblStatus.Text = string.Format("Loading image from the working directory {0}", WorkingDir.Image.FullName);
             DoLoadImage(file.FullName);
             DoProcess();
+            lblStatus.Text = "Image ready for mapping";
+            DoClear();
+            rdVision.Checked = true;
+            ShowVisionResult();
+        }
+
+        private void mnuLoadForMapping_Click(object sender, EventArgs e)
+        {
+            LoadFromWorkingDir();
+
         }
 
         private void mappingControl_ValueMappingSelected(object sender, EventArgs e)
@@ -448,6 +459,16 @@ namespace luval.vision.sink
         private void mappingControl_AnchorMappingSelected(object sender, EventArgs e)
         {
             _onPictureDoubleClick = 2;
+        }
+
+        private void mappingControl_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void mappingControl_SaveAndNew(object sender, EventArgs e)
+        {
+            LoadFromWorkingDir();
         }
     }
 }

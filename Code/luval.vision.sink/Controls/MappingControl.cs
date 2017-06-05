@@ -23,6 +23,7 @@ namespace luval.vision.sink.Controls
 
         public event EventHandler ValueMappingSelected;
         public event EventHandler AnchorMappingSelected;
+        public event EventHandler SaveAndNew;
 
         public MappingControl()
         {
@@ -55,8 +56,14 @@ namespace luval.vision.sink.Controls
             OnEventRaised(AnchorMappingSelected, e);
         }
 
+        protected virtual void OnSaveAndNew(EventArgs e)
+        {
+            OnEventRaised(SaveAndNew, e);
+        }
+
         public void Initialize(ProcessResult result)
         {
+            Clear();
             Result = result;
             DoLoad();
         }
@@ -72,6 +79,22 @@ namespace luval.vision.sink.Controls
                     Result.TextResults.Add(MappingResult.Create(att));
                 }
             }
+        }
+
+        public void Clear()
+        {
+            Result = null;
+            SelectedAttribute = null;
+            SelectedMapping = null;
+            cboAttribute.Items.Clear();
+            txtAnchorText.Text = null;
+            txtComments.Text = null;
+            txtLines.Text = null;
+            txtPercentage.Text = null;
+            txtValue.Text = null;
+            txtValueElement.Text = null;
+            lblInstructions.Text = "Instructions";
+            cboQuality.SelectedIndex = -1;
         }
 
         public void AcceptValueMapping(OcrLine value)
@@ -97,48 +120,54 @@ namespace luval.vision.sink.Controls
 
         private void txtLines_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Back || e.KeyCode == Keys.Delete) return;
+            if (e.KeyCode == Keys.Back || e.KeyCode == Keys.Delete || 
+                e.KeyData == Keys.NumPad0 || e.KeyData == Keys.NumPad1 || e.KeyData == Keys.NumPad2 ||
+                e.KeyData == Keys.NumPad3 || e.KeyData == Keys.NumPad4 || e.KeyData == Keys.NumPad5 ||
+                e.KeyData == Keys.NumPad6 || e.KeyData == Keys.NumPad7 || e.KeyData == Keys.NumPad8 ||
+                e.KeyData == Keys.NumPad9) return;
             var val = "0123456879";
             var s = _converter.ConvertToString(e.KeyData);
             e.SuppressKeyPress = !val.Contains(s);
-
         }
 
         private void cboAttribute_SelectedValueChanged(object sender, EventArgs e)
         {
-            LoadMapping(cboAttribute.SelectedText);
+            LoadMapping(Convert.ToString(cboAttribute.SelectedItem));
         }
 
         private void DoSave()
         {
             if (!DoValidations()) return;
+            Result.UnIdentifiedLines = Convert.ToInt32(txtLines.Text);
+            Result.QualityType = cboQuality.SelectedIndex + 1;
+            Result.Comment = txtComments.Text;
             var fileContent = JsonConvert.SerializeObject(Result);
             var fileName = string.Format("Result-{0}.celeris", Result.Id);
             File.WriteAllText(string.Format(@"{0}\{1}", WorkingDir.Result, fileName), fileContent);
             WorkingDir.MoveToProcessed(Result.ImageInfo.Name);
-            MessageBox.Show(string.Format("Mapping has been saved to file {0} in the results folder", fileName), "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            var message = string.Format("Mapping has been saved to file {0} in the results folder.\nDo you want to load another file", fileName);
+            if(MessageBox.Show(message, "Saved", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+            {
+                OnSaveAndNew(new EventArgs());
+            }
         }
 
         private bool DoValidations()
         {
-            foreach (var map in Result.Mappings)
+            foreach (var result in Result.TextResults)
             {
-                if (map.NotFound) return false;
-                var res = Result.TextResults.FirstOrDefault(i => i.Map.AttributeName == map.AttributeName);
-                if (res == null)
+                if (!result.NotFound)
                 {
-                    ShowValidation(string.Format("Please enter information for attribute {0}", map.AttributeName));
-                    return false;
-                }
-                if (res.AnchorElement == null)
-                {
-                    ShowValidation(string.Format("Please select anchor for attribute {0}", map.AttributeName));
-                    return false;
-                }
-                if (res.ResultElement == null)
-                {
-                    ShowValidation(string.Format("Please select anchor for attribute {0}", map.AttributeName));
-                    return false;
+                    if (result.AnchorElement == null)
+                    {
+                        ShowValidation(string.Format("Please select anchor for attribute {0}", result.Map.AttributeName));
+                        return false;
+                    }
+                    if (result.ResultElement == null)
+                    {
+                        ShowValidation(string.Format("Please select anchor for attribute {0}", result.Map.AttributeName));
+                        return false;
+                    }
                 }
             }
             if (string.IsNullOrEmpty(txtLines.Text))
@@ -162,6 +191,7 @@ namespace luval.vision.sink.Controls
 
         private void LoadMapping(string attName)
         {
+            lblInstructions.Text = "Instructions";
             SelectedAttribute = Result.Mappings.FirstOrDefault(i => i.AttributeName == attName);
             SelectedMapping = Result.TextResults.FirstOrDefault(i => i.Map.AttributeName == attName);
             if (SelectedMapping == null) return;
@@ -170,10 +200,16 @@ namespace luval.vision.sink.Controls
                 txtValueElement.Text = SelectedMapping.ResultElement.Text;
                 txtValue.Text = SelectedMapping.Value;
             }
-            if (SelectedMapping.AnchorElement != null)
+            else
             {
-                txtAnchorText.Text = SelectedMapping.AnchorElement.Text;
+                txtValueElement.Text = null;
+                txtValue.Text = null;
             }
+            if (SelectedMapping.AnchorElement != null)
+                txtAnchorText.Text = SelectedMapping.AnchorElement.Text;
+            else
+                txtAnchorText.Text = null;
+            chkNotFound.Checked = SelectedMapping.NotFound;
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -183,7 +219,7 @@ namespace luval.vision.sink.Controls
 
         private void txtLines_TextChanged(object sender, EventArgs e)
         {
-            if (Result == null || !Result.OcrResult.Lines.Any()) return;
+            if (Result == null || !Result.OcrResult.Lines.Any() || string.IsNullOrWhiteSpace(txtLines.Text) || SelectedMapping == null) return;
             var val = Convert.ToDouble(txtLines.Text);
             var count = Convert.ToDouble(Result.OcrResult.Lines.Count);
             txtPercentage.Text = string.Format("{0}%", Math.Round((1 - (val / (val + count))) * 100).ToString("N3"));
@@ -192,12 +228,30 @@ namespace luval.vision.sink.Controls
 
         private void btnMapValue_Click(object sender, EventArgs e)
         {
+            if(cboAttribute.SelectedIndex < 0)
+            {
+                ShowValidation("Please select an attribute to map");
+                return;
+            }
+            lblInstructions.Text = "Double Click on Element to Select the Value";
             OnValueMappingSelected(e);
         }
 
         private void btnMapAnchor_Click(object sender, EventArgs e)
         {
+            if (cboAttribute.SelectedIndex < 0)
+            {
+                ShowValidation("Please select an attribute to map");
+                return;
+            }
+            lblInstructions.Text = "Double Click on Element to Select the Anchor";
             OnAnchorMappingSelected(e);
+        }
+
+        private void chkNotFound_Click(object sender, EventArgs e)
+        {
+            if (SelectedMapping == null) return;
+            SelectedMapping.NotFound = chkNotFound.Checked;
         }
     }
 }

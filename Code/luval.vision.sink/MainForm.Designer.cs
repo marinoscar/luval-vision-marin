@@ -447,10 +447,10 @@
             this.colValue});
             this.listResult.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listResult.FullRowSelect = true;
-            this.listResult.Location = new System.Drawing.Point(0, 445);
+            this.listResult.Location = new System.Drawing.Point(0, 519);
             this.listResult.MultiSelect = false;
             this.listResult.Name = "listResult";
-            this.listResult.Size = new System.Drawing.Size(328, 215);
+            this.listResult.Size = new System.Drawing.Size(328, 141);
             this.listResult.TabIndex = 8;
             this.listResult.UseCompatibleStateImageBehavior = false;
             this.listResult.View = System.Windows.Forms.View.Details;
@@ -471,7 +471,7 @@
             this.panelResultHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelResultHeader.Location = new System.Drawing.Point(0, 0);
             this.panelResultHeader.Name = "panelResultHeader";
-            this.panelResultHeader.Size = new System.Drawing.Size(328, 445);
+            this.panelResultHeader.Size = new System.Drawing.Size(328, 519);
             this.panelResultHeader.TabIndex = 9;
             // 
             // mappingControl
@@ -481,10 +481,12 @@
             this.mappingControl.Name = "mappingControl";
             this.mappingControl.SelectedAttribute = null;
             this.mappingControl.SelectedMapping = null;
-            this.mappingControl.Size = new System.Drawing.Size(325, 445);
+            this.mappingControl.Size = new System.Drawing.Size(325, 520);
             this.mappingControl.TabIndex = 0;
             this.mappingControl.ValueMappingSelected += new System.EventHandler(this.mappingControl_ValueMappingSelected);
             this.mappingControl.AnchorMappingSelected += new System.EventHandler(this.mappingControl_AnchorMappingSelected);
+            this.mappingControl.SaveAndNew += new System.EventHandler(this.mappingControl_SaveAndNew);
+            this.mappingControl.Load += new System.EventHandler(this.mappingControl_Load);
             // 
             // tabResult
             // 

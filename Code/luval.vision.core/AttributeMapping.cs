@@ -30,7 +30,5 @@ namespace luval.vision.core
         public bool IsValueLast { get; set; }
         [JsonProperty(PropertyName = "anchorBlackList")]
         public string[] AnchorBlackList { get; set; }
-        [JsonProperty(PropertyName = "notFound")]
-        public bool NotFound { get; set; }
     }
 }

@@ -26,6 +26,8 @@ namespace luval.vision.core
         public double DurationInMs { get; set; }
         public ImageInfo ImageInfo { get; set; }
         public int UnIdentifiedLines { get; set; }
+        public int QualityType { get; set; }
+        public string Comment { get; set; }
 
     }
 }

@@ -22,6 +22,7 @@ namespace luval.vision.core
         public double AnchorRankMath { get; set; }
         public bool IsAnchorOnLeft { get; set; }
         public bool IsResultTagged { get; set; }
+        public bool NotFound { get; set; }
 
         public static MappingResult Create(AttributeMapping map)
         {
@@ -55,11 +56,14 @@ namespace luval.vision.core
                 Value = value,
                 Location = loc,
                 RelativeLocation = loc.RelativeLocation,
-                OffsetX = Math.Abs(result.Location.X - anchor.Location.X),
-                OffsetY = Math.Abs(result.Location.Y - anchor.Location.YBound),
                 AnchorRankMath = rankMatch
 
             };
+            if(anchor != null)
+            {
+                res.OffsetX = Math.Abs(result.Location.X - anchor.Location.X);
+                res.OffsetY = Math.Abs(result.Location.Y - anchor.Location.YBound);
+            }
             return res;
         }
 

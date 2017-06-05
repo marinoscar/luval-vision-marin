@@ -49,6 +49,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.txtValueElement = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.txtComments = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -106,7 +108,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(1, 359);
+            this.label6.Location = new System.Drawing.Point(7, 359);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(81, 13);
             this.label6.TabIndex = 11;
@@ -116,6 +118,7 @@
             // 
             this.cboQuality.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.cboQuality.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboQuality.FormattingEnabled = true;
             this.cboQuality.Items.AddRange(new object[] {
             "Bad Image Quality",
@@ -129,7 +132,7 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(232, 412);
+            this.btnSave.Location = new System.Drawing.Point(226, 483);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 3;
@@ -175,16 +178,19 @@
             this.chkNotFound.TabIndex = 3;
             this.chkNotFound.Text = "Not Found";
             this.chkNotFound.UseVisualStyleBackColor = true;
+            this.chkNotFound.Click += new System.EventHandler(this.chkNotFound_Click);
             // 
             // cboAttribute
             // 
             this.cboAttribute.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.cboAttribute.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboAttribute.FormattingEnabled = true;
             this.cboAttribute.Location = new System.Drawing.Point(9, 38);
             this.cboAttribute.Name = "cboAttribute";
             this.cboAttribute.Size = new System.Drawing.Size(291, 21);
             this.cboAttribute.TabIndex = 0;
+            this.cboAttribute.SelectionChangeCommitted += new System.EventHandler(this.cboAttribute_SelectedValueChanged);
             // 
             // label7
             // 
@@ -261,6 +267,7 @@
             // 
             this.txtValueElement.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtValueElement.BackColor = System.Drawing.SystemColors.Control;
             this.txtValueElement.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtValueElement.Location = new System.Drawing.Point(9, 88);
             this.txtValueElement.Name = "txtValueElement";
@@ -277,10 +284,32 @@
             this.label1.TabIndex = 17;
             this.label1.Text = "Value Element";
             // 
+            // txtComments
+            // 
+            this.txtComments.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtComments.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtComments.Location = new System.Drawing.Point(10, 415);
+            this.txtComments.Multiline = true;
+            this.txtComments.Name = "txtComments";
+            this.txtComments.Size = new System.Drawing.Size(291, 62);
+            this.txtComments.TabIndex = 19;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(11, 399);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(56, 13);
+            this.label8.TabIndex = 20;
+            this.label8.Text = "Comments";
+            // 
             // MappingControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.txtComments);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnSave);
@@ -293,7 +322,7 @@
             this.Controls.Add(this.lblInstructions);
             this.Enabled = false;
             this.Name = "MappingControl";
-            this.Size = new System.Drawing.Size(313, 452);
+            this.Size = new System.Drawing.Size(313, 520);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
@@ -324,5 +353,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtValueElement;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox txtComments;
+        private System.Windows.Forms.Label label8;
     }
 }

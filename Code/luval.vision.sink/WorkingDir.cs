@@ -78,13 +78,13 @@ namespace luval.vision.sink
         public static void MoveToProcessed(string fileName)
         {
             var file = new FileInfo(fileName);
-            File.Move(fileName, string.Format(@"{0}\{1}", Processed, file.Name));
+            File.Move(string.Format(@"{0}\{1}", Image.FullName, fileName), string.Format(@"{0}\{1}", Processed, file.Name));
         }
 
         public static void MoveToSkipped(string fileName)
         {
             var file = new FileInfo(fileName);
-            File.Move(fileName, string.Format(@"{0}\{1}", Skipped, file.Name));
+            File.Move(string.Format(@"{0}\{1}", Image.FullName, fileName), string.Format(@"{0}\{1}", Skipped, file.Name));
         }
     }
 }
