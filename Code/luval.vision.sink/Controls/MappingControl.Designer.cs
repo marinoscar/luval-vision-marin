@@ -127,6 +127,7 @@
             this.txtLines.Name = "txtLines";
             this.txtLines.Size = new System.Drawing.Size(101, 20);
             this.txtLines.TabIndex = 7;
+            this.txtLines.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtLines_KeyDown);
             // 
             // label4
             // 
@@ -215,6 +216,7 @@
             this.cboAttribute.Name = "cboAttribute";
             this.cboAttribute.Size = new System.Drawing.Size(310, 21);
             this.cboAttribute.TabIndex = 16;
+            this.cboAttribute.SelectedValueChanged += new System.EventHandler(this.cboAttribute_SelectedValueChanged);
             // 
             // label7
             // 
@@ -233,6 +235,7 @@
             this.btnSave.TabIndex = 17;
             this.btnSave.Text = "&Save";
             this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // MappingControl
             // 
