@@ -87,6 +87,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\MappingControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\MappingControl.Designer.cs">
+      <DependentUpon>MappingControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormResult.cs" />
     <Compile Include="ListViewHelper.cs" />
     <Compile Include="MainForm.cs">
@@ -110,6 +116,9 @@
     <Compile Include="ShowMap.Designer.cs">
       <DependentUpon>ShowMap.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Controls\MappingControl.resx">
+      <DependentUpon>MappingControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
