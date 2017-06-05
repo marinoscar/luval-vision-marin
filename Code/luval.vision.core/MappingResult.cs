@@ -38,7 +38,7 @@ namespace luval.vision.core
 
         public static MappingResult Create(ImageInfo info, AttributeMapping map, OcrElement anchor, OcrElement result, string value, double rankMatch)
         {
-            var items = new OcrElement[] { anchor, result };
+            var items = (new OcrElement[] { anchor, result }).Where(i => i != null).ToList();
             var loc = new OcrLocation()
             {
                 X = items.Min(i => i.Location.X),
