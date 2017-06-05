@@ -5,6 +5,6 @@ export default
   angular
     .module('luval-vision.core', [])
     .constant('CORE', {
-      URL: APP_PATH
+      URL: TESTING_PATH
     })
 		.name;

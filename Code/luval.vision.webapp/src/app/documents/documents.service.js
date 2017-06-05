@@ -2,7 +2,7 @@ class documentsService {
   /* @ngInject */
   constructor($log, $http, $window, Upload, CORE, sessionService) {
     this.documents = [];
-    this.log = $log;
+    this.$log = $log;
     this.$http = $http;
     this.$window = $window;
     this.upload = Upload;
@@ -27,7 +27,10 @@ class documentsService {
       url: this.CORE.URL + 'Provider',
       method: 'POST',
       data: blob,
-      file: blob.file
+      file: blob.file,
+      headers: {
+        Authorization: this.sessionService.getAuthorization()
+      }
     });
     return upload;
   }
@@ -37,7 +40,8 @@ class documentsService {
       method: 'GET',
       url: this.CORE.URL + 'Settings/GetProfiles',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        Authorization: this.sessionService.getAuthorization()
       },
       params: this.sessionService.buildUserJSON()
     };
@@ -49,7 +53,8 @@ class documentsService {
       method: 'GET',
       url: this.CORE.URL + 'Storage',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        Authorization: this.sessionService.getAuthorization()
       },
       params: this.sessionService.buildUserJSON()
     };

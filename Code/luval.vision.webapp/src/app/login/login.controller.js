@@ -2,7 +2,7 @@ class LoginController {
   /* @ngInject */
   constructor($log, $state, ngNotify, loginService, sessionService, documentService) {
     this.$state = $state;
-    this.log = $log;
+    this.$log = $log;
     this.ngNotify = ngNotify;
     this.loginService = loginService;
     this.documentService = documentService;
@@ -30,9 +30,10 @@ class LoginController {
     });
   }
 
-  saveSignIn(user) {
-    const tokenId = this.documentService.replaceSpecialCharacters(user.w3.U3);
-    this.sessionService.setAuthData(tokenId); // eslint-disable-line no-useless-escape
+  saveSignIn(user) { // .w3.U3
+    const authToken = user;
+    authToken.w3.U3 = this.documentService.replaceSpecialCharacters(authToken.w3.U3);
+    this.sessionService.setAuthData(authToken); // eslint-disable-line no-useless-escape
     this.$state.go('documents');
   }
 }

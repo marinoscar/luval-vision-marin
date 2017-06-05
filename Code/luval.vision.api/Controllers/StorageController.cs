@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Web;
 using luval.vision.entity;
 using luval.vision.core;
+using luval.vision.api.Security;
 
 namespace luval.vision.api.Controllers
 {
@@ -28,6 +29,7 @@ namespace luval.vision.api.Controllers
             processOcr = new ProcessLogic();
         }
 
+        [BasicAuthentication]
         public IHttpActionResult Get(string userId)
         {
             try

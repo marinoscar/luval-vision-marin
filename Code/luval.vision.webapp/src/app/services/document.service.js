@@ -14,6 +14,10 @@ class documentService {
     const getRequest = {
       method: 'GET',
       url: this.CORE.URL + 'Provider',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: this.sessionService.getAuthorization()
+      },
       params: {id: fileId}
     };
     return this.$http(getRequest);

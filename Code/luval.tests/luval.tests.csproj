@@ -78,6 +78,7 @@
     <Compile Include="WhenItLooksForEntities.cs" />
     <Compile Include="WhenItMongoStore.cs" />
     <Compile Include="WhenOcrEngineIsCalled.cs" />
+    <Compile Include="WhenUserItWorks.cs" />
     <Compile Include="WhenUsingStringUtils.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using luval.vision.api.Security;
 
 namespace luval.vision.api.Controllers
 {
@@ -25,8 +26,10 @@ namespace luval.vision.api.Controllers
             settingsLogic = new SettingsLogic();
         }
 
+
         [Route("api/v1/Settings/GetProfiles")]
         [HttpGet]
+        [BasicAuthentication]
         public IHttpActionResult GetProfiles(string userId)
         {
             try
@@ -47,6 +50,8 @@ namespace luval.vision.api.Controllers
             }
         }
 
+
+        [BasicAuthentication]
         public IHttpActionResult Get(string userId)
         {
             try
@@ -69,6 +74,8 @@ namespace luval.vision.api.Controllers
             }
         }
 
+
+        [BasicAuthentication]
         public IHttpActionResult Delete(string profile)
         {
             try
@@ -86,6 +93,7 @@ namespace luval.vision.api.Controllers
             }
         }
 
+        [BasicAuthentication]
         public IHttpActionResult Put(OcrSettings profile)
         {
             try
@@ -107,6 +115,7 @@ namespace luval.vision.api.Controllers
             }
         }
 
+        [BasicAuthentication]
         public async Task<IHttpActionResult> Post()
         {
             if (!Request.Content.IsMimeMultipartContent())

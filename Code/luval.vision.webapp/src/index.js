@@ -12,6 +12,7 @@ import 'angular-ui-bootstrap';
 import 'angular-spinner/dist/angular-spinner.min';
 import 'ng-file-upload/dist/ng-file-upload.js';
 import 'ng-notify/dist/ng-notify.min';
+import 'angular-base64/angular-base64';
 
 import './index.scss';
 import './app/login/login.scss';
@@ -30,6 +31,7 @@ angular
     'ui.bootstrap',
     'google-signin',
     'ngNotify',
+    'base64',
     'ngFileUpload',
     'angularSpinner',
     core,

@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "angular": "^1.6.2",
+    "angular-base64": "^2.0.5",
     "angular-jsoneditor": "0.0.2",
     "angular-spinner": "^1.0.1",
     "angular-ui-bootstrap": "^2.5.0",
