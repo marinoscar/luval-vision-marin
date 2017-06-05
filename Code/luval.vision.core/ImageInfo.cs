@@ -18,6 +18,7 @@ namespace luval.vision.core
         public double VerticalResolution { get; set; }
         public int WorkingHeight { get; set; }
         public int WorkingWidth { get; set; }
+        public string ImageHash { get; set; }
 
         public static ImageInfo Load(Image img, string fileName)
         {
