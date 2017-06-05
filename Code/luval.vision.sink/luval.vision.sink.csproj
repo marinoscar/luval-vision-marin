@@ -117,6 +117,7 @@
     <Compile Include="ShowMap.Designer.cs">
       <DependentUpon>ShowMap.cs</DependentUpon>
     </Compile>
+    <Compile Include="WorkingDir.cs" />
     <EmbeddedResource Include="Controls\MappingControl.resx">
       <DependentUpon>MappingControl.cs</DependentUpon>
     </EmbeddedResource>
