@@ -23,6 +23,14 @@ namespace luval.vision.core
         public bool IsAnchorOnLeft { get; set; }
         public bool IsResultTagged { get; set; }
 
+        public static MappingResult Create(AttributeMapping map)
+        {
+            return new MappingResult()
+            {
+                Map = map
+            };
+        }
+
         public static MappingResult Create(ImageInfo info, AttributeMapping map, OcrElement anchor, OcrElement result)
         {
             return Create(info, map, anchor, result, null, 0d);
@@ -54,5 +62,7 @@ namespace luval.vision.core
             };
             return res;
         }
+
+
     }
 }
