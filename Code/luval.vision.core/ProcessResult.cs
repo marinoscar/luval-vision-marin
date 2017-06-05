@@ -18,11 +18,14 @@ namespace luval.vision.core
 
         public string Id { get; set; }
         public string UserId { get; set; }
+        public List<AttributeMapping> Mappings { get; set; }
         public OcrResult OcrResult { get; set; }
         public NlpResult NlpResult { get; set; }
         public List<MappingResult> TextResults { get; set; }
         public DateTime UtcTimestamp { get; set; }
         public double DurationInMs { get; set; }
+        public ImageInfo ImageInfo { get; set; }
+        public int UnIdentifiedLines { get; set; }
 
     }
 }
