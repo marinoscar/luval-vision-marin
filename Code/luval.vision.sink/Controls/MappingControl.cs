@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using luval.vision.core;
 using System.Configuration;
+using Newtonsoft.Json;
+using System.IO;
 
 namespace luval.vision.sink.Controls
 {
@@ -16,6 +18,7 @@ namespace luval.vision.sink.Controls
     {
 
         private KeysConverter _converter;
+        private string _workingDir;
         private Configuration _config;
         public MappingControl()
         {
@@ -24,15 +27,14 @@ namespace luval.vision.sink.Controls
             _config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
         }
 
-        public List<AttributeMapping> Attributes { get; set; }
+        private ProcessResult Result { get; set; }
         public AttributeMapping SelectedAttribute { get; set; }
-        public List<MappingResult> Mappings { get; set; }
         public MappingResult SelectedMapping { get; set; }
 
 
         public void DoLoad()
         {
-            foreach(var att in Attributes)
+            foreach(var att in Result.Mappings)
             {
                 cboAttribute.Items.Add(att.AttributeName);
             }
@@ -54,13 +56,71 @@ namespace luval.vision.sink.Controls
 
         private void DoSave()
         {
+            if (!DoValidations()) return;
+            var fileContent = JsonConvert.SerializeObject(Result);
+            var fileName = string.Format("Result-{0}.celeris", Result.Id);
+            File.WriteAllText(string.Format(@"{0}\{1}", WorkingDir.Result, fileName), fileContent);
+            WorkingDir.MoveToProcessed(Result.ImageInfo.Name);
+            MessageBox.Show(string.Format("Mapping has been saved to file {0} in the results folder", fileName), "Saved",MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
 
+        private bool DoValidations()
+        {
+            foreach(var map in Result.Mappings)
+            {
+                if (map.NotFound) return false;
+                var res = Result.TextResults.FirstOrDefault(i => i.Map.AttributeName == map.AttributeName);
+                if(res == null)
+                {
+                    ShowValidation(string.Format("Please enter information for attribute {0}", map.AttributeName));
+                    return false;
+                }
+                if(res.AnchorElement == null)
+                {
+                    ShowValidation(string.Format("Please select anchor for attribute {0}", map.AttributeName));
+                    return false;
+                }
+                if (res.ResultElement == null)
+                {
+                    ShowValidation(string.Format("Please select anchor for attribute {0}", map.AttributeName));
+                    return false;
+                }
+            }
+            if (string.IsNullOrEmpty(txtLines.Text))
+            {
+                ShowValidation(string.Format("Please enter the value for Lines Not Identified"));
+                return false;
+            }
+            if(cboQuality.SelectedIndex < 0)
+            {
+                ShowValidation(string.Format("Please select the image category value"));
+                return false;
+            }
+            return true;
+        }
+
+        private void ShowValidation(string text)
+        {
+            MessageBox.Show(text, "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        private string GetAndSetWorkingFolder()
+        {
+            if (string.IsNullOrWhiteSpace(_workingDir))
+            {
+                _workingDir = ConfigurationManager.AppSettings["workingFolder"];
+                if (string.IsNullOrWhiteSpace(_workingDir))
+                {
+                    _workingDir = Environment.CurrentDirectory;
+                }
+
+            }
         }
 
         private void LoadMapping(string attName)
         {
-            SelectedAttribute = Attributes.FirstOrDefault(i => i.AttributeName == attName);
-            SelectedMapping = Mappings.FirstOrDefault(i => i.Map.AttributeName == attName);
+            SelectedAttribute = Result.Mappings.FirstOrDefault(i => i.AttributeName == attName);
+            SelectedMapping = Result.TextResults.FirstOrDefault(i => i.Map.AttributeName == attName);
             if (SelectedMapping == null) return;
             if(SelectedMapping.ResultElement != null)
             {
