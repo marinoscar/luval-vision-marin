@@ -23,6 +23,7 @@ namespace luval.vision.core
         public bool IsAnchorOnLeft { get; set; }
         public bool IsResultTagged { get; set; }
         public bool NotFound { get; set; }
+        public bool ElementTextNotFound { get; set; }
 
         public static MappingResult Create(AttributeMapping map)
         {
