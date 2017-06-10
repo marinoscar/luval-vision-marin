@@ -51,6 +51,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtComments = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
+            this.chkNotCaptured = new System.Windows.Forms.CheckBox();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -151,6 +152,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.chkNotCaptured);
             this.groupBox2.Controls.Add(this.chkNotFound);
             this.groupBox2.Controls.Add(this.cboAttribute);
             this.groupBox2.Controls.Add(this.label7);
@@ -304,6 +306,17 @@
             this.label8.TabIndex = 20;
             this.label8.Text = "Comments";
             // 
+            // chkNotCaptured
+            // 
+            this.chkNotCaptured.AutoSize = true;
+            this.chkNotCaptured.Location = new System.Drawing.Point(107, 204);
+            this.chkNotCaptured.Name = "chkNotCaptured";
+            this.chkNotCaptured.Size = new System.Drawing.Size(154, 17);
+            this.chkNotCaptured.TabIndex = 26;
+            this.chkNotCaptured.Text = "Element Text Not Captured";
+            this.chkNotCaptured.UseVisualStyleBackColor = true;
+            this.chkNotCaptured.Click += new System.EventHandler(this.chkNotCaptured_Click);
+            // 
             // MappingControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -355,5 +368,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtComments;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.CheckBox chkNotCaptured;
     }
 }

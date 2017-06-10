@@ -75,6 +75,7 @@
             this.resultText = new System.Windows.Forms.TextBox();
             this.tabVisionJson = new System.Windows.Forms.TabPage();
             this.treeJsonVision = new System.Windows.Forms.TreeView();
+            this.lblElementText = new System.Windows.Forms.ToolStripStatusLabel();
             this.mainMenu.SuspendLayout();
             this.panel1.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -206,28 +207,29 @@
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.lblProfile,
             this.lblMouseCoordinates,
-            this.lblStatus});
-            this.statusStrip.Location = new System.Drawing.Point(0, 66);
+            this.lblStatus,
+            this.lblElementText});
+            this.statusStrip.Location = new System.Drawing.Point(0, 64);
             this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(1083, 22);
+            this.statusStrip.Size = new System.Drawing.Size(1083, 24);
             this.statusStrip.TabIndex = 11;
             this.statusStrip.Text = "statusStrip1";
             // 
             // lblProfile
             // 
             this.lblProfile.Name = "lblProfile";
-            this.lblProfile.Size = new System.Drawing.Size(85, 17);
+            this.lblProfile.Size = new System.Drawing.Size(85, 19);
             this.lblProfile.Text = "Profile: Default";
             // 
             // lblMouseCoordinates
             // 
             this.lblMouseCoordinates.Name = "lblMouseCoordinates";
-            this.lblMouseCoordinates.Size = new System.Drawing.Size(0, 17);
+            this.lblMouseCoordinates.Size = new System.Drawing.Size(0, 19);
             // 
             // lblStatus
             // 
             this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(0, 17);
+            this.lblStatus.Size = new System.Drawing.Size(0, 19);
             // 
             // btnClear
             // 
@@ -375,6 +377,8 @@
             this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pictureBox.TabIndex = 2;
             this.pictureBox.TabStop = false;
+            this.pictureBox.Click += new System.EventHandler(this.pictureBox_Click);
+            this.pictureBox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseClick);
             this.pictureBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseDoubleClick);
             this.pictureBox.MouseHover += new System.EventHandler(this.pictureBox_MouseHover);
             this.pictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseMove);
@@ -550,6 +554,18 @@
             this.treeJsonVision.Size = new System.Drawing.Size(172, 36);
             this.treeJsonVision.TabIndex = 0;
             // 
+            // lblElementText
+            // 
+            this.lblElementText.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
+            this.lblElementText.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.lblElementText.Name = "lblElementText";
+            this.lblElementText.Size = new System.Drawing.Size(952, 19);
+            this.lblElementText.Spring = true;
+            this.lblElementText.Text = "Text:";
+            this.lblElementText.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -635,6 +651,7 @@
         private System.Windows.Forms.ToolStripMenuItem mnuLoadForMapping;
         private System.Windows.Forms.ToolStripMenuItem mnuSkip;
         private System.Windows.Forms.ToolStripStatusLabel lblStatus;
+        private System.Windows.Forms.ToolStripStatusLabel lblElementText;
     }
 }
 

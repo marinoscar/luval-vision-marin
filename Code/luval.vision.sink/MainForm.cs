@@ -379,20 +379,57 @@ namespace luval.vision.sink
 
         private void pictureBox_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            FindElement(e.Location);
+            ProcessedFoundElement(e.Location);
 
         }
 
-        private void FindElement(Point p)
+        private void pictureBox_MouseClick(object sender, MouseEventArgs e)
         {
-            if (_result == null) return;
+            var el = FindElement(e.Location);
+            if(el == null)
+            {
+                lblElementText.Text = "Element not found on location";
+                return;
+            }
+            if(string.IsNullOrWhiteSpace(el.Text))
+            {
+                lblElementText.Text = "No Text Value on Element";
+                return;
+            }
+            lblElementText.Text = el.Text;
+        }
+
+        private void pictureBox_Click(object sender, EventArgs e)
+        {
+
+        }
+
+
+        private void ProcessedFoundElement(Point p)
+        {
+            var res = FindElement(p);
+            if (res == null)
+            {
+                MessageBox.Show("Not Found");
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(res.Text))
+            {
+                MessageBox.Show("Element does not have text in it!");
+                return;
+            }
+            LoadFoundElement(res);
+        }
+
+        private OcrLine FindElement(Point p)
+        {
+            if (_result == null) return null;
             var res = _result.Lines.Where(i => (p.X >= i.Location.X && p.X <= i.Location.XBound) && (p.Y >= i.Location.Y && p.Y <= i.Location.YBound)).ToList();
             if (!res.Any())
             {
-                MessageBox.Show("Nothing Found");
-                return;
+                return null;
             }
-            LoadFoundElement(res.First());
+            return res.First();
         }
 
         private void LoadFoundElement(OcrLine element)

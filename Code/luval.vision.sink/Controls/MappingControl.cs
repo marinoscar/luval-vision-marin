@@ -148,6 +148,7 @@ namespace luval.vision.sink.Controls
             var message = string.Format("Mapping has been saved to file {0} in the results folder.\nDo you want to load another file", fileName);
             if(MessageBox.Show(message, "Saved", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
             {
+                Clear();
                 OnSaveAndNew(new EventArgs());
             }
         }
@@ -156,7 +157,8 @@ namespace luval.vision.sink.Controls
         {
             foreach (var result in Result.TextResults)
             {
-                if (!result.NotFound)
+                if (result.NotFound) continue;
+                if (result.ElementTextNotFound) continue;
                 {
                     if (result.AnchorElement == null)
                     {
@@ -209,6 +211,7 @@ namespace luval.vision.sink.Controls
                 txtAnchorText.Text = SelectedMapping.AnchorElement.Text;
             else
                 txtAnchorText.Text = null;
+            chkNotCaptured.Checked = SelectedMapping.ElementTextNotFound;
             chkNotFound.Checked = SelectedMapping.NotFound;
         }
 
@@ -252,6 +255,12 @@ namespace luval.vision.sink.Controls
         {
             if (SelectedMapping == null) return;
             SelectedMapping.NotFound = chkNotFound.Checked;
+        }
+
+        private void chkNotCaptured_Click(object sender, EventArgs e)
+        {
+            if (SelectedMapping == null) return;
+            SelectedMapping.ElementTextNotFound = chkNotCaptured.Checked;
         }
     }
 }
