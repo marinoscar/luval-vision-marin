@@ -507,5 +507,11 @@ namespace luval.vision.sink
         {
             LoadFromWorkingDir();
         }
+
+        private void mnuConsolidate_Click(object sender, EventArgs e)
+        {
+            var analizer = new ResultAnalizer();
+            analizer.FromDirectoryToCsv(WorkingDir.Result.FullName, string.Format(@"{0}\{1}.csv", WorkingDir.Analytics, Guid.NewGuid()));
+        }
     }
 }

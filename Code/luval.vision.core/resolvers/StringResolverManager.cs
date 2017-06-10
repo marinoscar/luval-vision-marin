@@ -45,21 +45,25 @@ namespace luval.vision.core.resolvers
 
         public bool ContainsDate(string text)
         {
+            if (string.IsNullOrWhiteSpace(text)) return false;
             return Get<DateResolver>().IsMatch(text);
         } 
 
         public bool ContainsAmount(string text)
         {
+            if (string.IsNullOrWhiteSpace(text)) return false;
             return Get<AmountResolver>().IsMatch(text);
         }
 
         public bool ContainsNumber(string text)
         {
+            if (string.IsNullOrWhiteSpace(text)) return false;
             return Get<NumberResolver>().IsMatch(text);
         }
 
         public bool ContainsCode(string text)
         {
+            if (string.IsNullOrWhiteSpace(text)) return false;
             return Get<CodeResolver>().IsMatch(text);
         }
     }

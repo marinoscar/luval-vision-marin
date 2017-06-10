@@ -25,6 +25,14 @@ namespace luval.vision.core
         public bool NotFound { get; set; }
         public bool ElementTextNotFound { get; set; }
 
+        public MappingResult()
+        {
+            Location = new OcrLocation();
+            RelativeLocation = new OcrRelativeLocation();
+            AnchorElement = new OcrElement();
+            ResultElement = new OcrElement();
+        }
+
         public static MappingResult Create(AttributeMapping map)
         {
             return new MappingResult()

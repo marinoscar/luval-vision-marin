@@ -14,6 +14,7 @@ namespace luval.vision.core
         {
             Id = Guid.NewGuid().ToString().Replace("-", "").ToLowerInvariant();
             UtcTimestamp = DateTime.UtcNow;
+            TextResults = new List<MappingResult>();
         }
 
         public string Id { get; set; }

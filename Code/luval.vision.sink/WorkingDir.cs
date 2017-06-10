@@ -14,6 +14,7 @@ namespace luval.vision.sink
         private static DirectoryInfo _processedDir { get; set; }
         private static DirectoryInfo _resultDir { get; set; }
         private static DirectoryInfo _skippedDir { get; set; }
+        private static DirectoryInfo _analyticsDir { get; set; }
 
         private static void LoadAll()
         {
@@ -28,9 +29,11 @@ namespace luval.vision.sink
             _processedDir = new DirectoryInfo(_imageDir.FullName + @"\Processed");
             _resultDir = new DirectoryInfo(_imageDir.FullName + @"\Result");
             _skippedDir = new DirectoryInfo(_imageDir.FullName + @"\Skipped");
+            _analyticsDir = new DirectoryInfo(_imageDir.FullName + @"\Analytics");
             CheckAndCreate(_processedDir);
             CheckAndCreate(_resultDir);
             CheckAndCreate(_skippedDir);
+            CheckAndCreate(_analyticsDir);
 
         }
         private static void CheckAndCreate(DirectoryInfo dir)
@@ -72,6 +75,15 @@ namespace luval.vision.sink
             {
                 LoadAll();
                 return _skippedDir;
+            }
+        }
+
+        public static DirectoryInfo Analytics
+        {
+            get
+            {
+                LoadAll();
+                return _analyticsDir;
             }
         }
 
