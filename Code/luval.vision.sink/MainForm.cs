@@ -508,10 +508,16 @@ namespace luval.vision.sink
             LoadFromWorkingDir();
         }
 
-        private void mnuConsolidate_Click(object sender, EventArgs e)
+        private void mnuExportCsv_Click(object sender, EventArgs e)
         {
             var analizer = new ResultAnalizer();
             analizer.FromDirectoryToCsv(WorkingDir.Result.FullName, string.Format(@"{0}\{1}.csv", WorkingDir.Analytics, Guid.NewGuid()));
+        }
+
+        private void mnuExportSql_Click(object sender, EventArgs e)
+        {
+            var analizer = new ResultAnalizer();
+            analizer.FromDirectoryToSql(WorkingDir.Result.FullName, "ResultData", true, string.Format(@"{0}\{1}.sql", WorkingDir.Analytics, Guid.NewGuid()));
         }
     }
 }

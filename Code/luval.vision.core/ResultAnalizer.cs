@@ -43,10 +43,8 @@ namespace luval.vision.core
 
         public string FromDirectoryToCsv(string directoryName)
         {
-            var dir = new DirectoryInfo(directoryName);
-            var files = dir.GetFiles("*.celeris", SearchOption.TopDirectoryOnly);
-            var items = LoadFromFiles(files.Select(i => i.FullName));
-            var res = new List<Dictionary<string, string>>();
+            var items = FromDirectory(directoryName);
+            var res = new List<Dictionary<string, object>>();
             foreach (var i in items)
             {
                 res.AddRange(GetValues(i));
@@ -55,88 +53,174 @@ namespace luval.vision.core
             if (!res.Any()) return sb.ToString();
             var header = res.First();
             sb.AppendLine(string.Join(",", header.Keys));
-            foreach(var r in res)
+            foreach (var r in res)
             {
-                sb.AppendLine(string.Join(",", r.Values));
+                sb.AppendLine(string.Join(",", r.Values.Select(i => Conv(i))));
             }
             return sb.ToString();
         }
 
-        private List<Dictionary<string, string>> GetValues(ProcessResult r)
+        public void FromDirectoryToSql(string directoryName, string sqlTableName, bool createTableStatement, string sqlFileName)
         {
-            var res = new List<Dictionary<string, string>>();
-            foreach(var map in r.Mappings)
+            var content = FromDirectoryToSql(directoryName, sqlTableName, createTableStatement);
+            File.WriteAllText(sqlFileName, content);
+        }
+
+        public string FromDirectoryToSql(string directoryName, string sqlTableName, bool createTableStatement)
+        {
+            var items = FromDirectory(directoryName);
+            var res = new List<Dictionary<string, object>>();
+            foreach (var i in items)
             {
-                var d = new Dictionary<string, string>();
+                res.AddRange(GetValues(i));
+            }
+            var sb = new StringBuilder();
+            if (!res.Any()) return sb.ToString();
+            var header = res.First();
+            if(createTableStatement)
+                sb.AppendLine(GetSqlTableDefinition(sqlTableName, header));
+            foreach (var r in res)
+            {
+                sb.AppendLine(GetSqlInsert(sqlTableName, r));
+            }
+            return sb.ToString();
+        }
+
+
+        public IEnumerable<ProcessResult> FromDirectory(string directoryName)
+        {
+            var dir = new DirectoryInfo(directoryName);
+            var files = dir.GetFiles("*.celeris", SearchOption.TopDirectoryOnly);
+            return LoadFromFiles(files.Select(i => i.FullName));
+        }
+
+
+        private List<Dictionary<string, object>> GetValues(ProcessResult r)
+        {
+            var res = new List<Dictionary<string, object>>();
+            foreach (var map in r.Mappings)
+            {
+                var d = new Dictionary<string, object>();
                 d["Id"] = r.Id;
-                d["Image_Height"] = Conv(r.ImageInfo.Height);
-                d["Image_Width"] = Conv(r.ImageInfo.Width);
-                d["Image_HorResolution"] = Conv(r.ImageInfo.HorizontalResolution);
-                d["Image_VerResolution"] = Conv(r.ImageInfo.VerticalResolution);
-                d["Image_WorkingHeight"] = Conv(r.ImageInfo.WorkingHeight);
-                d["Image_WorkingWidth"] = Conv(r.ImageInfo.WorkingWidth);
-                d["Image_Name"] = Conv(r.ImageInfo.Name);
-                d["Image_Format"] = Conv(r.ImageInfo.Format);
-                d["QualityType"] = Conv(r.QualityType);
-                d["Map_Name"] = Conv(map.AttributeName);
+                d["Image_Height"] = r.ImageInfo.Height;
+                d["Image_Width"] = r.ImageInfo.Width;
+                d["Image_HorResolution"] = r.ImageInfo.HorizontalResolution;
+                d["Image_VerResolution"] = r.ImageInfo.VerticalResolution;
+                d["Image_WorkingHeight"] = r.ImageInfo.WorkingHeight;
+                d["Image_WorkingWidth"] = r.ImageInfo.WorkingWidth;
+                d["Image_Name"] = r.ImageInfo.Name;
+                d["Image_Format"] = r.ImageInfo.Format;
+                d["QualityType"] = r.QualityType;
+                d["Map_Name"] = map.AttributeName;
                 var mapRes = r.TextResults.First(i => i.Map.AttributeName == map.AttributeName);
-                d["Map_AnchorRankMath"] = Conv(mapRes.AnchorRankMath);
-                d["Map_ElementTextNotFound"] = Conv(mapRes.ElementTextNotFound);
-                d["Map_IsAnchorOnLeft"] = Conv(mapRes.IsAnchorOnLeft);
-                d["Map_IsResultTagged"] = Conv(mapRes.IsResultTagged);
-                d["Map_NotFound"] = Conv(mapRes.NotFound);
-                d["Map_RelativeOffsetX"] = Conv(mapRes.RelativeOffsetX);
-                d["Map_RelativeOffsetY"] = Conv(mapRes.RelativeOffsetY);
+                d["Map_AnchorRankMath"] = mapRes.AnchorRankMath;
+                d["Map_ElementTextNotFound"] = mapRes.ElementTextNotFound;
+                d["Map_NotFound"] = mapRes.NotFound;
+                d["Map_IsAnchorOnLeft"] = mapRes.IsAnchorOnLeft;
+                d["Map_IsResultTagged"] = mapRes.IsResultTagged;
+                d["Map_RelativeOffsetX"] = mapRes.RelativeOffsetX;
+                d["Map_RelativeOffsetY"] = mapRes.RelativeOffsetY;
                 if (mapRes.RelativeLocation == null) mapRes.RelativeLocation = new OcrRelativeLocation();
-                d["Map_IsTopHalf"] = Conv(mapRes.RelativeLocation.IsTopHalf);
-                d["Map_Quadrant"] = Conv(mapRes.RelativeLocation.Quadrant);
-                d["Map_HorizontalThird"] = Conv(mapRes.RelativeLocation.HorizontalThird);
-                d["Map_HorizontalQuadrant"] = Conv(mapRes.RelativeLocation.HorizontalQuadrant);
-                d["Map_HorizontalSixth"] = Conv(mapRes.RelativeLocation.HorizontalSixth);
-                d["Map_HorizontalEight"] = Conv(mapRes.RelativeLocation.HorizontalEight);
-                d["Map_VerticalThird"] = Conv(mapRes.RelativeLocation.VerticalThird);
-                d["Map_VerticalQuadrant"] = Conv(mapRes.RelativeLocation.VerticalQuadrant);
-                d["Map_VerticalSixth"] = Conv(mapRes.RelativeLocation.VerticalSixth);
-                d["Map_VerticalEight"] = Conv(mapRes.RelativeLocation.VerticalEight);
-                d["Map_RelativeWidth"] = Conv(mapRes.RelativeLocation.Width);
-                d["Map_RelativeHeight"] = Conv(mapRes.RelativeLocation.Height);
+                d["Map_IsTopHalf"] = mapRes.RelativeLocation.IsTopHalf;
+                d["Map_Quadrant"] = mapRes.RelativeLocation.Quadrant;
+                d["Map_HorizontalThird"] = mapRes.RelativeLocation.HorizontalThird;
+                d["Map_HorizontalQuadrant"] = mapRes.RelativeLocation.HorizontalQuadrant;
+                d["Map_HorizontalSixth"] = mapRes.RelativeLocation.HorizontalSixth;
+                d["Map_HorizontalEight"] = mapRes.RelativeLocation.HorizontalEight;
+                d["Map_VerticalThird"] = mapRes.RelativeLocation.VerticalThird;
+                d["Map_VerticalQuadrant"] = mapRes.RelativeLocation.VerticalQuadrant;
+                d["Map_VerticalSixth"] = mapRes.RelativeLocation.VerticalSixth;
+                d["Map_VerticalEight"] = mapRes.RelativeLocation.VerticalEight;
+                d["Map_RelativeWidth"] = mapRes.RelativeLocation.Width;
+                d["Map_RelativeHeight"] = mapRes.RelativeLocation.Height;
                 if (mapRes.AnchorElement == null) mapRes.AnchorElement = new OcrElement();
-                d["Map_Anchor_Text"] = Conv(mapRes.AnchorElement.Text);
-                d["Map_Anchor_IsTopHalf"] = Conv(mapRes.AnchorElement.Location.RelativeLocation.IsTopHalf);
-                d["Map_Anchor_Quadrant"] = Conv(mapRes.AnchorElement.Location.RelativeLocation.Quadrant);
-                d["Map_Anchor_HorizontalThird"] = Conv(mapRes.AnchorElement.Location.RelativeLocation.HorizontalThird);
-                d["Map_Anchor_HorizontalQuadrant"] = Conv(mapRes.AnchorElement.Location.RelativeLocation.HorizontalQuadrant);
-                d["Map_Anchor_HorizontalSixth"] = Conv(mapRes.AnchorElement.Location.RelativeLocation.HorizontalSixth);
-                d["Map_Anchor_HorizontalEight"] = Conv(mapRes.AnchorElement.Location.RelativeLocation.HorizontalEight);
-                d["Map_Anchor_VerticalThird"] = Conv(mapRes.AnchorElement.Location.RelativeLocation.VerticalThird);
-                d["Map_Anchor_VerticalQuadrant"] = Conv(mapRes.AnchorElement.Location.RelativeLocation.VerticalQuadrant);
-                d["Map_Anchor_VerticalSixth"] = Conv(mapRes.AnchorElement.Location.RelativeLocation.VerticalSixth);
-                d["Map_Anchor_VerticalEight"] = Conv(mapRes.AnchorElement.Location.RelativeLocation.VerticalEight);
+                d["Map_Anchor_Text"] = mapRes.AnchorElement.Text;
+                d["Map_Anchor_IsTopHalf"] = mapRes.AnchorElement.Location.RelativeLocation.IsTopHalf;
+                d["Map_Anchor_Quadrant"] = mapRes.AnchorElement.Location.RelativeLocation.Quadrant;
+                d["Map_Anchor_HorizontalThird"] = mapRes.AnchorElement.Location.RelativeLocation.HorizontalThird;
+                d["Map_Anchor_HorizontalQuadrant"] = mapRes.AnchorElement.Location.RelativeLocation.HorizontalQuadrant;
+                d["Map_Anchor_HorizontalSixth"] = mapRes.AnchorElement.Location.RelativeLocation.HorizontalSixth;
+                d["Map_Anchor_HorizontalEight"] = mapRes.AnchorElement.Location.RelativeLocation.HorizontalEight;
+                d["Map_Anchor_VerticalThird"] = mapRes.AnchorElement.Location.RelativeLocation.VerticalThird;
+                d["Map_Anchor_VerticalQuadrant"] = mapRes.AnchorElement.Location.RelativeLocation.VerticalQuadrant;
+                d["Map_Anchor_VerticalSixth"] = mapRes.AnchorElement.Location.RelativeLocation.VerticalSixth;
+                d["Map_Anchor_VerticalEight"] = mapRes.AnchorElement.Location.RelativeLocation.VerticalEight;
                 if (mapRes.ResultElement == null) mapRes.ResultElement = new OcrElement();
-                d["Map_Result_Text"] = Conv(mapRes.ResultElement.Text);
-                d["Map_Result_IsTopHalf"] = Conv(mapRes.ResultElement.Location.RelativeLocation.IsTopHalf);
-                d["Map_Result_Quadrant"] = Conv(mapRes.ResultElement.Location.RelativeLocation.Quadrant);
-                d["Map_Result_HorizontalThird"] = Conv(mapRes.ResultElement.Location.RelativeLocation.HorizontalThird);
-                d["Map_Result_HorizontalQuadrant"] = Conv(mapRes.ResultElement.Location.RelativeLocation.HorizontalQuadrant);
-                d["Map_Result_HorizontalSixth"] = Conv(mapRes.ResultElement.Location.RelativeLocation.HorizontalSixth);
-                d["Map_Result_HorizontalEight"] = Conv(mapRes.ResultElement.Location.RelativeLocation.HorizontalEight);
-                d["Map_Result_VerticalThird"] = Conv(mapRes.ResultElement.Location.RelativeLocation.VerticalThird);
-                d["Map_Result_VerticalQuadrant"] = Conv(mapRes.ResultElement.Location.RelativeLocation.VerticalQuadrant);
-                d["Map_Result_VerticalSixth"] = Conv(mapRes.ResultElement.Location.RelativeLocation.VerticalSixth);
-                d["Map_Result_VerticalEight"] = Conv(mapRes.ResultElement.Location.RelativeLocation.VerticalEight);
-                d["Map_Result_HasNumber"] = Conv(_resolverMgr.ContainsNumber(mapRes.ResultElement.Text));
-                d["Map_Result_HasCode"] = Conv(_resolverMgr.ContainsCode(mapRes.ResultElement.Text));
-                d["Map_Result_HasDate"] = Conv(_resolverMgr.ContainsDate(mapRes.ResultElement.Text));
-                d["Map_Result_HasAmount"] = Conv(_resolverMgr.ContainsAmount(mapRes.ResultElement.Text));
+                d["Map_Result_Text"] = mapRes.ResultElement.Text;
+                d["Map_Result_IsTopHalf"] = mapRes.ResultElement.Location.RelativeLocation.IsTopHalf;
+                d["Map_Result_Quadrant"] = mapRes.ResultElement.Location.RelativeLocation.Quadrant;
+                d["Map_Result_HorizontalThird"] = mapRes.ResultElement.Location.RelativeLocation.HorizontalThird;
+                d["Map_Result_HorizontalQuadrant"] = mapRes.ResultElement.Location.RelativeLocation.HorizontalQuadrant;
+                d["Map_Result_HorizontalSixth"] = mapRes.ResultElement.Location.RelativeLocation.HorizontalSixth;
+                d["Map_Result_HorizontalEight"] = mapRes.ResultElement.Location.RelativeLocation.HorizontalEight;
+                d["Map_Result_VerticalThird"] = mapRes.ResultElement.Location.RelativeLocation.VerticalThird;
+                d["Map_Result_VerticalQuadrant"] = mapRes.ResultElement.Location.RelativeLocation.VerticalQuadrant;
+                d["Map_Result_VerticalSixth"] = mapRes.ResultElement.Location.RelativeLocation.VerticalSixth;
+                d["Map_Result_VerticalEight"] = mapRes.ResultElement.Location.RelativeLocation.VerticalEight;
+                d["Map_Result_HasNumber"] = _resolverMgr.ContainsNumber(mapRes.ResultElement.Text);
+                d["Map_Result_HasCode"] = _resolverMgr.ContainsCode(mapRes.ResultElement.Text);
+                d["Map_Result_HasDate"] = _resolverMgr.ContainsDate(mapRes.ResultElement.Text);
+                d["Map_Result_HasAmount"] = _resolverMgr.ContainsAmount(mapRes.ResultElement.Text);
                 res.Add(d);
             }
             return res;
         }
 
+        private string GetSqlInsert(string tableName, Dictionary<string, object> dic)
+        {
+            var values = string.Join(",", dic.Values.Select(i => SqlFormat(i)));
+            return string.Format("INSERT INTO {0} ({1}) VALUES ({2});", tableName, string.Join(",", dic.Keys), values);
+        }
+
+        private string GetSqlTableDefinition(string tableName, Dictionary<string, object> dic)
+        {
+            var cols = new List<string>();
+            foreach(KeyValuePair<string, object> kv in dic)
+            {
+                cols.Add(string.Format("{0} {1} NULL", kv.Key, GetSqlType(kv.Value.GetType())));
+            }
+            return GetTableTemplate().Replace("@table", tableName).Replace("@columns", string.Join(", ", cols));
+        }
+
+        private string SqlFormat(object obj)
+        {
+            if (obj == null) return "NULL";
+            var str = Conv(obj).Replace("'", "''");
+            return obj.GetType().IsValueType ? str : string.Format("'{0}'", str);
+
+        }
+        private string GetSqlType(Type type)
+        {
+            if (type == typeof(bool)) return "BIT";
+            if (type == typeof(short)) return "SMALLINT";
+            if (type == typeof(int)) return "INT";
+            if (type == typeof(long)) return "BIGINT";
+            if (type == typeof(double)) return "DECIMAL";
+            if (type == typeof(decimal)) return "DECIMAL";
+            if (type == typeof(DateTime)) return "DATETIME";
+            return "VARCHAR(MAX)";
+        }
+
+        private string GetTableTemplate()
+        {
+            return @"
+IF OBJECT_ID('@table') IS NOT NULL
+BEGIN
+	DROP TABLE @table;
+END
+GO
+CREATE TABLE @table(
+IndentityId int IDENTITY(1,1) primary key,
+@columns,
+UtcTimestamp datetime DEFAULT(GETUTCDATE())
+);
+";
+        }
 
         private string Conv(object obj)
         {
             if (obj is DateTime) return ((DateTime)obj).ToString("YYYY-MM-DD hh:mm:ss");
+            if (obj is bool) return ((bool)obj) ? "1" : "0";
             if (obj == null) return string.Empty;
             return Convert.ToString(obj);
         }
@@ -144,10 +228,13 @@ namespace luval.vision.core
         private List<ProcessResult> LoadFromFiles(IEnumerable<string> files)
         {
             var res = new List<ProcessResult>();
-            foreach(var f in files)
+            var count = 0;
+            foreach (var f in files)
             {
                 var i = JsonConvert.DeserializeObject<ProcessResult>(File.ReadAllText(f));
                 res.Add(i);
+                count++;
+                OnProgress(new ProgressEventArgs() { CurrentIteration = count, TotalIterations = files.Count(), Message = "Loading file data into memory" });
             }
             return res;
         }

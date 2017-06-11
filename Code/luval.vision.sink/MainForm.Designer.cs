@@ -69,14 +69,16 @@
             this.colAttribute = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colValue = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.panelResultHeader = new System.Windows.Forms.Panel();
-            this.mappingControl = new luval.vision.sink.Controls.MappingControl();
             this.tabResult = new System.Windows.Forms.TabPage();
             this.tabVision = new System.Windows.Forms.TabControl();
             this.tabText = new System.Windows.Forms.TabPage();
             this.resultText = new System.Windows.Forms.TextBox();
             this.tabVisionJson = new System.Windows.Forms.TabPage();
             this.treeJsonVision = new System.Windows.Forms.TreeView();
-            this.mnuConsolidate = new System.Windows.Forms.ToolStripMenuItem();
+            this.mappingControl = new luval.vision.sink.Controls.MappingControl();
+            this.consolidateResultsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuExportCsv = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuExportSql = new System.Windows.Forms.ToolStripMenuItem();
             this.mainMenu.SuspendLayout();
             this.panel1.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -171,7 +173,7 @@
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuLoadForMapping,
             this.mnuSkip,
-            this.mnuConsolidate});
+            this.consolidateResultsToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
             this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
             this.toolsToolStripMenuItem.Text = "&Tools";
@@ -492,20 +494,6 @@
             this.panelResultHeader.Size = new System.Drawing.Size(328, 519);
             this.panelResultHeader.TabIndex = 9;
             // 
-            // mappingControl
-            // 
-            this.mappingControl.Enabled = false;
-            this.mappingControl.Location = new System.Drawing.Point(2, 3);
-            this.mappingControl.Name = "mappingControl";
-            this.mappingControl.SelectedAttribute = null;
-            this.mappingControl.SelectedMapping = null;
-            this.mappingControl.Size = new System.Drawing.Size(325, 520);
-            this.mappingControl.TabIndex = 0;
-            this.mappingControl.ValueMappingSelected += new System.EventHandler(this.mappingControl_ValueMappingSelected);
-            this.mappingControl.AnchorMappingSelected += new System.EventHandler(this.mappingControl_AnchorMappingSelected);
-            this.mappingControl.SaveAndNew += new System.EventHandler(this.mappingControl_SaveAndNew);
-            this.mappingControl.Load += new System.EventHandler(this.mappingControl_Load);
-            // 
             // tabResult
             // 
             this.tabResult.Controls.Add(this.tabVision);
@@ -555,7 +543,7 @@
             this.tabVisionJson.Location = new System.Drawing.Point(4, 22);
             this.tabVisionJson.Name = "tabVisionJson";
             this.tabVisionJson.Padding = new System.Windows.Forms.Padding(3);
-            this.tabVisionJson.Size = new System.Drawing.Size(178, 42);
+            this.tabVisionJson.Size = new System.Drawing.Size(1058, 634);
             this.tabVisionJson.TabIndex = 1;
             this.tabVisionJson.Text = "Vision";
             this.tabVisionJson.UseVisualStyleBackColor = true;
@@ -565,15 +553,45 @@
             this.treeJsonVision.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeJsonVision.Location = new System.Drawing.Point(3, 3);
             this.treeJsonVision.Name = "treeJsonVision";
-            this.treeJsonVision.Size = new System.Drawing.Size(172, 36);
+            this.treeJsonVision.Size = new System.Drawing.Size(1052, 628);
             this.treeJsonVision.TabIndex = 0;
             // 
-            // mnuConsolidate
+            // mappingControl
             // 
-            this.mnuConsolidate.Name = "mnuConsolidate";
-            this.mnuConsolidate.Size = new System.Drawing.Size(190, 22);
-            this.mnuConsolidate.Text = "Consolidate Results";
-            this.mnuConsolidate.Click += new System.EventHandler(this.mnuConsolidate_Click);
+            this.mappingControl.Enabled = false;
+            this.mappingControl.Location = new System.Drawing.Point(2, 3);
+            this.mappingControl.Name = "mappingControl";
+            this.mappingControl.SelectedAttribute = null;
+            this.mappingControl.SelectedMapping = null;
+            this.mappingControl.Size = new System.Drawing.Size(325, 520);
+            this.mappingControl.TabIndex = 0;
+            this.mappingControl.ValueMappingSelected += new System.EventHandler(this.mappingControl_ValueMappingSelected);
+            this.mappingControl.AnchorMappingSelected += new System.EventHandler(this.mappingControl_AnchorMappingSelected);
+            this.mappingControl.SaveAndNew += new System.EventHandler(this.mappingControl_SaveAndNew);
+            this.mappingControl.Load += new System.EventHandler(this.mappingControl_Load);
+            // 
+            // consolidateResultsToolStripMenuItem
+            // 
+            this.consolidateResultsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuExportCsv,
+            this.mnuExportSql});
+            this.consolidateResultsToolStripMenuItem.Name = "consolidateResultsToolStripMenuItem";
+            this.consolidateResultsToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.consolidateResultsToolStripMenuItem.Text = "Consolidate Results";
+            // 
+            // mnuExportCsv
+            // 
+            this.mnuExportCsv.Name = "mnuExportCsv";
+            this.mnuExportCsv.Size = new System.Drawing.Size(152, 22);
+            this.mnuExportCsv.Text = "CSV File";
+            this.mnuExportCsv.Click += new System.EventHandler(this.mnuExportCsv_Click);
+            // 
+            // mnuExportSql
+            // 
+            this.mnuExportSql.Name = "mnuExportSql";
+            this.mnuExportSql.Size = new System.Drawing.Size(152, 22);
+            this.mnuExportSql.Text = "Sql File";
+            this.mnuExportSql.Click += new System.EventHandler(this.mnuExportSql_Click);
             // 
             // MainForm
             // 
@@ -661,7 +679,9 @@
         private System.Windows.Forms.ToolStripMenuItem mnuSkip;
         private System.Windows.Forms.ToolStripStatusLabel lblStatus;
         private System.Windows.Forms.ToolStripStatusLabel lblElementText;
-        private System.Windows.Forms.ToolStripMenuItem mnuConsolidate;
+        private System.Windows.Forms.ToolStripMenuItem consolidateResultsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mnuExportCsv;
+        private System.Windows.Forms.ToolStripMenuItem mnuExportSql;
     }
 }
 
