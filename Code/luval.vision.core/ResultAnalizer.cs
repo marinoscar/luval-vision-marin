@@ -45,18 +45,14 @@ namespace luval.vision.core
         {
             var items = FromDirectory(directoryName);
             var res = new List<Dictionary<string, object>>();
-            foreach (var i in items)
-            {
-                res.AddRange(GetValues(i));
-            }
+            GetValues(res, items);
             var sb = new StringBuilder();
             if (!res.Any()) return sb.ToString();
             var header = res.First();
             sb.AppendLine(string.Join(",", header.Keys));
-            foreach (var r in res)
-            {
-                sb.AppendLine(string.Join(",", r.Values.Select(i => Conv(i))));
-            }
+            BuildString(res, sb, "Building the csv file", (r) => {
+                return string.Join(",", r.Values.Select(i => Conv(i)));
+            });
             return sb.ToString();
         }
 
@@ -70,22 +66,40 @@ namespace luval.vision.core
         {
             var items = FromDirectory(directoryName);
             var res = new List<Dictionary<string, object>>();
-            foreach (var i in items)
-            {
-                res.AddRange(GetValues(i));
-            }
+            GetValues(res, items);
             var sb = new StringBuilder();
             if (!res.Any()) return sb.ToString();
             var header = res.First();
-            if(createTableStatement)
+            if (createTableStatement)
                 sb.AppendLine(GetSqlTableDefinition(sqlTableName, header));
-            foreach (var r in res)
-            {
-                sb.AppendLine(GetSqlInsert(sqlTableName, r));
-            }
+            BuildString(res, sb, "Building the sql file", (r) => {
+                return GetSqlInsert(sqlTableName, r);
+            });
             return sb.ToString();
         }
 
+        private void BuildString(List<Dictionary<string, object>> res, StringBuilder sb, string message, Func<Dictionary<string, object>, string> function)
+        {
+            var cnt = 0;
+            foreach (var r in res)
+            {
+                cnt++;
+                sb.AppendLine(function(r));
+                OnProgress(new ProgressEventArgs(message, cnt, res.Count));
+            }
+        }
+
+        private void GetValues(List<Dictionary<string, object>> res, IEnumerable<ProcessResult> items)
+        {
+            var cnt = 0;
+            var total = items.Count();
+            foreach (var i in items)
+            {
+                cnt++;
+                OnProgress(new ProgressEventArgs("Extracting values", cnt, total) { });
+                res.AddRange(GetValues(i));
+            }
+        }
 
         public IEnumerable<ProcessResult> FromDirectory(string directoryName)
         {
@@ -111,6 +125,10 @@ namespace luval.vision.core
                 d["Image_Name"] = r.ImageInfo.Name;
                 d["Image_Format"] = r.ImageInfo.Format;
                 d["QualityType"] = r.QualityType;
+                d["UnIdentifiedLines"] = r.UnIdentifiedLines;
+                d["TotalIdentifiedLines"] = r.OcrResult.Lines.Count;
+                d["TotalLinesInFile"] = r.OcrResult.Lines.Count + r.UnIdentifiedLines;
+                d["OcrItemIdentificationPercentage"] = (1d - ((double)r.UnIdentifiedLines / ((double)r.OcrResult.Lines.Count + (double)r.UnIdentifiedLines))) * 100d;
                 d["Map_Name"] = map.AttributeName;
                 var mapRes = r.TextResults.First(i => i.Map.AttributeName == map.AttributeName);
                 d["Map_AnchorRankMath"] = mapRes.AnchorRankMath;
@@ -146,7 +164,10 @@ namespace luval.vision.core
                 d["Map_Anchor_VerticalSixth"] = mapRes.AnchorElement.Location.RelativeLocation.VerticalSixth;
                 d["Map_Anchor_VerticalEight"] = mapRes.AnchorElement.Location.RelativeLocation.VerticalEight;
                 if (mapRes.ResultElement == null) mapRes.ResultElement = new OcrElement();
+                var resultLine = r.OcrResult.Lines.FirstOrDefault(i => mapRes.ResultElement.Id > 0 && mapRes.ResultElement.Id == i.Id);
                 d["Map_Result_Text"] = mapRes.ResultElement.Text;
+                d["Map_Result_Value"] = mapRes.Value;
+                d["Map_ResultScalarRank"] = mapRes.ScalarRank;
                 d["Map_Result_IsTopHalf"] = mapRes.ResultElement.Location.RelativeLocation.IsTopHalf;
                 d["Map_Result_Quadrant"] = mapRes.ResultElement.Location.RelativeLocation.Quadrant;
                 d["Map_Result_HorizontalThird"] = mapRes.ResultElement.Location.RelativeLocation.HorizontalThird;
@@ -157,10 +178,11 @@ namespace luval.vision.core
                 d["Map_Result_VerticalQuadrant"] = mapRes.ResultElement.Location.RelativeLocation.VerticalQuadrant;
                 d["Map_Result_VerticalSixth"] = mapRes.ResultElement.Location.RelativeLocation.VerticalSixth;
                 d["Map_Result_VerticalEight"] = mapRes.ResultElement.Location.RelativeLocation.VerticalEight;
-                d["Map_Result_HasNumber"] = _resolverMgr.ContainsNumber(mapRes.ResultElement.Text);
-                d["Map_Result_HasCode"] = _resolverMgr.ContainsCode(mapRes.ResultElement.Text);
-                d["Map_Result_HasDate"] = _resolverMgr.ContainsDate(mapRes.ResultElement.Text);
-                d["Map_Result_HasAmount"] = _resolverMgr.ContainsAmount(mapRes.ResultElement.Text);
+                d["Map_Result_HasNumber"] = resultLine == null ? false : resultLine.HasNumber;
+                d["Map_Result_HasCode"] = resultLine == null ? false : resultLine.HasCode;
+                d["Map_Result_HasDate"] = resultLine == null ? false : resultLine.HasDate;
+                d["Map_Result_HasAmount"] = resultLine == null ? false : resultLine.HasAmount;
+                d["Map_IsScalarRank"] = (bool)d["Map_Result_HasNumber"] || (bool)d["Map_Result_HasDate"] || (bool)d["Map_Result_HasAmount"];
                 res.Add(d);
             }
             return res;
@@ -175,7 +197,7 @@ namespace luval.vision.core
         private string GetSqlTableDefinition(string tableName, Dictionary<string, object> dic)
         {
             var cols = new List<string>();
-            foreach(KeyValuePair<string, object> kv in dic)
+            foreach (KeyValuePair<string, object> kv in dic)
             {
                 cols.Add(string.Format("{0} {1} NULL", kv.Key, GetSqlType(kv.Value.GetType())));
             }
@@ -234,7 +256,7 @@ UtcTimestamp datetime DEFAULT(GETUTCDATE())
                 var i = JsonConvert.DeserializeObject<ProcessResult>(File.ReadAllText(f));
                 res.Add(i);
                 count++;
-                OnProgress(new ProgressEventArgs() { CurrentIteration = count, TotalIterations = files.Count(), Message = "Loading file data into memory" });
+                OnProgress(new ProgressEventArgs("Loading file data into memory", count, files.Count()));
             }
             return res;
         }
