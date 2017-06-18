@@ -9,6 +9,7 @@ namespace luval.vision.ml
     public class ModelResult
     {
         public Dictionary<string, double> AttributeScore { get; set; }
-        public string ScoredAttribute { get; set; }
+        public string Class { get; set; }
+        public double Score { get; set; }
     }
 }

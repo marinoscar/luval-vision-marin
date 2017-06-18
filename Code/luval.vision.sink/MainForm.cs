@@ -1,4 +1,5 @@
 ﻿using luval.vision.core;
+using luval.vision.ml;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -114,17 +115,17 @@ namespace luval.vision.sink
             var result = provider.DoProcess(_fileName, options, "");
             var tuple = new Tuple<OcrResult, List<AttributeMapping>>(result.OcrResult, options);
             _result = result.OcrResult;
-            _processResult = result;
-            LoadVisionTree(result.OcrResult);
-            LoadText(result.OcrResult);
+            _processResult = FilterProcessResult(result);
+            LoadVisionTree(_processResult.OcrResult);
+            LoadText(_processResult.OcrResult);
             ShowParseResult();
             listResult.Tag = null;
             listResult.Items.Clear();
-            listResult.Tag = new Tuple<ProcessResult, List<AttributeMapping>>(result, options);
+            listResult.Tag = new Tuple<ProcessResult, List<AttributeMapping>>(_processResult, options);
             foreach (var map in options)
             {
                 var value = default(string);
-                var item = result.TextResults.FirstOrDefault(i => i.Map.AttributeName == map.AttributeName);
+                var item = _processResult.TextResults.FirstOrDefault(i => i.Map.AttributeName == map.AttributeName);
                 if (item != null) value = item.Value;
                 var listItem = new ListViewItem(new string[] { map.AttributeName, value });
                 if (!string.IsNullOrWhiteSpace(value))
@@ -136,7 +137,14 @@ namespace luval.vision.sink
             btnClear.Enabled = true;
             ListViewHelper.Prepare(listResult);
             mappingControl.Enabled = true;
-            mappingControl.Initialize(result);
+            mappingControl.Initialize(_processResult);
+        }
+
+        private ProcessResult FilterProcessResult(ProcessResult result)
+        {
+            var modelProvider = new ModelProcesor(new CortanaProvider());
+            var response = modelProvider.GetScoredResults(result);
+            return result;
         }
 
         private void LoadText(OcrResult ocrResult)
