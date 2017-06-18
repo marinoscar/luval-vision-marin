@@ -24,27 +24,35 @@ namespace luval.vision.ml
         public List<ModelResult> Execute(List<Dictionary<string, object>> elements)
         {
             var response = GetResponse(elements);
-            if(response.StatusCode != HttpStatusCode.OK)
+            if (response.StatusCode != HttpStatusCode.OK)
                 throw new InvalidOperationException(string.Format("Unable to process request status {0}\n{1}", response.StatusCode, response.Content), response.ErrorException);
             return ParseResponse(response.Content);
         }
 
         private JObject GetPayload(List<Dictionary<string, object>> elements)
         {
-            var json = new JObject();
+            var json = GetEmptyPayload();
             if (!elements.Any()) return json;
             var values = new List<List<object>>();
+            var columnNames = elements.First().Select(i => i.Key).ToArray();
             elements.ForEach(d => values.Add(d.Values.ToList()));
-            json["Inputs"]["invoice_set"]["ColumnNames"] = JArray.FromObject(elements.First().Select(i => i.Key).ToArray());
-            json["Inputs"]["invoice_set"]["ColumnNames"] = JArray.FromObject(values);
+
+            json["Inputs"][_inputName]["ColumnNames"] = JArray.FromObject(columnNames);
+            json["Inputs"][_inputName]["Values"] = JArray.FromObject(values);
             json["GlobalParameters"] = new JObject();
             return json;
+        }
+
+        private JObject GetEmptyPayload()
+        {
+            var template = @"{ ""Inputs"": { ""@input"": { ""ColumnNames"": [], ""Values"": [] } }, ""GlobalParameters"": {} }".Replace("@input", _inputName);
+            return JObject.Parse(template);
         }
 
         private IRestResponse GetResponse(List<Dictionary<string, object>> elements)
         {
             var key = ConfigurationManager.AppSettings["azure.ml.token"];
-            var endPoint = ConfigurationManager.AppSettings["ml.endpoint.request"];
+            var endPoint = WebUtility.UrlDecode(ConfigurationManager.AppSettings["ml.endpoint.request"]);
             var client = new RestClient(endPoint);
             var request = new RestRequest(Method.POST);
             var payload = GetPayload(elements).ToString();
@@ -52,6 +60,7 @@ namespace luval.vision.ml
             request.AddHeader("Content-Length", payload.Length.ToString());
             request.AddHeader("Content-Type", "application/json");
             request.AddHeader("Accept", "application/json");
+            request.AddParameter("application/json; charset=utf-8", payload, ParameterType.RequestBody);
             return client.Execute(request);
         }
 
@@ -60,20 +69,22 @@ namespace luval.vision.ml
             var resultArrays = new List<List<string>>();
             var criteria = "Scored Probabilities for Class ";
             var json = JObject.Parse(content);
-            var columnNames = json["Results"]["invoice_result"]["value"]["ColumnNames"].ToObject<List<string>>();
-            var values = json["Results"]["invoice_result"]["value"]["Values"].ToObject<List<List<string>>>().ToList();
+            var columnNames = json["Results"][_inputName]["value"]["ColumnNames"].ToObject<List<string>>();
+            var values = json["Results"][_inputName]["value"]["Values"].ToObject<List<List<string>>>().ToList();
             var labelIndex = columnNames.IndexOf("Scored Labels");
             var attributeScores = columnNames.Where(i => i.StartsWith(criteria)).ToList();
-            var mapResults = attributeScores.Select(i => i.Replace(criteria, "").Trim()).ToList();
+            var mapResults = attributeScores.Select(i => i.Replace(criteria, "").Replace(@"""", "").Trim()).ToList();
             var results = new List<ModelResult>();
-            foreach(var e in values)
+            foreach (var e in values)
             {
-                var modelRes = new ModelResult() { ScoredAttribute = e[labelIndex] };
+                var modelRes = new ModelResult() { Class = e[labelIndex] };
                 var attScore = new Dictionary<string, double>();
                 for (int i = 0; i < attributeScores.Count; i++)
                 {
-                    attScore[mapResults[i]] = Convert.ToDouble(columnNames.IndexOf(attributeScores[i]));
+                    attScore[mapResults[i]] = Convert.ToDouble(e[columnNames.IndexOf(attributeScores[i])]);
                 }
+                modelRes.AttributeScore = attScore;
+                modelRes.Score = attScore[modelRes.Class];
                 results.Add(modelRes);
             }
             return results;
