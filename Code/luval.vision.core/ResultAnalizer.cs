@@ -1,4 +1,5 @@
 ﻿using luval.vision.core.resolvers;
+using Luval.Common;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -114,83 +115,100 @@ namespace luval.vision.core
             var res = new List<Dictionary<string, object>>();
             foreach (var map in r.Mappings)
             {
-                var d = new Dictionary<string, object>();
-                d["Id"] = r.Id;
-                d["Image_Language"] = r.OcrResult.Language;
-                d["Image_Orientation"] = r.OcrResult.Orientation;
-                d["Image_TextAngle"] = r.OcrResult.TextAngle;
-                d["Image_Height"] = r.ImageInfo.Height;
-                d["Image_Width"] = r.ImageInfo.Width;
-                d["Image_HorResolution"] = r.ImageInfo.HorizontalResolution;
-                d["Image_VerResolution"] = r.ImageInfo.VerticalResolution;
-                d["Image_WorkingHeight"] = r.ImageInfo.WorkingHeight;
-                d["Image_WorkingWidth"] = r.ImageInfo.WorkingWidth;
-                d["Image_Name"] = r.ImageInfo.Name;
-                d["Image_Format"] = r.ImageInfo.Format;
-                d["Image_Hash"] = r.ImageInfo.ImageHash;
-                d["QualityType"] = r.QualityType;
-                d["UnIdentifiedLines"] = r.UnIdentifiedLines;
-                d["TotalIdentifiedLines"] = r.OcrResult.Lines.Count;
-                d["TotalLinesInFile"] = r.OcrResult.Lines.Count + r.UnIdentifiedLines;
-                d["OcrItemIdentificationPercentage"] = (1d - ((double)r.UnIdentifiedLines / ((double)r.OcrResult.Lines.Count + (double)r.UnIdentifiedLines))) * 100d;
-                d["Map_Name"] = map.AttributeName;
-                var mapRes = r.TextResults.First(i => i.Map.AttributeName == map.AttributeName);
-                d["Map_AnchorRankMath"] = mapRes.AnchorRankMath;
-                d["Map_ElementTextNotFound"] = mapRes.ElementTextNotFound;
-                d["Map_NotFound"] = mapRes.NotFound;
-                d["Map_IsAnchorOnLeft"] = mapRes.IsAnchorOnLeft;
-                d["Map_IsResultTagged"] = mapRes.IsResultTagged;
-                d["Map_RelativeOffsetX"] = mapRes.RelativeOffsetX;
-                d["Map_RelativeOffsetY"] = mapRes.RelativeOffsetY;
-                if (mapRes.RelativeLocation == null) mapRes.RelativeLocation = new OcrRelativeLocation();
-                d["Map_IsTopHalf"] = mapRes.RelativeLocation.IsTopHalf;
-                d["Map_Quadrant"] = mapRes.RelativeLocation.Quadrant;
-                d["Map_HorizontalThird"] = mapRes.RelativeLocation.HorizontalThird;
-                d["Map_HorizontalQuadrant"] = mapRes.RelativeLocation.HorizontalQuadrant;
-                d["Map_HorizontalSixth"] = mapRes.RelativeLocation.HorizontalSixth;
-                d["Map_HorizontalEight"] = mapRes.RelativeLocation.HorizontalEight;
-                d["Map_VerticalThird"] = mapRes.RelativeLocation.VerticalThird;
-                d["Map_VerticalQuadrant"] = mapRes.RelativeLocation.VerticalQuadrant;
-                d["Map_VerticalSixth"] = mapRes.RelativeLocation.VerticalSixth;
-                d["Map_VerticalEight"] = mapRes.RelativeLocation.VerticalEight;
-                d["Map_RelativeWidth"] = mapRes.RelativeLocation.Width;
-                d["Map_RelativeHeight"] = mapRes.RelativeLocation.Height;
-                if (mapRes.AnchorElement == null) mapRes.AnchorElement = new OcrElement();
-                d["Map_Anchor_Text"] = mapRes.AnchorElement.Text;
-                d["Map_Anchor_IsTopHalf"] = mapRes.AnchorElement.Location.RelativeLocation.IsTopHalf;
-                d["Map_Anchor_Quadrant"] = mapRes.AnchorElement.Location.RelativeLocation.Quadrant;
-                d["Map_Anchor_HorizontalThird"] = mapRes.AnchorElement.Location.RelativeLocation.HorizontalThird;
-                d["Map_Anchor_HorizontalQuadrant"] = mapRes.AnchorElement.Location.RelativeLocation.HorizontalQuadrant;
-                d["Map_Anchor_HorizontalSixth"] = mapRes.AnchorElement.Location.RelativeLocation.HorizontalSixth;
-                d["Map_Anchor_HorizontalEight"] = mapRes.AnchorElement.Location.RelativeLocation.HorizontalEight;
-                d["Map_Anchor_VerticalThird"] = mapRes.AnchorElement.Location.RelativeLocation.VerticalThird;
-                d["Map_Anchor_VerticalQuadrant"] = mapRes.AnchorElement.Location.RelativeLocation.VerticalQuadrant;
-                d["Map_Anchor_VerticalSixth"] = mapRes.AnchorElement.Location.RelativeLocation.VerticalSixth;
-                d["Map_Anchor_VerticalEight"] = mapRes.AnchorElement.Location.RelativeLocation.VerticalEight;
-                if (mapRes.ResultElement == null) mapRes.ResultElement = new OcrElement();
-                var resultLine = r.OcrResult.Lines.FirstOrDefault(i => mapRes.ResultElement.Id > 0 && mapRes.ResultElement.Id == i.Id);
-                d["Map_Result_Text"] = mapRes.ResultElement.Text;
-                d["Map_Result_Value"] = mapRes.Value;
-                d["Map_ResultScalarRank"] = mapRes.ScalarRank;
-                d["Map_Result_IsTopHalf"] = mapRes.ResultElement.Location.RelativeLocation.IsTopHalf;
-                d["Map_Result_Quadrant"] = mapRes.ResultElement.Location.RelativeLocation.Quadrant;
-                d["Map_Result_HorizontalThird"] = mapRes.ResultElement.Location.RelativeLocation.HorizontalThird;
-                d["Map_Result_HorizontalQuadrant"] = mapRes.ResultElement.Location.RelativeLocation.HorizontalQuadrant;
-                d["Map_Result_HorizontalSixth"] = mapRes.ResultElement.Location.RelativeLocation.HorizontalSixth;
-                d["Map_Result_HorizontalEight"] = mapRes.ResultElement.Location.RelativeLocation.HorizontalEight;
-                d["Map_Result_VerticalThird"] = mapRes.ResultElement.Location.RelativeLocation.VerticalThird;
-                d["Map_Result_VerticalQuadrant"] = mapRes.ResultElement.Location.RelativeLocation.VerticalQuadrant;
-                d["Map_Result_VerticalSixth"] = mapRes.ResultElement.Location.RelativeLocation.VerticalSixth;
-                d["Map_Result_VerticalEight"] = mapRes.ResultElement.Location.RelativeLocation.VerticalEight;
-                d["Map_Result_HasNumber"] = resultLine == null ? false : resultLine.HasNumber;
-                d["Map_Result_HasCode"] = resultLine == null ? false : resultLine.HasCode;
-                d["Map_Result_HasDate"] = resultLine == null ? false : resultLine.HasDate;
-                d["Map_Result_HasAmount"] = resultLine == null ? false : resultLine.HasAmount;
-                d["Map_IsScalarRank"] = (bool)d["Map_Result_HasNumber"] || (bool)d["Map_Result_HasDate"] || (bool)d["Map_Result_HasAmount"];
-                d["Nlp_Language"] = r.NlpResult.Language;
+                var d = GetMappingVector(r, map);
                 res.Add(d);
             }
             return res;
+        }
+
+        public static Dictionary<string, string> GetMappingVectorAsString(ProcessResult r, AttributeMapping map)
+        {
+            var d = GetMappingVector(r, map);
+            var res = new Dictionary<string, string>();
+            foreach(KeyValuePair<string, object> kv in d)
+            {
+                res[kv.Key] = Conv(kv.Value);
+            }
+            return res;
+        }
+
+        public static Dictionary<string, object> GetMappingVector(ProcessResult r, AttributeMapping map)
+        {
+            var d = new Dictionary<string, object>();
+            d["Id"] = r.Id;
+            d["Image_Language"] = r.OcrResult.Language;
+            d["Image_Orientation"] = r.OcrResult.Orientation;
+            d["Image_TextAngle"] = r.OcrResult.TextAngle;
+            d["Image_Height"] = r.ImageInfo.Height;
+            d["Image_Width"] = r.ImageInfo.Width;
+            d["Image_HorResolution"] = r.ImageInfo.HorizontalResolution;
+            d["Image_VerResolution"] = r.ImageInfo.VerticalResolution;
+            d["Image_WorkingHeight"] = r.ImageInfo.WorkingHeight;
+            d["Image_WorkingWidth"] = r.ImageInfo.WorkingWidth;
+            d["Image_Name"] = r.ImageInfo.Name;
+            d["Image_Format"] = r.ImageInfo.Format;
+            d["Image_Hash"] = r.ImageInfo.ImageHash;
+            d["QualityType"] = r.QualityType;
+            d["UnIdentifiedLines"] = r.UnIdentifiedLines;
+            d["TotalIdentifiedLines"] = r.OcrResult.Lines.Count;
+            d["TotalLinesInFile"] = r.OcrResult.Lines.Count + r.UnIdentifiedLines;
+            d["OcrItemIdentificationPercentage"] = (1d - ((double)r.UnIdentifiedLines / ((double)r.OcrResult.Lines.Count + (double)r.UnIdentifiedLines))) * 100d;
+            d["Map_Name"] = map.AttributeName;
+            var mapRes = r.TextResults.First(i => i.Map.AttributeName == map.AttributeName);
+            d["Map_AnchorRankMath"] = mapRes.AnchorRankMath;
+            d["Map_ElementTextNotFound"] = mapRes.ElementTextNotFound;
+            d["Map_NotFound"] = mapRes.NotFound;
+            d["Map_IsAnchorOnLeft"] = mapRes.IsAnchorOnLeft;
+            d["Map_IsResultTagged"] = mapRes.IsResultTagged;
+            d["Map_RelativeOffsetX"] = mapRes.RelativeOffsetX;
+            d["Map_RelativeOffsetY"] = mapRes.RelativeOffsetY;
+            if (mapRes.RelativeLocation == null) mapRes.RelativeLocation = new OcrRelativeLocation();
+            d["Map_IsTopHalf"] = mapRes.RelativeLocation.IsTopHalf;
+            d["Map_Quadrant"] = mapRes.RelativeLocation.Quadrant;
+            d["Map_HorizontalThird"] = mapRes.RelativeLocation.HorizontalThird;
+            d["Map_HorizontalQuadrant"] = mapRes.RelativeLocation.HorizontalQuadrant;
+            d["Map_HorizontalSixth"] = mapRes.RelativeLocation.HorizontalSixth;
+            d["Map_HorizontalEight"] = mapRes.RelativeLocation.HorizontalEight;
+            d["Map_VerticalThird"] = mapRes.RelativeLocation.VerticalThird;
+            d["Map_VerticalQuadrant"] = mapRes.RelativeLocation.VerticalQuadrant;
+            d["Map_VerticalSixth"] = mapRes.RelativeLocation.VerticalSixth;
+            d["Map_VerticalEight"] = mapRes.RelativeLocation.VerticalEight;
+            d["Map_RelativeWidth"] = mapRes.RelativeLocation.Width;
+            d["Map_RelativeHeight"] = mapRes.RelativeLocation.Height;
+            if (mapRes.AnchorElement == null) mapRes.AnchorElement = new OcrElement();
+            d["Map_Anchor_Text"] = mapRes.AnchorElement.Text;
+            d["Map_Anchor_IsTopHalf"] = mapRes.AnchorElement.Location.RelativeLocation.IsTopHalf;
+            d["Map_Anchor_Quadrant"] = mapRes.AnchorElement.Location.RelativeLocation.Quadrant;
+            d["Map_Anchor_HorizontalThird"] = mapRes.AnchorElement.Location.RelativeLocation.HorizontalThird;
+            d["Map_Anchor_HorizontalQuadrant"] = mapRes.AnchorElement.Location.RelativeLocation.HorizontalQuadrant;
+            d["Map_Anchor_HorizontalSixth"] = mapRes.AnchorElement.Location.RelativeLocation.HorizontalSixth;
+            d["Map_Anchor_HorizontalEight"] = mapRes.AnchorElement.Location.RelativeLocation.HorizontalEight;
+            d["Map_Anchor_VerticalThird"] = mapRes.AnchorElement.Location.RelativeLocation.VerticalThird;
+            d["Map_Anchor_VerticalQuadrant"] = mapRes.AnchorElement.Location.RelativeLocation.VerticalQuadrant;
+            d["Map_Anchor_VerticalSixth"] = mapRes.AnchorElement.Location.RelativeLocation.VerticalSixth;
+            d["Map_Anchor_VerticalEight"] = mapRes.AnchorElement.Location.RelativeLocation.VerticalEight;
+            if (mapRes.ResultElement == null) mapRes.ResultElement = new OcrElement();
+            var resultLine = r.OcrResult.Lines.FirstOrDefault(i => mapRes.ResultElement.Id > 0 && mapRes.ResultElement.Id == i.Id);
+            d["Map_Result_Text"] = mapRes.ResultElement.Text;
+            d["Map_Result_Value"] = mapRes.Value;
+            d["Map_ResultScalarRank"] = mapRes.ScalarRank;
+            d["Map_Result_IsTopHalf"] = mapRes.ResultElement.Location.RelativeLocation.IsTopHalf;
+            d["Map_Result_Quadrant"] = mapRes.ResultElement.Location.RelativeLocation.Quadrant;
+            d["Map_Result_HorizontalThird"] = mapRes.ResultElement.Location.RelativeLocation.HorizontalThird;
+            d["Map_Result_HorizontalQuadrant"] = mapRes.ResultElement.Location.RelativeLocation.HorizontalQuadrant;
+            d["Map_Result_HorizontalSixth"] = mapRes.ResultElement.Location.RelativeLocation.HorizontalSixth;
+            d["Map_Result_HorizontalEight"] = mapRes.ResultElement.Location.RelativeLocation.HorizontalEight;
+            d["Map_Result_VerticalThird"] = mapRes.ResultElement.Location.RelativeLocation.VerticalThird;
+            d["Map_Result_VerticalQuadrant"] = mapRes.ResultElement.Location.RelativeLocation.VerticalQuadrant;
+            d["Map_Result_VerticalSixth"] = mapRes.ResultElement.Location.RelativeLocation.VerticalSixth;
+            d["Map_Result_VerticalEight"] = mapRes.ResultElement.Location.RelativeLocation.VerticalEight;
+            d["Map_Result_HasNumber"] = resultLine == null ? false : resultLine.HasNumber;
+            d["Map_Result_HasCode"] = resultLine == null ? false : resultLine.HasCode;
+            d["Map_Result_HasDate"] = resultLine == null ? false : resultLine.HasDate;
+            d["Map_Result_HasAmount"] = resultLine == null ? false : resultLine.HasAmount;
+            d["Map_IsScalarRank"] = (bool)d["Map_Result_HasNumber"] || (bool)d["Map_Result_HasDate"] || (bool)d["Map_Result_HasAmount"];
+            d["Nlp_Language"] = r.NlpResult.Language;
+            return d;
         }
 
         private string GetSqlInsert(string tableName, Dictionary<string, object> dic)
@@ -212,8 +230,7 @@ namespace luval.vision.core
         private string SqlFormat(object obj)
         {
             if (obj == null) return "NULL";
-            var str = Conv(obj).Replace("'", "''");
-            return obj.GetType().IsValueType ? str : string.Format("'{0}'", str);
+            return obj.ToSql();
 
         }
         private string GetSqlType(Type type)
@@ -244,12 +261,10 @@ UtcTimestamp datetime DEFAULT(GETUTCDATE())
 ";
         }
 
-        private string Conv(object obj)
+        private static string Conv(object obj)
         {
-            if (obj is DateTime) return ((DateTime)obj).ToString("YYYY-MM-DD hh:mm:ss");
-            if (obj is bool) return ((bool)obj) ? "1" : "0";
             if (obj == null) return string.Empty;
-            return Convert.ToString(obj);
+            return obj.ToSql().Replace("'", "");
         }
 
         private List<ProcessResult> LoadFromFiles(IEnumerable<string> files)
