@@ -24,6 +24,7 @@ namespace luval.vision.core
         public bool IsResultTagged { get; set; }
         public bool NotFound { get; set; }
         public bool ElementTextNotFound { get; set; }
+        public double Score { get; set; }
 
         public MappingResult()
         {

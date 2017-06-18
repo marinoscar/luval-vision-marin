@@ -15,10 +15,12 @@ namespace luval.vision.ml
     public class CortanaProvider : IModelProvider
     {
         private string _inputName;
+        private string _outputName;
 
         public CortanaProvider()
         {
             _inputName = ConfigurationManager.AppSettings["ml.input_name"];
+            _outputName = ConfigurationManager.AppSettings["ml.output_name"];
         }
 
         public List<ModelResult> Execute(List<Dictionary<string, object>> elements)
@@ -69,8 +71,8 @@ namespace luval.vision.ml
             var resultArrays = new List<List<string>>();
             var criteria = "Scored Probabilities for Class ";
             var json = JObject.Parse(content);
-            var columnNames = json["Results"][_inputName]["value"]["ColumnNames"].ToObject<List<string>>();
-            var values = json["Results"][_inputName]["value"]["Values"].ToObject<List<List<string>>>().ToList();
+            var columnNames = json["Results"][_outputName]["value"]["ColumnNames"].ToObject<List<string>>();
+            var values = json["Results"][_outputName]["value"]["Values"].ToObject<List<List<string>>>().ToList();
             var labelIndex = columnNames.IndexOf("Scored Labels");
             var attributeScores = columnNames.Where(i => i.StartsWith(criteria)).ToList();
             var mapResults = attributeScores.Select(i => i.Replace(criteria, "").Replace(@"""", "").Trim()).ToList();
@@ -84,7 +86,8 @@ namespace luval.vision.ml
                     attScore[mapResults[i]] = Convert.ToDouble(e[columnNames.IndexOf(attributeScores[i])]);
                 }
                 modelRes.AttributeScore = attScore;
-                modelRes.Score = attScore[modelRes.Class];
+                if(!string.IsNullOrWhiteSpace(modelRes.Class))
+                    modelRes.Score = attScore[modelRes.Class];
                 results.Add(modelRes);
             }
             return results;

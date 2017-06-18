@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -87,8 +88,17 @@ namespace luval.vision.sink
                 return;
             }
             processBtn.Enabled = false;
-            DoProcess();
-            MessageBox.Show("Process completed", "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            var avgScore = 0d;
+            var sw = Stopwatch.StartNew();
+            var res = DoProcess();
+            sw.Stop();
+            if (res != null)
+            {
+                var items = res.TextResults.Where(i => i.Score > 0).ToList();
+                if(items.Any())
+                    avgScore = items.Average(i => i.Score);
+            }
+            MessageBox.Show(string.Format("Process completed in {0} with a confidence value of {1}", sw.Elapsed, avgScore.ToString("N4")), "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
             processBtn.Enabled = true;
         }
 
@@ -108,14 +118,15 @@ namespace luval.vision.sink
 
         }
 
-        private void DoProcess()
+        private ProcessResult DoProcess()
         {
             var options = GetProfile();
             var provider = new DocumentProcesor(GetProvider(false), new NlpProvider(new GoogleNlpEngine(), new GoogleNlpLoader()));
             var result = provider.DoProcess(_fileName, options, "");
             var tuple = new Tuple<OcrResult, List<AttributeMapping>>(result.OcrResult, options);
             _result = result.OcrResult;
-            _processResult = FilterProcessResult(result);
+            result = FilterProcessResult(result);
+            _processResult = result;
             LoadVisionTree(_processResult.OcrResult);
             LoadText(_processResult.OcrResult);
             ShowParseResult();
@@ -138,12 +149,28 @@ namespace luval.vision.sink
             ListViewHelper.Prepare(listResult);
             mappingControl.Enabled = true;
             mappingControl.Initialize(_processResult);
+            return result;
         }
 
         private ProcessResult FilterProcessResult(ProcessResult result)
         {
             var modelProvider = new ModelProcesor(new CortanaProvider());
-            var response = modelProvider.GetScoredResults(result);
+            var response = modelProvider.GetScoredResults(result).ToList();
+            var mapedItems = new List<Tuple<MappingResult, ModelResult>>();
+            for (int i = 0; i < result.TextResults.Count; i++)
+            {
+                mapedItems.Add(new Tuple<MappingResult, ModelResult>(result.TextResults[i], response[i]));
+            }
+            var orderedItems = mapedItems.OrderBy(i => i.Item2.Class).ThenByDescending(i => i.Item2.Score).ToList();
+            var classes = response.Select(i => i.Class).Distinct().ToList();
+            var newResults = new List<MappingResult>();
+            foreach(var c in classes)
+            {
+                var tuple = orderedItems.First(i => i.Item2.Class == c);
+                tuple.Item1.Score = tuple.Item2.Score;
+                newResults.Add(tuple.Item1);
+            }
+            result.TextResults = newResults.Where(i => i.Score > 0.75d).ToList();
             return result;
         }
 
