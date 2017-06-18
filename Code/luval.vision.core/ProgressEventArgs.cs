@@ -8,6 +8,24 @@ namespace luval.vision.core
 {
     public class ProgressEventArgs : EventArgs
     {
+
+        public ProgressEventArgs()
+        {
+
+        }
+
+
+        public ProgressEventArgs(int current, int total)
+        {
+            CurrentIteration = current;
+            TotalIterations = total;
+        }
+
+        public ProgressEventArgs(string message, int current, int total): this(current, total)
+        {
+            Message = message;
+        }
+
         public string Message { get; set; }
         public int CurrentIteration { get; set; }
         public int TotalIterations { get; set; }
