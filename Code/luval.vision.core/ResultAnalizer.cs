@@ -98,7 +98,7 @@ namespace luval.vision.core
             {
                 cnt++;
                 OnProgress(new ProgressEventArgs("Extracting values", cnt, total) { });
-                res.AddRange(GetValues(i));
+                res.AddRange(GetMappingVector(i));
             }
         }
 
@@ -110,20 +110,23 @@ namespace luval.vision.core
         }
 
 
-        private List<Dictionary<string, object>> GetValues(ProcessResult r)
+        public static List<Dictionary<string, object>> GetMappingVector(ProcessResult r)
         {
             var res = new List<Dictionary<string, object>>();
-            foreach (var map in r.Mappings)
+
+            foreach (var mapRes in r.TextResults)
             {
-                var d = GetMappingVector(r, map);
-                res.Add(d);
+                var d = GetMappingVector(r, mapRes);
+                if(d != null)
+                    res.Add(d);
             }
             return res;
         }
 
-        public static Dictionary<string, string> GetMappingVectorAsString(ProcessResult r, AttributeMapping map)
+        public static Dictionary<string, string> GetMappingVectorAsString(ProcessResult r, MappingResult mapRes)
         {
-            var d = GetMappingVector(r, map);
+            var d = GetMappingVector(r, mapRes);
+            if (d == null) return null;
             var res = new Dictionary<string, string>();
             foreach(KeyValuePair<string, object> kv in d)
             {
@@ -132,7 +135,7 @@ namespace luval.vision.core
             return res;
         }
 
-        public static Dictionary<string, object> GetMappingVector(ProcessResult r, AttributeMapping map)
+        public static Dictionary<string, object> GetMappingVector(ProcessResult r, MappingResult mapRes)
         {
             var d = new Dictionary<string, object>();
             d["Id"] = r.Id;
@@ -153,8 +156,7 @@ namespace luval.vision.core
             d["TotalIdentifiedLines"] = r.OcrResult.Lines.Count;
             d["TotalLinesInFile"] = r.OcrResult.Lines.Count + r.UnIdentifiedLines;
             d["OcrItemIdentificationPercentage"] = (1d - ((double)r.UnIdentifiedLines / ((double)r.OcrResult.Lines.Count + (double)r.UnIdentifiedLines))) * 100d;
-            d["Map_Name"] = map.AttributeName;
-            var mapRes = r.TextResults.First(i => i.Map.AttributeName == map.AttributeName);
+            d["Map_Name"] = mapRes.Map.AttributeName;
             d["Map_AnchorRankMath"] = mapRes.AnchorRankMath;
             d["Map_ElementTextNotFound"] = mapRes.ElementTextNotFound;
             d["Map_NotFound"] = mapRes.NotFound;
@@ -208,7 +210,14 @@ namespace luval.vision.core
             d["Map_Result_HasAmount"] = resultLine == null ? false : resultLine.HasAmount;
             d["Map_IsScalarRank"] = (bool)d["Map_Result_HasNumber"] || (bool)d["Map_Result_HasDate"] || (bool)d["Map_Result_HasAmount"];
             d["Nlp_Language"] = r.NlpResult.Language;
-            return d;
+            //Change boolean to numeric type
+            var resDir = new Dictionary<string, object>();
+            foreach(KeyValuePair<string, object> kv in d)
+            {
+                if (kv.Value is bool) resDir[kv.Key] = Convert.ToInt16(kv.Value);
+                else resDir[kv.Key] = kv.Value;
+            }
+            return resDir;
         }
 
         private string GetSqlInsert(string tableName, Dictionary<string, object> dic)
