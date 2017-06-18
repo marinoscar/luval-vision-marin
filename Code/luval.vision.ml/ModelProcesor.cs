@@ -16,7 +16,7 @@ namespace luval.vision.ml
 
         public IModelProvider Provider { get; private set; }
 
-        public IEnumerable<MappingResult> GetScoredResults(IEnumerable<MappingResult> toScore)
+        public IEnumerable<MappingResult> GetScoredResults(ProcessResult processResult)
         {
 
             return null;
