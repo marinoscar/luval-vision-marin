@@ -116,6 +116,9 @@ namespace luval.vision.core
             {
                 var d = new Dictionary<string, object>();
                 d["Id"] = r.Id;
+                d["Image_Language"] = r.OcrResult.Language;
+                d["Image_Orientation"] = r.OcrResult.Orientation;
+                d["Image_TextAngle"] = r.OcrResult.TextAngle;
                 d["Image_Height"] = r.ImageInfo.Height;
                 d["Image_Width"] = r.ImageInfo.Width;
                 d["Image_HorResolution"] = r.ImageInfo.HorizontalResolution;
@@ -124,6 +127,7 @@ namespace luval.vision.core
                 d["Image_WorkingWidth"] = r.ImageInfo.WorkingWidth;
                 d["Image_Name"] = r.ImageInfo.Name;
                 d["Image_Format"] = r.ImageInfo.Format;
+                d["Image_Hash"] = r.ImageInfo.ImageHash;
                 d["QualityType"] = r.QualityType;
                 d["UnIdentifiedLines"] = r.UnIdentifiedLines;
                 d["TotalIdentifiedLines"] = r.OcrResult.Lines.Count;
@@ -183,6 +187,7 @@ namespace luval.vision.core
                 d["Map_Result_HasDate"] = resultLine == null ? false : resultLine.HasDate;
                 d["Map_Result_HasAmount"] = resultLine == null ? false : resultLine.HasAmount;
                 d["Map_IsScalarRank"] = (bool)d["Map_Result_HasNumber"] || (bool)d["Map_Result_HasDate"] || (bool)d["Map_Result_HasAmount"];
+                d["Nlp_Language"] = r.NlpResult.Language;
                 res.Add(d);
             }
             return res;
