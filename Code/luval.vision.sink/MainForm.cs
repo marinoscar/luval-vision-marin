@@ -23,10 +23,13 @@ namespace luval.vision.sink
         private Image _originalImg;
         private ProcessResult _processResult;
         private List<AttributeMapping> _profiles;
+        ResultAnalizer _analizer;
 
         public MainForm()
         {
             InitializeComponent();
+            _analizer = new ResultAnalizer();
+            _analizer.Progress += UpdateProgress;
         }
 
         public PictureBox PictureBox { get { return pictureBox; } }
@@ -510,14 +513,39 @@ namespace luval.vision.sink
 
         private void mnuExportCsv_Click(object sender, EventArgs e)
         {
-            var analizer = new ResultAnalizer();
-            analizer.FromDirectoryToCsv(WorkingDir.Result.FullName, string.Format(@"{0}\{1}.csv", WorkingDir.Analytics, Guid.NewGuid()));
+            StartProgress();
+            _analizer.FromDirectoryToCsv(WorkingDir.Result.FullName, string.Format(@"{0}\{1}.csv", WorkingDir.Analytics, Guid.NewGuid()));
+            EndProgress("Finish Export");
         }
 
         private void mnuExportSql_Click(object sender, EventArgs e)
         {
-            var analizer = new ResultAnalizer();
-            analizer.FromDirectoryToSql(WorkingDir.Result.FullName, "ResultData", true, string.Format(@"{0}\{1}.sql", WorkingDir.Analytics, Guid.NewGuid()));
+            StartProgress();
+            _analizer.FromDirectoryToSql(WorkingDir.Result.FullName, "ResultData", true, string.Format(@"{0}\{1}.sql", WorkingDir.Analytics, Guid.NewGuid()));
+            EndProgress("Finish Export");
+        }
+
+        private void StartProgress()
+        {
+            lblProgress.Visible = true;
+            pbProgress.Visible = true;
+            pbProgress.Minimum = 0;
+            pbProgress.Maximum = 100;
+        }
+
+        private void EndProgress(string message)
+        {
+            lblProgress.Visible = false;
+            pbProgress.Visible = false;
+            if (string.IsNullOrWhiteSpace(message)) return;
+            MessageBox.Show(message, "Completed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void UpdateProgress(object sender, ProgressEventArgs e)
+        {
+            pbProgress.Value = (int)e.Progress;
+            lblProgress.Text = e.Message;
+            Application.DoEvents();
         }
     }
 }

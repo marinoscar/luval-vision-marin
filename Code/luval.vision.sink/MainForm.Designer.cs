@@ -41,6 +41,9 @@
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuLoadForMapping = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuSkip = new System.Windows.Forms.ToolStripMenuItem();
+            this.consolidateResultsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuExportCsv = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuExportSql = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.lblProfile = new System.Windows.Forms.ToolStripStatusLabel();
@@ -75,10 +78,9 @@
             this.resultText = new System.Windows.Forms.TextBox();
             this.tabVisionJson = new System.Windows.Forms.TabPage();
             this.treeJsonVision = new System.Windows.Forms.TreeView();
+            this.lblProgress = new System.Windows.Forms.ToolStripStatusLabel();
+            this.pbProgress = new System.Windows.Forms.ToolStripProgressBar();
             this.mappingControl = new luval.vision.sink.Controls.MappingControl();
-            this.consolidateResultsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuExportCsv = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuExportSql = new System.Windows.Forms.ToolStripMenuItem();
             this.mainMenu.SuspendLayout();
             this.panel1.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -193,6 +195,29 @@
             this.mnuSkip.Size = new System.Drawing.Size(190, 22);
             this.mnuSkip.Text = "Skip Image";
             // 
+            // consolidateResultsToolStripMenuItem
+            // 
+            this.consolidateResultsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuExportCsv,
+            this.mnuExportSql});
+            this.consolidateResultsToolStripMenuItem.Name = "consolidateResultsToolStripMenuItem";
+            this.consolidateResultsToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.consolidateResultsToolStripMenuItem.Text = "Consolidate Results";
+            // 
+            // mnuExportCsv
+            // 
+            this.mnuExportCsv.Name = "mnuExportCsv";
+            this.mnuExportCsv.Size = new System.Drawing.Size(116, 22);
+            this.mnuExportCsv.Text = "CSV File";
+            this.mnuExportCsv.Click += new System.EventHandler(this.mnuExportCsv_Click);
+            // 
+            // mnuExportSql
+            // 
+            this.mnuExportSql.Name = "mnuExportSql";
+            this.mnuExportSql.Size = new System.Drawing.Size(116, 22);
+            this.mnuExportSql.Text = "Sql File";
+            this.mnuExportSql.Click += new System.EventHandler(this.mnuExportSql_Click);
+            // 
             // panel1
             // 
             this.panel1.Controls.Add(this.statusStrip);
@@ -212,7 +237,9 @@
             this.lblProfile,
             this.lblMouseCoordinates,
             this.lblStatus,
-            this.lblElementText});
+            this.lblElementText,
+            this.lblProgress,
+            this.pbProgress});
             this.statusStrip.Location = new System.Drawing.Point(0, 64);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Size = new System.Drawing.Size(1083, 24);
@@ -242,8 +269,7 @@
             | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
             this.lblElementText.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.lblElementText.Name = "lblElementText";
-            this.lblElementText.Size = new System.Drawing.Size(983, 19);
-            this.lblElementText.Spring = true;
+            this.lblElementText.Size = new System.Drawing.Size(35, 19);
             this.lblElementText.Text = "Text:";
             this.lblElementText.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -556,6 +582,18 @@
             this.treeJsonVision.Size = new System.Drawing.Size(1052, 628);
             this.treeJsonVision.TabIndex = 0;
             // 
+            // lblProgress
+            // 
+            this.lblProgress.Name = "lblProgress";
+            this.lblProgress.Size = new System.Drawing.Size(101, 19);
+            this.lblProgress.Text = "Progress Message";
+            // 
+            // pbProgress
+            // 
+            this.pbProgress.Name = "pbProgress";
+            this.pbProgress.Size = new System.Drawing.Size(100, 18);
+            this.pbProgress.Visible = false;
+            // 
             // mappingControl
             // 
             this.mappingControl.Enabled = false;
@@ -569,29 +607,6 @@
             this.mappingControl.AnchorMappingSelected += new System.EventHandler(this.mappingControl_AnchorMappingSelected);
             this.mappingControl.SaveAndNew += new System.EventHandler(this.mappingControl_SaveAndNew);
             this.mappingControl.Load += new System.EventHandler(this.mappingControl_Load);
-            // 
-            // consolidateResultsToolStripMenuItem
-            // 
-            this.consolidateResultsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuExportCsv,
-            this.mnuExportSql});
-            this.consolidateResultsToolStripMenuItem.Name = "consolidateResultsToolStripMenuItem";
-            this.consolidateResultsToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
-            this.consolidateResultsToolStripMenuItem.Text = "Consolidate Results";
-            // 
-            // mnuExportCsv
-            // 
-            this.mnuExportCsv.Name = "mnuExportCsv";
-            this.mnuExportCsv.Size = new System.Drawing.Size(152, 22);
-            this.mnuExportCsv.Text = "CSV File";
-            this.mnuExportCsv.Click += new System.EventHandler(this.mnuExportCsv_Click);
-            // 
-            // mnuExportSql
-            // 
-            this.mnuExportSql.Name = "mnuExportSql";
-            this.mnuExportSql.Size = new System.Drawing.Size(152, 22);
-            this.mnuExportSql.Text = "Sql File";
-            this.mnuExportSql.Click += new System.EventHandler(this.mnuExportSql_Click);
             // 
             // MainForm
             // 
@@ -682,6 +697,8 @@
         private System.Windows.Forms.ToolStripMenuItem consolidateResultsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mnuExportCsv;
         private System.Windows.Forms.ToolStripMenuItem mnuExportSql;
+        private System.Windows.Forms.ToolStripStatusLabel lblProgress;
+        private System.Windows.Forms.ToolStripProgressBar pbProgress;
     }
 }
 
