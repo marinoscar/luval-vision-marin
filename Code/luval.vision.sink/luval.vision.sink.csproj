@@ -148,6 +148,10 @@
       <Project>{e2b1ce82-40c0-4f2b-9d00-a93425d7147f}</Project>
       <Name>luval.vision.core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\luval.vision.ml\luval.vision.ml.csproj">
+      <Project>{65fa6bf4-8eb4-4039-b703-613c470574ac}</Project>
+      <Name>luval.vision.ml</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
