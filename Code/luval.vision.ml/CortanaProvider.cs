@@ -14,6 +14,13 @@ namespace luval.vision.ml
 {
     public class CortanaProvider : IModelProvider
     {
+        private string _inputName;
+
+        public CortanaProvider()
+        {
+            _inputName = ConfigurationManager.AppSettings["ml.input_name"];
+        }
+
         public List<ModelResult> Execute(List<Dictionary<string, object>> elements)
         {
             var response = GetResponse(elements);
@@ -36,8 +43,8 @@ namespace luval.vision.ml
 
         private IRestResponse GetResponse(List<Dictionary<string, object>> elements)
         {
-            var key = ConfigurationManager.AppSettings["azure.vision.ml.token"];
-            var endPoint = ConfigurationManager.AppSettings["luval.vision.ml.endpoint.request"];
+            var key = ConfigurationManager.AppSettings["azure.ml.token"];
+            var endPoint = ConfigurationManager.AppSettings["ml.endpoint.request"];
             var client = new RestClient(endPoint);
             var request = new RestRequest(Method.POST);
             var payload = GetPayload(elements).ToString();
