@@ -65,6 +65,9 @@
       <HintPath>..\packages\Google.Apis.Vision.v1.1.23.0.810\lib\net45\Google.Apis.Vision.v1.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Luval.Common">
+      <HintPath>..\..\Libraries\Luval.Common.dll</HintPath>
+    </Reference>
     <Reference Include="MongoDB.Bson, Version=2.4.3.23, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MongoDB.Bson.2.4.3\lib\net45\MongoDB.Bson.dll</HintPath>
     </Reference>
