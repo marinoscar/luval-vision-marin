@@ -54,6 +54,7 @@
             this.pbProgress = new System.Windows.Forms.ToolStripProgressBar();
             this.btnClear = new System.Windows.Forms.Button();
             this.grpResults = new System.Windows.Forms.GroupBox();
+            this.lblImageDetails = new System.Windows.Forms.Label();
             this.rdNumbers = new System.Windows.Forms.RadioButton();
             this.rdWords = new System.Windows.Forms.RadioButton();
             this.rdCodes = new System.Windows.Forms.RadioButton();
@@ -73,16 +74,16 @@
             this.listResult = new System.Windows.Forms.ListView();
             this.colAttribute = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colValue = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colScore = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.panelResultHeader = new System.Windows.Forms.Panel();
+            this.mappingControl = new luval.vision.sink.Controls.MappingControl();
             this.tabResult = new System.Windows.Forms.TabPage();
             this.tabVision = new System.Windows.Forms.TabControl();
             this.tabText = new System.Windows.Forms.TabPage();
             this.resultText = new System.Windows.Forms.TextBox();
             this.tabVisionJson = new System.Windows.Forms.TabPage();
             this.treeJsonVision = new System.Windows.Forms.TreeView();
-            this.colScore = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.mappingControl = new luval.vision.sink.Controls.MappingControl();
-            this.lblImageDetails = new System.Windows.Forms.Label();
+            this.mnuAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.mainMenu.SuspendLayout();
             this.panel1.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -103,7 +104,8 @@
             // 
             this.mainMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.toolsToolStripMenuItem});
+            this.toolsToolStripMenuItem,
+            this.mnuAbout});
             this.mainMenu.Location = new System.Drawing.Point(0, 0);
             this.mainMenu.Name = "mainMenu";
             this.mainMenu.Size = new System.Drawing.Size(1083, 24);
@@ -321,6 +323,18 @@
             this.grpResults.TabStop = false;
             this.grpResults.Text = "Result Options";
             // 
+            // lblImageDetails
+            // 
+            this.lblImageDetails.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblImageDetails.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblImageDetails.Location = new System.Drawing.Point(581, 13);
+            this.lblImageDetails.Name = "lblImageDetails";
+            this.lblImageDetails.Size = new System.Drawing.Size(310, 18);
+            this.lblImageDetails.TabIndex = 12;
+            this.lblImageDetails.Text = "Size: Quality";
+            this.lblImageDetails.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lblImageDetails.Visible = false;
+            // 
             // rdNumbers
             // 
             this.rdNumbers.AutoSize = true;
@@ -529,6 +543,10 @@
             this.colValue.Text = "Value";
             this.colValue.Width = 230;
             // 
+            // colScore
+            // 
+            this.colScore.Text = "Score";
+            // 
             // panelResultHeader
             // 
             this.panelResultHeader.Controls.Add(this.mappingControl);
@@ -537,6 +555,20 @@
             this.panelResultHeader.Name = "panelResultHeader";
             this.panelResultHeader.Size = new System.Drawing.Size(328, 519);
             this.panelResultHeader.TabIndex = 9;
+            // 
+            // mappingControl
+            // 
+            this.mappingControl.Enabled = false;
+            this.mappingControl.Location = new System.Drawing.Point(2, 3);
+            this.mappingControl.Name = "mappingControl";
+            this.mappingControl.SelectedAttribute = null;
+            this.mappingControl.SelectedMapping = null;
+            this.mappingControl.Size = new System.Drawing.Size(325, 520);
+            this.mappingControl.TabIndex = 0;
+            this.mappingControl.ValueMappingSelected += new System.EventHandler(this.mappingControl_ValueMappingSelected);
+            this.mappingControl.AnchorMappingSelected += new System.EventHandler(this.mappingControl_AnchorMappingSelected);
+            this.mappingControl.SaveAndNew += new System.EventHandler(this.mappingControl_SaveAndNew);
+            this.mappingControl.Load += new System.EventHandler(this.mappingControl_Load);
             // 
             // tabResult
             // 
@@ -587,7 +619,7 @@
             this.tabVisionJson.Location = new System.Drawing.Point(4, 22);
             this.tabVisionJson.Name = "tabVisionJson";
             this.tabVisionJson.Padding = new System.Windows.Forms.Padding(3);
-            this.tabVisionJson.Size = new System.Drawing.Size(1058, 634);
+            this.tabVisionJson.Size = new System.Drawing.Size(178, 42);
             this.tabVisionJson.TabIndex = 1;
             this.tabVisionJson.Text = "Vision";
             this.tabVisionJson.UseVisualStyleBackColor = true;
@@ -597,38 +629,15 @@
             this.treeJsonVision.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeJsonVision.Location = new System.Drawing.Point(3, 3);
             this.treeJsonVision.Name = "treeJsonVision";
-            this.treeJsonVision.Size = new System.Drawing.Size(1052, 628);
+            this.treeJsonVision.Size = new System.Drawing.Size(172, 36);
             this.treeJsonVision.TabIndex = 0;
             // 
-            // colScore
+            // mnuAbout
             // 
-            this.colScore.Text = "Score";
-            // 
-            // mappingControl
-            // 
-            this.mappingControl.Enabled = false;
-            this.mappingControl.Location = new System.Drawing.Point(2, 3);
-            this.mappingControl.Name = "mappingControl";
-            this.mappingControl.SelectedAttribute = null;
-            this.mappingControl.SelectedMapping = null;
-            this.mappingControl.Size = new System.Drawing.Size(325, 520);
-            this.mappingControl.TabIndex = 0;
-            this.mappingControl.ValueMappingSelected += new System.EventHandler(this.mappingControl_ValueMappingSelected);
-            this.mappingControl.AnchorMappingSelected += new System.EventHandler(this.mappingControl_AnchorMappingSelected);
-            this.mappingControl.SaveAndNew += new System.EventHandler(this.mappingControl_SaveAndNew);
-            this.mappingControl.Load += new System.EventHandler(this.mappingControl_Load);
-            // 
-            // lblImageDetails
-            // 
-            this.lblImageDetails.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblImageDetails.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblImageDetails.Location = new System.Drawing.Point(581, 13);
-            this.lblImageDetails.Name = "lblImageDetails";
-            this.lblImageDetails.Size = new System.Drawing.Size(310, 18);
-            this.lblImageDetails.TabIndex = 12;
-            this.lblImageDetails.Text = "Size: Quality";
-            this.lblImageDetails.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.lblImageDetails.Visible = false;
+            this.mnuAbout.Name = "mnuAbout";
+            this.mnuAbout.Size = new System.Drawing.Size(52, 20);
+            this.mnuAbout.Text = "&About";
+            this.mnuAbout.Click += new System.EventHandler(this.mnuAbout_Click);
             // 
             // MainForm
             // 
@@ -641,7 +650,7 @@
             this.Controls.Add(this.mainMenu);
             this.MainMenuStrip = this.mainMenu;
             this.Name = "MainForm";
-            this.Text = "Ocr Tool";
+            this.Text = "Oscar Marin Machine Learning  OCR Tool";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.mainMenu.ResumeLayout(false);
             this.mainMenu.PerformLayout();
@@ -724,6 +733,7 @@
         private System.Windows.Forms.ToolStripProgressBar pbProgress;
         private System.Windows.Forms.ColumnHeader colScore;
         private System.Windows.Forms.Label lblImageDetails;
+        private System.Windows.Forms.ToolStripMenuItem mnuAbout;
     }
 }
 

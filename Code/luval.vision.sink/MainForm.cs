@@ -588,5 +588,10 @@ namespace luval.vision.sink
             lblProgress.Text = e.Message;
             Application.DoEvents();
         }
+
+        private void mnuAbout_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Application developed by Oscar Marin\n\nhttps://github.com/marinoscar\nhttps://www.linkedin.com/in/marinoscar", "About this application", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
     }
 }
