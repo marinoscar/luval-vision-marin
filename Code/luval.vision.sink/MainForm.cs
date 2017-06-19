@@ -95,10 +95,10 @@ namespace luval.vision.sink
             if (res != null)
             {
                 var items = res.TextResults.Where(i => i.Score > 0).ToList();
-                if(items.Any())
+                if (items.Any())
                     avgScore = items.Average(i => i.Score);
             }
-            MessageBox.Show(string.Format("Process completed in {0} with a confidence value of {1}", sw.Elapsed, avgScore.ToString("N4")), "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(string.Format("Process completed in {0} seconds with an average confidence score of {1}", sw.Elapsed.TotalSeconds.ToString("N0"), avgScore.ToString("N4")), "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
             processBtn.Enabled = true;
         }
 
@@ -135,14 +135,20 @@ namespace luval.vision.sink
             listResult.Tag = new Tuple<ProcessResult, List<AttributeMapping>>(_processResult, options);
             foreach (var map in options)
             {
+                var score = 0d;
                 var value = default(string);
                 var item = _processResult.TextResults.FirstOrDefault(i => i.Map.AttributeName == map.AttributeName);
-                if (item != null) value = item.Value;
-                var listItem = new ListViewItem(new string[] { map.AttributeName, value });
+                if (item != null) {
+                    value = item.Value;
+                    score = item.Score;
+                }
+                var listItem = new ListViewItem(new string[] { map.AttributeName, value, score.ToString("N3") });
                 if (!string.IsNullOrWhiteSpace(value))
                     listItem.Tag = item;
                 listResult.Items.Add(listItem);
             }
+            lblImageDetails.Visible = true;
+            lblImageDetails.Text = string.Format("Size: {0}, {1} Quality: {2} dpi", result.ImageInfo.Height, result.ImageInfo.Width, result.ImageInfo.HorizontalResolution);
             rdResult.Checked = true;
             grpResults.Enabled = true;
             btnClear.Enabled = true;
@@ -164,7 +170,7 @@ namespace luval.vision.sink
             var orderedItems = mapedItems.OrderBy(i => i.Item2.Class).ThenByDescending(i => i.Item2.Score).ToList();
             var classes = response.Select(i => i.Class).Distinct().ToList();
             var newResults = new List<MappingResult>();
-            foreach(var c in classes)
+            foreach (var c in classes)
             {
                 var tuple = orderedItems.First(i => i.Item2.Class == c);
                 tuple.Item1.Score = tuple.Item2.Score;
@@ -424,12 +430,12 @@ namespace luval.vision.sink
         private void pictureBox_MouseClick(object sender, MouseEventArgs e)
         {
             var el = FindElement(e.Location);
-            if(el == null)
+            if (el == null)
             {
                 lblElementText.Text = "Element not found on location";
                 return;
             }
-            if(string.IsNullOrWhiteSpace(el.Text))
+            if (string.IsNullOrWhiteSpace(el.Text))
             {
                 lblElementText.Text = "No Text Value on Element";
                 return;

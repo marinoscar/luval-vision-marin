@@ -50,6 +50,8 @@
             this.lblMouseCoordinates = new System.Windows.Forms.ToolStripStatusLabel();
             this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.lblElementText = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lblProgress = new System.Windows.Forms.ToolStripStatusLabel();
+            this.pbProgress = new System.Windows.Forms.ToolStripProgressBar();
             this.btnClear = new System.Windows.Forms.Button();
             this.grpResults = new System.Windows.Forms.GroupBox();
             this.rdNumbers = new System.Windows.Forms.RadioButton();
@@ -78,9 +80,9 @@
             this.resultText = new System.Windows.Forms.TextBox();
             this.tabVisionJson = new System.Windows.Forms.TabPage();
             this.treeJsonVision = new System.Windows.Forms.TreeView();
-            this.lblProgress = new System.Windows.Forms.ToolStripStatusLabel();
-            this.pbProgress = new System.Windows.Forms.ToolStripProgressBar();
+            this.colScore = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.mappingControl = new luval.vision.sink.Controls.MappingControl();
+            this.lblImageDetails = new System.Windows.Forms.Label();
             this.mainMenu.SuspendLayout();
             this.panel1.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -269,9 +271,22 @@
             | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
             this.lblElementText.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.lblElementText.Name = "lblElementText";
-            this.lblElementText.Size = new System.Drawing.Size(35, 19);
-            this.lblElementText.Text = "Text:";
+            this.lblElementText.Size = new System.Drawing.Size(158, 19);
+            this.lblElementText.Text = "Click on Element to get Text";
             this.lblElementText.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblProgress
+            // 
+            this.lblProgress.Name = "lblProgress";
+            this.lblProgress.Size = new System.Drawing.Size(101, 19);
+            this.lblProgress.Text = "Progress Message";
+            this.lblProgress.Visible = false;
+            // 
+            // pbProgress
+            // 
+            this.pbProgress.Name = "pbProgress";
+            this.pbProgress.Size = new System.Drawing.Size(100, 18);
+            this.pbProgress.Visible = false;
             // 
             // btnClear
             // 
@@ -290,6 +305,7 @@
             this.grpResults.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.grpResults.Controls.Add(this.lblImageDetails);
             this.grpResults.Controls.Add(this.rdNumbers);
             this.grpResults.Controls.Add(this.rdWords);
             this.grpResults.Controls.Add(this.rdCodes);
@@ -490,8 +506,10 @@
             // 
             this.listResult.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.colAttribute,
-            this.colValue});
+            this.colValue,
+            this.colScore});
             this.listResult.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listResult.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listResult.FullRowSelect = true;
             this.listResult.Location = new System.Drawing.Point(0, 519);
             this.listResult.MultiSelect = false;
@@ -582,17 +600,9 @@
             this.treeJsonVision.Size = new System.Drawing.Size(1052, 628);
             this.treeJsonVision.TabIndex = 0;
             // 
-            // lblProgress
+            // colScore
             // 
-            this.lblProgress.Name = "lblProgress";
-            this.lblProgress.Size = new System.Drawing.Size(101, 19);
-            this.lblProgress.Text = "Progress Message";
-            // 
-            // pbProgress
-            // 
-            this.pbProgress.Name = "pbProgress";
-            this.pbProgress.Size = new System.Drawing.Size(100, 18);
-            this.pbProgress.Visible = false;
+            this.colScore.Text = "Score";
             // 
             // mappingControl
             // 
@@ -608,6 +618,18 @@
             this.mappingControl.SaveAndNew += new System.EventHandler(this.mappingControl_SaveAndNew);
             this.mappingControl.Load += new System.EventHandler(this.mappingControl_Load);
             // 
+            // lblImageDetails
+            // 
+            this.lblImageDetails.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblImageDetails.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblImageDetails.Location = new System.Drawing.Point(581, 13);
+            this.lblImageDetails.Name = "lblImageDetails";
+            this.lblImageDetails.Size = new System.Drawing.Size(310, 18);
+            this.lblImageDetails.TabIndex = 12;
+            this.lblImageDetails.Text = "Size: Quality";
+            this.lblImageDetails.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lblImageDetails.Visible = false;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -620,6 +642,7 @@
             this.MainMenuStrip = this.mainMenu;
             this.Name = "MainForm";
             this.Text = "Ocr Tool";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.mainMenu.ResumeLayout(false);
             this.mainMenu.PerformLayout();
             this.panel1.ResumeLayout(false);
@@ -699,6 +722,8 @@
         private System.Windows.Forms.ToolStripMenuItem mnuExportSql;
         private System.Windows.Forms.ToolStripStatusLabel lblProgress;
         private System.Windows.Forms.ToolStripProgressBar pbProgress;
+        private System.Windows.Forms.ColumnHeader colScore;
+        private System.Windows.Forms.Label lblImageDetails;
     }
 }
 
