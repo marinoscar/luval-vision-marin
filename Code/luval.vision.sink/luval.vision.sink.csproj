@@ -122,7 +122,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <None Include="attribute-mapping.json" />
+    <None Include="attribute-mapping.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Demo\sample-response.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
