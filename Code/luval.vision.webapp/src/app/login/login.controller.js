@@ -17,14 +17,12 @@ class LoginController {
   }
 
   signInHandler(user) {
-    user.isAuthorized = false;
-    this.saveSignIn(user);
-    this.loginService.getUserAccount()
+    this.saveSignIn(user, null);
+    this.usersService.getUserAccount()
       .then(res => {
         const userAccount = res.data;
         if (userAccount.id) {
-          user.isAuthorized = userAccount.isAuthorized;
-          this.saveSignIn(user);
+          this.saveSignIn(user, userAccount);
           this.ngNotify.set('Google Sign In Success', {
             duration: 2000,
             position: 'bottom'
@@ -47,7 +45,7 @@ class LoginController {
     });
   }
 
-  saveSignIn(user) { // .w3.U3
+  saveSignIn(user, userAccount) { // .w3.U3
     const authToken = user;
     const email = authToken.w3.U3;
     const userId = this.documentService.replaceSpecialCharacters(authToken.w3.U3);
@@ -62,12 +60,13 @@ class LoginController {
         authToken.w3.U3 = userId;
         authToken.account = res.data;
         this.sessionService.setAuthData(authToken); // eslint-disable-line no-useless-escape
+        this.sessionService.setAuthData(googleUser, userAccount);
         this.$state.go('documents');
       });
   }
 
   createUserAccount(user) {
-    this.$state.go('login-create', {user});
+    this.$state.go('user-create', {user});
   }
 }
 

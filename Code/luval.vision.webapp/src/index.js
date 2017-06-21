@@ -1,5 +1,7 @@
 import angular from 'angular';
 import login from './app/login/login';
+import admin from './app/admin/admin';
+import users from './app/users/users';
 import documents from './app/documents/documents';
 import core from './app/core/core.constants';
 import checkDocuments from './app/check-documents/check-documents';
@@ -17,6 +19,7 @@ import 'angular-base64/angular-base64';
 
 import './index.scss';
 import './app/login/login.scss';
+import './app/admin/admin.scss';
 import './app/profiles/profiles.scss';
 import './app/profiles/show/profiles-show.scss';
 import './app/profiles/create/profiles-create.scss';
@@ -41,6 +44,8 @@ angular
     checkDocuments,
     users,
     viewJSON,
+    users,
+    admin,
     login
   ])
   .config(routesConfig)

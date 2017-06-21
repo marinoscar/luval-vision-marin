@@ -1,28 +1,26 @@
-class LoginCreateController {
+class UserCreateController {
   /* @ngInject */
-  constructor($log, $state, $stateParams, ngNotify, sessionService, loginService) {
+  constructor($log, $state, $stateParams, ngNotify, sessionService, usersService) {
     this.log = $log;
     this.$state = $state;
     this.$stateParams = $stateParams;
     this.ngNotify = ngNotify;
     this.sessionService = sessionService;
-    this.loginService = loginService;
+    this.usersService = usersService;
 
     this.user = this.$stateParams.user;
-    this.userName = this.user.w3.ig;
-    this.email = this.user.w3.U3;
+    this.userName = this.user.name;
+    this.email = this.user.email;
   }
 
   confirmAccount() {
-    this.loginService.createUserAccount({
+    this.usersService.createUserAccount({
       name: this.userName,
       email: this.email
     })
       .then(res => {
         const userAccount = res.data;
-        this.log.log(userAccount);
-        this.user.isAuthorized = userAccount.isAuthorized;
-        this.sessionService.setAuthData(this.user);
+        this.sessionService.setAuthData(this.user, userAccount);
         this.ngNotify.set('Account created successfully', {
           duration: 2000,
           position: 'bottom'
@@ -41,4 +39,4 @@ class LoginCreateController {
   }
 }
 
-export default LoginCreateController;
+export default UserCreateController;

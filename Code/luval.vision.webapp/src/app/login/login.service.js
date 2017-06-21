@@ -1,13 +1,9 @@
 class loginService {
   /* @ngInject */
-  constructor($log, $location, GoogleSignin, documentService, sessionService, $http, CORE) { // eslint-disable-line max-params
+  constructor($log, GoogleSignin, sessionService) { // eslint-disable-line max-params
     this.log = $log;
-    this.$location = $location;
     this.GoogleSignin = GoogleSignin;
-    this.documentService = documentService;
     this.sessionService = sessionService;
-    this.$http = $http;
-    this.CORE = CORE;
   }
 
   isLoggedIn() {
@@ -31,36 +27,6 @@ class loginService {
 
   callGoogleSignIn() {
     return this.GoogleSignin.signIn();
-  }
-
-  getUserAccount() {
-    const getRequest = {
-      method: 'GET',
-      url: this.CORE.URL + 'Users/GetAccount',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      params: this.sessionService.buildUserJSON()
-    };
-    this.log.debug(getRequest);
-    // return this.$http(getRequest);
-    return this.$http.get('app/login/user.mock.json');
-    // return this.$http.get('app/login/user.notfound.mock.json');
-    // return this.$http.get('app/login/user.notauthorized.mock.json');
-  }
-
-  createUserAccount(user) {
-    const postRequest = {
-      method: 'POST',
-      url: this.CORE.URL + 'Users/CreateAccount',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      data: user
-    };
-    this.log.debug(postRequest);
-    // return this.$http(postRequest);
-    return this.$http.get('app/login/user.mock.json');
   }
 }
 

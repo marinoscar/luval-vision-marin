@@ -1,0 +1,23 @@
+[
+    {
+        "id" : 12345,
+        "email" : "javalos@pernxi-solutions.com",
+        "name" : "Jonathan Avalos",
+        "isEnabled" : true,
+        "isAuthorized" : true
+    },
+    {
+        "id" : 12345,
+        "email" : "dcordero@example.com",
+        "name" : "David Cordero",
+        "isEnabled" : true,
+        "isAuthorized" : true
+    },
+    {
+        "id" : 12345,
+        "email" : "omarin@example.com",
+        "name" : "Oscar Marin",
+        "isEnabled" : true,
+        "isAuthorized" : true
+    }
+]

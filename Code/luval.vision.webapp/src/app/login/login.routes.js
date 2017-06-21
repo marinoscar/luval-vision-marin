@@ -7,18 +7,6 @@ function routes($stateProvider) {
       controller: ('LoginController as vm'),
       cache: false,
       public: true
-    })
-    .state('login-create', {
-      url: '/login-create',
-      template: require('./create/login-create.html'),
-      controller: ('LoginCreateController as vm'),
-      cache: false,
-      public: true,
-      params: {
-        user: {
-          w3: {}
-        }
-      }
     });
 }
 

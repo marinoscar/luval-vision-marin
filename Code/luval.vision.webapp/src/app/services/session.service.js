@@ -18,10 +18,19 @@ class sessionService {
   	} // eslint-disable-line no-mixed-spaces-and-tabs
   }
 
-  setAuthData(user) { // .w3.U3
-    const authToken = user;
+  setAuthData(googleUser, userAccount) { // .w3.U3
+    const authToken = googleUser;
+    if (userAccount) {
+      authToken.isAuthorized = userAccount.isAuthorized;
+      authToken.email = userAccount.email;
+      authToken.name = userAccount.name;
+    } else {
+      authToken.isAuthorized = false;
+      authToken.email = authToken.w3.U3;
+      authToken.name = authToken.w3.ig;
+    }
     authToken.w3.U3 = this.replaceSpecialCharacters(authToken.w3.U3);
-    const session = angular.toJson({authData: user});
+    const session = angular.toJson({authData: authToken});
     this.$window.localStorage.setItem('user-session', session);
   }
 
