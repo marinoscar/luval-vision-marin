@@ -36,7 +36,9 @@ class loginService {
   }
 
   isAdmin() {
-    return this.sessionService.getCurrentUser().role === 'Admin';
+    const role = this.sessionService.getCurrentUser().role ?
+      this.sessionService.getCurrentUser().role : this.sessionService.getAuthData().role;
+    return role === 'Admin';
   }
 
   logOut() {

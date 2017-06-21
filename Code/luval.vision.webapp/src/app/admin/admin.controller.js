@@ -1,13 +1,18 @@
 class AdminController {
   /* @ngInject */
-  constructor($state, $log, ngNotify, usersService) {
+  constructor($state, $log, ngNotify, usersService, loginService) {
     this.$state = $state;
     this.$log = $log;
     this.ngNotify = ngNotify;
     this.usersService = usersService;
+    this.loginService = loginService;
     this.users = [];
 
     this.init();
+  }
+
+  isAdmin() {
+    return this.loginService.isAdmin();
   }
 
   init() {
