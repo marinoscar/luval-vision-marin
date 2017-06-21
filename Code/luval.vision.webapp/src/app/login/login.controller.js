@@ -1,12 +1,14 @@
 class LoginController {
   /* @ngInject */
-  constructor($log, $state, ngNotify, loginService, sessionService, documentService) {
+  constructor($log, $state, ngNotify, GAuth, GData, loginService, sessionService, documentService) {
     this.$state = $state;
     this.log = $log;
     this.ngNotify = ngNotify;
     this.loginService = loginService;
     this.documentService = documentService;
     this.sessionService = sessionService;
+    this.GData = GData;
+    this.GAuth = GAuth;
   }
 
   onSignIn() {
@@ -31,7 +33,7 @@ class LoginController {
   }
 
   saveSignIn(user) {
-    const tokenId = this.documentService.replaceSpecialCharacters(user.w3.U3);
+    const tokenId = this.documentService.replaceSpecialCharacters(user.email);
     this.sessionService.setAuthData(tokenId); // eslint-disable-line no-useless-escape
     this.$state.go('documents');
   }

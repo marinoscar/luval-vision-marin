@@ -12,6 +12,7 @@ import 'angular-ui-bootstrap';
 import 'angular-spinner/dist/angular-spinner.min';
 import 'ng-file-upload/dist/ng-file-upload.js';
 import 'ng-notify/dist/ng-notify.min';
+import 'angular-google-gapi';
 
 import './index.scss';
 import './app/login/login.scss';
@@ -28,10 +29,10 @@ angular
     'ui.router',
     'ui.router.state.events',
     'ui.bootstrap',
-    'google-signin',
     'ngNotify',
     'ngFileUpload',
     'angularSpinner',
+    'angular-google-gapi',
     core,
     profiles,
     documents,

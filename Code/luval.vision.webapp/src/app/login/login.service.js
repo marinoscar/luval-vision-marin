@@ -1,28 +1,26 @@
 class loginService {
   /* @ngInject */
-  constructor($log, $location, GoogleSignin, documentService, sessionService, $http, CORE) { // eslint-disable-line max-params
+  constructor($log, $location, GData, GAuth, documentService, sessionService, $http, CORE) { // eslint-disable-line max-params
     this.log = $log;
     this.$location = $location;
-    this.GoogleSignin = GoogleSignin;
+    this.GData = GData;
+    this.GAuth = GAuth;
     this.documentService = documentService;
     this.sessionService = sessionService;
     this.$http = $http;
     this.CORE = CORE;
   }
 
-  isLoggedIn() {
-    const authData = this.sessionService.getAuthData();
-    const sessionDefined = typeof authData !== 'undefined'; // eslint-disable-line
-    const authDataDefined = authData !== null;
-    return sessionDefined && authDataDefined;
+  checkAuth() {
+    return this.GAuth.checkAuth();
   }
 
   logOut() {
-    return this.GoogleSignin.signOut();
+    return this.GAuth.logout();
   }
 
   callGoogleSignIn() {
-    return this.GoogleSignin.signIn();
+    return this.GAuth.login();
   }
 
   buildUserJSON(user) {
