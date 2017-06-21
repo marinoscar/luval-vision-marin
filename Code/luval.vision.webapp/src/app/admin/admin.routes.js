@@ -5,7 +5,8 @@ function routes($stateProvider) {
       url: '/admin',
       template: require('./admin.html'),
       controller: ('AdminController as vm'),
-      cache: false
+      cache: false,
+      admin: true
     });
 }
 

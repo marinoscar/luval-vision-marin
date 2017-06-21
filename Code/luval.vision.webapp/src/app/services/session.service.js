@@ -5,10 +5,16 @@ class sessionService {
     this.$state = $state;
     this.$window = $window;
     this.$base64 = $base64;
+    this.currentUser = {};
   }
 
   destroy() {
+    this.currentUser = {};
     this.$window.localStorage.removeItem('user-session');
+  }
+
+  getCurrentUser() {
+    return this.currentUser;
   }
 
   getAuthData() {
@@ -21,10 +27,15 @@ class sessionService {
   setAuthData(googleUser, userAccount) { // .w3.U3
     const authToken = googleUser;
     if (userAccount) {
+      this.currentUser = userAccount;
+
       authToken.isAuthorized = userAccount.isAuthorized;
       authToken.email = userAccount.email;
       authToken.name = userAccount.name;
+      authToken.role = userAccount.role;
     } else {
+      this.currentUser = {};
+
       authToken.isAuthorized = false;
       authToken.email = authToken.w3.U3;
       authToken.name = authToken.w3.ig;
@@ -45,8 +56,9 @@ class sessionService {
   }
 
   buildUserJSON() {
+    const id = (this.getAuthData() && this.getAuthData().w3) ? this.getAuthData().w3.U3 : '';
     return {
-      userId: this.getAuthData().w3.U3
+      userId: id
     };
   }
 

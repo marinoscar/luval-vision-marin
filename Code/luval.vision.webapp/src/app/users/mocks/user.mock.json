@@ -3,5 +3,6 @@
     "email" : "javalos@pernxi-solutions.com",
     "name" : "Jonathan Avalos",
     "isEnabled" : true,
-    "isAuthorized" : true
+    "isAuthorized" : true,
+    "role" : "Admin"
 }

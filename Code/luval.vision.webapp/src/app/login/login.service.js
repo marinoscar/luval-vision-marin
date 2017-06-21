@@ -1,9 +1,24 @@
 class loginService {
   /* @ngInject */
-  constructor($log, GoogleSignin, sessionService) { // eslint-disable-line max-params
+  constructor($log, GoogleSignin, sessionService, usersService) { // eslint-disable-line max-params
     this.log = $log;
     this.GoogleSignin = GoogleSignin;
     this.sessionService = sessionService;
+    this.usersService = usersService;
+
+    this.fetchUserAccount();
+  }
+
+  fetchUserAccount() {
+    this.usersService.getUserAccount()
+      .then(res => {
+        const userAccount = res.data;
+        const authData = this.sessionService.getAuthData();
+        this.sessionService.setAuthData(authData, userAccount);
+      })
+      .catch(res => {
+        this.log.debug(res);
+      });
   }
 
   isLoggedIn() {
@@ -18,6 +33,10 @@ class loginService {
     const sessionDefined = typeof authData !== 'undefined'; // eslint-disable-line
     const authDataDefined = authData !== null;
     return sessionDefined && authDataDefined && authData.isAuthorized;
+  }
+
+  isAdmin() {
+    return this.sessionService.getCurrentUser().role === 'Admin';
   }
 
   logOut() {

@@ -17,6 +17,10 @@ function blockPrivateAccess($rootScope, $state, $log, ngNotify, loginService) {
       ngNotify.set('Your account is not authorized', 'info');
       loginService.logOut();
       $state.go('login');
+    } else if (targetState.admin && !loginService.isAdmin()) {
+      evt.preventDefault();
+      ngNotify.set('Your account does not have enough permissions', 'info');
+      $state.go('documents');
     }
   });
 
