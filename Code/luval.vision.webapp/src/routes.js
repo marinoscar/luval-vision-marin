@@ -10,6 +10,12 @@ function blockPrivateAccess($rootScope, $state, $log, ngNotify, loginService) {
     if (!targetState.public && !loginService.isLoggedIn()) {
       evt.preventDefault();
       ngNotify.set('Please Sign In with Google', 'info');
+      loginService.logOut();
+      $state.go('login');
+    } else if (!targetState.public && !loginService.isAuthorized()) {
+      evt.preventDefault();
+      ngNotify.set('Your account is not authorized', 'info');
+      loginService.logOut();
       $state.go('login');
     }
   });

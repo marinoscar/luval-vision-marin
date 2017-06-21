@@ -19,10 +19,6 @@ class documentService {
     return this.$http(getRequest);
   }
 
-  replaceSpecialCharacters(source) {
-    return source.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '') // eslint-disable-line
-  }
-
   objectBlobStorage(files, profileName) {
     return {
       profile: profileName,

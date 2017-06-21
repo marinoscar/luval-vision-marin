@@ -6,8 +6,8 @@ class LoginController {
     this.ngNotify = ngNotify;
     this.usersService = usersService;
     this.loginService = loginService;
-    this.documentService = documentService;
     this.sessionService = sessionService;
+    this.documentService = documentService;
   }
 
   onSignIn() {
@@ -17,11 +17,14 @@ class LoginController {
   }
 
   signInHandler(user) {
+    user.isAuthorized = false;
     this.saveSignIn(user);
     this.loginService.getUserAccount()
       .then(res => {
         const userAccount = res.data;
         if (userAccount.id) {
+          user.isAuthorized = userAccount.isAuthorized;
+          this.saveSignIn(user);
           this.ngNotify.set('Google Sign In Success', {
             duration: 2000,
             position: 'bottom'

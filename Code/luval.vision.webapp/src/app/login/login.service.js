@@ -14,21 +14,23 @@ class loginService {
     const authData = this.sessionService.getAuthData().w3.U3;
     const sessionDefined = typeof authData !== 'undefined'; // eslint-disable-line
     const authDataDefined = authData !== null;
-    return sessionDefined && authDataDefined;
+    return sessionDefined && authDataDefined && authData.w3 && authData.w3.U3;
+  }
+
+  isAuthorized() {
+    const authData = this.sessionService.getAuthData();
+    const sessionDefined = typeof authData !== 'undefined'; // eslint-disable-line
+    const authDataDefined = authData !== null;
+    return sessionDefined && authDataDefined && authData.isAuthorized;
   }
 
   logOut() {
-    return this.GoogleSignin.signOut();
+    this.sessionService.destroy();
+    // return this.GoogleSignin.signOut();
   }
 
   callGoogleSignIn() {
     return this.GoogleSignin.signIn();
-  }
-
-  buildUserJSON(user) {
-    return {
-      token_id: this.documentService.replaceSpecialCharacters(user.w3.U3) // eslint-disable-line camelcase
-    };
   }
 
   getUserAccount() {
@@ -42,8 +44,9 @@ class loginService {
     };
     this.log.debug(getRequest);
     // return this.$http(getRequest);
-    // return this.$http.get('app/login/user..mock.json');
-    return this.$http.get('app/login/user.notfound.mock.json');
+    return this.$http.get('app/login/user.mock.json');
+    // return this.$http.get('app/login/user.notfound.mock.json');
+    // return this.$http.get('app/login/user.notauthorized.mock.json');
   }
 
   createUserAccount(user) {

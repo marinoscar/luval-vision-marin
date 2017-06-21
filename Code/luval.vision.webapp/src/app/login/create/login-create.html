@@ -13,7 +13,7 @@
           <div>
             <p>Just one more step, please confirm your information:</p>
           </div>
-          <form name="settingsForm">
+          <form name="createAccountForm">
             <div class="form-group">
               <label>User name:</label>
               <input type="text" class="form-control" ng-model="vm.userName" required id="userName" />
@@ -23,7 +23,7 @@
               <input type="text" class="form-control" ng-model="vm.email" required id="email" />
             </div>
             <div class="form-group">
-              <button class="btn btn-success" ng-disabled="settingsForm.$invalid" ng-click="vm.confirmAccount()">Confirm</button>
+              <button class="btn btn-success" ng-disabled="createAccountForm.$invalid" ng-click="vm.confirmAccount()">Confirm</button>
             </div>
           </form>
         </div>

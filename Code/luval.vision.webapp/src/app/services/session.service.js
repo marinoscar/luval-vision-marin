@@ -8,7 +8,7 @@ class sessionService {
   }
 
   destroy() {
-    this.setAuthData(null);
+    this.$window.localStorage.removeItem('user-session');
   }
 
   getAuthData() {
@@ -18,7 +18,9 @@ class sessionService {
   	} // eslint-disable-line no-mixed-spaces-and-tabs
   }
 
-  setAuthData(user) {
+  setAuthData(user) { // .w3.U3
+    const authToken = user;
+    authToken.w3.U3 = this.replaceSpecialCharacters(authToken.w3.U3);
     const session = angular.toJson({authData: user});
     this.$window.localStorage.setItem('user-session', session);
   }
@@ -37,6 +39,10 @@ class sessionService {
     return {
       userId: this.getAuthData().w3.U3
     };
+  }
+
+  replaceSpecialCharacters(source) {
+    return source.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '') // eslint-disable-line
   }
 }
 
