@@ -30,6 +30,35 @@ class loginService {
       token_id: this.documentService.replaceSpecialCharacters(user.w3.U3) // eslint-disable-line camelcase
     };
   }
+
+  getUserAccount() {
+    const getRequest = {
+      method: 'GET',
+      url: this.CORE.URL + 'Users/GetAccount',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      params: this.sessionService.buildUserJSON()
+    };
+    this.log.debug(getRequest);
+    // return this.$http(getRequest);
+    // return this.$http.get('app/login/user..mock.json');
+    return this.$http.get('app/login/user.notfound.mock.json');
+  }
+
+  createUserAccount(user) {
+    const postRequest = {
+      method: 'POST',
+      url: this.CORE.URL + 'Users/CreateAccount',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      data: user
+    };
+    this.log.debug(postRequest);
+    // return this.$http(postRequest);
+    return this.$http.get('app/login/user.mock.json');
+  }
 }
 
 export default loginService;

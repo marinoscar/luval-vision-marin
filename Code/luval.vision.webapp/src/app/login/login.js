@@ -1,4 +1,5 @@
 import LoginController from './login.controller';
+import LoginCreateController from './create/login-create.controller';
 import loginService from './login.service';
 import sessionService from '../services/session.service';
 import authorizationInjectorService from '../services/authorization-injector.service';
@@ -11,6 +12,7 @@ export default
     .config(routes)
     .config(GoogleSignInConfig)
     .controller('LoginController', LoginController)
+    .controller('LoginCreateController', LoginCreateController)
     .service('loginService', loginService)
     .service('sessionService', sessionService)
     .service('authorizationInjectorService', authorizationInjectorService)

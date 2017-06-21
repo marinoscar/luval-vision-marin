@@ -17,11 +17,24 @@ class LoginController {
   }
 
   signInHandler(user) {
-    this.ngNotify.set('Google Sign In Success', {
-      duration: 2000,
-      position: 'bottom'
-    });
     this.saveSignIn(user);
+    this.loginService.getUserAccount()
+      .then(res => {
+        const userAccount = res.data;
+        if (userAccount.id) {
+          this.ngNotify.set('Google Sign In Success', {
+            duration: 2000,
+            position: 'bottom'
+          });
+          this.$state.go('documents');
+        } else {
+          this.createUserAccount(user);
+        }
+      })
+      .catch(res => {
+        this.log.debug(res);
+        this.createUserAccount(user);
+      });
   }
 
   signInRejected() {
@@ -48,6 +61,10 @@ class LoginController {
         this.sessionService.setAuthData(authToken); // eslint-disable-line no-useless-escape
         this.$state.go('documents');
       });
+  }
+
+  createUserAccount(user) {
+    this.$state.go('login-create', {user});
   }
 }
 
