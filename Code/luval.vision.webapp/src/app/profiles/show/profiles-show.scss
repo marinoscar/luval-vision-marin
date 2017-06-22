@@ -2,10 +2,11 @@
   #close-this {
     left: 0;
     &:before {
-      content: "\f00d";
+      content: "\f060";
       font-family: fontawesome;
       font-size: 2em;
       color: #706f73;
+      padding: 4px 12px;
     }
   }
   .subheader {
