@@ -38,6 +38,7 @@
             this.btnSave = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.chkNotFound = new System.Windows.Forms.CheckBox();
             this.cboAttribute = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
             this.btnMapAnchor = new System.Windows.Forms.Button();
@@ -48,7 +49,9 @@
             this.label2 = new System.Windows.Forms.Label();
             this.txtValueElement = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.chkNotFound = new System.Windows.Forms.CheckBox();
+            this.txtComments = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.chkNotCaptured = new System.Windows.Forms.CheckBox();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -62,21 +65,22 @@
             this.lblInstructions.Name = "lblInstructions";
             this.lblInstructions.Size = new System.Drawing.Size(314, 57);
             this.lblInstructions.TabIndex = 2;
-            this.lblInstructions.Text = "Instructions";
+            this.lblInstructions.Text = "Attribute Mapping";
             this.lblInstructions.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // txtLines
             // 
-            this.txtLines.Location = new System.Drawing.Point(-2, 324);
+            this.txtLines.Location = new System.Drawing.Point(10, 324);
             this.txtLines.Name = "txtLines";
-            this.txtLines.Size = new System.Drawing.Size(101, 20);
+            this.txtLines.Size = new System.Drawing.Size(95, 20);
             this.txtLines.TabIndex = 0;
+            this.txtLines.TextChanged += new System.EventHandler(this.txtLines_TextChanged);
             this.txtLines.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtLines_KeyDown);
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(1, 308);
+            this.label4.Location = new System.Drawing.Point(7, 308);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(98, 13);
             this.label4.TabIndex = 8;
@@ -87,16 +91,16 @@
             this.txtPercentage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtPercentage.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPercentage.Location = new System.Drawing.Point(105, 324);
+            this.txtPercentage.Location = new System.Drawing.Point(111, 324);
             this.txtPercentage.Name = "txtPercentage";
             this.txtPercentage.ReadOnly = true;
-            this.txtPercentage.Size = new System.Drawing.Size(203, 20);
+            this.txtPercentage.Size = new System.Drawing.Size(197, 20);
             this.txtPercentage.TabIndex = 1;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(105, 308);
+            this.label5.Location = new System.Drawing.Point(108, 308);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(110, 13);
             this.label5.TabIndex = 10;
@@ -105,7 +109,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(1, 359);
+            this.label6.Location = new System.Drawing.Point(7, 359);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(81, 13);
             this.label6.TabIndex = 11;
@@ -115,20 +119,21 @@
             // 
             this.cboQuality.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.cboQuality.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboQuality.FormattingEnabled = true;
             this.cboQuality.Items.AddRange(new object[] {
             "Bad Image Quality",
             "Regular Data Quality",
             "Machine Learning Required",
             "High Accuracy / High Confidence"});
-            this.cboQuality.Location = new System.Drawing.Point(1, 375);
+            this.cboQuality.Location = new System.Drawing.Point(10, 375);
             this.cboQuality.Name = "cboQuality";
-            this.cboQuality.Size = new System.Drawing.Size(307, 21);
+            this.cboQuality.Size = new System.Drawing.Size(298, 21);
             this.cboQuality.TabIndex = 2;
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(232, 412);
+            this.btnSave.Location = new System.Drawing.Point(226, 483);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 3;
@@ -147,6 +152,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.chkNotCaptured);
             this.groupBox2.Controls.Add(this.chkNotFound);
             this.groupBox2.Controls.Add(this.cboAttribute);
             this.groupBox2.Controls.Add(this.label7);
@@ -165,20 +171,28 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Attribute Based Values";
             // 
+            // chkNotFound
+            // 
+            this.chkNotFound.AutoSize = true;
+            this.chkNotFound.Location = new System.Drawing.Point(9, 204);
+            this.chkNotFound.Name = "chkNotFound";
+            this.chkNotFound.Size = new System.Drawing.Size(76, 17);
+            this.chkNotFound.TabIndex = 3;
+            this.chkNotFound.Text = "Not Found";
+            this.chkNotFound.UseVisualStyleBackColor = true;
+            this.chkNotFound.Click += new System.EventHandler(this.chkNotFound_Click);
+            // 
             // cboAttribute
             // 
             this.cboAttribute.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.cboAttribute.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboAttribute.FormattingEnabled = true;
-            this.cboAttribute.Items.AddRange(new object[] {
-            "Bad Image Quality",
-            "Regular Data Quality",
-            "Machine Learning Required",
-            "High Accuracy / High Confidence"});
             this.cboAttribute.Location = new System.Drawing.Point(9, 38);
             this.cboAttribute.Name = "cboAttribute";
             this.cboAttribute.Size = new System.Drawing.Size(291, 21);
             this.cboAttribute.TabIndex = 0;
+            this.cboAttribute.SelectionChangeCommitted += new System.EventHandler(this.cboAttribute_SelectedValueChanged);
             // 
             // label7
             // 
@@ -198,6 +212,7 @@
             this.btnMapAnchor.TabIndex = 2;
             this.btnMapAnchor.Text = "...";
             this.btnMapAnchor.UseVisualStyleBackColor = true;
+            this.btnMapAnchor.Click += new System.EventHandler(this.btnMapAnchor_Click);
             // 
             // btnMapValue
             // 
@@ -208,6 +223,7 @@
             this.btnMapValue.TabIndex = 1;
             this.btnMapValue.Text = "...";
             this.btnMapValue.UseVisualStyleBackColor = true;
+            this.btnMapValue.Click += new System.EventHandler(this.btnMapValue_Click);
             // 
             // txtAnchorText
             // 
@@ -253,6 +269,7 @@
             // 
             this.txtValueElement.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtValueElement.BackColor = System.Drawing.SystemColors.Control;
             this.txtValueElement.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtValueElement.Location = new System.Drawing.Point(9, 88);
             this.txtValueElement.Name = "txtValueElement";
@@ -269,20 +286,43 @@
             this.label1.TabIndex = 17;
             this.label1.Text = "Value Element";
             // 
-            // chkNotFound
+            // txtComments
             // 
-            this.chkNotFound.AutoSize = true;
-            this.chkNotFound.Location = new System.Drawing.Point(9, 204);
-            this.chkNotFound.Name = "chkNotFound";
-            this.chkNotFound.Size = new System.Drawing.Size(76, 17);
-            this.chkNotFound.TabIndex = 3;
-            this.chkNotFound.Text = "Not Found";
-            this.chkNotFound.UseVisualStyleBackColor = true;
+            this.txtComments.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtComments.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtComments.Location = new System.Drawing.Point(10, 415);
+            this.txtComments.Multiline = true;
+            this.txtComments.Name = "txtComments";
+            this.txtComments.Size = new System.Drawing.Size(291, 62);
+            this.txtComments.TabIndex = 19;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(11, 399);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(56, 13);
+            this.label8.TabIndex = 20;
+            this.label8.Text = "Comments";
+            // 
+            // chkNotCaptured
+            // 
+            this.chkNotCaptured.AutoSize = true;
+            this.chkNotCaptured.Location = new System.Drawing.Point(107, 204);
+            this.chkNotCaptured.Name = "chkNotCaptured";
+            this.chkNotCaptured.Size = new System.Drawing.Size(154, 17);
+            this.chkNotCaptured.TabIndex = 26;
+            this.chkNotCaptured.Text = "Element Text Not Captured";
+            this.chkNotCaptured.UseVisualStyleBackColor = true;
+            this.chkNotCaptured.Click += new System.EventHandler(this.chkNotCaptured_Click);
             // 
             // MappingControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.txtComments);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnSave);
@@ -293,8 +333,9 @@
             this.Controls.Add(this.label4);
             this.Controls.Add(this.txtLines);
             this.Controls.Add(this.lblInstructions);
+            this.Enabled = false;
             this.Name = "MappingControl";
-            this.Size = new System.Drawing.Size(313, 452);
+            this.Size = new System.Drawing.Size(313, 520);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
@@ -325,5 +366,8 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtValueElement;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox txtComments;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.CheckBox chkNotCaptured;
     }
 }

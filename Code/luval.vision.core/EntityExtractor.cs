@@ -29,16 +29,30 @@ namespace luval.vision.core
 
         public IEnumerable<MappingResult> DoExtract()
         {
+            //TODO: Add a way to better filter the results
+            /* This is how we filtered in the past */
+            //if (mapResult.Any())
+            //{
+            //    //we add the closest item, first by looking at the left
+            //    var orderItems = mapResult.OrderBy(i => i.OffsetX).ThenBy(i => i.OffsetY);
+            //    result.Add(orderItems.FirstOrDefault(i => i.IsAnchorOnLeft) ?? orderItems.First());
+            //}
+            var result = DoExtractAllPosibleValues();
+            return result;
+        }
+
+        public IEnumerable<MappingResult> DoExtractAllPosibleValues()
+        {
             var result = new List<MappingResult>();
             foreach (var map in Mappings.Where(i => i.AttributeName != "Organization"))
             {
                 var mapResult = new List<MappingResult>();
-                foreach (var pattern in map.ValuePatterns)
+                foreach (var valuePattern in map.ValuePatterns)
                 {
-                    if (string.IsNullOrWhiteSpace(pattern)) continue;
-                    var elements = Find(pattern);
-                    if (elements == null || !elements.Any()) continue;
-                    foreach (var el in elements)
+                    if (string.IsNullOrWhiteSpace(valuePattern)) continue;
+                    var valueElement = Find(valuePattern);
+                    if (valueElement == null || !valueElement.Any()) continue;
+                    foreach (var el in valueElement)
                     {
                         var left = SearchLeft(map, el);
                         var item = default(MappingResult);
@@ -54,7 +68,7 @@ namespace luval.vision.core
                         }
                         if (item != null)
                         {
-                            item.Value = GetResolver(pattern).GetValue(el.Text);
+                            item.Value = GetResolver(valuePattern).GetValue(el.Text);
                             mapResult.Add(item);
                         }
                     }
@@ -62,9 +76,9 @@ namespace luval.vision.core
 
                 if (mapResult.Any())
                 {
-                    //we add the closest item, first by looking at the left
+                    //we sort the elements by closeness
                     var orderItems = mapResult.OrderBy(i => i.OffsetX).ThenBy(i => i.OffsetY);
-                    result.Add(orderItems.FirstOrDefault(i => i.IsAnchorOnLeft) ?? orderItems.First());
+                    result.AddRange(orderItems);
                 }
             }
             return result;

@@ -14,6 +14,7 @@ namespace luval.vision.core
         {
             Id = Guid.NewGuid().ToString().Replace("-", "").ToLowerInvariant();
             UtcTimestamp = DateTime.UtcNow;
+            TextResults = new List<MappingResult>();
         }
 
         public string Id { get; set; }
@@ -26,6 +27,8 @@ namespace luval.vision.core
         public double DurationInMs { get; set; }
         public ImageInfo ImageInfo { get; set; }
         public int UnIdentifiedLines { get; set; }
+        public int QualityType { get; set; }
+        public string Comment { get; set; }
 
     }
 }

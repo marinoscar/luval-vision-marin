@@ -1,9 +1,11 @@
 ﻿using luval.vision.core;
+using luval.vision.ml;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -16,18 +18,20 @@ namespace luval.vision.sink
     public partial class MainForm : Form
     {
 
-        private bool _isEditingMapping;
-        private bool _isSelectingValue;
+        private int _onPictureDoubleClick = 0;
         private string _fileName;
         private ImageManager _imageManager;
         private OcrResult _result;
         private Image _originalImg;
         private ProcessResult _processResult;
         private List<AttributeMapping> _profiles;
+        ResultAnalizer _analizer;
 
         public MainForm()
         {
             InitializeComponent();
+            _analizer = new ResultAnalizer();
+            _analizer.Progress += UpdateProgress;
         }
 
         public PictureBox PictureBox { get { return pictureBox; } }
@@ -67,6 +71,7 @@ namespace luval.vision.sink
             PictureBox.Image = img;
             PictureBox.Refresh();
             _originalImg = img;
+            _fileName = fileName;
         }
 
 
@@ -83,8 +88,17 @@ namespace luval.vision.sink
                 return;
             }
             processBtn.Enabled = false;
-            DoProcess();
-            MessageBox.Show("Process completed", "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            var avgScore = 0d;
+            var sw = Stopwatch.StartNew();
+            var res = DoProcess();
+            sw.Stop();
+            if (res != null)
+            {
+                var items = res.TextResults.Where(i => i.Score > 0).ToList();
+                if (items.Any())
+                    avgScore = items.Average(i => i.Score);
+            }
+            MessageBox.Show(string.Format("Process completed in {0} seconds with an average confidence score of {1}", sw.Elapsed.TotalSeconds.ToString("N0"), avgScore.ToString("N4")), "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
             processBtn.Enabled = true;
         }
 
@@ -104,35 +118,66 @@ namespace luval.vision.sink
 
         }
 
-        private void DoProcess()
+        private ProcessResult DoProcess()
         {
             var options = GetProfile();
             var provider = new DocumentProcesor(GetProvider(false), new NlpProvider(new GoogleNlpEngine(), new GoogleNlpLoader()));
             var result = provider.DoProcess(_fileName, options, "");
             var tuple = new Tuple<OcrResult, List<AttributeMapping>>(result.OcrResult, options);
             _result = result.OcrResult;
+            result = FilterProcessResult(result);
             _processResult = result;
-            LoadVisionTree(result.OcrResult);
-            LoadText(result.OcrResult);
+            LoadVisionTree(_processResult.OcrResult);
+            LoadText(_processResult.OcrResult);
             ShowParseResult();
             listResult.Tag = null;
             listResult.Items.Clear();
-            listResult.Tag = new Tuple<ProcessResult, List<AttributeMapping>>(result, options);
+            listResult.Tag = new Tuple<ProcessResult, List<AttributeMapping>>(_processResult, options);
             foreach (var map in options)
             {
+                var score = 0d;
                 var value = default(string);
-                var item = result.TextResults.FirstOrDefault(i => i.Map.AttributeName == map.AttributeName);
-                if (item != null) value = item.Value;
-                var listItem = new ListViewItem(new string[] { map.AttributeName, value });
+                var item = _processResult.TextResults.FirstOrDefault(i => i.Map.AttributeName == map.AttributeName);
+                if (item != null) {
+                    value = item.Value;
+                    score = item.Score;
+                }
+                var listItem = new ListViewItem(new string[] { map.AttributeName, value, score.ToString("N3") });
                 if (!string.IsNullOrWhiteSpace(value))
                     listItem.Tag = item;
                 listResult.Items.Add(listItem);
             }
+            lblImageDetails.Visible = true;
+            lblImageDetails.Text = string.Format("Size: {0}, {1} Quality: {2} dpi", result.ImageInfo.Height, result.ImageInfo.Width, result.ImageInfo.HorizontalResolution);
             rdResult.Checked = true;
             grpResults.Enabled = true;
             btnClear.Enabled = true;
             ListViewHelper.Prepare(listResult);
-            lblInstructions.Text = "Double Click on the Result Item to edit the mapping";
+            mappingControl.Enabled = true;
+            mappingControl.Initialize(_processResult);
+            return result;
+        }
+
+        private ProcessResult FilterProcessResult(ProcessResult result)
+        {
+            var modelProvider = new ModelProcesor(new CortanaProvider());
+            var response = modelProvider.GetScoredResults(result).ToList();
+            var mapedItems = new List<Tuple<MappingResult, ModelResult>>();
+            for (int i = 0; i < result.TextResults.Count; i++)
+            {
+                mapedItems.Add(new Tuple<MappingResult, ModelResult>(result.TextResults[i], response[i]));
+            }
+            var orderedItems = mapedItems.OrderBy(i => i.Item2.Class).ThenByDescending(i => i.Item2.Score).ToList();
+            var classes = response.Select(i => i.Class).Distinct().ToList();
+            var newResults = new List<MappingResult>();
+            foreach (var c in classes)
+            {
+                var tuple = orderedItems.First(i => i.Item2.Class == c);
+                tuple.Item1.Score = tuple.Item2.Score;
+                newResults.Add(tuple.Item1);
+            }
+            result.TextResults = newResults.Where(i => i.Score > 0.75d).ToList();
+            return result;
         }
 
         private void LoadText(OcrResult ocrResult)
@@ -343,14 +388,6 @@ namespace luval.vision.sink
             PictureBox.Image.Save(saveDlg.FileName);
         }
 
-        private void listResult_DoubleClick(object sender, EventArgs e)
-        {
-            if (listResult.SelectedItems.Count <= 0) return;
-            lblInstructions.Text = "Double click on the item to picture to select the value";
-            _isEditingMapping = true;
-            _isSelectingValue = true;
-        }
-
         private void mnuLoadProfile_Click(object sender, EventArgs e)
         {
             var openDlg = new OpenFileDialog()
@@ -386,42 +423,64 @@ namespace luval.vision.sink
 
         private void pictureBox_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            FindElement(e.Location);
+            ProcessedFoundElement(e.Location);
 
         }
 
-        private void FindElement(Point p)
+        private void pictureBox_MouseClick(object sender, MouseEventArgs e)
         {
-            if (_result == null) return;
+            var el = FindElement(e.Location);
+            if (el == null)
+            {
+                lblElementText.Text = "Element not found on location";
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(el.Text))
+            {
+                lblElementText.Text = "No Text Value on Element";
+                return;
+            }
+            lblElementText.Text = el.Text;
+        }
+
+        private void pictureBox_Click(object sender, EventArgs e)
+        {
+
+        }
+
+
+        private void ProcessedFoundElement(Point p)
+        {
+            var res = FindElement(p);
+            if (res == null)
+            {
+                MessageBox.Show("Not Found");
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(res.Text))
+            {
+                MessageBox.Show("Element does not have text in it!");
+                return;
+            }
+            LoadFoundElement(res);
+        }
+
+        private OcrLine FindElement(Point p)
+        {
+            if (_result == null) return null;
             var res = _result.Lines.Where(i => (p.X >= i.Location.X && p.X <= i.Location.XBound) && (p.Y >= i.Location.Y && p.Y <= i.Location.YBound)).ToList();
             if (!res.Any())
             {
-                MessageBox.Show("Nothing Found");
-                return;
+                return null;
             }
-            LoadFoundElement(res.First());
+            return res.First();
         }
 
         private void LoadFoundElement(OcrLine element)
         {
-            if (_isSelectingValue)
-            {
-                var extractor = new EntityExtractor(_result, _profiles);
-                var mapping = GetMapping();
-                txtLineText.Text = element.Text;
-                txtLineText.Tag = element;
-                txtLineValue.Text = extractor.GetElementValue(mapping, element);
-                _isSelectingValue = false;
-                lblInstructions.Text = "Now double click on the anchor element";
-            }
-            else
-            {
-                txtAnchorText.Tag = element;
-                txtAnchorText.Text = element.Text;
-                lblInstructions.Text = "Now click on Apply Mapping to apply the changes";
-                btnApplyMap.Enabled = true;
-                _isEditingMapping = false;
-            }
+            if (_onPictureDoubleClick <= 0) return;
+            if (_onPictureDoubleClick == 1) mappingControl.AcceptValueMapping(element);
+            else mappingControl.AcceptAnchorMapping(element);
         }
 
         private void pictureBox_MouseHover(object sender, EventArgs e)
@@ -434,37 +493,105 @@ namespace luval.vision.sink
             lblMouseCoordinates.Text = string.Format("X: {0} Y: {1}", e.Location.X, e.Location.Y);
         }
 
-        private void btnCancel_Click(object sender, EventArgs e)
-        {
-            _isEditingMapping = false;
-            _isSelectingValue = false;
-            lblInstructions.Text = "";
-        }
-
-        private void btnApplyMap_Click(object sender, EventArgs e)
-        {
-            _isEditingMapping = false;
-            _isSelectingValue = false;
-            var res = MappingResult.Create(_result.Info, GetMapping(), (OcrElement)txtAnchorText.Tag, (OcrElement)txtLineText.Tag);
-            listResult.SelectedItems[0].SubItems[1].Text = txtLineValue.Text;
-            listResult.SelectedItems[0].Tag = res;
-            txtLineValue.Text = null;
-            txtLineValue.Tag = null;
-            txtAnchorText.Text = null;
-            txtAnchorText.Tag = null;
-            txtLineText.Text = null;
-            txtLineText.Tag = null;
-            _isEditingMapping = false;
-            _isSelectingValue = false;
-            btnApplyMap.Enabled = false;
-            lblInstructions.Text = "Double click on list element to edit";
-            DoClear();
-            LoadImg(ImageManager.ProcessElements(PictureBox.Image, new OcrLocation[] { res.Location }, new Pen(Color.Blue, 4)));
-        }
-
         private AttributeMapping GetMapping()
         {
             return _profiles.FirstOrDefault(i => i.AttributeName == listResult.SelectedItems[0].Text);
+        }
+
+        private FileInfo GetImageFileFromWorkingDir()
+        {
+            var jpgs = WorkingDir.Image.GetFiles("*.jpg", SearchOption.TopDirectoryOnly);
+            if (jpgs.Any()) return jpgs.First();
+            var gifs = WorkingDir.Image.GetFiles("*.gif", SearchOption.TopDirectoryOnly);
+            if (gifs.Any()) return gifs.First();
+            var pngs = WorkingDir.Image.GetFiles("*.png", SearchOption.TopDirectoryOnly);
+            if (pngs.Any()) return pngs.First();
+            return null;
+        }
+
+        private void LoadFromWorkingDir()
+        {
+            var file = GetImageFileFromWorkingDir();
+            if (file == null)
+            {
+                MessageBox.Show(string.Format("Images not found on the working directory {0}", WorkingDir.Image.FullName), "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            lblStatus.Text = string.Format("Loading image from the working directory {0}", WorkingDir.Image.FullName);
+            DoLoadImage(file.FullName);
+            DoProcess();
+            lblStatus.Text = "Image ready for mapping";
+            DoClear();
+            rdVision.Checked = true;
+            ShowVisionResult();
+        }
+
+        private void mnuLoadForMapping_Click(object sender, EventArgs e)
+        {
+            LoadFromWorkingDir();
+
+        }
+
+        private void mappingControl_ValueMappingSelected(object sender, EventArgs e)
+        {
+            _onPictureDoubleClick = 1;
+        }
+
+        private void mappingControl_AnchorMappingSelected(object sender, EventArgs e)
+        {
+            _onPictureDoubleClick = 2;
+        }
+
+        private void mappingControl_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void mappingControl_SaveAndNew(object sender, EventArgs e)
+        {
+            LoadFromWorkingDir();
+        }
+
+        private void mnuExportCsv_Click(object sender, EventArgs e)
+        {
+            StartProgress();
+            _analizer.FromDirectoryToCsv(WorkingDir.Result.FullName, string.Format(@"{0}\{1}.csv", WorkingDir.Analytics, Guid.NewGuid()));
+            EndProgress("Finish Export");
+        }
+
+        private void mnuExportSql_Click(object sender, EventArgs e)
+        {
+            StartProgress();
+            _analizer.FromDirectoryToSql(WorkingDir.Result.FullName, "ResultData", true, string.Format(@"{0}\{1}.sql", WorkingDir.Analytics, Guid.NewGuid()));
+            EndProgress("Finish Export");
+        }
+
+        private void StartProgress()
+        {
+            lblProgress.Visible = true;
+            pbProgress.Visible = true;
+            pbProgress.Minimum = 0;
+            pbProgress.Maximum = 100;
+        }
+
+        private void EndProgress(string message)
+        {
+            lblProgress.Visible = false;
+            pbProgress.Visible = false;
+            if (string.IsNullOrWhiteSpace(message)) return;
+            MessageBox.Show(message, "Completed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void UpdateProgress(object sender, ProgressEventArgs e)
+        {
+            pbProgress.Value = (int)e.Progress;
+            lblProgress.Text = e.Message;
+            Application.DoEvents();
+        }
+
+        private void mnuAbout_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Application developed by Oscar Marin\n\nhttps://github.com/marinoscar\nhttps://www.linkedin.com/in/marinoscar", "About this application", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

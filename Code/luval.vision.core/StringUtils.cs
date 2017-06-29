@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -68,6 +69,16 @@ namespace luval.vision.core
             var res = CalculateLevenshteinDistance(i, p);
             if (res == 0) return 1d;
             return (double)res / (double)tot;
+        }
+
+        public static string GetHash(byte[] bytes)
+        {
+            var hash = default(string);
+            using (SHA1CryptoServiceProvider sha1 = new SHA1CryptoServiceProvider())
+            {
+                hash = Convert.ToBase64String(sha1.ComputeHash(bytes));
+            }
+            return hash;
         }
     }
 }
