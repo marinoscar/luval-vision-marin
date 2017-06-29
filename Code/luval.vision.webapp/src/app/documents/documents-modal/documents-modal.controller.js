@@ -14,6 +14,11 @@ class DocumentsModalController {
     this.$uibModalStack.dismissAll();
   }
 
+  goToUsage() {
+    this.$state.go('metrics');
+    this.$uibModalStack.dismissAll();
+  }
+
   logOut() {
     this.loginService.logOut()
       .then(this.redirectToLogin.bind(this));

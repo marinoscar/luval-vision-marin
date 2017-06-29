@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http.Cors;
 using System.IO;
+using luval.vision.api.Security;
 
 namespace luval.vision.api.Controllers
 {
@@ -30,6 +31,7 @@ namespace luval.vision.api.Controllers
             documentLogic = new DocumentLogic();
         }
 
+        [BasicAuthentication]
         public IHttpActionResult Get(string id)
         {
             var ocrDocument = documentLogic.GetProcessResultById(id);
@@ -38,6 +40,7 @@ namespace luval.vision.api.Controllers
             return BadRequest();
         }
 
+        [BasicAuthentication]
         public async Task<IHttpActionResult> Post()
         {
             ProcessResult processResult = new ProcessResult();
@@ -49,7 +52,7 @@ namespace luval.vision.api.Controllers
 
             var provider = GetMultipartProvider();
             try
-            { 
+            {
                 var result = await Request.Content.ReadAsMultipartAsync(provider);
                 var originalFileName = GetDeserializedFileName(result.FileData.First());
                 var userId = result.FormData.GetValues(1).FirstOrDefault();

@@ -40,28 +40,34 @@ namespace luval.vision.dal
 
         public bool DeleteByDocument(OcrDocument document)
         {
+            bool retVal;
             try
             {
                 var documentsList = MongoConn.mongoDB().GetCollection("documents");
                 IMongoQuery query = Query.EQ("_id", document.Id);
                 documentsList.Remove(query);
-                return true;
+                retVal = true;
             }
             catch
             {
-                return false;
+                retVal = false;
             }
+            return retVal;
         }
 
         public OcrDocument Save(OcrDocument document)
         {
-            var documentsList = MongoConn.mongoDB().GetCollection("documents");
-            WriteConcernResult result;
-            if(!String.IsNullOrEmpty(document.Id))
+            if(isValidDocumentId(document.Id))
             {
-                result = documentsList.Insert<OcrDocument>(document);
+                var documentsList = MongoConn.mongoDB().GetCollection("documents");
+                WriteConcernResult result = documentsList.Insert<OcrDocument>(document);
             }
             return document;
+        }
+
+        private bool isValidDocumentId(string documentId)
+        {
+          return !String.IsNullOrEmpty(documentId);
         }
     }
 }

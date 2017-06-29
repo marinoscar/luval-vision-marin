@@ -1,6 +1,7 @@
 class DocumentsController {
   /* @ngInject */
-  constructor($q, $log, $state, ngNotify, $uibModal, documentsService, usSpinnerService, documentService) {
+  constructor($q, $log, $state, ngNotify, $uibModal, documentsService,
+              usSpinnerService, documentService) {
     this.$q = $q;
     this.$log = $log;
     this.$state = $state;
@@ -22,10 +23,42 @@ class DocumentsController {
     this.itemsPerPage = 10;
 
     this.documentsService.getDocumentsStored()
-      .then(this.documentStoredHandler.bind(this),
-      this.documentStoredRejected.bind(this));
+      .then(
+        this.documentStoredHandler.bind(this),
+        this.documentStoredRejected.bind(this)
+      );
     this.documentsService.getProfiles()
       .then(this.profilesLoadedHandler.bind(this));
+  }
+
+  documentStoredHandler(documents) {
+    this.documents = documents.data;
+    this.serializeDocumentsContent(this.documents)
+      .then(this.stopLoading.bind(this),
+      this.stopLoading.bind(this));
+
+    this.totalItems = this.documents.length;
+  }
+
+  documentStoredRejected() {
+    this.stopLoading();
+    this.ngNotify.set('Documents are not available', {
+      type: 'error',
+      duration: 2000
+    });
+  }
+
+  serializeDocumentsContent(documents) {
+    this.documentDeferred = this.$q.defer();
+    angular.forEach(documents, index => {
+      index.Content = angular.fromJson(index.Content);
+      const documentsContent = index;
+      documentsContent.Content.ProfileName = index.ProfileName;
+      this.setDocumentContent(documentsContent.Content);
+    });
+    this.documents = this.documentsService.getDocumentsList();
+    this.documentDeferred.resolve(this.documents);
+    return this.documentDeferred.promise;
   }
 
   profilesLoadedHandler(profiles) {
@@ -41,14 +74,22 @@ class DocumentsController {
     });
   }
 
-  uploadFile($files, profileName) {
+  stopLoading() {
+    this.loading = false;
+  }
+
+  startLoading() {
     this.loading = true;
+  }
+
+  uploadFile($files, profileName) {
+    this.startLoading();
     this.documentsService.uploadDocumenToBlobStorage(this.documentService.objectBlobStorage($files, profileName))
       .then(this.fileUploadedHandler.bind(this), this.fileUploadedRejected.bind(this));
   }
 
   fileUploadedHandler(documents) {
-    this.loading = false;
+    this.stopLoading();
     this.serializeDocument = angular.fromJson(documents.data);
     this.$state.go('check-documents', {tokenId: this.serializeDocument.Result.Id});
     this.ngNotify.set('Successfully Loaded', {
@@ -58,7 +99,7 @@ class DocumentsController {
   }
 
   fileUploadedRejected() {
-    this.loading = false;
+    this.stopLoading();
     this.ngNotify.set('Falied to Load', {
       duration: 2000,
       position: 'bottom',
@@ -72,32 +113,6 @@ class DocumentsController {
       duration: 2000,
       position: 'bottom'
     });
-  }
-
-  documentStoredHandler(documents) {
-    this.documents = documents.data;
-    this.serializeDocumentsContent(this.documents)
-      .then(this.stopLoading.bind(this),
-      this.stopLoading.bind(this));
-
-    this.totalItems = this.documents.length;
-  }
-
-  stopLoading() {
-    this.loading = false;
-  }
-
-  serializeDocumentsContent(documents) {
-    this.documentDeferred = this.$q.defer();
-    angular.forEach(documents, index => {
-      index.Content = angular.fromJson(index.Content);
-      const documentsContent = index;
-      documentsContent.Content.ProfileName = index.ProfileName;
-      this.setDocumentContent(documentsContent.Content);
-    });
-    this.documents = this.documentsService.getDocumentsList();
-    this.documentDeferred.resolve(this.documents);
-    return this.documentDeferred.promise;
   }
 
   setDocumentContent(documentContent) {
@@ -126,14 +141,6 @@ class DocumentsController {
       controller: 'DocumentsModalController',
       controllerAs: 'vm',
       size: 'sm'
-    });
-  }
-
-  documentStoredRejected() {
-    this.loading = false;
-    this.ngNotify.set('Documents are not available', {
-      type: 'error',
-      duration: 2000
     });
   }
 
