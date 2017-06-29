@@ -22,6 +22,14 @@ class sessionService {
     this.$window.localStorage.setItem('user-session', session);
   }
 
+  getAuthorization() {
+    const user = {
+      Email: this.getAuthData().account.Email,
+      ApiToken: this.getAuthData().account.ApiToken
+    };
+    return 'Basic ' + this.$base64.encode(user.Email + ':' + user.ApiToken);
+  }
+
   buildUserJSON() {
     return {
       userId: this.getAuthData()
