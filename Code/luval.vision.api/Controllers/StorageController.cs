@@ -28,11 +28,11 @@ namespace luval.vision.api.Controllers
         {
             try
             {
-                IEnumerable<OcrDocument> documents = documentLogic.GetProcessResultByUserId(userId);
-                if (!documents.Equals(null))
+                IEnumerable<OcrDocument> documents;
+                documents = documentLogic.GetProcessResultByUserId(userId);
+                if (documentCollectionIsNotNull(documents))
                 {
-                    if(documents.Count() > 0)
-                        return Ok(documents);
+                    return Ok(documents);
                 }
                 return InternalServerError();
             }
@@ -40,6 +40,11 @@ namespace luval.vision.api.Controllers
             {
                 return Content(HttpStatusCode.InternalServerError, e.ToString());
             }
+        }
+
+        private bool documentCollectionIsNotNull(IEnumerable<OcrDocument> documents)
+        {
+            return !documents.Equals(null);
         }
     }
 }
