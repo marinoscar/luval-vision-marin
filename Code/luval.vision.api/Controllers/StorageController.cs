@@ -17,22 +17,17 @@ namespace luval.vision.api.Controllers
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class StorageController : ApiController
     {
-        private BlobStorageLogic ocrBlobStorage;
         private DocumentLogic documentLogic;
-        private ProcessLogic processOcr;
 
         public StorageController()
         {
-            ocrBlobStorage = new BlobStorageLogic();
             documentLogic = new DocumentLogic();
-            processOcr = new ProcessLogic();
         }
 
         public IHttpActionResult Get(string userId)
         {
             try
             {
-                ProcessResult processResult = new ProcessResult();
                 IEnumerable<OcrDocument> documents = documentLogic.GetProcessResultByUserId(userId);
                 if (!documents.Equals(null))
                 {
