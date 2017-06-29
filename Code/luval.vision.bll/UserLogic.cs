@@ -38,14 +38,15 @@ namespace luval.vision.bll
             return userDAL.Delete();
         }
 
-        public OcrUser SaveOrUpdate(string tokenId, string email, string name)
+        public OcrUser SaveOrUpdate(string tokenId, string email, string name, string userId)
         {
             return userDAL.SaveOrUpdate(new OcrUser
             {
                 Id = ObjectId.GenerateNewId().ToString(),
                 Email = email,
                 ApiToken = tokenId,
-                Name = name
+                Name = name,
+                UserId = userId
             });
         }
     }

@@ -19,20 +19,21 @@ namespace luval.tests
             OcrUser user = new OcrUser
             {
                 ApiToken = "ya29.Gl1gBCq8s8T-bIYlc6By6lHiwez4Z460sflQvfLyRzVXUThrwgEUyPXhxWDWEMV-spOHy3biaTH_RR5iRj0Z5eAxvbLHsgViseeWkA7SK9LnKWrvZRXWmtFx6cB1KSU",
-                Email = "test",
-                Name = "Harry"
+                Email = "harry182894@gmailcom",
+                Name = "Harry",
+                UserId = "harry182894gmailcom"
             };
             UserLogic userLogic = new UserLogic();
-            user = userLogic.SaveOrUpdate(user.ApiToken, user.Email, user.Name);
+            user = userLogic.SaveOrUpdate(user.ApiToken, user.Email, user.Name, user.UserId);
             Assert.IsNotNull(user);
         }
-        
+
         [Test]
         public void ItShouldGetUserList()
         {
             UserLogic userLogic = new UserLogic();
             IEnumerable<OcrUser> userList = userLogic.GetUserList();
-            var user = userList.Where(u => u.Email.Equals("harry182894gmailcom")).FirstOrDefault();
+            var user = userList.Where(u => u.UserId.Equals("harry182894gmailcom")).FirstOrDefault();
             Assert.IsNotNull(user);
         }
 

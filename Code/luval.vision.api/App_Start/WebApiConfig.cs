@@ -15,7 +15,6 @@ namespace luval.vision.api
         public static void Register(HttpConfiguration config)
         {
             config.SuppressHostPrincipal();
-            config.Filters.Add(new BasicAuthentication());
 
             config.EnableCors(new EnableCorsAttribute("*", "*", "*"));
             // Web API configuration and services

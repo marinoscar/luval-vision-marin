@@ -20,6 +20,8 @@ namespace luval.vision.entity
         public DateTime UtcLastLoginDate { get; set; }
         [BsonElement("name")]
         public string Name { get; set; }
+        [BsonElement("user_id")]
+        public string UserId { get; set; }
         [BsonElement("api_token")]
         public string ApiToken { get; set; }
         [BsonElement("utc_api_token_expiration_date")]
