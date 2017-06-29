@@ -18,15 +18,11 @@ namespace luval.vision.api.Controllers
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class StorageController : ApiController
     {
-        private BlobStorageLogic ocrBlobStorage;
         private DocumentLogic documentLogic;
-        private ProcessLogic processOcr;
 
         public StorageController()
         {
-            ocrBlobStorage = new BlobStorageLogic();
             documentLogic = new DocumentLogic();
-            processOcr = new ProcessLogic();
         }
 
         [BasicAuthentication]
@@ -34,12 +30,11 @@ namespace luval.vision.api.Controllers
         {
             try
             {
-                ProcessResult processResult = new ProcessResult();
-                IEnumerable<OcrDocument> documents = documentLogic.GetProcessResultByUserId(userId);
-                if (!documents.Equals(null))
+                IEnumerable<OcrDocument> documents;
+                documents = documentLogic.GetProcessResultByUserId(userId);
+                if (documentCollectionIsNotNull(documents))
                 {
-                    if(documents.Count() > 0)
-                        return Ok(documents);
+                    return Ok(documents);
                 }
                 return InternalServerError();
             }
@@ -47,6 +42,11 @@ namespace luval.vision.api.Controllers
             {
                 return Content(HttpStatusCode.InternalServerError, e.ToString());
             }
+        }
+
+        private bool documentCollectionIsNotNull(IEnumerable<OcrDocument> documents)
+        {
+            return !documents.Equals(null);
         }
     }
 }
