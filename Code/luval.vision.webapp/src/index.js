@@ -4,6 +4,7 @@ import documents from './app/documents/documents';
 import core from './app/core/core.constants';
 import checkDocuments from './app/check-documents/check-documents';
 import profiles from './app/profiles/profiles';
+import users from './app/users/users';
 import viewJSON from './app/view-json/view-json';
 import {routesConfig, blockPrivateAccess} from './routes';
 import 'angular-ui-router';
@@ -38,6 +39,7 @@ angular
     profiles,
     documents,
     checkDocuments,
+    users,
     viewJSON,
     login
   ])

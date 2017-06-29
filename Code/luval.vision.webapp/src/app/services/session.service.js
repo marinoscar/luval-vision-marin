@@ -25,8 +25,8 @@ class sessionService {
 
   getAuthorization() {
     const user = {
-      Email: this.getAuthData().w3.U3,
-      ApiToken: this.getAuthData().Zi.access_token
+      Email: this.getAuthData().account.Email,
+      ApiToken: this.getAuthData().account.ApiToken
     };
     return 'Basic ' + this.$base64.encode(user.Email + ':' + user.ApiToken);
   }
