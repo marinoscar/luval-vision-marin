@@ -1,26 +1,30 @@
 class UserCreateController {
   /* @ngInject */
-  constructor($log, $state, $stateParams, ngNotify, sessionService, usersService) {
+  constructor($log, $state, $stateParams, ngNotify, sessionService, usersService, documentService) {
     this.log = $log;
     this.$state = $state;
     this.$stateParams = $stateParams;
     this.ngNotify = ngNotify;
     this.sessionService = sessionService;
     this.usersService = usersService;
+    this.documentService = documentService;
 
-    this.user = this.$stateParams.user;
-    this.userName = this.user.name;
-    this.email = this.user.email;
+    this.googleUser = this.$stateParams.user;
+
+    const userId = this.documentService.replaceSpecialCharacters(this.googleUser.w3.U3);
+    this.account = {
+      Email: this.googleUser.w3.U3,
+      Name: this.googleUser.w3.ig,
+      UserId: userId,
+      ApiToken: this.googleUser.Zi.access_token
+    };
   }
 
   confirmAccount() {
-    this.usersService.createUserAccount({
-      name: this.userName,
-      email: this.email
-    })
+    this.usersService.createUserAccount(this.account)
       .then(res => {
         const userAccount = res.data;
-        this.sessionService.setAuthData(this.user, userAccount);
+        this.sessionService.setAuthData(this.googleUser, userAccount);
         this.ngNotify.set('Account created successfully', {
           duration: 2000,
           position: 'bottom'

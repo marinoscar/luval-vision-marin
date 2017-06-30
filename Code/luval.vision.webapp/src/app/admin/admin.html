@@ -28,14 +28,14 @@
                 </thead>
                 <tbody>
                   <tr ng-repeat="user in vm.users">
-                    <td>{{user.name}}</td>
-                    <td>{{user.email}}</td>
-                    <td>{{user.role}}</td>
+                    <td>{{user.Name}}</td>
+                    <td>{{user.Email}}</td>
+                    <td>{{user.Role}}</td>
                     <td>
-                      <toggle ng-model="user.isEnabled" data-on="Yes" data-off="No" data-size="small"></toggle>
+                      <toggle ng-model="user.IsEnabled" data-on="Yes" data-off="No" data-size="small"></toggle>
                     </td>
                     <td>
-                      <toggle ng-model="user.isAuthorized" data-on="Yes" data-off="No" data-size="small"></toggle>
+                      <toggle ng-model="user.IsApproved" data-on="Yes" data-off="No" data-size="small"></toggle>
                     </td>
                     <td>
                       <button class="btn btn-success" ng-disabled="settingsForm.$invalid" ng-click="vm.updateUser(user)">Update</button>

@@ -16,11 +16,11 @@
           <form name="createAccountForm">
             <div class="form-group">
               <label>User name:</label>
-              <input type="text" class="form-control" ng-model="vm.userName" required id="userName" />
+              <input type="text" class="form-control" ng-model="vm.account.Name" required id="userName" />
             </div>
             <div class="form-group">
               <label>Email:</label>
-              <input type="text" class="form-control" ng-model="vm.email" required id="email" />
+              <input type="text" class="form-control" ng-model="vm..account.Email" required id="email" />
             </div>
             <div class="form-group">
               <button class="btn btn-success" ng-disabled="createAccountForm.$invalid" ng-click="vm.confirmAccount()">Confirm</button>

@@ -16,25 +16,26 @@ class LoginController {
       this.signInRejected.bind(this));
   }
 
-  signInHandler(user) {
-    this.saveSignIn(user, null);
+  signInHandler(googleUser) {
+    this.saveSignIn(googleUser, null);
     this.usersService.getUserAccount()
       .then(res => {
         const userAccount = res.data;
-        if (userAccount.id) {
-          this.saveSignIn(user, userAccount);
+        if (userAccount.Id) {
+          this.saveSignIn(googleUser, userAccount);
           this.ngNotify.set('Google Sign In Success', {
             duration: 2000,
             position: 'bottom'
           });
+          // HERE WE NEED TO UPDATE ACCOUNT WITH TOKEN
           this.$state.go('documents');
         } else {
-          this.createUserAccount(user);
+          this.createUserAccount(googleUser);
         }
       })
       .catch(res => {
         this.log.debug(res);
-        this.createUserAccount(user);
+        this.createUserAccount(googleUser);
       });
   }
 
@@ -45,24 +46,8 @@ class LoginController {
     });
   }
 
-  saveSignIn(user, userAccount) { // .w3.U3
-    const authToken = user;
-    const email = authToken.w3.U3;
-    const userId = this.documentService.replaceSpecialCharacters(authToken.w3.U3);
-    const account = {
-      Email: email,
-      Name: authToken.w3.ig,
-      UserId: userId,
-      ApiToken: authToken.Zi.access_token
-    };
-    this.usersService.createUserAccount(account)
-      .then(res => {
-        authToken.w3.U3 = userId;
-        authToken.account = res.data;
-        this.sessionService.setAuthData(authToken); // eslint-disable-line no-useless-escape
-        this.sessionService.setAuthData(googleUser, userAccount);
-        this.$state.go('documents');
-      });
+  saveSignIn(googleUser, userAccount) {
+    this.sessionService.setAuthData(googleUser, userAccount);
   }
 
   createUserAccount(user) {

@@ -1,10 +1,9 @@
 class DocumentsModalController {
   /* @ngInject */
-  constructor($log, $state, $uibModalStack, loginService, documentsService) {
+  constructor($log, $state, $uibModalStack, loginService) {
     this.log = $log;
     this.$state = $state;
     this.$uibModalStack = $uibModalStack;
-    this.documentsService = documentsService;
     this.loginService = loginService;
   }
 
@@ -23,13 +22,12 @@ class DocumentsModalController {
   }
 
   logOut() {
-    this.loginService.logOut()
-      .then(this.redirectToLogin.bind(this));
+    this.loginService.logOut();
+    this.redirectToLogin();
   }
 
   redirectToLogin() {
     this.$state.go('login');
-    this.sessionService.destroy();
     this.$uibModalStack.dismissAll();
   }
 }

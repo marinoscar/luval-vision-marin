@@ -6,7 +6,6 @@ import documents from './app/documents/documents';
 import core from './app/core/core.constants';
 import checkDocuments from './app/check-documents/check-documents';
 import profiles from './app/profiles/profiles';
-import users from './app/users/users';
 import viewJSON from './app/view-json/view-json';
 import {routesConfig, blockPrivateAccess, interceptor} from './routes';
 import 'angular-ui-router';
@@ -47,7 +46,6 @@ angular
     checkDocuments,
     users,
     viewJSON,
-    users,
     admin,
     login
   ])

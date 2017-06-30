@@ -9,7 +9,8 @@ function routes($stateProvider) {
       public: true,
       params: {
         user: {
-          w3: {}
+          w3: {},
+          Zi: {}
         }
       }
     });

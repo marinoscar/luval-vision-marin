@@ -10,10 +10,7 @@ class usersService {
   getUserAccount() {
     const getRequest = {
       method: 'GET',
-      url: this.CORE.URL + 'Users/Get',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      url: this.CORE.URL + 'Users',
       params: this.sessionService.buildUserJSON()
     };
     this.log.debug(getRequest);
@@ -26,24 +23,17 @@ class usersService {
   createUserAccount(user) {
     const postRequest = {
       method: 'POST',
-      url: this.CORE.URL + 'Users/Post',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      url: this.CORE.URL + 'Users',
       data: user
     };
-    this.log.debug(postRequest);
+    this.log.log(postRequest);
     return this.$http(postRequest);
-    // return this.$http.get('app/users/mocks/user.mock.json');
   }
 
   updateUserAccount(user) {
     const putRequest = {
       method: 'PUT',
-      url: this.CORE.URL + 'Users/Put',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      url: this.CORE.URL + 'Users',
       data: user
     };
     this.log.debug(putRequest);
@@ -54,11 +44,7 @@ class usersService {
   getAllUsers() {
     const getRequest = {
       method: 'GET',
-      url: this.CORE.URL + 'Users/GetAll',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      params: this.sessionService.buildUserJSON()
+      url: this.CORE.URL + 'Users/GetAll'
     };
     this.log.debug(getRequest);
     // return this.$http(getRequest);

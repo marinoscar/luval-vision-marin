@@ -22,7 +22,7 @@ class loginService {
   }
 
   isLoggedIn() {
-    const authData = this.sessionService.getAuthData().w3.U3;
+    const authData = this.sessionService.getAuthData();
     const sessionDefined = typeof authData !== 'undefined'; // eslint-disable-line
     const authDataDefined = authData !== null;
     return sessionDefined && authDataDefined && authData.w3 && authData.w3.U3;
@@ -32,12 +32,12 @@ class loginService {
     const authData = this.sessionService.getAuthData();
     const sessionDefined = typeof authData !== 'undefined'; // eslint-disable-line
     const authDataDefined = authData !== null;
-    return sessionDefined && authDataDefined && authData.isAuthorized;
+    return sessionDefined && authDataDefined && authData.account && authData.account.IsApproved;
   }
 
   isAdmin() {
-    const role = this.sessionService.getCurrentUser().role ?
-      this.sessionService.getCurrentUser().role : this.sessionService.getAuthData().role;
+    const role = this.sessionService.getCurrentUser().Role ?
+      this.sessionService.getCurrentUser().Role : this.sessionService.getAuthData().account.Role;
     return role === 'Admin';
   }
 
