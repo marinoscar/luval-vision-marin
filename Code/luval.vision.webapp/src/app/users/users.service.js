@@ -10,9 +10,6 @@ class usersService {
     const postRequest = {
       method: 'POST',
       url: this.CORE.URL + 'Users',
-      headers: {
-        'Content-Type': 'application/json'
-      },
       data: user
     };
     return this.$http(postRequest);

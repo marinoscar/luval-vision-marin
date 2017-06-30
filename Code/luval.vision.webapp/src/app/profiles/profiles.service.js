@@ -13,10 +13,6 @@ class profilesService {
     const putRequest = {
       method: 'PUT',
       url: this.CORE.URL + 'Settings/Put',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: this.sessionService.getAuthorization()
-      },
       data: profile
     };
     return this.$http(putRequest);
@@ -27,10 +23,7 @@ class profilesService {
       url: this.CORE.URL + 'Settings',
       method: 'POST',
       data: blob,
-      file: blob.file,
-      headers: {
-        Authorization: this.sessionService.getAuthorization()
-      }
+      file: blob.file
     });
     return upload;
   }
@@ -39,10 +32,6 @@ class profilesService {
     const deleteRequest = {
       method: 'DELETE',
       url: this.CORE.URL + 'Settings/Delete',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: this.sessionService.getAuthorization()
-      },
       params: {profile: profileName}
     };
     return this.$http(deleteRequest);
@@ -52,10 +41,6 @@ class profilesService {
     const getRequest = {
       method: 'GET',
       url: this.CORE.URL + 'Settings/GetProfiles',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: this.sessionService.getAuthorization()
-      },
       params: this.sessionService.buildUserJSON()
     };
     return this.$http(getRequest);

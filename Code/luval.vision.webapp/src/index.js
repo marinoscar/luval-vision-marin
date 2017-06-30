@@ -6,7 +6,7 @@ import checkDocuments from './app/check-documents/check-documents';
 import profiles from './app/profiles/profiles';
 import users from './app/users/users';
 import viewJSON from './app/view-json/view-json';
-import {routesConfig, blockPrivateAccess} from './routes';
+import {routesConfig, blockPrivateAccess, interceptor} from './routes';
 import 'angular-ui-router';
 import 'angular-ui-router/release/stateEvents';
 import 'angular-ui-bootstrap';
@@ -44,4 +44,5 @@ angular
     login
   ])
   .config(routesConfig)
+  .config(interceptor)
   .run(blockPrivateAccess);

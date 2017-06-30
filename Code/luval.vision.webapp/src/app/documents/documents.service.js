@@ -27,10 +27,7 @@ class documentsService {
       url: this.CORE.URL + 'Provider',
       method: 'POST',
       data: blob,
-      file: blob.file,
-      headers: {
-        Authorization: this.sessionService.getAuthorization()
-      }
+      file: blob.file
     });
     return upload;
   }
@@ -39,10 +36,6 @@ class documentsService {
     const getRequest = {
       method: 'GET',
       url: this.CORE.URL + 'Settings/GetProfiles',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: this.sessionService.getAuthorization()
-      },
       params: this.sessionService.buildUserJSON()
     };
     return this.$http(getRequest);
@@ -52,10 +45,6 @@ class documentsService {
     const getRequest = {
       method: 'GET',
       url: this.CORE.URL + 'Storage',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: this.sessionService.getAuthorization()
-      },
       params: this.sessionService.buildUserJSON()
     };
     return this.$http(getRequest);
