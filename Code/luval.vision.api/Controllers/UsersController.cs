@@ -78,5 +78,32 @@ namespace luval.vision.api.Controllers
                 return Content(HttpStatusCode.InternalServerError, exception.ToString());
             }
         }
+
+        [BasicAuthentication]
+        public IHttpActionResult Put(OcrUser request)
+        {
+            try
+            {
+                if (String.IsNullOrEmpty(request.Email))
+                {
+                    return BadRequest();
+                }
+
+                OcrUser user = userLogic.GetUser(request.Email);
+
+                if (user == null)
+                {
+                    return NotFound();
+                }
+
+                user = userLogic.SaveOrUpdate(request);
+
+                return Ok(user);
+            }
+            catch (Exception exception)
+            {
+                return Content(HttpStatusCode.InternalServerError, exception.ToString());
+            }
+        }
     }
 }

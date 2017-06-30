@@ -33,9 +33,7 @@ class usersService {
       url: this.CORE.URL + 'Users',
       data: user
     };
-    this.log.debug(putRequest);
-    // return this.$http(putRequest);
-    return this.$http.get('app/users/mocks/user.mock.json');
+    return this.$http(putRequest);
   }
 
   getAllUsers() {

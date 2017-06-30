@@ -49,5 +49,10 @@ namespace luval.vision.bll
                 UserId = userId
             });
         }
+
+        public OcrUser SaveOrUpdate(OcrUser user)
+        {
+            return userDAL.SaveOrUpdate(user);
+        }
     }
 }
