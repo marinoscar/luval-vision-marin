@@ -7,17 +7,16 @@ class usersService {
     this.CORE = CORE;
   }
 
-  getUserAccount() {
+  getUserAccount(email) {
     const getRequest = {
       method: 'GET',
       url: this.CORE.URL + 'Users',
-      params: this.sessionService.buildUserJSON()
+      params: {
+        userEmail: email
+      }
     };
     this.log.debug(getRequest);
-    // return this.$http(getRequest);
-    return this.$http.get('app/users/mocks/user.mock.json');
-    // return this.$http.get('app/users/mocks/user.notfound.mock.json');
-    // return this.$http.get('app/users/mocks/user.notauthorized.mock.json');
+    return this.$http(getRequest);
   }
 
   createUserAccount(user) {
@@ -26,7 +25,6 @@ class usersService {
       url: this.CORE.URL + 'Users',
       data: user
     };
-    this.log.log(postRequest);
     return this.$http(postRequest);
   }
 

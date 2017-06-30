@@ -18,7 +18,7 @@ class LoginController {
 
   signInHandler(googleUser) {
     this.saveSignIn(googleUser, null);
-    this.usersService.getUserAccount()
+    this.usersService.getUserAccount(this.sessionService.getAuthData().account.Email)
       .then(res => {
         const userAccount = res.data;
         if (userAccount.Id) {
@@ -34,7 +34,7 @@ class LoginController {
         }
       })
       .catch(res => {
-        this.log.debug(res);
+        this.$log.debug(res);
         this.createUserAccount(googleUser);
       });
   }

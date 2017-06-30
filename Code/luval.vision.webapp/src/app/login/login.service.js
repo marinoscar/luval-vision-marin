@@ -10,15 +10,20 @@ class loginService {
   }
 
   fetchUserAccount() {
-    this.usersService.getUserAccount()
-      .then(res => {
-        const userAccount = res.data;
-        const authData = this.sessionService.getAuthData();
-        this.sessionService.setAuthData(authData, userAccount);
-      })
-      .catch(res => {
-        this.log.debug(res);
-      });
+    const email = (this.sessionService.getAuthData() && this.sessionService.getAuthData().account) ?
+      this.sessionService.getAuthData().account.Email : null;
+
+    if (email) {
+      this.usersService.getUserAccount(email)
+        .then(res => {
+          const userAccount = res.data;
+          const authData = this.sessionService.getAuthData();
+          this.sessionService.setAuthData(authData, userAccount);
+        })
+        .catch(res => {
+          this.log.debug(res);
+        });
+    }
   }
 
   isLoggedIn() {

@@ -1,17 +1,16 @@
 class UserCreateController {
   /* @ngInject */
-  constructor($log, $state, $stateParams, ngNotify, sessionService, usersService, documentService) {
+  constructor($log, $state, $stateParams, ngNotify, sessionService, usersService) {
     this.log = $log;
     this.$state = $state;
     this.$stateParams = $stateParams;
     this.ngNotify = ngNotify;
     this.sessionService = sessionService;
     this.usersService = usersService;
-    this.documentService = documentService;
 
     this.googleUser = this.$stateParams.user;
 
-    const userId = this.documentService.replaceSpecialCharacters(this.googleUser.w3.U3);
+    const userId = this.sessionService.replaceSpecialCharacters(this.googleUser.w3.U3);
     this.account = {
       Email: this.googleUser.w3.U3,
       Name: this.googleUser.w3.ig,
