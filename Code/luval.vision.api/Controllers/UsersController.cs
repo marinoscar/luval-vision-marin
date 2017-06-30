@@ -17,6 +17,29 @@ namespace luval.vision.api.Controllers
             userLogic = new UserLogic();
         }
 
+        public IHttpActionResult Get(string userEmail)
+        {
+            try
+            {
+                if (String.IsNullOrEmpty(userEmail))
+                {
+                    return BadRequest();
+                }
+                OcrUser user = userLogic.GetUser(userEmail);
+
+                if (user == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(user);
+            }
+            catch (Exception exception)
+            {
+                return Content(HttpStatusCode.InternalServerError, exception.ToString());
+            }
+        }
+
         public IHttpActionResult Post(OcrUser request)
         {
             try
