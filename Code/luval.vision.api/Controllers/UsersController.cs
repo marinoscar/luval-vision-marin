@@ -4,6 +4,8 @@ using System;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Net;
+using luval.vision.api.Security;
+using System.Collections.Generic;
 
 namespace luval.vision.api.Controllers
 {
@@ -37,6 +39,22 @@ namespace luval.vision.api.Controllers
             catch (Exception exception)
             {
                 return Content(HttpStatusCode.InternalServerError, exception.ToString());
+            }
+        }
+
+        [Route("api/v1/Users/GetAll")]
+        [HttpGet]
+        [BasicAuthentication]
+        public IHttpActionResult GetAll()
+        {
+            try
+            {
+                var users = userLogic.GetUserList();
+                return Ok(users);
+            }
+            catch (Exception e)
+            {
+                return Content(HttpStatusCode.InternalServerError, e.ToString());
             }
         }
 

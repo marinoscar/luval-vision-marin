@@ -15,7 +15,6 @@ class usersService {
         userEmail: email
       }
     };
-    this.log.debug(getRequest);
     return this.$http(getRequest);
   }
 
@@ -44,9 +43,7 @@ class usersService {
       method: 'GET',
       url: this.CORE.URL + 'Users/GetAll'
     };
-    this.log.debug(getRequest);
-    // return this.$http(getRequest);
-    return this.$http.get('app/users/mocks/users.mock.json');
+    return this.$http(getRequest);
   }
 }
 
