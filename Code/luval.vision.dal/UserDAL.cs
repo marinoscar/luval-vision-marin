@@ -54,6 +54,8 @@ namespace luval.vision.dal
 
             if (existingItem == null)
             {
+                user.IsApproved = true;
+                user.IsEnabled = true;
                 result = userList.Insert<OcrUser>(user);
             }
             else
