@@ -1,6 +1,7 @@
 import LoginController from './login.controller';
 import loginService from './login.service';
 import sessionService from '../services/session.service';
+import authorizationInjectorService from '../services/authorization-injector.service';
 import routes from './login.routes';
 import 'ng-google-signin/dist/ng-google-signin';
 
@@ -12,6 +13,7 @@ export default
     .controller('LoginController', LoginController)
     .service('loginService', loginService)
     .service('sessionService', sessionService)
+    .service('authorizationInjectorService', authorizationInjectorService)
     .name;
 
 /* @ngInject */

@@ -1,9 +1,10 @@
 class sessionService {
   /* @ngInject */
-  constructor($log, $state, $window) {
-    this.log = $log;
+  constructor($log, $state, $window, $base64) {
+    this.$log = $log;
     this.$state = $state;
     this.$window = $window;
+    this.$base64 = $base64;
   }
 
   destroy() {
@@ -22,9 +23,19 @@ class sessionService {
     this.$window.localStorage.setItem('user-session', session);
   }
 
+  getAuthorization() {
+    const email = (this.getAuthData() && this.getAuthData().account) ? this.getAuthData().account.Email : '';
+    const token = (this.getAuthData() && this.getAuthData().account) ? this.getAuthData().account.ApiToken : '';
+    const user = {
+      Email: email,
+      ApiToken: token
+    };
+    return 'Basic ' + this.$base64.encode(user.Email + ':' + user.ApiToken);
+  }
+
   buildUserJSON() {
     return {
-      userId: this.getAuthData()
+      userId: this.getAuthData().w3.U3
     };
   }
 }

@@ -13,9 +13,6 @@ class profilesService {
     const putRequest = {
       method: 'PUT',
       url: this.CORE.URL + 'Settings/Put',
-      headers: {
-        'Content-Type': 'application/json'
-      },
       data: profile
     };
     return this.$http(putRequest);
@@ -35,9 +32,6 @@ class profilesService {
     const deleteRequest = {
       method: 'DELETE',
       url: this.CORE.URL + 'Settings/Delete',
-      headers: {
-        'Content-Type': 'application/json'
-      },
       params: {profile: profileName}
     };
     return this.$http(deleteRequest);
@@ -47,9 +41,6 @@ class profilesService {
     const getRequest = {
       method: 'GET',
       url: this.CORE.URL + 'Settings/GetProfiles',
-      headers: {
-        'Content-Type': 'application/json'
-      },
       params: this.sessionService.buildUserJSON()
     };
     return this.$http(getRequest);

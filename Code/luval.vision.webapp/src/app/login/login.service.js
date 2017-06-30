@@ -11,7 +11,7 @@ class loginService {
   }
 
   isLoggedIn() {
-    const authData = this.sessionService.getAuthData();
+    const authData = this.sessionService.getAuthData().w3.U3;
     const sessionDefined = typeof authData !== 'undefined'; // eslint-disable-line
     const authDataDefined = authData !== null;
     return sessionDefined && authDataDefined;
