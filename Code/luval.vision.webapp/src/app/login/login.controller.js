@@ -41,11 +41,13 @@ class LoginController {
       UserId: userId,
       ApiToken: authToken.Zi.access_token
     };
-    this.usersService.createUserAccount(account);
-    authToken.w3.U3 = userId;
-    authToken.account = account;
-    this.sessionService.setAuthData(authToken); // eslint-disable-line no-useless-escape
-    this.$state.go('documents');
+    this.usersService.createUserAccount(account)
+      .then(res => {
+        authToken.w3.U3 = userId;
+        authToken.account = res.data;
+        this.sessionService.setAuthData(authToken); // eslint-disable-line no-useless-escape
+        this.$state.go('documents');
+      });
   }
 }
 

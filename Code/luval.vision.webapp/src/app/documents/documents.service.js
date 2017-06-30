@@ -36,9 +36,6 @@ class documentsService {
     const getRequest = {
       method: 'GET',
       url: this.CORE.URL + 'Settings/GetProfiles',
-      headers: {
-        'Content-Type': 'application/json'
-      },
       params: this.sessionService.buildUserJSON()
     };
     return this.$http(getRequest);
@@ -48,9 +45,6 @@ class documentsService {
     const getRequest = {
       method: 'GET',
       url: this.CORE.URL + 'Storage',
-      headers: {
-        'Content-Type': 'application/json'
-      },
       params: this.sessionService.buildUserJSON()
     };
     return this.$http(getRequest);

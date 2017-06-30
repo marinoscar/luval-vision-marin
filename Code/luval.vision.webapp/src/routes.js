@@ -17,4 +17,9 @@ function blockPrivateAccess($rootScope, $state, $log, ngNotify, loginService) {
   $rootScope.$on('$destroy', deregistration);
 }
 
-export {routesConfig, blockPrivateAccess};
+/* @ngInject */
+function interceptor($httpProvider) {
+  $httpProvider.interceptors.push('authorizationInjectorService');
+}
+
+export {routesConfig, blockPrivateAccess, interceptor};
