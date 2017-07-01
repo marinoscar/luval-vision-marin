@@ -37,7 +37,7 @@ namespace luval.vision.api.Security
                 string email = emailTokenIdArray[0];
                 string tokenId = emailTokenIdArray[1];
 
-                if (userLogic.isAuthenticationValid(email, tokenId))
+                if (userLogic.isAuthenticationValid(email, tokenId) && userLogic.isApproved(email))
                 {
                     Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(email), null);
                 }

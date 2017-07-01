@@ -28,6 +28,11 @@ namespace luval.vision.bll
             return userDAL.isAuthenticationValid(email, tokenId);
         }
 
+        public bool isApproved(string email)
+        {
+            return userDAL.isApproved(email);
+        }
+
         public IEnumerable<OcrUser> GetUserList()
         {
             return userDAL.GetUserList();

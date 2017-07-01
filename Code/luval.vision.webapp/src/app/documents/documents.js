@@ -2,6 +2,7 @@ import DocumentsController from './documents.controller';
 import DocumentsModalController from './documents-modal/documents-modal.controller';
 import documentsService from './documents.service';
 import sessionService from '../services/session.service';
+import errorService from '../services/error.service';
 import documentService from '../services/document.service';
 import routes from './documents.routes';
 
@@ -13,5 +14,6 @@ export default
     .controller('DocumentsModalController', DocumentsModalController)
     .service('documentsService', documentsService)
     .service('sessionService', sessionService)
+    .service('errorService', errorService)
     .service('documentService', documentService)
     .name;
