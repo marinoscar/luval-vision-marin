@@ -1,17 +1,22 @@
 <ul class="list-group text-center">
-	<li class="list-group-item">
-		<button ng-click="vm.goToSettings()">
-			Settings
-		</button>
-	</li>
-	<li class="list-group-item">
-		<button>
-			Emails
-		</button>
-	</li>
-	<li class="list-group-item">
-		<button ng-click="vm.logOut()">
-			Log Out
-		</button>
-	</li>
+    <li class="list-group-item">
+        <button ng-click="vm.goToSettings()">
+            Settings
+        </button>
+    </li>
+    <li class="list-group-item">
+        <button>
+            Emails
+        </button>
+    </li>
+    <li ng-if="vm.isAdmin()" class="list-group-item">
+        <button ng-click="vm.goToAdmin()">
+            Admin
+        </button>
+    </li>
+    <li class="list-group-item">
+        <button ng-click="vm.logOut()">
+            Log Out
+        </button>
+    </li>
 </ul>

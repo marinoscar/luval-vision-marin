@@ -5,10 +5,20 @@ class sessionService {
     this.$state = $state;
     this.$window = $window;
     this.$base64 = $base64;
+    this.currentUser = {};
   }
 
   destroy() {
-    this.setAuthData(null);
+    this.currentUser = {
+      IsEnabled: false,
+      IsApproved: false,
+      Role: 'User'
+    };
+    this.$window.localStorage.removeItem('user-session');
+  }
+
+  getCurrentUser() {
+    return this.currentUser;
   }
 
   getAuthData() {
@@ -18,8 +28,25 @@ class sessionService {
   	} // eslint-disable-line no-mixed-spaces-and-tabs
   }
 
-  setAuthData(user) {
-    const session = angular.toJson({authData: user});
+  setAuthData(googleUser, userAccount) {
+    const authToken = googleUser;
+    if (userAccount) {
+      this.currentUser = userAccount;
+
+      authToken.account = this.currentUser;
+    } else {
+      this.currentUser = {
+        Email: authToken.w3.U3,
+        Name: authToken.w3.ig,
+        IsEnabled: false,
+        IsApproved: false,
+        UserId: this.replaceSpecialCharacters(authToken.w3.U3),
+        Role: 'User'
+      };
+
+      authToken.account = this.currentUser;
+    }
+    const session = angular.toJson({authData: authToken});
     this.$window.localStorage.setItem('user-session', session);
   }
 
@@ -34,9 +61,14 @@ class sessionService {
   }
 
   buildUserJSON() {
+    const id = (this.getAuthData() && this.getAuthData().account) ? this.getAuthData().account.UserId : '';
     return {
-      userId: this.getAuthData().w3.U3
+      userId: id
     };
+  }
+
+  replaceSpecialCharacters(source) {
+    return source.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '') // eslint-disable-line
   }
 }
 

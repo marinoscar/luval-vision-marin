@@ -1,34 +1,58 @@
 class loginService {
   /* @ngInject */
-  constructor($log, $location, GoogleSignin, documentService, sessionService, $http, CORE) { // eslint-disable-line max-params
+  constructor($log, GoogleSignin, sessionService, usersService) { // eslint-disable-line max-params
     this.log = $log;
-    this.$location = $location;
     this.GoogleSignin = GoogleSignin;
-    this.documentService = documentService;
     this.sessionService = sessionService;
-    this.$http = $http;
-    this.CORE = CORE;
+    this.usersService = usersService;
+
+    this.fetchUserAccount();
+  }
+
+  fetchUserAccount() {
+    const email = (this.sessionService.getAuthData() && this.sessionService.getAuthData().account) ?
+      this.sessionService.getAuthData().account.Email : null;
+
+    if (email) {
+      this.usersService.getUserAccount(email)
+        .then(res => {
+          const userAccount = res.data;
+          const authData = this.sessionService.getAuthData();
+          this.sessionService.setAuthData(authData, userAccount);
+        })
+        .catch(res => {
+          this.log.debug(res);
+        });
+    }
   }
 
   isLoggedIn() {
-    const authData = this.sessionService.getAuthData().w3.U3;
+    const authData = this.sessionService.getAuthData();
     const sessionDefined = typeof authData !== 'undefined'; // eslint-disable-line
     const authDataDefined = authData !== null;
-    return sessionDefined && authDataDefined;
+    return sessionDefined && authDataDefined && authData.w3 && authData.w3.U3;
+  }
+
+  isAuthorized() {
+    const authData = this.sessionService.getAuthData();
+    const sessionDefined = typeof authData !== 'undefined'; // eslint-disable-line
+    const authDataDefined = authData !== null;
+    return sessionDefined && authDataDefined && authData.account && authData.account.IsApproved;
+  }
+
+  isAdmin() {
+    const role = this.sessionService.getCurrentUser().Role ?
+      this.sessionService.getCurrentUser().Role : this.sessionService.getAuthData().account.Role;
+    return role === 'Admin';
   }
 
   logOut() {
-    return this.GoogleSignin.signOut();
+    this.sessionService.destroy();
+    // return this.GoogleSignin.signOut();
   }
 
   callGoogleSignIn() {
     return this.GoogleSignin.signIn();
-  }
-
-  buildUserJSON(user) {
-    return {
-      token_id: this.documentService.replaceSpecialCharacters(user.w3.U3) // eslint-disable-line camelcase
-    };
   }
 }
 

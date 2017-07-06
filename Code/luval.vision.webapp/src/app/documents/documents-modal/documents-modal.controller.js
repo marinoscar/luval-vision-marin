@@ -1,12 +1,14 @@
 class DocumentsModalController {
   /* @ngInject */
-  constructor($log, $state, $uibModalStack, loginService, documentsService, sessionService) {
+  constructor($log, $state, $uibModalStack, loginService) {
     this.log = $log;
     this.$state = $state;
     this.$uibModalStack = $uibModalStack;
-    this.sessionService = sessionService;
-    this.documentsService = documentsService;
     this.loginService = loginService;
+  }
+
+  isAdmin() {
+    return this.loginService.isAdmin();
   }
 
   goToSettings() {
@@ -14,14 +16,18 @@ class DocumentsModalController {
     this.$uibModalStack.dismissAll();
   }
 
+  goToAdmin() {
+    this.$state.go('admin');
+    this.$uibModalStack.dismissAll();
+  }
+
   logOut() {
-    this.loginService.logOut()
-      .then(this.redirectToLogin.bind(this));
+    this.loginService.logOut();
+    this.redirectToLogin();
   }
 
   redirectToLogin() {
     this.$state.go('login');
-    this.sessionService.destroy();
     this.$uibModalStack.dismissAll();
   }
 }

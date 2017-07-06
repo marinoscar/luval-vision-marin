@@ -32,6 +32,13 @@ namespace luval.vision.dal
                 StringComparison.OrdinalIgnoreCase) && u.ApiToken == tokenId);
         }
 
+        public bool isApproved(string email)
+        {
+            OcrUser user = GetUser(email);
+
+            return user != null && user.IsApproved;
+        }
+
         public bool Delete()
         {
             try
@@ -54,6 +61,9 @@ namespace luval.vision.dal
 
             if (existingItem == null)
             {
+                user.IsApproved = true;
+                user.IsEnabled = true;
+                user.Role = "User";
                 result = userList.Insert<OcrUser>(user);
             }
             else

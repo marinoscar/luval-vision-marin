@@ -1,13 +1,14 @@
 class LoginController {
   /* @ngInject */
-  constructor($log, $state, ngNotify, usersService, loginService, sessionService, documentService) {
+  constructor($log, $state, ngNotify, errorService, usersService, loginService, sessionService, documentService) {
     this.$state = $state;
     this.$log = $log;
     this.ngNotify = ngNotify;
+    this.errorService = errorService;
     this.usersService = usersService;
     this.loginService = loginService;
-    this.documentService = documentService;
     this.sessionService = sessionService;
+    this.documentService = documentService;
   }
 
   onSignIn() {
@@ -16,12 +17,17 @@ class LoginController {
       this.signInRejected.bind(this));
   }
 
-  signInHandler(user) {
-    this.ngNotify.set('Google Sign In Success', {
-      duration: 2000,
-      position: 'bottom'
-    });
-    this.saveSignIn(user);
+  signInHandler(googleUser) {
+    this.saveSignIn(googleUser, null);
+    this.usersService
+      .getUserAccount(this.sessionService.getAuthData().account.Email)
+      .then(res => {
+        this.accountAlreadyExists(googleUser, res.data);
+      })
+      .catch(res => {
+        this.$log.debug(res);
+        this.createUserAccount(googleUser);
+      });
   }
 
   signInRejected() {
@@ -31,23 +37,31 @@ class LoginController {
     });
   }
 
-  saveSignIn(user) { // .w3.U3
-    const authToken = user;
-    const email = authToken.w3.U3;
-    const userId = this.documentService.replaceSpecialCharacters(authToken.w3.U3);
-    const account = {
-      Email: email,
-      Name: authToken.w3.ig,
-      UserId: userId,
-      ApiToken: authToken.Zi.access_token
-    };
-    this.usersService.createUserAccount(account)
-      .then(res => {
-        authToken.w3.U3 = userId;
-        authToken.account = res.data;
-        this.sessionService.setAuthData(authToken); // eslint-disable-line no-useless-escape
-        this.$state.go('documents');
-      });
+  accountAlreadyExists(googleUser, userAccount) {
+    if (userAccount.Id) {
+      this.saveSignIn(googleUser, userAccount);
+      userAccount.ApiToken = googleUser.Zi.access_token;
+      this.usersService.updateUserAccount(userAccount)
+        .then(res => {
+          this.saveSignIn(googleUser, res.data);
+          this.ngNotify.set('Google Sign In Success', {
+            duration: 2000,
+            position: 'bottom'
+          });
+          this.$state.go('documents');
+        })
+        .catch(res => this.errorService.handleError(res));
+    } else {
+      this.createUserAccount(googleUser);
+    }
+  }
+
+  saveSignIn(googleUser, userAccount) {
+    this.sessionService.setAuthData(googleUser, userAccount);
+  }
+
+  createUserAccount(user) {
+    this.$state.go('user-create', {user});
   }
 }
 

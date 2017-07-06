@@ -1,9 +1,21 @@
 class usersService {
   /* @ngInject */
-  constructor($log, $http, CORE) { // eslint-disable-line max-params
+  constructor($log, sessionService, $http, CORE) { // eslint-disable-line max-params
     this.log = $log;
+    this.sessionService = sessionService;
     this.$http = $http;
     this.CORE = CORE;
+  }
+
+  getUserAccount(email) {
+    const getRequest = {
+      method: 'GET',
+      url: this.CORE.URL + 'Users',
+      params: {
+        userEmail: email
+      }
+    };
+    return this.$http(getRequest);
   }
 
   createUserAccount(user) {
@@ -13,6 +25,23 @@ class usersService {
       data: user
     };
     return this.$http(postRequest);
+  }
+
+  updateUserAccount(user) {
+    const putRequest = {
+      method: 'PUT',
+      url: this.CORE.URL + 'Users',
+      data: user
+    };
+    return this.$http(putRequest);
+  }
+
+  getAllUsers() {
+    const getRequest = {
+      method: 'GET',
+      url: this.CORE.URL + 'Users/GetAll'
+    };
+    return this.$http(getRequest);
   }
 }
 

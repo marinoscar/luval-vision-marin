@@ -1,6 +1,6 @@
 class DocumentsController {
   /* @ngInject */
-  constructor($q, $log, $state, ngNotify, $uibModal, documentsService, usSpinnerService, documentService) {
+  constructor($q, $log, $state, ngNotify, $uibModal, documentsService, errorService, usSpinnerService, documentService) {
     this.$q = $q;
     this.$log = $log;
     this.$state = $state;
@@ -9,6 +9,7 @@ class DocumentsController {
     this.profiles = [];
     this.documentsService = documentsService;
     this.documentService = documentService;
+    this.errorService = errorService;
     this.usSpinnerService = usSpinnerService;
     this.loading = true;
     this.documentsService.resetDocumentsList();
@@ -129,12 +130,9 @@ class DocumentsController {
     });
   }
 
-  documentStoredRejected() {
+  documentStoredRejected(res) {
     this.loading = false;
-    this.ngNotify.set('Documents are not available', {
-      type: 'error',
-      duration: 2000
-    });
+    this.errorService.handleError(res);
   }
 
   getPaginationLowerBound() {
