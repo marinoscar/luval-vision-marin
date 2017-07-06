@@ -1,9 +1,10 @@
 class LoginController {
   /* @ngInject */
-  constructor($log, $state, ngNotify, usersService, loginService, sessionService, documentService) {
+  constructor($log, $state, ngNotify, errorService, usersService, loginService, sessionService, documentService) {
     this.$state = $state;
     this.$log = $log;
     this.ngNotify = ngNotify;
+    this.errorService = errorService;
     this.usersService = usersService;
     this.loginService = loginService;
     this.sessionService = sessionService;
@@ -18,20 +19,10 @@ class LoginController {
 
   signInHandler(googleUser) {
     this.saveSignIn(googleUser, null);
-    this.usersService.getUserAccount(this.sessionService.getAuthData().account.Email)
+    this.usersService
+      .getUserAccount(this.sessionService.getAuthData().account.Email)
       .then(res => {
-        const userAccount = res.data;
-        if (userAccount.Id) {
-          this.saveSignIn(googleUser, userAccount);
-          this.ngNotify.set('Google Sign In Success', {
-            duration: 2000,
-            position: 'bottom'
-          });
-          // HERE WE NEED TO UPDATE ACCOUNT WITH TOKEN
-          this.$state.go('documents');
-        } else {
-          this.createUserAccount(googleUser);
-        }
+        this.accountAlreadyExists(googleUser, res.data);
       })
       .catch(res => {
         this.$log.debug(res);
@@ -44,6 +35,25 @@ class LoginController {
       type: 'error',
       duration: 2000
     });
+  }
+
+  accountAlreadyExists(googleUser, userAccount) {
+    if (userAccount.Id) {
+      this.saveSignIn(googleUser, userAccount);
+      userAccount.ApiToken = googleUser.Zi.access_token;
+      this.usersService.updateUserAccount(userAccount)
+        .then(res => {
+          this.saveSignIn(googleUser, res.data);
+          this.ngNotify.set('Google Sign In Success', {
+            duration: 2000,
+            position: 'bottom'
+          });
+          this.$state.go('documents');
+        })
+        .catch(res => this.errorService.handleError(res));
+    } else {
+      this.createUserAccount(googleUser);
+    }
   }
 
   saveSignIn(googleUser, userAccount) {
