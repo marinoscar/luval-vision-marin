@@ -10,56 +10,6 @@ class MetricsController {
     this.chart = {};
     this.chart.type = 'ColumnChart';
     this.chart.displayed = true;
-    this.chart.data = {
-      cols:
-      [
-        {
-          id: 'd',
-          label: 'Date',
-          type: 'string'
-        },
-        {
-          id: 'n',
-          label: 'Number of Documents',
-          type: 'number'
-        }
-      ],
-      rows:
-      [
-        {
-          c: [
-            {
-              v: '2017-06-22'
-            },
-            {
-              v: 9
-            }
-          ]
-        },
-        {
-          c:
-          [
-            {
-              v: '2017-06-23'
-            },
-            {
-              v: 19
-            }
-          ]
-        },
-        {
-          c:
-          [
-            {
-              v: '2017-06-24'
-            },
-            {
-              v: 17
-            }
-          ]
-        }
-      ]
-    };
     this.chart.options = {
       title: 'Celeris Processed Documents',
       isStacked: true,
@@ -79,6 +29,7 @@ class MetricsController {
       formatters: {},
       view: {}
     };
+    loadStatistics();
   }
 
   loadStatistics() {
