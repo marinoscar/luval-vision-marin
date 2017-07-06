@@ -1,11 +1,12 @@
 class AdminController {
   /* @ngInject */
-  constructor($state, $log, ngNotify, usersService, loginService) {
+  constructor($state, $log, ngNotify, usersService, loginService, errorService) {
     this.$state = $state;
     this.$log = $log;
     this.ngNotify = ngNotify;
     this.usersService = usersService;
     this.loginService = loginService;
+    this.errorService = errorService;
     this.users = [];
 
     this.init();
@@ -20,9 +21,7 @@ class AdminController {
       .then(res => {
         this.users = res.data;
       })
-      .catch(res => {
-        this.$log.debug(res);
-      });
+      .catch(res => this.errorService.handleError(res));
   }
 
   updateUser(user) {
@@ -34,13 +33,7 @@ class AdminController {
           position: 'bottom'
         });
       })
-      .catch(res => {
-        this.$log.debug(res);
-        this.ngNotify.set('Something went wrong!', {
-          type: 'error',
-          duration: 2000
-        });
-      });
+      .catch(res => this.errorService.handleError(res));
   }
 
   backToDocuments() {

@@ -1,12 +1,13 @@
 class UserCreateController {
   /* @ngInject */
-  constructor($log, $state, $stateParams, ngNotify, sessionService, usersService) {
+  constructor($log, $state, $stateParams, ngNotify, sessionService, usersService, errorService) {
     this.log = $log;
     this.$state = $state;
     this.$stateParams = $stateParams;
     this.ngNotify = ngNotify;
     this.sessionService = sessionService;
     this.usersService = usersService;
+    this.errorService = errorService;
 
     this.googleUser = this.$stateParams.user;
 
@@ -30,15 +31,7 @@ class UserCreateController {
         });
         this.$state.go('documents');
       })
-      .catch(res => {
-        this.log.debug(res);
-        this.ngNotify.set('Something went wrong', {
-          duration: 2000,
-          position: 'bottom',
-          type: 'error'
-        });
-        this.$state.go('login');
-      });
+      .catch(res => this.errorService.handleError(res));
   }
 }
 
