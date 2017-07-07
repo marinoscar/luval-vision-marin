@@ -29,6 +29,7 @@ namespace luval.vision.api.Controllers
             documentLogic = new DocumentLogic();
         }
 
+        [BasicAuthentication]
         public IHttpActionResult Get(string userId)
         {
             try

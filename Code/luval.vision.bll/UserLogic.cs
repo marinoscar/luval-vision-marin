@@ -1,11 +1,12 @@
-﻿using luval.vision.dal;
-using luval.vision.entity;
 using MongoDB.Bson;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
+﻿using luval.vision.dal;
+using luval.vision.entity;
 
 namespace luval.vision.bll
 {
@@ -28,6 +29,11 @@ namespace luval.vision.bll
             return userDAL.isAuthenticationValid(email, tokenId);
         }
 
+        public bool isApproved(string email)
+        {
+            return userDAL.isApproved(email);
+        }
+
         public IEnumerable<OcrUser> GetUserList()
         {
             return userDAL.GetUserList();
@@ -48,6 +54,11 @@ namespace luval.vision.bll
                 Name = name,
                 UserId = userId
             });
+        }
+
+        public OcrUser SaveOrUpdate(OcrUser user)
+        {
+            return userDAL.SaveOrUpdate(user);
         }
     }
 }

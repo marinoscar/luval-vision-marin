@@ -1,3 +1,6 @@
+﻿using luval.vision.core;
+using luval.vision.entity;
+using luval.vision.bll;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -9,9 +12,6 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Cors;
-﻿using luval.vision.core;
-using luval.vision.entity;
-using luval.vision.bll;
 using luval.vision.api.Security;
 
 namespace luval.vision.api.Controllers

@@ -1,6 +1,8 @@
 import angular from 'angular';
 import core from './app/core/core.constants';
 import login from './app/login/login';
+import admin from './app/admin/admin';
+import users from './app/users/users';
 import documents from './app/documents/documents';
 import checkDocuments from './app/check-documents/check-documents';
 import profiles from './app/profiles/profiles';
@@ -14,9 +16,12 @@ import 'angular-ui-bootstrap';
 import 'angular-spinner/dist/angular-spinner.min';
 import 'ng-file-upload/dist/ng-file-upload.js';
 import 'ng-notify/dist/ng-notify.min';
+import 'angular-base64/angular-base64';
+import 'angular-bootstrap-toggle/dist/angular-bootstrap-toggle.min';
 
 import './index.scss';
 import './app/login/login.scss';
+import './app/admin/admin.scss';
 import './app/profiles/profiles.scss';
 import './app/profiles/show/profiles-show.scss';
 import './app/profiles/create/profiles-create.scss';
@@ -25,6 +30,7 @@ import './app/documents/documents.scss';
 import './app/check-documents/check-documents.scss';
 import './app/metrics/metrics.scss';
 import 'ng-notify/dist/ng-notify.min.css';
+import 'angular-bootstrap-toggle/dist/angular-bootstrap-toggle.min.css';
 
 angular
   .module('luval-vision', [
@@ -33,8 +39,10 @@ angular
     'ui.bootstrap',
     'google-signin',
     'ngNotify',
+    'base64',
     'ngFileUpload',
     'angularSpinner',
+    'ui.toggle',
     core,
     login,
     profiles,
@@ -42,6 +50,8 @@ angular
     checkDocuments,
     users,
     viewJSON,
+    admin,
+    login,
     metrics
   ])
   .config(routesConfig)

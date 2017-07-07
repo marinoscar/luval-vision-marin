@@ -1,0 +1,31 @@
+[
+    {
+        "Id" : "595684e079306012044911b1",
+        "Email" : "javalos@pernxi-solutions.com",
+        "Name" : "Jonathan Avalos",
+        "UserId" : "javalospernixsolutionscom",
+        "IsEnabled" : true,
+        "IsApproved" : true,
+        "Role" : "Admin",
+        "ApiToken" : "ya29.Glx5BFqbEZf6WHyHtSrZWUlGu2pd1bbjgmYXLmO6BhSLbWHREfmcbPNoJAWc6XPzHp7YP3v-FHjZmqr0Su730VdvtJWPdE8Q5UBjIuEbYmmBXcVLUWqcI3DcLXJEWA"
+    },
+    {
+        "Id" : "12345",
+        "Email" : "dcordero@example.com",
+        "Name" : "David Cordero",
+        "IsEnabled" : false,
+        "IsApproved" : true,
+        "Role" : "User",
+        "ApiToken" : "ya29.Glx5BFqbEZf6WHyHtSrZWUlGu2pd1bbjgmYXLmO6BhSLbWHREfmcbPNoJAWc6XPzHp7YP3v-FHjZmqr0Su730VdvtJWPdE8Q5UBjIuEbYmmBXcVLUWqcI3DcLXJEWA"
+
+    },
+    {
+        "Id" : "12345",
+        "Email" : "omarin@example.com",
+        "Name" : "Oscar Marin",
+        "IsEnabled" : true,
+        "IsApproved" : true,
+        "Role" : "User",
+        "ApiToken" : "ya29.Glx5BFqbEZf6WHyHtSrZWUlGu2pd1bbjgmYXLmO6BhSLbWHREfmcbPNoJAWc6XPzHp7YP3v-FHjZmqr0Su730VdvtJWPdE8Q5UBjIuEbYmmBXcVLUWqcI3DcLXJEWA"
+    }
+]

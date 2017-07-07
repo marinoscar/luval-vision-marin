@@ -1,0 +1,51 @@
+<div ng-if="vm.isAdmin()" id="admin-view">
+  <div class="container">
+    <div class="row">
+      <div id="main-header">
+        <div class="col-md-4">
+          <button id="close-this" ng-click="vm.backToDocuments()"></button>
+        </div>
+        <div class="col-md-8 col-md-offset-2">
+          <img ng-src="../../img/logo.png" class="logo" />
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="container-fluid">
+        <div class="col-md-offset-1 col-md-10">
+          <div>
+            <h3>Admin View</h3>
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Is Enabled?</th>
+                    <th>Is Authorized?</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="user in vm.users">
+                    <td>{{user.Name}}</td>
+                    <td>{{user.Email}}</td>
+                    <td>{{user.Role}}</td>
+                    <td>
+                      <toggle ng-model="user.IsEnabled" data-on="Yes" data-off="No" data-size="small"></toggle>
+                    </td>
+                    <td>
+                      <toggle ng-model="user.IsApproved" data-on="Yes" data-off="No" data-size="small"></toggle>
+                    </td>
+                    <td>
+                      <button class="btn btn-success" ng-disabled="settingsForm.$invalid" ng-click="vm.updateUser(user)">Update</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

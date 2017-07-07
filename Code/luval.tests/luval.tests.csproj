@@ -95,10 +95,6 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\luval.vision.api\luval.vision.api.csproj">
-      <Project>{bf1f6b66-703e-4064-8627-9685bdd7e0f7}</Project>
-      <Name>luval.vision.api</Name>
-    </ProjectReference>
     <ProjectReference Include="..\luval.vision.bll\luval.vision.bll.csproj">
       <Project>{79e0f57b-4776-4c98-9959-e7de120beb84}</Project>
       <Name>luval.vision.bll</Name>

@@ -1,0 +1,11 @@
+#admin-view {
+  #close-this {
+    left: 0;
+    &:before {
+      content: "\f060";
+      font-family: fontawesome;
+      font-size: 2em;
+      color: #706f73;
+    }
+  }
+}
