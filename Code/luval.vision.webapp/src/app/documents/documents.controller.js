@@ -40,14 +40,6 @@ class DocumentsController {
     this.totalItems = this.documents.length;
   }
 
-  documentStoredRejected() {
-    this.stopLoading();
-    this.ngNotify.set('Documents are not available', {
-      type: 'error',
-      duration: 2000
-    });
-  }
-
   serializeDocumentsContent(documents) {
     this.documentDeferred = this.$q.defer();
     angular.forEach(documents, index => {
@@ -59,6 +51,11 @@ class DocumentsController {
     this.documents = this.documentsService.getDocumentsList();
     this.documentDeferred.resolve(this.documents);
     return this.documentDeferred.promise;
+  }
+
+  documentStoredRejected(res) {
+    this.stopLoading();
+    this.errorService.handleError(res);
   }
 
   profilesLoadedHandler(profiles) {
@@ -142,11 +139,6 @@ class DocumentsController {
       controllerAs: 'vm',
       size: 'sm'
     });
-  }
-
-  documentStoredRejected(res) {
-    this.loading = false;
-    this.errorService.handleError(res);
   }
 
   getPaginationLowerBound() {

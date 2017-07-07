@@ -29,7 +29,7 @@ class MetricsController {
       formatters: {},
       view: {}
     };
-    loadStatistics();
+    this.loadStatistics();
   }
 
   loadStatistics() {

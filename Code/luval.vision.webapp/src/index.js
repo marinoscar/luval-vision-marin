@@ -6,7 +6,6 @@ import users from './app/users/users';
 import documents from './app/documents/documents';
 import checkDocuments from './app/check-documents/check-documents';
 import profiles from './app/profiles/profiles';
-import users from './app/users/users';
 import viewJSON from './app/view-json/view-json';
 import metrics from './app/metrics/metrics';
 import {routesConfig, blockPrivateAccess, interceptor} from './routes';
