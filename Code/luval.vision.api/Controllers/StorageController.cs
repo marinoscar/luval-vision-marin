@@ -13,7 +13,6 @@ using System.Text.RegularExpressions;
 using luval.vision.core;
 using luval.vision.bll;
 using luval.vision.entity;
-using luval.vision.api.Models;
 using luval.vision.api.Security;
 
 
@@ -55,6 +54,7 @@ namespace luval.vision.api.Controllers
 
         [Route("api/v1/Storage/GetStatistics")]
         [HttpGet]
+        [BasicAuthentication]
         public IHttpActionResult GetStatistics(string userId)
         {
             IEnumerable<OcrDocument> documents;

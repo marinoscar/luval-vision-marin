@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace luval.vision.api.Models
+namespace luval.vision.entity
 {
-    public class C
+    public class Row
     {
-        public string v { get; set; }
+        public List<C> c { get; set; }
     }
 }

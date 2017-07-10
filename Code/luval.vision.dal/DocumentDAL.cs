@@ -1,15 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Collections.Generic;
+using System.Net;
+using System.Web.Http;
 using System.Threading.Tasks;
-using luval.vision.entity;
 using MongoDB.Driver;
 using MongoDB.Bson;
 using MongoDB.Driver.Builders;
-using System.Net;
-using System.Web.Http;
 using Newtonsoft.Json;
+
+using luval.vision.entity;
 
 namespace luval.vision.dal
 {
