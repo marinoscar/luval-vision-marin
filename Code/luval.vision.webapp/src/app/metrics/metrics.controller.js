@@ -7,6 +7,7 @@ class MetricsController {
     this.ngNotify = ngNotify;
     this.MetricsService = MetricsService;
 
+    this.loadStatistics();
     this.chart = {};
     this.chart.type = 'ColumnChart';
     this.chart.displayed = true;
@@ -15,7 +16,7 @@ class MetricsController {
       isStacked: true,
       fill: '20',
       vAxis: {
-        title: '# Docs',
+        title: 'Documents',
         gridlines: {
           count: 10
         }
@@ -29,14 +30,13 @@ class MetricsController {
       formatters: {},
       view: {}
     };
-    this.loadStatistics();
   }
 
   loadStatistics() {
     this.MetricsService.getStatistics()
       .then(
         this.formatStatistics.bind(this),
-        this.errorLoadingStatistics(this)
+        this.errorLoadingStatistics.bind(this)
       );
   }
 

@@ -10,7 +10,12 @@
         </div>
       </div>
       <div>
-        <div google-chart chart="vm.chart" style="height:600px; width:100%;"></div>
+        <div ng-if="!vm.chart.data" style="text-align:center;font-size:500%;">
+          <br/>
+          <br/>
+          LOADING
+        </div>
+        <div google-chart ng-if="vm.chart.data" chart="vm.chart" style="height:600px; width:100%;"></div>
       </div>
     </div>
   </div>
