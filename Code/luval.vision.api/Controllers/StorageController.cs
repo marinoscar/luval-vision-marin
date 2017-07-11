@@ -153,7 +153,7 @@ namespace luval.vision.api.Controllers
         private string GetDateInDoc(OcrDocument doc)
         {
             /* Regular expression matches date in format: yyyy-mm-ddThh:MM:ss.usZ */
-            Regex date_regex = new Regex(@"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{1,7}Z");
+            Regex date_regex = new Regex(@"UtcTimestamp(.*?)\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{1,7}Z");
             var rawDate = date_regex.Match(doc.Content).ToString();
             var formattedDate = GetDateInYearMonthDayFormat(rawDate);
             return formattedDate;
@@ -162,7 +162,7 @@ namespace luval.vision.api.Controllers
         private string GetDateInYearMonthDayFormat(string rawDateString)
         {
             /* Date format is: yyyy-mm-dd. */
-            return rawDateString.Substring(0, 10);
+            return rawDateString.Substring(15, 10);
         }
     }
 }
