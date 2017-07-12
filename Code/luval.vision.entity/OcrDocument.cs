@@ -19,5 +19,7 @@ namespace luval.vision.entity
         public string Content { get; set; }
         [BsonElement("profile_name")]
         public string ProfileName { get; set; }
+        [BsonElement("created_date")]
+        public DateTime Date { get; set; }
     }
 }

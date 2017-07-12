@@ -46,7 +46,7 @@ class DocumentsController {
       index.Content = angular.fromJson(index.Content);
       const documentsContent = index;
       documentsContent.Content.ProfileName = index.ProfileName;
-      this.setDocumentContent(documentsContent.Content);
+      this.setDocumentContent(documentsContent);
     });
     this.documents = this.documentsService.getDocumentsList();
     this.documentDeferred.resolve(this.documents);
@@ -113,9 +113,10 @@ class DocumentsController {
   }
 
   setDocumentContent(documentContent) {
-    this.initilizeDocumentInfo(documentContent);
-    angular.forEach(documentContent.Result.TextResults, index => {
+    this.initilizeDocumentInfo(documentContent.Content);
+    angular.forEach(documentContent.Content.Result.TextResults, index => {
       this.documentsInfo.attributes.push(index.Value);
+      this.documentsInfo.createdDate = documentContent.Date;
     });
     this.documentsService.addDocument(this.documentsInfo);
   }

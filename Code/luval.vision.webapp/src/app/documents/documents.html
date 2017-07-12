@@ -56,7 +56,7 @@
               <tbody ng-repeat="document in vm.documents.slice(vm.getPaginationLowerBound(), vm.getPaginationUpperBound())">
                 <tr>
                   <th>
-                    {{document.Result.UtcTimestamp | date : 'MM/dd/yy HH:mm'}}
+                    {{document.createdDate | date : 'yyyy-MM-dd HH:mm'}}
                   </th>
                   <th>
                     {{document.ProfileName}}
