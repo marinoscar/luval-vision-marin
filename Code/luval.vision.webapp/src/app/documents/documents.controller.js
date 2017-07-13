@@ -1,6 +1,7 @@
 class DocumentsController {
   /* @ngInject */
-  constructor($q, $log, $state, ngNotify, $uibModal, documentsService, errorService, usSpinnerService, documentService) {
+  constructor($q, $log, $state, ngNotify, $uibModal, documentsService,
+              errorService, usSpinnerService, documentService) {
     this.$q = $q;
     this.$log = $log;
     this.$state = $state;
@@ -34,23 +35,32 @@ class DocumentsController {
   documentStoredHandler(documents) {
     this.documents = documents.data;
     this.serializeDocumentsContent(this.documents)
-      .then(this.stopLoading.bind(this),
-      this.stopLoading.bind(this));
+      .then(
+        this.stopLoading.bind(this),
+        this.stopLoading.bind(this)
+      );
+    this.setNumberOfDocuments();
+  }
 
-    this.totalItems = this.documents.length;
+  setNumberOfDocuments() {
+    this.numberOfDocuments = this.documents.length;
   }
 
   serializeDocumentsContent(documents) {
     this.documentDeferred = this.$q.defer();
-    angular.forEach(documents, index => {
-      index.Content = angular.fromJson(index.Content);
-      const documentsContent = index;
-      documentsContent.Content.ProfileName = index.ProfileName;
+    angular.forEach(documents, doc => {
+      doc.Content = angular.fromJson(doc.Content);
+      const documentsContent = doc;
+      documentsContent.Content.ProfileName = doc.ProfileName;
       this.setDocumentContent(documentsContent);
     });
-    this.documents = this.documentsService.getDocumentsList();
+    this.setSerializedDocuments();
     this.documentDeferred.resolve(this.documents);
     return this.documentDeferred.promise;
+  }
+
+  setSerializedDocuments() {
+    this.documents = this.documentsService.getDocumentsList();
   }
 
   documentStoredRejected(res) {
@@ -81,8 +91,9 @@ class DocumentsController {
 
   uploadFile($files, profileName) {
     this.startLoading();
-    this.documentsService.uploadDocumenToBlobStorage(this.documentService.objectBlobStorage($files, profileName))
-      .then(this.fileUploadedHandler.bind(this), this.fileUploadedRejected.bind(this));
+    this.documentsService.uploadDocumenToBlobStorage(
+      this.documentService.objectBlobStorage($files, profileName)
+      ).then(this.fileUploadedHandler.bind(this), this.fileUploadedRejected.bind(this));
   }
 
   fileUploadedHandler(documents) {
@@ -112,24 +123,28 @@ class DocumentsController {
     });
   }
 
-  setDocumentContent(documentContent) {
-    this.initilizeDocumentInfo(documentContent.Content);
-    angular.forEach(documentContent.Content.Result.TextResults, index => {
-      this.documentsInfo.attributes.push(index.Value);
-      this.documentsInfo.createdDate = documentContent.Date;
+  setDocumentContent(doc) {
+    this.initilizeDocumentInfo(doc.Content);
+    angular.forEach(doc.Content.Result.TextResults, index => {
+      this.docWithInfo.attributes.push(index.Value);
     });
-    this.documentsService.addDocument(this.documentsInfo);
+    this.addDateToDocument(this.docWithInfo, doc.Date);
+    this.documentsService.addDocument(this.docWithInfo);
   }
 
   initilizeDocumentInfo(documentContent) {
-    this.documentsInfo = {};
-    this.documentsInfo.attributes = [];
-    this.documentsInfo.Id = documentContent.Result.Id;
-    this.documentsInfo.UserId = documentContent.Result.UserId;
-    this.documentsInfo.FileName = documentContent.FileName;
-    this.documentsInfo.FileData = documentContent.FileData;
-    this.documentsInfo.Result = documentContent.Result;
-    this.documentsInfo.ProfileName = documentContent.ProfileName;
+    this.docWithInfo = {};
+    this.docWithInfo.attributes = [];
+    this.docWithInfo.Id = documentContent.Result.Id;
+    this.docWithInfo.UserId = documentContent.Result.UserId;
+    this.docWithInfo.FileName = documentContent.FileName;
+    this.docWithInfo.FileData = documentContent.FileData;
+    this.docWithInfo.Result = documentContent.Result;
+    this.docWithInfo.ProfileName = documentContent.ProfileName;
+  }
+
+  addDateToDocument(doc, date) {
+    doc.createdDate = date;
   }
 
   openDocumentModal() {
