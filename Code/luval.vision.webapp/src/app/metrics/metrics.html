@@ -20,7 +20,10 @@
               <option ng-repeat="option in vm.months" value="{{option.id}}">{{option.name}}</option>
             </select>
           </label>
-          <button type="button" class="btn btn-default" ng-click="vm.setDate()">Load</button>
+          <button ng-disabled="vm.loading" type="button" class="btn btn-default" ng-click="vm.setDate()">Load</button>
+        </div>
+        <div ng-if="vm.loading">
+          <span us-spinner></span>
         </div>
         <div google-chart ng-if="vm.chart.data" chart="vm.chart" style="height:600px; width: 100%;"></div>
       </div>

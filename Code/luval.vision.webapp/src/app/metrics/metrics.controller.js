@@ -1,11 +1,14 @@
 class MetricsController {
   /* @ngInject */
-  constructor($state, $window, $log, ngNotify, MetricsService) {
+  constructor($state, $window, $log, ngNotify, MetricsService, usSpinnerService) {
     this.$state = $state;
     this.$log = $log;
     this.$window = $window;
     this.ngNotify = ngNotify;
     this.MetricsService = MetricsService;
+    this.usSpinnerService = usSpinnerService;
+
+    this.stopLoading();
 
     this.dateIsSet = false;
     this.months = [
@@ -84,6 +87,7 @@ class MetricsController {
 
   renderChart() {
     if (this.dateIsSet) {
+      this.loading = true;
       this.loadChartData();
     } else {
       this.ngNotify.set('Please set the Date', {
@@ -122,7 +126,7 @@ class MetricsController {
     this.MetricsService.getStatistics(this.formatYear(this.year),
                                       this.formatMonth(this.month))
       .then(
-        this.formatStatistics.bind(this),
+        this.formatLoadedStatistics.bind(this),
         this.errorLoadingStatistics.bind(this)
       );
   }
@@ -135,8 +139,9 @@ class MetricsController {
     return (month < 10) ? '0' + String(month) : String(month);
   }
 
-  formatStatistics(statistics) {
+  formatLoadedStatistics(statistics) {
     this.chart.data = statistics.data;
+    this.stopLoading();
   }
 
   errorLoadingStatistics() {
@@ -144,6 +149,10 @@ class MetricsController {
       type: 'error',
       duration: 2000
     });
+  }
+
+  stopLoading() {
+    this.loading = false;
   }
 
   backToDocuments() {
