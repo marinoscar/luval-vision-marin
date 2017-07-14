@@ -52,7 +52,7 @@ namespace luval.vision.api.Controllers
 
             var provider = GetMultipartProvider();
             try
-            { 
+            {
                 var result = await Request.Content.ReadAsMultipartAsync(provider);
                 var originalFileName = GetDeserializedFileName(result.FileData.First());
                 var userId = result.FormData.GetValues(1).FirstOrDefault();

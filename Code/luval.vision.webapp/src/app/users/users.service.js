@@ -1,10 +1,10 @@
 class usersService {
   /* @ngInject */
-  constructor($log, sessionService, $http, CORE) { // eslint-disable-line max-params
+  constructor($log, $http, CORE, sessionService) { // eslint-disable-line max-params
     this.log = $log;
-    this.sessionService = sessionService;
     this.$http = $http;
     this.CORE = CORE;
+    this.sessionService = sessionService;
   }
 
   getUserAccount(email) {

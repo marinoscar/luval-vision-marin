@@ -1,14 +1,15 @@
 class LoginController {
   /* @ngInject */
-  constructor($log, $state, ngNotify, errorService, usersService, loginService, sessionService, documentService) {
+  constructor($log, $state, ngNotify, usersService, loginService,
+              sessionService, documentService, errorService) {
     this.$state = $state;
     this.$log = $log;
     this.ngNotify = ngNotify;
-    this.errorService = errorService;
     this.usersService = usersService;
     this.loginService = loginService;
     this.sessionService = sessionService;
     this.documentService = documentService;
+    this.errorService = errorService;
   }
 
   onSignIn() {

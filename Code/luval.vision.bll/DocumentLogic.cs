@@ -27,6 +27,12 @@ namespace luval.vision.bll
             return documentDAL.GetProcessResult(id);
         }
 
+        public IEnumerable<DocumentStatistics> GetDocumentStatisticsByUserId(string userId, string year, string month)
+        {
+            var inputDate = year + "-" + month;
+            return documentDAL.GetDocumentStatisticsByUserId(userId, inputDate);
+        }
+
         public OcrDocument Save(OcrDocument document)
         {
             return documentDAL.Save(document);

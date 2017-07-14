@@ -74,11 +74,16 @@
   <ItemGroup>
     <Compile Include="BlobDownloadModel.cs" />
     <Compile Include="BlobUploadModel.cs" />
+    <Compile Include="DocumentStatistics.cs" />
     <Compile Include="FormResult.cs" />
     <Compile Include="OcrSettings.cs" />
     <Compile Include="OcrDocument.cs" />
     <Compile Include="OcrUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StatisticsModels\C.cs" />
+    <Compile Include="StatisticsModels\Col.cs" />
+    <Compile Include="StatisticsModels\Data.cs" />
+    <Compile Include="StatisticsModels\Row.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

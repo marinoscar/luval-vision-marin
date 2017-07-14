@@ -1,6 +1,7 @@
 class DocumentsController {
   /* @ngInject */
-  constructor($q, $log, $state, ngNotify, $uibModal, documentsService, errorService, usSpinnerService, documentService) {
+  constructor($q, $log, $state, ngNotify, $uibModal, documentsService,
+              errorService, usSpinnerService, documentService) {
     this.$q = $q;
     this.$log = $log;
     this.$state = $state;
@@ -23,10 +24,48 @@ class DocumentsController {
     this.itemsPerPage = 10;
 
     this.documentsService.getDocumentsStored()
-      .then(this.documentStoredHandler.bind(this),
-      this.documentStoredRejected.bind(this));
+      .then(
+        this.documentStoredHandler.bind(this),
+        this.documentStoredRejected.bind(this)
+      );
     this.documentsService.getProfiles()
       .then(this.profilesLoadedHandler.bind(this));
+  }
+
+  documentStoredHandler(documents) {
+    this.documents = documents.data;
+    this.serializeDocumentsContent(this.documents)
+      .then(
+        this.stopLoading.bind(this),
+        this.stopLoading.bind(this)
+      );
+    this.setNumberOfDocuments();
+  }
+
+  setNumberOfDocuments() {
+    this.numberOfDocuments = this.documents.length;
+  }
+
+  serializeDocumentsContent(documents) {
+    this.documentDeferred = this.$q.defer();
+    angular.forEach(documents, doc => {
+      doc.Content = angular.fromJson(doc.Content);
+      const documentsContent = doc;
+      documentsContent.Content.ProfileName = doc.ProfileName;
+      this.setDocumentContent(documentsContent);
+    });
+    this.setSerializedDocuments();
+    this.documentDeferred.resolve(this.documents);
+    return this.documentDeferred.promise;
+  }
+
+  setSerializedDocuments() {
+    this.documents = this.documentsService.getDocumentsList();
+  }
+
+  documentStoredRejected(res) {
+    this.stopLoading();
+    this.errorService.handleError(res);
   }
 
   profilesLoadedHandler(profiles) {
@@ -42,14 +81,23 @@ class DocumentsController {
     });
   }
 
-  uploadFile($files, profileName) {
+  stopLoading() {
+    this.loading = false;
+  }
+
+  startLoading() {
     this.loading = true;
-    this.documentsService.uploadDocumenToBlobStorage(this.documentService.objectBlobStorage($files, profileName))
-      .then(this.fileUploadedHandler.bind(this), this.fileUploadedRejected.bind(this));
+  }
+
+  uploadFile($files, profileName) {
+    this.startLoading();
+    this.documentsService.uploadDocumenToBlobStorage(
+      this.documentService.objectBlobStorage($files, profileName)
+      ).then(this.fileUploadedHandler.bind(this), this.fileUploadedRejected.bind(this));
   }
 
   fileUploadedHandler(documents) {
-    this.loading = false;
+    this.stopLoading();
     this.serializeDocument = angular.fromJson(documents.data);
     this.$state.go('check-documents', {tokenId: this.serializeDocument.Result.Id});
     this.ngNotify.set('Successfully Loaded', {
@@ -59,7 +107,7 @@ class DocumentsController {
   }
 
   fileUploadedRejected() {
-    this.loading = false;
+    this.stopLoading();
     this.ngNotify.set('Falied to Load', {
       duration: 2000,
       position: 'bottom',
@@ -75,49 +123,28 @@ class DocumentsController {
     });
   }
 
-  documentStoredHandler(documents) {
-    this.documents = documents.data;
-    this.serializeDocumentsContent(this.documents)
-      .then(this.stopLoading.bind(this),
-      this.stopLoading.bind(this));
-
-    this.totalItems = this.documents.length;
-  }
-
-  stopLoading() {
-    this.loading = false;
-  }
-
-  serializeDocumentsContent(documents) {
-    this.documentDeferred = this.$q.defer();
-    angular.forEach(documents, index => {
-      index.Content = angular.fromJson(index.Content);
-      const documentsContent = index;
-      documentsContent.Content.ProfileName = index.ProfileName;
-      this.setDocumentContent(documentsContent.Content);
+  setDocumentContent(doc) {
+    this.initilizeDocumentInfo(doc.Content);
+    angular.forEach(doc.Content.Result.TextResults, index => {
+      this.docWithInfo.attributes.push(index.Value);
     });
-    this.documents = this.documentsService.getDocumentsList();
-    this.documentDeferred.resolve(this.documents);
-    return this.documentDeferred.promise;
-  }
-
-  setDocumentContent(documentContent) {
-    this.initilizeDocumentInfo(documentContent);
-    angular.forEach(documentContent.Result.TextResults, index => {
-      this.documentsInfo.attributes.push(index.Value);
-    });
-    this.documentsService.addDocument(this.documentsInfo);
+    this.addDateToDocument(this.docWithInfo, doc.Date);
+    this.documentsService.addDocument(this.docWithInfo);
   }
 
   initilizeDocumentInfo(documentContent) {
-    this.documentsInfo = {};
-    this.documentsInfo.attributes = [];
-    this.documentsInfo.Id = documentContent.Result.Id;
-    this.documentsInfo.UserId = documentContent.Result.UserId;
-    this.documentsInfo.FileName = documentContent.FileName;
-    this.documentsInfo.FileData = documentContent.FileData;
-    this.documentsInfo.Result = documentContent.Result;
-    this.documentsInfo.ProfileName = documentContent.ProfileName;
+    this.docWithInfo = {};
+    this.docWithInfo.attributes = [];
+    this.docWithInfo.Id = documentContent.Result.Id;
+    this.docWithInfo.UserId = documentContent.Result.UserId;
+    this.docWithInfo.FileName = documentContent.FileName;
+    this.docWithInfo.FileData = documentContent.FileData;
+    this.docWithInfo.Result = documentContent.Result;
+    this.docWithInfo.ProfileName = documentContent.ProfileName;
+  }
+
+  addDateToDocument(doc, date) {
+    doc.createdDate = date;
   }
 
   openDocumentModal() {
@@ -128,11 +155,6 @@ class DocumentsController {
       controllerAs: 'vm',
       size: 'sm'
     });
-  }
-
-  documentStoredRejected(res) {
-    this.loading = false;
-    this.errorService.handleError(res);
   }
 
   getPaginationLowerBound() {

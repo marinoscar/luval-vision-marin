@@ -20,6 +20,7 @@
     "@types/angular-mocks": "^1.5.9",
     "@types/angular-ui-router": "^1.1.36",
     "@types/jquery": "^2.0.40",
+    "angular-google-chart": "^0.1.0",
     "angular-mocks": "^1.6.2",
     "autoprefixer": "^6.7.3",
     "babel-core": "^6.23.1",

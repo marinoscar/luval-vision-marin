@@ -6,12 +6,16 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
-using luval.vision.bll;
 using System.Threading.Tasks;
 using System.Web;
-using luval.vision.entity;
+using System.Text.RegularExpressions;
+
 using luval.vision.core;
+using luval.vision.bll;
+using luval.vision.entity;
 using luval.vision.api.Security;
+using luval.vision.api.Statistics;
+
 
 namespace luval.vision.api.Controllers
 {
@@ -32,7 +36,7 @@ namespace luval.vision.api.Controllers
             {
                 IEnumerable<OcrDocument> documents;
                 documents = documentLogic.GetProcessResultByUserId(userId);
-                if (documentCollectionIsNotNull(documents))
+                if (CollectionValidator.IEnumerableCollectionIsNotNull(documents))
                 {
                     return Ok(documents);
                 }
@@ -44,9 +48,18 @@ namespace luval.vision.api.Controllers
             }
         }
 
-        private bool documentCollectionIsNotNull(IEnumerable<OcrDocument> documents)
+        [Route("api/v1/Storage/GetStatistics")]
+        [HttpGet]
+        [BasicAuthentication]
+        public IHttpActionResult GetStatistics(string userId, string year, string month)
         {
-            return !documents.Equals(null);
+            IEnumerable<DocumentStatistics> dateOccurrencePairsList;
+            dateOccurrencePairsList = documentLogic.GetDocumentStatisticsByUserId(userId, year, month);
+
+            StatisticsDataGenerator generator = new StatisticsDataGenerator();
+            Data returnData = generator.GenerateDataFromDateOccurrencePairs(dateOccurrencePairsList);
+
+            return Ok(returnData);
         }
     }
 }

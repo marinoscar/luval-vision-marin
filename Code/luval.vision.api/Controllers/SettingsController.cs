@@ -26,7 +26,6 @@ namespace luval.vision.api.Controllers
             settingsLogic = new SettingsLogic();
         }
 
-
         [Route("api/v1/Settings/GetProfiles")]
         [HttpGet]
         [BasicAuthentication]
@@ -50,7 +49,6 @@ namespace luval.vision.api.Controllers
             }
         }
 
-
         [BasicAuthentication]
         public IHttpActionResult Get(string userId)
         {
@@ -73,7 +71,6 @@ namespace luval.vision.api.Controllers
                 return Content(HttpStatusCode.InternalServerError, e.ToString());
             }
         }
-
 
         [BasicAuthentication]
         public IHttpActionResult Delete(string profile)

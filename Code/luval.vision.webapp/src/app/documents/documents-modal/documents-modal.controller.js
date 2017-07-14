@@ -16,6 +16,11 @@ class DocumentsModalController {
     this.$uibModalStack.dismissAll();
   }
 
+  goToUsage() {
+    this.$state.go('metrics');
+    this.$uibModalStack.dismissAll();
+  }
+
   goToAdmin() {
     this.$state.go('admin');
     this.$uibModalStack.dismissAll();
