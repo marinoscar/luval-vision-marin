@@ -51,13 +51,13 @@ namespace luval.vision.api.Controllers
         [Route("api/v1/Storage/GetStatistics")]
         [HttpGet]
         [BasicAuthentication]
-        public IHttpActionResult GetStatistics(string userId)
+        public IHttpActionResult GetStatistics(string userId, string year, string month)
         {
-            IEnumerable<OcrDocument> documents;
-            documents = documentLogic.GetProcessResultByUserId(userId);
+            IEnumerable<DocumentStatistics> dateOccurrencePairsList;
+            dateOccurrencePairsList = documentLogic.GetDocumentStatisticsByUserId(userId, year, month);
 
             StatisticsDataGenerator generator = new StatisticsDataGenerator();
-            Data returnData = generator.GenerateDataFromDocuments(documents);
+            Data returnData = generator.GenerateDataFromDateOccurrencePairs(dateOccurrencePairsList);
 
             return Ok(returnData);
         }

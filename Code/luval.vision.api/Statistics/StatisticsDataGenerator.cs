@@ -22,11 +22,12 @@ namespace luval.vision.api.Statistics
             };
         }
 
-        public Data GenerateDataFromDocuments(IEnumerable<OcrDocument> documentCollection)
+        public Data GenerateDataFromDateOccurrencePairs(IEnumerable<DocumentStatistics> dateOccurrencePairsList)
         {
-            if(CollectionValidator.IEnumerableCollectionIsNotNull(documentCollection))
+            if (CollectionValidator.IEnumerableCollectionIsNotNull(dateOccurrencePairsList))
             {
-                return GetStatisticsData(documentCollection);
+                StatisticsData = BuildStatisticsData(StatisticsData, dateOccurrencePairsList);
+                return StatisticsData;
             }
             else
             {
@@ -34,16 +35,10 @@ namespace luval.vision.api.Statistics
             }
         }
 
-        private Data GetStatisticsData(IEnumerable<OcrDocument> documents)
-        {
-            StatisticsData = GetStatisticsDataFromDocuments(StatisticsData, documents);
-            return StatisticsData;
-        }
-
-        private Data GetStatisticsDataFromDocuments(Data data, IEnumerable<OcrDocument> documents)
+        private Data BuildStatisticsData(Data data, IEnumerable<DocumentStatistics> statistics)
         {
             data.cols = FillColumns(data.cols);
-            data.rows = FillRowsWithDocumentsData(data.rows, documents);
+            data.rows = FillRowsWithDocumentStatistics(data.rows, statistics);
             return data;
         }
 
@@ -64,60 +59,16 @@ namespace luval.vision.api.Statistics
             return cols;
         }
 
-        private List<Row> FillRowsWithDocumentsData(List<Row> rows, IEnumerable<OcrDocument> documents)
+        private List<Row> FillRowsWithDocumentStatistics(List<Row> rows, IEnumerable<DocumentStatistics> statistics)
         {
-            var dates = new List<string>();
-            var occurrences = new List<int>();
-
-            SetDocumentDatesAndOccurrences(documents, dates, occurrences);
-
-            FillRows(rows, dates, occurrences);
-            return rows;
-        }
-
-        private void SetDocumentDatesAndOccurrences(IEnumerable<OcrDocument> documents, List<string> dates, List<int> occurrences)
-        {
-            foreach (var doc in documents)
-            {
-                var date = GetDateInDoc(doc);
-                var testIndex = dates.FindIndex(x => x == date);
-                if (testIndex != -1)
-                {
-                    occurrences[testIndex] += 1;
-                }
-                else
-                {
-                    dates.Add(date);
-                    /* It appears at least once. */
-                    occurrences.Add(1);
-                }
-            }
-        }
-
-        private void FillRows(List<Row> rows, List<string> dates, List<int> occurrences)
-        {
-            for (int i = 0; i < dates.Count; i++)
+            foreach(var statistic in statistics)
             {
                 var rowContents = new List<C>();
-                rowContents.Add(new C() { v = dates[i] });
-                rowContents.Add(new C() { v = occurrences[i].ToString() });
+                rowContents.Add(new C() { v = statistic.Date });
+                rowContents.Add(new C() { v = statistic.Ocurrences.ToString() });
                 rows.Add(new Row() { c = rowContents });
             }
-        }
-
-        private string GetDateInDoc(OcrDocument doc)
-        {
-            /* Regular expression matches date in format: yyyy-mm-ddThh:MM:ss.usZ */
-            Regex date_regex = new Regex(@"UtcTimestamp(.*?)\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{1,7}Z");
-            var rawDate = date_regex.Match(doc.Content).ToString();
-            var formattedDate = GetDateInYearMonthDayFormat(rawDate);
-            return formattedDate;
-        }
-
-        private string GetDateInYearMonthDayFormat(string rawDateString)
-        {
-            /* Date format is: yyyy-mm-dd. */
-            return rawDateString.Substring(15, 10);
+            return rows;
         }
     }
 }

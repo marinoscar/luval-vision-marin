@@ -74,6 +74,7 @@
   <ItemGroup>
     <Compile Include="BlobDownloadModel.cs" />
     <Compile Include="BlobUploadModel.cs" />
+    <Compile Include="DocumentStatistics.cs" />
     <Compile Include="FormResult.cs" />
     <Compile Include="OcrSettings.cs" />
     <Compile Include="OcrDocument.cs" />

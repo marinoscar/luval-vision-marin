@@ -10,12 +10,19 @@
         </div>
       </div>
       <div>
-        <div ng-if="!vm.chart.data" style="text-align:center;font-size:500%;">
-          <br/>
-          <br/>
-          LOADING
+        <div id="date">
+          <label> Year:
+            <input type="number" name="input" ng-model="vm.year"
+            min="2017" required>
+          </label>
+          <label> Month:
+            <select ng-model="vm.month" required>
+              <option ng-repeat="option in vm.months" value="{{option.id}}">{{option.name}}</option>
+            </select>
+          </label>
+          <button type="button" class="btn btn-default" ng-click="vm.setDate()">Load</button>
         </div>
-        <div google-chart ng-if="vm.chart.data" chart="vm.chart" style="height:600px; width:100%;"></div>
+        <div google-chart ng-if="vm.chart.data" chart="vm.chart" style="height:600px; width: 100%;"></div>
       </div>
     </div>
   </div>

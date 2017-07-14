@@ -8,14 +8,14 @@ class MetricsService {
     this.sessionService = sessionService;
   }
 
-  getStatistics() {
+  getStatistics(year, month) {
+    const theJson = this.sessionService.buildUserJSON();
+    theJson.year = year;
+    theJson.month = month;
     const getRequest = {
       method: 'GET',
       url: this.CORE.URL + 'Storage/GetStatistics',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      params: this.sessionService.buildUserJSON()
+      params: theJson
     };
     return this.$http(getRequest);
   }

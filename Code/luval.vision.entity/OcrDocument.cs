@@ -20,6 +20,6 @@ namespace luval.vision.entity
         [BsonElement("profile_name")]
         public string ProfileName { get; set; }
         [BsonElement("created_date")]
-        public DateTime Date { get; set; }
+        public DateTime Date { get; set; } = DateTime.Now;
     }
 }

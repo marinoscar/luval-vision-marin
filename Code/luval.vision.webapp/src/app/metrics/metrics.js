@@ -3,7 +3,7 @@ import MetricsService from './metrics.service';
 import sessionService from '../services/session.service';
 import routes from './metrics.routes';
 
-import 'angular-google-chart/ng-google-chart';
+import 'angular-google-chart/ng-google-chart.min';
 
 export default
   angular
