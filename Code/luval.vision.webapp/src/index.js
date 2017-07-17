@@ -16,7 +16,7 @@ import 'angular-spinner/dist/angular-spinner.min';
 import 'ng-file-upload/dist/ng-file-upload.js';
 import 'ng-notify/dist/ng-notify.min';
 import 'angular-base64/angular-base64';
-import 'angular-bootstrap-toggle/dist/angular-bootstrap-toggle.min';
+import 'angular-ui-switch/angular-ui-switch.min';
 
 import './index.scss';
 import './app/login/login.scss';
@@ -29,7 +29,7 @@ import './app/documents/documents.scss';
 import './app/check-documents/check-documents.scss';
 import './app/metrics/metrics.scss';
 import 'ng-notify/dist/ng-notify.min.css';
-import 'angular-bootstrap-toggle/dist/angular-bootstrap-toggle.min.css';
+import 'angular-ui-switch/angular-ui-switch.min.css';
 
 angular
   .module('luval-vision', [
@@ -41,7 +41,7 @@ angular
     'base64',
     'ngFileUpload',
     'angularSpinner',
-    'ui.toggle',
+    'uiSwitch',
     core,
     login,
     profiles,

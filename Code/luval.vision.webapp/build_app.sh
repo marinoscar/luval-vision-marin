@@ -1,6 +1,7 @@
 #!/bin/bash
 
 BUILD_DIR=$(date +%F%s)
+CURRENT=$PWD
 
 mkdir -p "/tmp/$BUILD_DIR"
 
@@ -10,9 +11,11 @@ cd "/tmp/$BUILD_DIR"
 
 cd luval.vision.webapp
 
-rm -rf node_modules dist
+rm -rf dist
 
-npm install && npm run build
+find src -type f -iname '*.json' -delete
+
+npm run build
 
 perl -pi -e 's/app\/documents\/documents-modal\//.\//g' $(find dist -type f -iname "app*.js" -print)
 
