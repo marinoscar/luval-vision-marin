@@ -32,10 +32,10 @@
                     <td>{{user.Email}}</td>
                     <td>{{user.Role}}</td>
                     <td>
-                      <toggle ng-model="user.IsEnabled" data-on="Yes" data-off="No" data-size="small"></toggle>
+                      <switch ng-model="user.IsEnabled" on="Yes" off="No" data-size="small"></switch>
                     </td>
                     <td>
-                      <toggle ng-model="user.IsApproved" data-on="Yes" data-off="No" data-size="small"></toggle>
+                      <switch ng-model="user.IsApproved" on="Yes" off="No" data-size="small"></switch>
                     </td>
                     <td>
                       <button class="btn btn-success" ng-disabled="settingsForm.$invalid" ng-click="vm.updateUser(user)">Update</button>

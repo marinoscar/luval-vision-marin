@@ -2,11 +2,11 @@
   "dependencies": {
     "angular": "^1.6.2",
     "angular-base64": "^2.0.5",
-    "angular-bootstrap-toggle": "^0.1.2",
     "angular-jsoneditor": "0.0.2",
     "angular-spinner": "^1.0.1",
     "angular-ui-bootstrap": "^2.5.0",
     "angular-ui-router": "1.0.0-beta.3",
+    "angular-ui-switch":"^0.1.1",
     "bootstrap": "^3.3.7",
     "express": "^4.15.2",
     "gzippo": "^0.2.0",
