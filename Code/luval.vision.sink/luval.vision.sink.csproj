@@ -146,6 +146,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\luval.vision.common\Luval.Common\Luval.Common.csproj">
+      <Project>{45588aae-358d-4ad3-bf0c-dc461de00d59}</Project>
+      <Name>Luval.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\luval.vision.core\luval.vision.core.csproj">
       <Project>{e2b1ce82-40c0-4f2b-9d00-a93425d7147f}</Project>
       <Name>luval.vision.core</Name>

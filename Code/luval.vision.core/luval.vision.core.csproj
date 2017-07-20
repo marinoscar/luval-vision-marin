@@ -65,9 +65,6 @@
       <HintPath>..\packages\Google.Apis.Vision.v1.1.23.0.810\lib\net45\Google.Apis.Vision.v1.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Luval.Common">
-      <HintPath>..\..\Libraries\Luval.Common.dll</HintPath>
-    </Reference>
     <Reference Include="MongoDB.Bson, Version=2.4.3.23, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MongoDB.Bson.2.4.3\lib\net45\MongoDB.Bson.dll</HintPath>
     </Reference>
@@ -172,6 +169,12 @@
     <Content Include="Resources\en-words.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\luval.vision.common\Luval.Common\Luval.Common.csproj">
+      <Project>{45588aae-358d-4ad3-bf0c-dc461de00d59}</Project>
+      <Name>Luval.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

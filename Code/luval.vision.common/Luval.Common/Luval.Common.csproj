@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--Project was exported from assembly: C:\Users\Kenneth Hidalgo\Documents\Devs\Celeris(git)\luval-vision\Libraries\Luval.Common.dll-->
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{45588AAE-358D-4AD3-BF0C-DC461DE00D59}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AssemblyName>Luval.Common</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <ApplicationVersion>0.1.0.0</ApplicationVersion>
+    <FileAlignment>512</FileAlignment>
+    <RootNamespace>Luval.Common</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\luval.vision.api\bin\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ByteExtensions.cs" />
+    <Compile Include="ConsoleArguments.cs" />
+    <Compile Include="DateInYear.cs" />
+    <Compile Include="DateTimeExtension.cs" />
+    <Compile Include="GuidExtension.cs" />
+    <Compile Include="ILocalizationProvider.cs" />
+    <Compile Include="IntExtension.cs" />
+    <Compile Include="IpAddressExtension.cs" />
+    <Compile Include="JsonSerializer.cs" />
+    <Compile Include="FileLocalization.cs" />
+    <Compile Include="NumericBaseConverter.cs" />
+    <Compile Include="ObjectCacheProvider.cs" />
+    <Compile Include="IClearableCacheItems.cs" />
+    <Compile Include="CacheItems`2.cs" />
+    <Compile Include="CacheItemContainer`1.cs" />
+    <Compile Include="ICacheStorageProvider`2.cs" />
+    <Compile Include="DictionaryCacheStorage`2.cs" />
+    <Compile Include="ObjectContainer.cs" />
+    <Compile Include="ObjectExtensions.cs" />
+    <Compile Include="PathHelper.cs" />
+    <Compile Include="SqlFormatter.cs" />
+    <Compile Include="StreamExtension.cs" />
+    <Compile Include="StringExtensions.cs" />
+    <Compile Include="SymmetricEncryptHelper.cs" />
+    <Compile Include="TimeZoneHelper.cs" />
+    <Compile Include="TypeExtensions.cs" />
+    <Compile Include="UIntExtension.cs" />
+    <Compile Include="ULongExtension.cs" />
+    <Compile Include="WebAsyncJob.cs" />
+    <Compile Include="AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="key.snk" />
+    <None Include="Luval.Common.snk" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
