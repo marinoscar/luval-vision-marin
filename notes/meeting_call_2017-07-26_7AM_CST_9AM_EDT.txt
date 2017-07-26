@@ -1,0 +1,57 @@
+<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+We need to figure out how much of a delay there will be
+<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+
+There is no need for a demo, at least at this stage, only the CSV files,
+properly made, it should not be too much of a problem
+
+<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+
+
+there WILL be a demo, but that's for later, after that, Ravi will do something
+speak, discuss, something like that, with Lee Henkel, or someone else from
+Devon or EY, about a third phase, but that's for much later
+
+
+<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+
+Ravi & Frank are going to talk with Oscar
+
+They need us to be consistent with the wey we talk, and to tell them ahead of
+time if we need to talk on a video call, or share screens or whatever
+
+_______________________________________________________________________________
+
+CHECK INPUT
+
+We need to sho Lee Henkel & others that there are "noise pages" that aren't
+useful for capturing any data, and ask what to do about them, if there are
+are always going to be the same amount of them, or if they can be removed
+before they are sent to us
+
+and also, the page with the Post It Note, that's also a "noise page"
+
+having inconsistent files is kind of a problem
+
+having consistent files can not only help make the processing of the files
+easier, but also more efficient, if there are PDFs that have text, rather
+than scanned documents (we could have separate processes for scanned files, and
+text PDFs, to make the process as efficient as possible for the text PDFs, and
+use OCR for the ones with scanned documents)
+
+
+Do we need all the fields in the BA_X_REF Sheet in the Excel File
+that was sent to us?
+
+_______________________________________________________________________________
+
+OBO
+
+Will Filenames always have the Name of the Well? because currently, that's
+difficult to get from OCR/Extractor process
+
+
+Will Filenames always have the Name of the Company? because currently, that's
+difficult to get from OCR/Extractor process
+
+making a CSV from each PDF is fine, at least according to Ravi
