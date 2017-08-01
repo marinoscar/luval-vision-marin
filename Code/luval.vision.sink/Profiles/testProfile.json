@@ -1,0 +1,510 @@
+{
+  "profileName": "test",
+  "pagesWithAttributes": 4,
+  "attributes": [
+    //75
+    {
+      "attributeName": "Activity Type",
+      "dataType": "string",
+      "hasRegex": true,
+      "regex": "\"Partner\\s*Report\\s*\\n(.*)\\n\\s*Confidential",
+      "hasLocationBoundaries": false,
+      "locationBoundaries": null,
+      "attributeValue": "Completion"
+    },
+    {
+      "attributeName": "Operator Name",
+      "dataType": "string",
+      "hasRegex": true,
+      "regex": "www\\.(.*)\\.com",
+      "hasLocationBoundaries": false,
+      "locationBoundaries": null,
+      "attributeValue": "www.clr.com"
+    },
+    {
+      "attributeName": "Report Number",
+      "dataType": "string",
+      "hasRegex": true,
+      "regex": "\"Report\\s*(Number|#):\\s*([0-9]+)",
+      "hasLocationBoundaries": false,
+      "locationBoundaries": null,
+      "attributeValue": 75
+    },
+    {
+      "attributeName": "Well Number",
+      "dataType": "string",
+      "hasRegex": true,
+      "regex": "\"Partner\\s*Report\\s*\\n(.*)\\n\\s*Confidential",
+      "hasLocationBoundaries": false,
+      "locationBoundaries": null,
+      "attributeValue": "null"
+    },
+    {
+      "attributeName": "End Date",
+      "dataType": "string",
+      "hasRegex": true,
+      "regex": "Report\\s*End\\s*Date\\s*:\\s*(.*)\\n",
+      "hasLocationBoundaries": false,
+      "locationBoundaries": null,
+      "attributeValue": "6/23/2017"
+    },
+    {
+      "attributeName": "Daily Cost",
+      "dataType": "number",
+      "hasRegex": true,
+      "regex": "Daily\\s*Total.*\\n([0-9]+(,|.)?)+",
+      "hasLocationBoundaries": false,
+      "locationBoundaries": null,
+      "attributeValue": "6,514.04"
+    },
+    {
+      "attributeName": "Api Number",
+      "dataType": "number",
+      "hasRegex": true,
+      "regex": "API\\s*#\\n([0-9]{1,20})",
+      "hasLocationBoundaries": false,
+      "locationBoundaries": null,
+      "attributeValue": 35039224900000
+    },
+    {
+      "attributeName": "End Depth",
+      "dataType": "number",
+      "hasRegex": true,
+      "regex": "\\End\\s*Depth.*\\n\\s*([0-9]+(,|.)?)+",
+      "hasLocationBoundaries": false,
+      "locationBoundaries": null,
+      "attributeValue": "null"
+    },
+    {
+      "attributeName": "Operations Summary",
+      "dataType": "string",
+      "hasRegex": true,
+      "regex": "\"Operations\\s*Summary(.*\\n)+End\\s*Depth",
+      "hasLocationBoundaries": false,
+      "locationBoundaries": null,
+      "attributeValue": "FL/24, 24 BO, 14,353 MCF, 3,142 BLW, CP 4,450 (psi), 34/64 Choke, 128,779 BLWR 479,479 BLWTR (21.17 %LR),(FARO: 1 BOPH 14, 524MCFD,127 BLWPH)"
+    },
+
+
+
+
+    //74
+    {
+      "attributeName": "Activity Type",
+      "dataType": "string",
+      "hasRegex": true,
+      "regex": "\"Partner\\s*Report\\s*\\n(.*)\\n\\s*Confidential",
+      "hasLocationBoundaries": false,
+      "locationBoundaries": null,
+      "attributeValue": "Completion"
+    },
+    {
+      "attributeName": "Operator Name",
+      "dataType": "string",
+      "hasRegex": true,
+      "regex": "www\\.(.*)\\.com",
+      "hasLocationBoundaries": false,
+      "locationBoundaries": null,
+      "attributeValue": "www.clr.com"
+    },
+    {
+      "attributeName": "Report Number",
+      "dataType": "string",
+      "hasRegex": true,
+      "regex": "\"Report\\s*(Number|#):\\s*([0-9]+)",
+      "hasLocationBoundaries": false,
+      "locationBoundaries": null,
+      "attributeValue": 74
+    },
+    {
+      "attributeName": "Well Number",
+      "dataType": "string",
+      "hasRegex": true,
+      "regex": "\"Partner\\s*Report\\s*\\n(.*)\\n\\s*Confidential",
+      "hasLocationBoundaries": false,
+      "locationBoundaries": null,
+      "attributeValue": "null"
+    },
+    {
+      "attributeName": "End Date",
+      "dataType": "string",
+      "hasRegex": true,
+      "regex": "Report\\s*End\\s*Date\\s*:\\s*(.*)\\n",
+      "hasLocationBoundaries": false,
+      "locationBoundaries": null,
+      "attributeValue": "6/22/2017"
+    },
+    {
+      "attributeName": "Daily Cost",
+      "dataType": "number",
+      "hasRegex": true,
+      "regex": "Daily\\s*Total.*\\n([0-9]+(,|.)?)+",
+      "hasLocationBoundaries": false,
+      "locationBoundaries": null,
+      "attributeValue": "6,514.04"
+    },
+    {
+      "attributeName": "Api Number",
+      "dataType": "number",
+      "hasRegex": true,
+      "regex": "API\\s*#\\n([0-9]{1,20})",
+      "hasLocationBoundaries": false,
+      "locationBoundaries": null,
+      "attributeValue": 35039224900000
+    },
+    {
+      "attributeName": "End Depth",
+      "dataType": "number",
+      "hasRegex": true,
+      "regex": "\\End\\s*Depth.*\\n\\s*([0-9]+(,|.)?)+",
+      "hasLocationBoundaries": false,
+      "locationBoundaries": null,
+      "attributeValue": "null"
+    },
+    {
+      "attributeName": "Operations Summary",
+      "dataType": "string",
+      "hasRegex": true,
+      "regex": "\"Operations\\s*Summary(.*\\n)+End\\s*Depth",
+      "hasLocationBoundaries": false,
+      "locationBoundaries": null,
+      "attributeValue": " FL/20, 14 BO, 9,456 MCF, 3,064 BLW, CP 4,489 (psi), 32/64 Choke, 125,637 BLWR, 482,621 BLWTR, (20.66 % LR), (FARO: 1 BOPH, 13,424 MCFD, 150 BLWPH"
+    },
+
+
+    //73
+    {
+      "attributeName": "Activity Type",
+      "dataType": "string",
+      "hasRegex": true,
+      "regex": "\"Partner\\s*Report\\s*\\n(.*)\\n\\s*Confidential",
+      "hasLocationBoundaries": false,
+      "locationBoundaries": null,
+      "attributeValue": "Completion"
+    },
+    {
+      "attributeName": "Operator Name",
+      "dataType": "string",
+      "hasRegex": true,
+      "regex": "www\\.(.*)\\.com",
+      "hasLocationBoundaries": false,
+      "locationBoundaries": null,
+      "attributeValue": "www.clr.com"
+    },
+    {
+      "attributeName": "Report Number",
+      "dataType": "string",
+      "hasRegex": true,
+      "regex": "\"Report\\s*(Number|#):\\s*([0-9]+)",
+      "hasLocationBoundaries": false,
+      "locationBoundaries": null,
+      "attributeValue": 73
+    },
+    {
+      "attributeName": "Well Number",
+      "dataType": "string",
+      "hasRegex": true,
+      "regex": "\"Partner\\s*Report\\s*\\n(.*)\\n\\s*Confidential",
+      "hasLocationBoundaries": false,
+      "locationBoundaries": null,
+      "attributeValue": "null"
+    },
+    {
+      "attributeName": "End Date",
+      "dataType": "string",
+      "hasRegex": true,
+      "regex": "Report\\s*End\\s*Date\\s*:\\s*(.*)\\n",
+      "hasLocationBoundaries": false,
+      "locationBoundaries": null,
+      "attributeValue": "6/21/2017"
+    },
+    {
+      "attributeName": "Daily Cost",
+      "dataType": "number",
+      "hasRegex": true,
+      "regex": "Daily\\s*Total.*\\n([0-9]+(,|.)?)+",
+      "hasLocationBoundaries": false,
+      "locationBoundaries": null,
+      "attributeValue": "6,514.04"
+    },
+    {
+      "attributeName": "Api Number",
+      "dataType": "number",
+      "hasRegex": true,
+      "regex": "API\\s*#\\n([0-9]{1,20})",
+      "hasLocationBoundaries": false,
+      "locationBoundaries": null,
+      "attributeValue": 35039224900000
+    },
+    {
+      "attributeName": "End Depth",
+      "dataType": "number",
+      "hasRegex": true,
+      "regex": "\\End\\s*Depth.*\\n\\s*([0-9]+(,|.)?)+",
+      "hasLocationBoundaries": false,
+      "locationBoundaries": null,
+      "attributeValue": "null"
+    },
+    {
+      "attributeName": "Operations Summary",
+      "dataType": "string",
+      "hasRegex": true,
+      "regex": "\"Operations\\s*Summary(.*\\n)+End\\s*Depth",
+      "hasLocationBoundaries": false,
+      "locationBoundaries": null,
+      "attributeValue": "FL/4, 4 BO, 2,348 MCF, 522 BLW, CP 6,148 (psi), 0/64 Choke, 122,573 BLWR, 485,685 BLWTR, (20.15 % LR), (FARO: 0 BOPH, 0 MCFD, 0 BLWPH)"
+    },
+
+    //72
+    {
+      "attributeName": "Activity Type",
+      "dataType": "string",
+      "hasRegex": true,
+      "regex": "\"Partner\\s*Report\\s*\\n(.*)\\n\\s*Confidential",
+      "hasLocationBoundaries": false,
+      "locationBoundaries": null,
+      "attributeValue": "Completion"
+    },
+    {
+      "attributeName": "Operator Name",
+      "dataType": "string",
+      "hasRegex": true,
+      "regex": "www\\.(.*)\\.com",
+      "hasLocationBoundaries": false,
+      "locationBoundaries": null,
+      "attributeValue": "www.clr.com"
+    },
+    {
+      "attributeName": "Report Number",
+      "dataType": "string",
+      "hasRegex": true,
+      "regex": "\"Report\\s*(Number|#):\\s*([0-9]+)",
+      "hasLocationBoundaries": false,
+      "locationBoundaries": null,
+      "attributeValue": 72
+    },
+    {
+      "attributeName": "Well Number",
+      "dataType": "string",
+      "hasRegex": true,
+      "regex": "\"Partner\\s*Report\\s*\\n(.*)\\n\\s*Confidential",
+      "hasLocationBoundaries": false,
+      "locationBoundaries": null,
+      "attributeValue": "null"
+    },
+    {
+      "attributeName": "End Date",
+      "dataType": "string",
+      "hasRegex": true,
+      "regex": "Report\\s*End\\s*Date\\s*:\\s*(.*)\\n",
+      "hasLocationBoundaries": false,
+      "locationBoundaries": null,
+      "attributeValue": "6/20/2017"
+    },
+    {
+      "attributeName": "Daily Cost",
+      "dataType": "number",
+      "hasRegex": true,
+      "regex": "Daily\\s*Total.*\\n([0-9]+(,|.)?)+",
+      "hasLocationBoundaries": false,
+      "locationBoundaries": null,
+      "attributeValue": "6,514.04"
+    },
+    {
+      "attributeName": "Api Number",
+      "dataType": "number",
+      "hasRegex": true,
+      "regex": "API\\s*#\\n([0-9]{1,20})",
+      "hasLocationBoundaries": false,
+      "locationBoundaries": null,
+      "attributeValue": 35039224900000
+    },
+    {
+      "attributeName": "End Depth",
+      "dataType": "number",
+      "hasRegex": true,
+      "regex": "\\End\\s*Depth.*\\n\\s*([0-9]+(,|.)?)+",
+      "hasLocationBoundaries": false,
+      "locationBoundaries": null,
+      "attributeValue": "null"
+    },
+    {
+      "attributeName": "Operations Summary",
+      "dataType": "string",
+      "hasRegex": true,
+      "regex": "\"Operations\\s*Summary(.*\\n)+End\\s*Depth",
+      "hasLocationBoundaries": false,
+      "locationBoundaries": null,
+      "attributeValue": " FL/24, 17 BO, 13,411 MCF, 3,200 BLW, CP 4,400 (psi), 34/64 Choke, 122,051 BLWR, 486,207 BLWTR, (20.07 % LR), (FARO: 1 BOPH, 13,456 MCFD, 132 BLWPH)"
+    },
+
+
+    //71
+    {
+      "attributeName": "Activity Type",
+      "dataType": "string",
+      "hasRegex": true,
+      "regex": "\"Partner\\s*Report\\s*\\n(.*)\\n\\s*Confidential",
+      "hasLocationBoundaries": false,
+      "locationBoundaries": null,
+      "attributeValue": "Completion"
+    },
+    {
+      "attributeName": "Operator Name",
+      "dataType": "string",
+      "hasRegex": true,
+      "regex": "www\\.(.*)\\.com",
+      "hasLocationBoundaries": false,
+      "locationBoundaries": null,
+      "attributeValue": "www.clr.com"
+    },
+    {
+      "attributeName": "Report Number",
+      "dataType": "string",
+      "hasRegex": true,
+      "regex": "\"Report\\s*(Number|#):\\s*([0-9]+)",
+      "hasLocationBoundaries": false,
+      "locationBoundaries": null,
+      "attributeValue": 71
+    },
+    {
+      "attributeName": "Well Number",
+      "dataType": "string",
+      "hasRegex": true,
+      "regex": "\"Partner\\s*Report\\s*\\n(.*)\\n\\s*Confidential",
+      "hasLocationBoundaries": false,
+      "locationBoundaries": null,
+      "attributeValue": "null"
+    },
+    {
+      "attributeName": "End Date",
+      "dataType": "string",
+      "hasRegex": true,
+      "regex": "Report\\s*End\\s*Date\\s*:\\s*(.*)\\n",
+      "hasLocationBoundaries": false,
+      "locationBoundaries": null,
+      "attributeValue": "6/19/2017"
+    },
+    {
+      "attributeName": "Daily Cost",
+      "dataType": "number",
+      "hasRegex": true,
+      "regex": "Daily\\s*Total.*\\n([0-9]+(,|.)?)+",
+      "hasLocationBoundaries": false,
+      "locationBoundaries": null,
+      "attributeValue": "6,514.04"
+    },
+    {
+      "attributeName": "Api Number",
+      "dataType": "number",
+      "hasRegex": true,
+      "regex": "API\\s*#\\n([0-9]{1,20})",
+      "hasLocationBoundaries": false,
+      "locationBoundaries": null,
+      "attributeValue": 35039224900000
+    },
+    {
+      "attributeName": "End Depth",
+      "dataType": "number",
+      "hasRegex": true,
+      "regex": "\\End\\s*Depth.*\\n\\s*([0-9]+(,|.)?)+",
+      "hasLocationBoundaries": false,
+      "locationBoundaries": null,
+      "attributeValue": "null"
+    },
+    {
+      "attributeName": "Operations Summary",
+      "dataType": "string",
+      "hasRegex": true,
+      "regex": "\"Operations\\s*Summary(.*\\n)+End\\s*Depth",
+      "hasLocationBoundaries": false,
+      "locationBoundaries": null,
+      "attributeValue": "FL/24, 17 BO, 13,225 MCF, 3,271 BLW, CP 4,400 (psi), 34/64 Choke, 118,851 BLWR, 489,407 BLWTR, (19.54 % LR), (FARO: 1 BOPH, 13,244 MCFD, 135 BLWPH)"
+    },
+
+
+    //70
+    {
+      "attributeName": "Activity Type",
+      "dataType": "string",
+      "hasRegex": true,
+      "regex": "\"Partner\\s*Report\\s*\\n(.*)\\n\\s*Confidential",
+      "hasLocationBoundaries": false,
+      "locationBoundaries": null,
+      "attributeValue": "Completion"
+    },
+    {
+      "attributeName": "Operator Name",
+      "dataType": "string",
+      "hasRegex": true,
+      "regex": "\"Partner\\s*Report\\s*\\n(.*)\\n\\s*Confidential",
+      "hasLocationBoundaries": false,
+      "locationBoundaries": null,
+      "attributeValue": "www.clr.com"
+    },
+    {
+      "attributeName": "Report Number",
+      "dataType": "string",
+      "hasRegex": true,
+      "regex": "\"Report\\s*(Number|#):\\s*([0-9]+)",
+      "hasLocationBoundaries": false,
+      "locationBoundaries": null,
+      "attributeValue": 70
+    },
+    {
+      "attributeName": "Well Number",
+      "dataType": "string",
+      "hasRegex": true,
+      "regex": "www\\.(.*)\\.com",
+      "hasLocationBoundaries": false,
+      "locationBoundaries": null,
+      "attributeValue": "null"
+    },
+    {
+      "attributeName": "End Date",
+      "dataType": "string",
+      "hasRegex": true,
+      "regex": "Report\\s*End\\s*Date\\s*:\\s*(.*)\\n",
+      "hasLocationBoundaries": false,
+      "locationBoundaries": null,
+      "attributeValue": "6/18/2017"
+    },
+    {
+      "attributeName": "Daily Cost",
+      "dataType": "number",
+      "hasRegex": true,
+      "regex": "Daily\\s*Total.*\\n([0-9]+(,|.)?)+",
+      "hasLocationBoundaries": false,
+      "locationBoundaries": null,
+      "attributeValue": "6,514.04"
+    },
+    {
+      "attributeName": "Api Number",
+      "dataType": "number",
+      "hasRegex": true,
+      "regex": "API\\s*#\\n([0-9]{1,20})",
+      "hasLocationBoundaries": false,
+      "locationBoundaries": null,
+      "attributeValue": 35039224900000
+    },
+    {
+      "attributeName": "End Depth",
+      "dataType": "number",
+      "hasRegex": true,
+      "regex": "\\End\\s*Depth.*\\n\\s*([0-9]+(,|.)?)+",
+      "hasLocationBoundaries": false,
+      "locationBoundaries": null,
+      "attributeValue": "null"
+    },
+    {
+      "attributeName": "Operations Summary",
+      "dataType": "string",
+      "hasRegex": true,
+      "regex": "\"Operations\\s*Summary(.*\\n)+End\\s*Depth",
+      "hasLocationBoundaries": false,
+      "locationBoundaries": null,
+      "attributeValue": " FL/24, 25 BO, 13,115 MCF, 3,539 BLW, CP 4,425 (psi), 34/64 Choke, 115,580 BLWR, 492,678 BLWTR, (19 % LR), (FARO: 1 BOPH, 13,144 MCFD, 146 BLWPH)"
+    }
+  ]
+
+}

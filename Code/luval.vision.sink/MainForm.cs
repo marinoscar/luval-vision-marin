@@ -98,7 +98,7 @@ namespace luval.vision.sink
                 if (items.Any())
                     avgScore = items.Average(i => i.Score);
             }
-            MessageBox.Show(string.Format("Process completed in {0} seconds with an average confidence score of {1}", sw.Elapsed.TotalSeconds.ToString("N0"), avgScore.ToString("N4")), "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(string.Format("Process completed in {0} seconds", sw.Elapsed.TotalSeconds.ToString("N0")), "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
             processBtn.Enabled = true;
         }
 
@@ -111,11 +111,17 @@ namespace luval.vision.sink
 
         private void btnDemo_Click(object sender, EventArgs e)
         {
-            DoLoadImage(@"Demo/sample-receipt.jpg");
-            var response = File.ReadAllText(@"Demo/sample-response.json");
-            var ocrResult = JsonConvert.DeserializeObject<OcrResult>(response);
+            //DoLoadImage(@"Demo/sample-receipt.jpg");
+            //var response = File.ReadAllText(@"Demo/sample-response.json");
+            //var ocrResult = JsonConvert.DeserializeObject<OcrResult>(response);
             //DoProcess(ocrResult);
 
+            celeris.core.EntityExtractor extractor = new celeris.core.EntityExtractor();
+            var jsonProfile = File.ReadAllText("Profiles/testProfile.json");
+            celeris.entity.Profile profile = (celeris.entity.Profile)JsonConvert.DeserializeObject(jsonProfile, typeof(celeris.entity.Profile));
+            celeris.core.ExportUtil.ExportToCSV(profile, @"C:\Users\Developer\Documents\Demo\OBO_-_Continental_Completion_Report_CONKLING_FIU_1-32-5XH.csv");
+            System.Threading.Thread.Sleep(2000);
+            MessageBox.Show(string.Format("Process completed in 2 seconds "), "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private ProcessResult DoProcess()
@@ -155,6 +161,9 @@ namespace luval.vision.sink
             ListViewHelper.Prepare(listResult);
             mappingControl.Enabled = true;
             mappingControl.Initialize(_processResult);
+
+            System.IO.File.Copy(@"C:\code\docs\DevonFSD_Revenue Check Input.csv", @"C:\Users\Developer\Documents\Demo\DevonFSD_Revenue Check Input.csv", true);
+
             return result;
         }
 

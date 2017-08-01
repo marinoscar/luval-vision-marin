@@ -44,6 +44,7 @@
             this.consolidateResultsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuExportCsv = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuExportSql = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.lblProfile = new System.Windows.Forms.ToolStripStatusLabel();
@@ -83,7 +84,6 @@
             this.resultText = new System.Windows.Forms.TextBox();
             this.tabVisionJson = new System.Windows.Forms.TabPage();
             this.treeJsonVision = new System.Windows.Forms.TreeView();
-            this.mnuAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.mainMenu.SuspendLayout();
             this.panel1.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -181,7 +181,7 @@
             this.mnuSkip,
             this.consolidateResultsToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.toolsToolStripMenuItem.Text = "&Tools";
             // 
             // mnuLoadForMapping
@@ -222,6 +222,13 @@
             this.mnuExportSql.Text = "Sql File";
             this.mnuExportSql.Click += new System.EventHandler(this.mnuExportSql_Click);
             // 
+            // mnuAbout
+            // 
+            this.mnuAbout.Name = "mnuAbout";
+            this.mnuAbout.Size = new System.Drawing.Size(52, 20);
+            this.mnuAbout.Text = "&About";
+            this.mnuAbout.Click += new System.EventHandler(this.mnuAbout_Click);
+            // 
             // panel1
             // 
             this.panel1.Controls.Add(this.statusStrip);
@@ -230,7 +237,7 @@
             this.panel1.Controls.Add(this.btnDemo);
             this.panel1.Controls.Add(this.processBtn);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 716);
+            this.panel1.Location = new System.Drawing.Point(0, 677);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1083, 88);
             this.panel1.TabIndex = 1;
@@ -273,7 +280,7 @@
             | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
             this.lblElementText.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.lblElementText.Name = "lblElementText";
-            this.lblElementText.Size = new System.Drawing.Size(158, 19);
+            this.lblElementText.Size = new System.Drawing.Size(159, 19);
             this.lblElementText.Text = "Click on Element to get Text";
             this.lblElementText.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -459,7 +466,7 @@
             // 
             this.splitter1.Location = new System.Drawing.Point(0, 24);
             this.splitter1.Name = "splitter1";
-            this.splitter1.Size = new System.Drawing.Size(3, 692);
+            this.splitter1.Size = new System.Drawing.Size(3, 653);
             this.splitter1.TabIndex = 3;
             this.splitter1.TabStop = false;
             // 
@@ -471,7 +478,7 @@
             this.mainTab.Location = new System.Drawing.Point(3, 24);
             this.mainTab.Name = "mainTab";
             this.mainTab.SelectedIndex = 0;
-            this.mainTab.Size = new System.Drawing.Size(1080, 692);
+            this.mainTab.Size = new System.Drawing.Size(1080, 653);
             this.mainTab.TabIndex = 6;
             // 
             // tabPicture
@@ -482,7 +489,7 @@
             this.tabPicture.Location = new System.Drawing.Point(4, 22);
             this.tabPicture.Name = "tabPicture";
             this.tabPicture.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPicture.Size = new System.Drawing.Size(1072, 666);
+            this.tabPicture.Size = new System.Drawing.Size(1072, 627);
             this.tabPicture.TabIndex = 0;
             this.tabPicture.Text = "Document";
             this.tabPicture.UseVisualStyleBackColor = true;
@@ -494,7 +501,7 @@
             this.panelPicture.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelPicture.Location = new System.Drawing.Point(3, 3);
             this.panelPicture.Name = "panelPicture";
-            this.panelPicture.Size = new System.Drawing.Size(735, 660);
+            this.panelPicture.Size = new System.Drawing.Size(735, 621);
             this.panelPicture.TabIndex = 0;
             // 
             // splitterPicture
@@ -502,7 +509,7 @@
             this.splitterPicture.Dock = System.Windows.Forms.DockStyle.Right;
             this.splitterPicture.Location = new System.Drawing.Point(738, 3);
             this.splitterPicture.Name = "splitterPicture";
-            this.splitterPicture.Size = new System.Drawing.Size(3, 660);
+            this.splitterPicture.Size = new System.Drawing.Size(3, 621);
             this.splitterPicture.TabIndex = 2;
             this.splitterPicture.TabStop = false;
             // 
@@ -513,7 +520,7 @@
             this.panelResult.Dock = System.Windows.Forms.DockStyle.Right;
             this.panelResult.Location = new System.Drawing.Point(741, 3);
             this.panelResult.Name = "panelResult";
-            this.panelResult.Size = new System.Drawing.Size(328, 660);
+            this.panelResult.Size = new System.Drawing.Size(328, 621);
             this.panelResult.TabIndex = 1;
             // 
             // listResult
@@ -528,7 +535,7 @@
             this.listResult.Location = new System.Drawing.Point(0, 519);
             this.listResult.MultiSelect = false;
             this.listResult.Name = "listResult";
-            this.listResult.Size = new System.Drawing.Size(328, 141);
+            this.listResult.Size = new System.Drawing.Size(328, 102);
             this.listResult.TabIndex = 8;
             this.listResult.UseCompatibleStateImageBehavior = false;
             this.listResult.View = System.Windows.Forms.View.Details;
@@ -632,25 +639,18 @@
             this.treeJsonVision.Size = new System.Drawing.Size(172, 36);
             this.treeJsonVision.TabIndex = 0;
             // 
-            // mnuAbout
-            // 
-            this.mnuAbout.Name = "mnuAbout";
-            this.mnuAbout.Size = new System.Drawing.Size(52, 20);
-            this.mnuAbout.Text = "&About";
-            this.mnuAbout.Click += new System.EventHandler(this.mnuAbout_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1083, 804);
+            this.ClientSize = new System.Drawing.Size(1083, 765);
             this.Controls.Add(this.mainTab);
             this.Controls.Add(this.splitter1);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.mainMenu);
             this.MainMenuStrip = this.mainMenu;
             this.Name = "MainForm";
-            this.Text = "Oscar Marin Machine Learning  OCR Tool";
+            this.Text = "Celeris";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.mainMenu.ResumeLayout(false);
             this.mainMenu.PerformLayout();
