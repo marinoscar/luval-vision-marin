@@ -102,13 +102,15 @@
             // 
             // mainMenu
             // 
+            this.mainMenu.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.mainMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.toolsToolStripMenuItem,
             this.mnuAbout});
             this.mainMenu.Location = new System.Drawing.Point(0, 0);
             this.mainMenu.Name = "mainMenu";
-            this.mainMenu.Size = new System.Drawing.Size(1083, 24);
+            this.mainMenu.Padding = new System.Windows.Forms.Padding(12, 4, 0, 4);
+            this.mainMenu.Size = new System.Drawing.Size(2166, 46);
             this.mainMenu.TabIndex = 0;
             this.mainMenu.Text = "menuStrip1";
             // 
@@ -123,7 +125,7 @@
             this.exitMenu,
             this.toolStripSeparator2});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(64, 38);
             this.fileToolStripMenuItem.Text = "&File";
             // 
             // openMenu
@@ -132,47 +134,47 @@
             this.openMenu.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.openMenu.Name = "openMenu";
             this.openMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.openMenu.Size = new System.Drawing.Size(146, 22);
+            this.openMenu.Size = new System.Drawing.Size(269, 38);
             this.openMenu.Text = "&Open";
             this.openMenu.Click += new System.EventHandler(this.openMenu_Click);
             // 
             // mnuSaveResult
             // 
             this.mnuSaveResult.Name = "mnuSaveResult";
-            this.mnuSaveResult.Size = new System.Drawing.Size(146, 22);
+            this.mnuSaveResult.Size = new System.Drawing.Size(269, 38);
             this.mnuSaveResult.Text = "Save Result";
             this.mnuSaveResult.Click += new System.EventHandler(this.mnuSaveResult_Click);
             // 
             // mnuSaveImage
             // 
             this.mnuSaveImage.Name = "mnuSaveImage";
-            this.mnuSaveImage.Size = new System.Drawing.Size(146, 22);
+            this.mnuSaveImage.Size = new System.Drawing.Size(269, 38);
             this.mnuSaveImage.Text = "Save Image";
             this.mnuSaveImage.Click += new System.EventHandler(this.mnuSaveImage_Click);
             // 
             // mnuLoadProfile
             // 
             this.mnuLoadProfile.Name = "mnuLoadProfile";
-            this.mnuLoadProfile.Size = new System.Drawing.Size(146, 22);
+            this.mnuLoadProfile.Size = new System.Drawing.Size(269, 38);
             this.mnuLoadProfile.Text = "Load Profile";
             this.mnuLoadProfile.Click += new System.EventHandler(this.mnuLoadProfile_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(143, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(266, 6);
             // 
             // exitMenu
             // 
             this.exitMenu.Name = "exitMenu";
-            this.exitMenu.Size = new System.Drawing.Size(146, 22);
+            this.exitMenu.Size = new System.Drawing.Size(269, 38);
             this.exitMenu.Text = "E&xit";
             this.exitMenu.Click += new System.EventHandler(this.exitMenu_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(143, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(266, 6);
             // 
             // toolsToolStripMenuItem
             // 
@@ -181,14 +183,14 @@
             this.mnuSkip,
             this.consolidateResultsToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(84, 38);
             this.toolsToolStripMenuItem.Text = "&Tools";
             // 
             // mnuLoadForMapping
             // 
             this.mnuLoadForMapping.Name = "mnuLoadForMapping";
             this.mnuLoadForMapping.ShortcutKeys = System.Windows.Forms.Keys.F5;
-            this.mnuLoadForMapping.Size = new System.Drawing.Size(190, 22);
+            this.mnuLoadForMapping.Size = new System.Drawing.Size(350, 38);
             this.mnuLoadForMapping.Text = "Load For Mapping";
             this.mnuLoadForMapping.Click += new System.EventHandler(this.mnuLoadForMapping_Click);
             // 
@@ -196,7 +198,7 @@
             // 
             this.mnuSkip.Name = "mnuSkip";
             this.mnuSkip.ShortcutKeys = System.Windows.Forms.Keys.F10;
-            this.mnuSkip.Size = new System.Drawing.Size(190, 22);
+            this.mnuSkip.Size = new System.Drawing.Size(350, 38);
             this.mnuSkip.Text = "Skip Image";
             // 
             // consolidateResultsToolStripMenuItem
@@ -205,27 +207,27 @@
             this.mnuExportCsv,
             this.mnuExportSql});
             this.consolidateResultsToolStripMenuItem.Name = "consolidateResultsToolStripMenuItem";
-            this.consolidateResultsToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.consolidateResultsToolStripMenuItem.Size = new System.Drawing.Size(350, 38);
             this.consolidateResultsToolStripMenuItem.Text = "Consolidate Results";
             // 
             // mnuExportCsv
             // 
             this.mnuExportCsv.Name = "mnuExportCsv";
-            this.mnuExportCsv.Size = new System.Drawing.Size(116, 22);
+            this.mnuExportCsv.Size = new System.Drawing.Size(202, 38);
             this.mnuExportCsv.Text = "CSV File";
             this.mnuExportCsv.Click += new System.EventHandler(this.mnuExportCsv_Click);
             // 
             // mnuExportSql
             // 
             this.mnuExportSql.Name = "mnuExportSql";
-            this.mnuExportSql.Size = new System.Drawing.Size(116, 22);
+            this.mnuExportSql.Size = new System.Drawing.Size(202, 38);
             this.mnuExportSql.Text = "Sql File";
             this.mnuExportSql.Click += new System.EventHandler(this.mnuExportSql_Click);
             // 
             // mnuAbout
             // 
             this.mnuAbout.Name = "mnuAbout";
-            this.mnuAbout.Size = new System.Drawing.Size(52, 20);
+            this.mnuAbout.Size = new System.Drawing.Size(92, 38);
             this.mnuAbout.Text = "&About";
             this.mnuAbout.Click += new System.EventHandler(this.mnuAbout_Click);
             // 
@@ -237,13 +239,15 @@
             this.panel1.Controls.Add(this.btnDemo);
             this.panel1.Controls.Add(this.processBtn);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 677);
+            this.panel1.Location = new System.Drawing.Point(0, 1214);
+            this.panel1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1083, 88);
+            this.panel1.Size = new System.Drawing.Size(2166, 169);
             this.panel1.TabIndex = 1;
             // 
             // statusStrip
             // 
+            this.statusStrip.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.lblProfile,
             this.lblMouseCoordinates,
@@ -251,27 +255,28 @@
             this.lblElementText,
             this.lblProgress,
             this.pbProgress});
-            this.statusStrip.Location = new System.Drawing.Point(0, 64);
+            this.statusStrip.Location = new System.Drawing.Point(0, 128);
             this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(1083, 24);
+            this.statusStrip.Padding = new System.Windows.Forms.Padding(2, 0, 28, 0);
+            this.statusStrip.Size = new System.Drawing.Size(2166, 41);
             this.statusStrip.TabIndex = 11;
             this.statusStrip.Text = "statusStrip1";
             // 
             // lblProfile
             // 
             this.lblProfile.Name = "lblProfile";
-            this.lblProfile.Size = new System.Drawing.Size(85, 19);
+            this.lblProfile.Size = new System.Drawing.Size(173, 36);
             this.lblProfile.Text = "Profile: Default";
             // 
             // lblMouseCoordinates
             // 
             this.lblMouseCoordinates.Name = "lblMouseCoordinates";
-            this.lblMouseCoordinates.Size = new System.Drawing.Size(0, 19);
+            this.lblMouseCoordinates.Size = new System.Drawing.Size(0, 36);
             // 
             // lblStatus
             // 
             this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(0, 19);
+            this.lblStatus.Size = new System.Drawing.Size(0, 36);
             // 
             // lblElementText
             // 
@@ -280,30 +285,31 @@
             | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
             this.lblElementText.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.lblElementText.Name = "lblElementText";
-            this.lblElementText.Size = new System.Drawing.Size(159, 19);
+            this.lblElementText.Size = new System.Drawing.Size(321, 36);
             this.lblElementText.Text = "Click on Element to get Text";
             this.lblElementText.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lblProgress
             // 
             this.lblProgress.Name = "lblProgress";
-            this.lblProgress.Size = new System.Drawing.Size(101, 19);
+            this.lblProgress.Size = new System.Drawing.Size(206, 68);
             this.lblProgress.Text = "Progress Message";
             this.lblProgress.Visible = false;
             // 
             // pbProgress
             // 
             this.pbProgress.Name = "pbProgress";
-            this.pbProgress.Size = new System.Drawing.Size(100, 18);
+            this.pbProgress.Size = new System.Drawing.Size(200, 67);
             this.pbProgress.Visible = false;
             // 
             // btnClear
             // 
             this.btnClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnClear.Enabled = false;
-            this.btnClear.Location = new System.Drawing.Point(909, 22);
+            this.btnClear.Location = new System.Drawing.Point(1818, 42);
+            this.btnClear.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(48, 23);
+            this.btnClear.Size = new System.Drawing.Size(96, 44);
             this.btnClear.TabIndex = 10;
             this.btnClear.Text = "&Clear";
             this.btnClear.UseVisualStyleBackColor = true;
@@ -323,9 +329,11 @@
             this.grpResults.Controls.Add(this.rdVision);
             this.grpResults.Controls.Add(this.rdResult);
             this.grpResults.Enabled = false;
-            this.grpResults.Location = new System.Drawing.Point(12, 14);
+            this.grpResults.Location = new System.Drawing.Point(24, 27);
+            this.grpResults.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.grpResults.Name = "grpResults";
-            this.grpResults.Size = new System.Drawing.Size(891, 43);
+            this.grpResults.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.grpResults.Size = new System.Drawing.Size(1782, 83);
             this.grpResults.TabIndex = 9;
             this.grpResults.TabStop = false;
             this.grpResults.Text = "Result Options";
@@ -334,9 +342,10 @@
             // 
             this.lblImageDetails.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblImageDetails.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblImageDetails.Location = new System.Drawing.Point(581, 13);
+            this.lblImageDetails.Location = new System.Drawing.Point(1162, 25);
+            this.lblImageDetails.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lblImageDetails.Name = "lblImageDetails";
-            this.lblImageDetails.Size = new System.Drawing.Size(310, 18);
+            this.lblImageDetails.Size = new System.Drawing.Size(620, 35);
             this.lblImageDetails.TabIndex = 12;
             this.lblImageDetails.Text = "Size: Quality";
             this.lblImageDetails.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -345,9 +354,10 @@
             // rdNumbers
             // 
             this.rdNumbers.AutoSize = true;
-            this.rdNumbers.Location = new System.Drawing.Point(260, 17);
+            this.rdNumbers.Location = new System.Drawing.Point(520, 33);
+            this.rdNumbers.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.rdNumbers.Name = "rdNumbers";
-            this.rdNumbers.Size = new System.Drawing.Size(67, 17);
+            this.rdNumbers.Size = new System.Drawing.Size(129, 29);
             this.rdNumbers.TabIndex = 11;
             this.rdNumbers.TabStop = true;
             this.rdNumbers.Text = "Numbers";
@@ -357,9 +367,10 @@
             // rdWords
             // 
             this.rdWords.AutoSize = true;
-            this.rdWords.Location = new System.Drawing.Point(452, 17);
+            this.rdWords.Location = new System.Drawing.Point(904, 33);
+            this.rdWords.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.rdWords.Name = "rdWords";
-            this.rdWords.Size = new System.Drawing.Size(56, 17);
+            this.rdWords.Size = new System.Drawing.Size(105, 29);
             this.rdWords.TabIndex = 10;
             this.rdWords.TabStop = true;
             this.rdWords.Text = "Words";
@@ -369,9 +380,10 @@
             // rdCodes
             // 
             this.rdCodes.AutoSize = true;
-            this.rdCodes.Location = new System.Drawing.Point(391, 18);
+            this.rdCodes.Location = new System.Drawing.Point(782, 35);
+            this.rdCodes.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.rdCodes.Name = "rdCodes";
-            this.rdCodes.Size = new System.Drawing.Size(55, 17);
+            this.rdCodes.Size = new System.Drawing.Size(105, 29);
             this.rdCodes.TabIndex = 9;
             this.rdCodes.TabStop = true;
             this.rdCodes.Text = "Codes";
@@ -381,9 +393,10 @@
             // rdDates
             // 
             this.rdDates.AutoSize = true;
-            this.rdDates.Location = new System.Drawing.Point(332, 18);
+            this.rdDates.Location = new System.Drawing.Point(664, 35);
+            this.rdDates.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.rdDates.Name = "rdDates";
-            this.rdDates.Size = new System.Drawing.Size(53, 17);
+            this.rdDates.Size = new System.Drawing.Size(99, 29);
             this.rdDates.TabIndex = 8;
             this.rdDates.TabStop = true;
             this.rdDates.Text = "Dates";
@@ -393,9 +406,10 @@
             // rdAmounts
             // 
             this.rdAmounts.AutoSize = true;
-            this.rdAmounts.Location = new System.Drawing.Point(189, 17);
+            this.rdAmounts.Location = new System.Drawing.Point(378, 33);
+            this.rdAmounts.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.rdAmounts.Name = "rdAmounts";
-            this.rdAmounts.Size = new System.Drawing.Size(66, 17);
+            this.rdAmounts.Size = new System.Drawing.Size(127, 29);
             this.rdAmounts.TabIndex = 7;
             this.rdAmounts.TabStop = true;
             this.rdAmounts.Text = "Amounts";
@@ -405,9 +419,10 @@
             // rdVision
             // 
             this.rdVision.AutoSize = true;
-            this.rdVision.Location = new System.Drawing.Point(97, 18);
+            this.rdVision.Location = new System.Drawing.Point(194, 35);
+            this.rdVision.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.rdVision.Name = "rdVision";
-            this.rdVision.Size = new System.Drawing.Size(86, 17);
+            this.rdVision.Size = new System.Drawing.Size(169, 29);
             this.rdVision.TabIndex = 6;
             this.rdVision.TabStop = true;
             this.rdVision.Text = "Vision Result";
@@ -417,9 +432,10 @@
             // rdResult
             // 
             this.rdResult.AutoSize = true;
-            this.rdResult.Location = new System.Drawing.Point(6, 19);
+            this.rdResult.Location = new System.Drawing.Point(12, 37);
+            this.rdResult.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.rdResult.Name = "rdResult";
-            this.rdResult.Size = new System.Drawing.Size(85, 17);
+            this.rdResult.Size = new System.Drawing.Size(166, 29);
             this.rdResult.TabIndex = 5;
             this.rdResult.TabStop = true;
             this.rdResult.Text = "Parse Result";
@@ -429,9 +445,10 @@
             // btnDemo
             // 
             this.btnDemo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDemo.Location = new System.Drawing.Point(963, 22);
+            this.btnDemo.Location = new System.Drawing.Point(1926, 42);
+            this.btnDemo.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.btnDemo.Name = "btnDemo";
-            this.btnDemo.Size = new System.Drawing.Size(48, 23);
+            this.btnDemo.Size = new System.Drawing.Size(96, 44);
             this.btnDemo.TabIndex = 8;
             this.btnDemo.Text = "&Demo";
             this.btnDemo.UseVisualStyleBackColor = true;
@@ -440,9 +457,10 @@
             // processBtn
             // 
             this.processBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.processBtn.Location = new System.Drawing.Point(1017, 22);
+            this.processBtn.Location = new System.Drawing.Point(2034, 42);
+            this.processBtn.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.processBtn.Name = "processBtn";
-            this.processBtn.Size = new System.Drawing.Size(54, 23);
+            this.processBtn.Size = new System.Drawing.Size(108, 44);
             this.processBtn.TabIndex = 7;
             this.processBtn.Text = "Process";
             this.processBtn.UseVisualStyleBackColor = true;
@@ -450,7 +468,8 @@
             // 
             // pictureBox
             // 
-            this.pictureBox.Location = new System.Drawing.Point(-1, 0);
+            this.pictureBox.Location = new System.Drawing.Point(-2, 0);
+            this.pictureBox.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.pictureBox.Name = "pictureBox";
             this.pictureBox.Size = new System.Drawing.Size(735, 655);
             this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -464,9 +483,10 @@
             // 
             // splitter1
             // 
-            this.splitter1.Location = new System.Drawing.Point(0, 24);
+            this.splitter1.Location = new System.Drawing.Point(0, 46);
+            this.splitter1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.splitter1.Name = "splitter1";
-            this.splitter1.Size = new System.Drawing.Size(3, 653);
+            this.splitter1.Size = new System.Drawing.Size(6, 1168);
             this.splitter1.TabIndex = 3;
             this.splitter1.TabStop = false;
             // 
@@ -475,10 +495,11 @@
             this.mainTab.Controls.Add(this.tabPicture);
             this.mainTab.Controls.Add(this.tabResult);
             this.mainTab.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mainTab.Location = new System.Drawing.Point(3, 24);
+            this.mainTab.Location = new System.Drawing.Point(6, 46);
+            this.mainTab.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.mainTab.Name = "mainTab";
             this.mainTab.SelectedIndex = 0;
-            this.mainTab.Size = new System.Drawing.Size(1080, 653);
+            this.mainTab.Size = new System.Drawing.Size(2160, 1168);
             this.mainTab.TabIndex = 6;
             // 
             // tabPicture
@@ -486,10 +507,11 @@
             this.tabPicture.Controls.Add(this.panelPicture);
             this.tabPicture.Controls.Add(this.splitterPicture);
             this.tabPicture.Controls.Add(this.panelResult);
-            this.tabPicture.Location = new System.Drawing.Point(4, 22);
+            this.tabPicture.Location = new System.Drawing.Point(4, 34);
+            this.tabPicture.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.tabPicture.Name = "tabPicture";
-            this.tabPicture.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPicture.Size = new System.Drawing.Size(1072, 627);
+            this.tabPicture.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.tabPicture.Size = new System.Drawing.Size(2152, 1130);
             this.tabPicture.TabIndex = 0;
             this.tabPicture.Text = "Document";
             this.tabPicture.UseVisualStyleBackColor = true;
@@ -499,17 +521,19 @@
             this.panelPicture.AutoScroll = true;
             this.panelPicture.Controls.Add(this.pictureBox);
             this.panelPicture.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelPicture.Location = new System.Drawing.Point(3, 3);
+            this.panelPicture.Location = new System.Drawing.Point(6, 6);
+            this.panelPicture.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.panelPicture.Name = "panelPicture";
-            this.panelPicture.Size = new System.Drawing.Size(735, 621);
+            this.panelPicture.Size = new System.Drawing.Size(1478, 1118);
             this.panelPicture.TabIndex = 0;
             // 
             // splitterPicture
             // 
             this.splitterPicture.Dock = System.Windows.Forms.DockStyle.Right;
-            this.splitterPicture.Location = new System.Drawing.Point(738, 3);
+            this.splitterPicture.Location = new System.Drawing.Point(1484, 6);
+            this.splitterPicture.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.splitterPicture.Name = "splitterPicture";
-            this.splitterPicture.Size = new System.Drawing.Size(3, 621);
+            this.splitterPicture.Size = new System.Drawing.Size(6, 1118);
             this.splitterPicture.TabIndex = 2;
             this.splitterPicture.TabStop = false;
             // 
@@ -518,9 +542,10 @@
             this.panelResult.Controls.Add(this.listResult);
             this.panelResult.Controls.Add(this.panelResultHeader);
             this.panelResult.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panelResult.Location = new System.Drawing.Point(741, 3);
+            this.panelResult.Location = new System.Drawing.Point(1490, 6);
+            this.panelResult.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.panelResult.Name = "panelResult";
-            this.panelResult.Size = new System.Drawing.Size(328, 621);
+            this.panelResult.Size = new System.Drawing.Size(656, 1118);
             this.panelResult.TabIndex = 1;
             // 
             // listResult
@@ -532,10 +557,11 @@
             this.listResult.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listResult.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listResult.FullRowSelect = true;
-            this.listResult.Location = new System.Drawing.Point(0, 519);
+            this.listResult.Location = new System.Drawing.Point(0, 998);
+            this.listResult.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.listResult.MultiSelect = false;
             this.listResult.Name = "listResult";
-            this.listResult.Size = new System.Drawing.Size(328, 102);
+            this.listResult.Size = new System.Drawing.Size(656, 120);
             this.listResult.TabIndex = 8;
             this.listResult.UseCompatibleStateImageBehavior = false;
             this.listResult.View = System.Windows.Forms.View.Details;
@@ -559,18 +585,20 @@
             this.panelResultHeader.Controls.Add(this.mappingControl);
             this.panelResultHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelResultHeader.Location = new System.Drawing.Point(0, 0);
+            this.panelResultHeader.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.panelResultHeader.Name = "panelResultHeader";
-            this.panelResultHeader.Size = new System.Drawing.Size(328, 519);
+            this.panelResultHeader.Size = new System.Drawing.Size(656, 998);
             this.panelResultHeader.TabIndex = 9;
             // 
             // mappingControl
             // 
             this.mappingControl.Enabled = false;
-            this.mappingControl.Location = new System.Drawing.Point(2, 3);
+            this.mappingControl.Location = new System.Drawing.Point(4, 6);
+            this.mappingControl.Margin = new System.Windows.Forms.Padding(12, 12, 12, 12);
             this.mappingControl.Name = "mappingControl";
             this.mappingControl.SelectedAttribute = null;
             this.mappingControl.SelectedMapping = null;
-            this.mappingControl.Size = new System.Drawing.Size(325, 520);
+            this.mappingControl.Size = new System.Drawing.Size(650, 1000);
             this.mappingControl.TabIndex = 0;
             this.mappingControl.ValueMappingSelected += new System.EventHandler(this.mappingControl_ValueMappingSelected);
             this.mappingControl.AnchorMappingSelected += new System.EventHandler(this.mappingControl_AnchorMappingSelected);
@@ -580,10 +608,11 @@
             // tabResult
             // 
             this.tabResult.Controls.Add(this.tabVision);
-            this.tabResult.Location = new System.Drawing.Point(4, 22);
+            this.tabResult.Location = new System.Drawing.Point(4, 34);
+            this.tabResult.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.tabResult.Name = "tabResult";
-            this.tabResult.Padding = new System.Windows.Forms.Padding(3);
-            this.tabResult.Size = new System.Drawing.Size(1072, 666);
+            this.tabResult.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.tabResult.Size = new System.Drawing.Size(2152, 1218);
             this.tabResult.TabIndex = 1;
             this.tabResult.Text = "Metadata";
             this.tabResult.UseVisualStyleBackColor = true;
@@ -593,19 +622,21 @@
             this.tabVision.Controls.Add(this.tabText);
             this.tabVision.Controls.Add(this.tabVisionJson);
             this.tabVision.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabVision.Location = new System.Drawing.Point(3, 3);
+            this.tabVision.Location = new System.Drawing.Point(6, 6);
+            this.tabVision.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.tabVision.Name = "tabVision";
             this.tabVision.SelectedIndex = 0;
-            this.tabVision.Size = new System.Drawing.Size(1066, 660);
+            this.tabVision.Size = new System.Drawing.Size(2140, 1206);
             this.tabVision.TabIndex = 5;
             // 
             // tabText
             // 
             this.tabText.Controls.Add(this.resultText);
-            this.tabText.Location = new System.Drawing.Point(4, 22);
+            this.tabText.Location = new System.Drawing.Point(4, 34);
+            this.tabText.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.tabText.Name = "tabText";
-            this.tabText.Padding = new System.Windows.Forms.Padding(3);
-            this.tabText.Size = new System.Drawing.Size(1058, 634);
+            this.tabText.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.tabText.Size = new System.Drawing.Size(2132, 1168);
             this.tabText.TabIndex = 0;
             this.tabText.Text = "Text";
             this.tabText.UseVisualStyleBackColor = true;
@@ -614,19 +645,21 @@
             // 
             this.resultText.Dock = System.Windows.Forms.DockStyle.Fill;
             this.resultText.Font = new System.Drawing.Font("Courier New", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.resultText.Location = new System.Drawing.Point(3, 3);
+            this.resultText.Location = new System.Drawing.Point(6, 6);
+            this.resultText.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.resultText.Multiline = true;
             this.resultText.Name = "resultText";
-            this.resultText.Size = new System.Drawing.Size(1052, 628);
+            this.resultText.Size = new System.Drawing.Size(2120, 1156);
             this.resultText.TabIndex = 5;
             // 
             // tabVisionJson
             // 
             this.tabVisionJson.Controls.Add(this.treeJsonVision);
-            this.tabVisionJson.Location = new System.Drawing.Point(4, 22);
+            this.tabVisionJson.Location = new System.Drawing.Point(4, 34);
+            this.tabVisionJson.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.tabVisionJson.Name = "tabVisionJson";
-            this.tabVisionJson.Padding = new System.Windows.Forms.Padding(3);
-            this.tabVisionJson.Size = new System.Drawing.Size(178, 42);
+            this.tabVisionJson.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.tabVisionJson.Size = new System.Drawing.Size(364, 70);
             this.tabVisionJson.TabIndex = 1;
             this.tabVisionJson.Text = "Vision";
             this.tabVisionJson.UseVisualStyleBackColor = true;
@@ -634,21 +667,23 @@
             // treeJsonVision
             // 
             this.treeJsonVision.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeJsonVision.Location = new System.Drawing.Point(3, 3);
+            this.treeJsonVision.Location = new System.Drawing.Point(6, 6);
+            this.treeJsonVision.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.treeJsonVision.Name = "treeJsonVision";
-            this.treeJsonVision.Size = new System.Drawing.Size(172, 36);
+            this.treeJsonVision.Size = new System.Drawing.Size(352, 58);
             this.treeJsonVision.TabIndex = 0;
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1083, 765);
+            this.ClientSize = new System.Drawing.Size(2166, 1383);
             this.Controls.Add(this.mainTab);
             this.Controls.Add(this.splitter1);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.mainMenu);
             this.MainMenuStrip = this.mainMenu;
+            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Name = "MainForm";
             this.Text = "Celeris";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;

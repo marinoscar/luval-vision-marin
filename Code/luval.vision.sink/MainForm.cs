@@ -25,6 +25,7 @@ namespace luval.vision.sink
         private Image _originalImg;
         private ProcessResult _processResult;
         private List<AttributeMapping> _profiles;
+        private string profilePath = string.Empty;
         ResultAnalizer _analizer;
 
         public MainForm()
@@ -52,7 +53,7 @@ namespace luval.vision.sink
             };
             if (dialog.ShowDialog() == DialogResult.Cancel) return;
             _fileName = dialog.FileName;
-            DoLoadImage(_fileName);
+          //  DoLoadImage(_fileName);
         }
 
         private void DoLoadImage(string fileName)
@@ -90,14 +91,16 @@ namespace luval.vision.sink
             processBtn.Enabled = false;
             var avgScore = 0d;
             var sw = Stopwatch.StartNew();
-            var res = DoProcess();
+            //var res = DoProcess();
+            celeris.core.DocumentProcessor documentProcessor = new celeris.core.DocumentProcessor();
+            documentProcessor.DoProcess(_fileName,profilePath,"Demo/"+Path.GetFileNameWithoutExtension(_fileName)+".csv");
             sw.Stop();
-            if (res != null)
-            {
-                var items = res.TextResults.Where(i => i.Score > 0).ToList();
-                if (items.Any())
-                    avgScore = items.Average(i => i.Score);
-            }
+            //if (res != null)
+            //{
+            //    var items = res.TextResults.Where(i => i.Score > 0).ToList();
+            //    if (items.Any())
+            //        avgScore = items.Average(i => i.Score);
+            //}
             MessageBox.Show(string.Format("Process completed in {0} seconds", sw.Elapsed.TotalSeconds.ToString("N0")), "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
             processBtn.Enabled = true;
         }
@@ -119,7 +122,7 @@ namespace luval.vision.sink
             celeris.core.EntityExtractor extractor = new celeris.core.EntityExtractor();
             var jsonProfile = File.ReadAllText("Profiles/testProfile.json");
             celeris.entity.Profile profile = (celeris.entity.Profile)JsonConvert.DeserializeObject(jsonProfile, typeof(celeris.entity.Profile));
-            celeris.core.ExportUtil.ExportToCSV(profile, @"C:\Users\Developer\Documents\Demo\OBO_-_Continental_Completion_Report_CONKLING_FIU_1-32-5XH.csv");
+            //  celeris.core.ExportUtil.ExportToCSV(profile, @"C:\Users\Kenneth Hidalgo\Desktop\Demo\OBO_-_Continental_Completion_Report_CONKLING_FIU_1-32-5XH.csv");
             System.Threading.Thread.Sleep(2000);
             MessageBox.Show(string.Format("Process completed in 2 seconds "), "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
@@ -144,7 +147,8 @@ namespace luval.vision.sink
                 var score = 0d;
                 var value = default(string);
                 var item = _processResult.TextResults.FirstOrDefault(i => i.Map.AttributeName == map.AttributeName);
-                if (item != null) {
+                if (item != null)
+                {
                     value = item.Value;
                     score = item.Score;
                 }
@@ -162,7 +166,7 @@ namespace luval.vision.sink
             mappingControl.Enabled = true;
             mappingControl.Initialize(_processResult);
 
-            System.IO.File.Copy(@"C:\code\docs\DevonFSD_Revenue Check Input.csv", @"C:\Users\Developer\Documents\Demo\DevonFSD_Revenue Check Input.csv", true);
+            // System.IO.File.Copy(@"C:\Users\Kenneth Hidalgo\Desktop\CelerisOutput\DevonFSD_Revenue Check Input.csv", @"C:\Users\Kenneth Hidalgo\Desktop\Demo\DevonFSD_Revenue Check Input.csv", true);
 
             return result;
         }
@@ -406,16 +410,17 @@ namespace luval.vision.sink
                 RestoreDirectory = true,
             };
             if (openDlg.ShowDialog() == DialogResult.Cancel) return;
-            try
-            {
-                _profiles = JsonConvert.DeserializeObject<List<AttributeMapping>>(File.ReadAllText(openDlg.FileName));
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Invalid profile file", "Error Loading", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                _profiles = null;
-                return;
-            }
+            //try
+            //{
+            //    _profiles = JsonConvert.DeserializeObject<List<AttributeMapping>>(File.ReadAllText(openDlg.FileName));
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show("Invalid profile file", "Error Loading", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //    _profiles = null;
+            //    return;
+            //}
+            profilePath = openDlg.FileName;
             lblProfile.Text = "Profile: " + new FileInfo(openDlg.FileName).Name;
         }
 
