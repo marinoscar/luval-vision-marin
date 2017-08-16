@@ -48,7 +48,7 @@ namespace luval.vision.sink
             var dialog = new OpenFileDialog()
             {
                 Title = "Open Image",
-                Filter = "Image Files(*.BMP;*.JPG;*.GIF;*.PNG; *.TIF)|*.BMP;*.JPG;*.GIF;*.PNG;*.TIF|All files (*.*)|*.*",
+                Filter = "PDF files(*.PDF)|*.PDF|All files (*.*)|*.*",
                 RestoreDirectory = true
             };
             if (dialog.ShowDialog() == DialogResult.Cancel) return;
@@ -93,7 +93,7 @@ namespace luval.vision.sink
             var sw = Stopwatch.StartNew();
             //var res = DoProcess();
             celeris.core.DocumentProcessor documentProcessor = new celeris.core.DocumentProcessor();
-            documentProcessor.DoProcess(_fileName,profilePath,"Demo/"+Path.GetFileNameWithoutExtension(_fileName)+".csv");
+            documentProcessor.DoProcess(_fileName,profilePath, Environment.GetFolderPath(Environment.SpecialFolder.Desktop)+ "\\Demo celeris v2.0\\Demo\\" + Path.GetFileNameWithoutExtension(_fileName)+".csv");
             sw.Stop();
             //if (res != null)
             //{
