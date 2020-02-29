@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -34,8 +35,11 @@ namespace luval.vision.core
             if (string.IsNullOrWhiteSpace(type) || type.ToUpperInvariant().Equals("OTHER") || type.ToUpperInvariant().Equals("UNKNOWN")) return EntityType.None;
             if (type.ToUpperInvariant().Equals("CONSUMER_GOOD")) return EntityType.ConsumerGood;
             if (type.ToUpperInvariant().Equals("WORK_OF_ART")) return EntityType.WorkofArt;
-            return (EntityType)Enum.Parse(typeof(EntityType), type, true);
-
+            if (type.ToUpperInvariant().Equals("PHONE_NUMBER")) return EntityType.PhoneNumber;
+            EntityType typeResult;
+            var result = Enum.TryParse<EntityType>(type, out typeResult);
+            if (!result) return EntityType.Other;
+            return typeResult;
         }
 
         private IDictionary<string, string> GetMetadata(JToken token)

@@ -116,6 +116,7 @@
     <None Include="attribute-mapping.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Keys\google-vision-keys.json" />
     <None Include="packages.config" />
     <None Include="private.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

@@ -120,6 +120,7 @@
     <Compile Include="ProcessResult.cs" />
     <Compile Include="resolvers\CodeResolver.cs" />
     <Compile Include="resolvers\DateResolver.cs" />
+    <Compile Include="resolvers\EmailResolver.cs" />
     <Compile Include="resolvers\IRegexResolver.cs" />
     <Compile Include="resolvers\IStringResolver.cs" />
     <Compile Include="IVisionResultParser.cs" />

@@ -1,28 +1,31 @@
 ﻿[
   {
-    "attributeName": "DueDate",
-    "anchorPatterns": [ "Due Date", "Expiration Date" ],
-    "valuePatterns": [ "@date"]
-  },
-  {
-    "attributeName": "Date",
-    "anchorPatterns": [ "Date", "Invoice Date", "Effective Date", "Invoice Date:" ],
-    "valuePatterns": [ "@date" ]
-  },
-  {
-    "attributeName": "PONumber",
-    "anchorPatterns": [ "PO requisition", "PO#", "P.O.#", "P.O. #", "PO Number", "P.O. #", "P.O. No." ],
+    "attributeName": "PhoneNumber",
+    "anchorPatterns": [ "Phone #", "Phone Number", "Phone"],
     "valuePatterns": [ "@code", "@number" ]
   },
   {
-    "attributeName": "Total",
-    "anchorPatterns": [ "Amount Due","\\bTotal\\b", "\\bGrand Total\\b" ],
-    "valuePatterns": [ "@amount" ],
+    "attributeName": "BankRouting",
+    "anchorPatterns": [ "Bank Routing", "Bank Routing #" ],
+    "valuePatterns": [ "@number" ],
     "isAttributeLast": true
   },
   {
-    "attributeName": "InvoiceNumber",
-    "anchorPatterns": [ "Invoice", "Invoice #", "Invoice Number" ],
-    "valuePatterns": [ "@code", "@number" ]
+    "attributeName": "BankAccount",
+    "anchorPatterns": [ "Bank Account #", "Bank Account" ],
+    "valuePatterns": [ "@number" ],
+    "isAttributeLast": true
+  },
+  {
+    "attributeName": "Email",
+    "anchorPatterns": [ "Email", "Email:" ],
+    "valuePatterns": [ "@email" ],
+    "isAttributeLast": true
+  },
+  {
+    "attributeName": "CardNo",
+    "anchorPatterns": [ "# of Cards Requested", "Number of Cards Requested" ],
+    "valuePatterns": [ "@number" ],
+    "isAttributeLast": true
   }
 ]
