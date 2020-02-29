@@ -243,5 +243,15 @@ namespace luval.vision.sink
             }
             MessageBox.Show("Result has been saved", "Save", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
+        private void mnuTextCopy_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(resultText.SelectedText);
+        }
+
+        private void mnuSelectAllTxt_Click(object sender, EventArgs e)
+        {
+            resultText.SelectAll();
+        }
     }
 }

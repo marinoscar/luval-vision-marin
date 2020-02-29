@@ -1,30 +1,30 @@
 ﻿[
   {
     "attributeName": "PhoneNumber",
-    "anchorPatterns": [ "Phone #", "Phone Number", "Phone"],
-    "valuePatterns": [ "@code", "@number" ]
+    "anchorPatterns": [ "Phone #", "Phone Number", "Phone", "\\bPhone\\b", "PHONE" ],
+    "valuePatterns": [ "@number", "@code" ]
   },
   {
     "attributeName": "BankRouting",
-    "anchorPatterns": [ "Bank Routing", "Bank Routing #" ],
+    "anchorPatterns": [ "Bank Routing", "BANK ROUTING #", "\\bBank Routing\\b" ],
     "valuePatterns": [ "@number" ],
     "isAttributeLast": true
   },
   {
     "attributeName": "BankAccount",
-    "anchorPatterns": [ "Bank Account #", "Bank Account" ],
+    "anchorPatterns": [ "BANK ACCOUNT", "Bank Account", "\\bBank Account\\b" ],
     "valuePatterns": [ "@number" ],
     "isAttributeLast": true
   },
   {
     "attributeName": "Email",
-    "anchorPatterns": [ "Email", "Email:" ],
+    "anchorPatterns": [ "Email", "Email:", "\\bEmail\\b", "EMAIL ADDRESS" ],
     "valuePatterns": [ "@email" ],
     "isAttributeLast": true
   },
   {
     "attributeName": "CardNo",
-    "anchorPatterns": [ "# of Cards Requested", "Number of Cards Requested" ],
+    "anchorPatterns": [ "# of Cards Requested", "Number of Cards Requested", "OF CARDS REQUESTED" ],
     "valuePatterns": [ "@number" ],
     "isAttributeLast": true
   }

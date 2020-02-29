@@ -27,13 +27,13 @@ namespace luval.vision.core.resolvers
 
         public virtual IEnumerable<ResolverMatch> GetValues(string text)
         {
-            var vals = Regex.Matches(text, Pattern).Cast<Match>().Where(i => i.Success && !string.IsNullOrWhiteSpace(i.Value));
+            var vals = Regex.Matches(text, Pattern, RegexOptions.IgnoreCase).Cast<Match>().Where(i => i.Success && !string.IsNullOrWhiteSpace(i.Value));
             return vals.Select(i => ResolverMatch.Load(i)).ToList();
         }
 
         public virtual bool IsMatch(string text)
         {
-            return Regex.IsMatch(text, Pattern);
+            return Regex.IsMatch(text, Pattern, RegexOptions.IgnoreCase);
         }
     }
 }
