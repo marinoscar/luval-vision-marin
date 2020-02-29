@@ -119,6 +119,7 @@
     <Compile Include="Pdf2Img.cs" />
     <Compile Include="ProcessResult.cs" />
     <Compile Include="resolvers\CodeResolver.cs" />
+    <Compile Include="resolvers\ConstantResolver.cs" />
     <Compile Include="resolvers\DateResolver.cs" />
     <Compile Include="resolvers\EmailResolver.cs" />
     <Compile Include="resolvers\IRegexResolver.cs" />

@@ -27,5 +27,11 @@
     "anchorPatterns": [ "# of Cards Requested", "Number of Cards Requested", "OF CARDS REQUESTED" ],
     "valuePatterns": [ "@number" ],
     "isAttributeLast": true
+  },
+  {
+    "attributeName": "TruckMaintance",
+    "anchorPatterns": [ "TRUCK MAINTENANCE" ],
+    "valuePatterns": [ "\\bX\\b" ],
+    "isAttributeLast": true
   }
 ]
