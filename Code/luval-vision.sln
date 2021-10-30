@@ -3,13 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "luval.vision.core", "luval.vision.core\luval.vision.core.csproj", "{E2B1CE82-40C0-4F2B-9D00-A93425D7147F}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "luval.vision.sink", "luval.vision.sink\luval.vision.sink.csproj", "{443E9AC3-B5FE-4F20-8B6F-87F59EBBC8F1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "luval.tests", "luval.tests\luval.tests.csproj", "{3299F628-3097-4799-A9E2-EAC16D587FB8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "luval.vision.core.pdf", "luval.vision.core.pdf\luval.vision.core.pdf.csproj", "{6C9CA9EF-52AA-414A-8548-624B75D426C5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "luval.vision.core", "luval.vision.core\luval.vision.core.csproj", "{3B0B8704-3CB1-4CF6-9137-FB04F3A6F22A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,16 +18,6 @@ Global
 		SingleImage|Any CPU = SingleImage|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E2B1CE82-40C0-4F2B-9D00-A93425D7147F}.CD_ROM|Any CPU.ActiveCfg = Release|Any CPU
-		{E2B1CE82-40C0-4F2B-9D00-A93425D7147F}.CD_ROM|Any CPU.Build.0 = Release|Any CPU
-		{E2B1CE82-40C0-4F2B-9D00-A93425D7147F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E2B1CE82-40C0-4F2B-9D00-A93425D7147F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E2B1CE82-40C0-4F2B-9D00-A93425D7147F}.DVD-5|Any CPU.ActiveCfg = Debug|Any CPU
-		{E2B1CE82-40C0-4F2B-9D00-A93425D7147F}.DVD-5|Any CPU.Build.0 = Debug|Any CPU
-		{E2B1CE82-40C0-4F2B-9D00-A93425D7147F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E2B1CE82-40C0-4F2B-9D00-A93425D7147F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E2B1CE82-40C0-4F2B-9D00-A93425D7147F}.SingleImage|Any CPU.ActiveCfg = Release|Any CPU
-		{E2B1CE82-40C0-4F2B-9D00-A93425D7147F}.SingleImage|Any CPU.Build.0 = Release|Any CPU
 		{443E9AC3-B5FE-4F20-8B6F-87F59EBBC8F1}.CD_ROM|Any CPU.ActiveCfg = Release|Any CPU
 		{443E9AC3-B5FE-4F20-8B6F-87F59EBBC8F1}.CD_ROM|Any CPU.Build.0 = Release|Any CPU
 		{443E9AC3-B5FE-4F20-8B6F-87F59EBBC8F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -50,16 +38,16 @@ Global
 		{3299F628-3097-4799-A9E2-EAC16D587FB8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3299F628-3097-4799-A9E2-EAC16D587FB8}.SingleImage|Any CPU.ActiveCfg = Release|Any CPU
 		{3299F628-3097-4799-A9E2-EAC16D587FB8}.SingleImage|Any CPU.Build.0 = Release|Any CPU
-		{6C9CA9EF-52AA-414A-8548-624B75D426C5}.CD_ROM|Any CPU.ActiveCfg = Release|Any CPU
-		{6C9CA9EF-52AA-414A-8548-624B75D426C5}.CD_ROM|Any CPU.Build.0 = Release|Any CPU
-		{6C9CA9EF-52AA-414A-8548-624B75D426C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6C9CA9EF-52AA-414A-8548-624B75D426C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6C9CA9EF-52AA-414A-8548-624B75D426C5}.DVD-5|Any CPU.ActiveCfg = Debug|Any CPU
-		{6C9CA9EF-52AA-414A-8548-624B75D426C5}.DVD-5|Any CPU.Build.0 = Debug|Any CPU
-		{6C9CA9EF-52AA-414A-8548-624B75D426C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6C9CA9EF-52AA-414A-8548-624B75D426C5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6C9CA9EF-52AA-414A-8548-624B75D426C5}.SingleImage|Any CPU.ActiveCfg = Release|Any CPU
-		{6C9CA9EF-52AA-414A-8548-624B75D426C5}.SingleImage|Any CPU.Build.0 = Release|Any CPU
+		{3B0B8704-3CB1-4CF6-9137-FB04F3A6F22A}.CD_ROM|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B0B8704-3CB1-4CF6-9137-FB04F3A6F22A}.CD_ROM|Any CPU.Build.0 = Debug|Any CPU
+		{3B0B8704-3CB1-4CF6-9137-FB04F3A6F22A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B0B8704-3CB1-4CF6-9137-FB04F3A6F22A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B0B8704-3CB1-4CF6-9137-FB04F3A6F22A}.DVD-5|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B0B8704-3CB1-4CF6-9137-FB04F3A6F22A}.DVD-5|Any CPU.Build.0 = Debug|Any CPU
+		{3B0B8704-3CB1-4CF6-9137-FB04F3A6F22A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B0B8704-3CB1-4CF6-9137-FB04F3A6F22A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B0B8704-3CB1-4CF6-9137-FB04F3A6F22A}.SingleImage|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B0B8704-3CB1-4CF6-9137-FB04F3A6F22A}.SingleImage|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

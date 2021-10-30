@@ -66,7 +66,7 @@ namespace luval.vision.sink
             if (PictureBox.Image != null) PictureBox.Image.Dispose();
             PictureBox.Image = null;
             var img = default(Image);
-            using (var stream = new MemoryStream(Pdf2Img.CheckForPdfAndConvert(data, fileName)))
+            using (var stream = new MemoryStream(data))
             {
                 img = Image.FromStream(stream);
                 stream.Close();

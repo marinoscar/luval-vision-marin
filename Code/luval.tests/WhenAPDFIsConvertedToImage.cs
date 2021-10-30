@@ -14,7 +14,7 @@ namespace luval.tests
         [Test]
         public void ItShouldDoTheConversionWithoutErrors()
         {
-            Pdf2Img.ConverToSingleImage(@"C:\Users\Oscar\Desktop\Tmp\sample.pdf", @"C:\Users\Oscar\Desktop\Tmp\sample-img.jpeg");
+            //Pdf2Img.ConverToSingleImage(@"C:\Users\Oscar\Desktop\Tmp\sample.pdf", @"C:\Users\Oscar\Desktop\Tmp\sample-img.jpeg");
         }
     }
 }

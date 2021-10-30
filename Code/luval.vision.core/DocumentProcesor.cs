@@ -30,8 +30,7 @@ namespace luval.vision.core
         public ProcessResult DoProcess(byte[] data, string fileName, IEnumerable<AttributeMapping> mappings)
         {
             var startedOn = DateTime.UtcNow;
-            var imgBytes = Pdf2Img.CheckForPdfAndConvert(data, fileName);
-            var ocr = OcrProvider.DoOcr(imgBytes, fileName);
+            var ocr = OcrProvider.DoOcr(data, fileName);
             var nlp = NlpProvider.DoNlp(GetTextToAnalyze(ocr, mappings));
             return DoProcess(data, fileName, mappings, ocr, nlp, startedOn);
         }
