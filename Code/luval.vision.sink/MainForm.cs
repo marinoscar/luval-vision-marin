@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -16,6 +17,7 @@ namespace luval.vision.sink
     public partial class MainForm : Form
     {
 
+        private string _mappingFile;
         private string _fileName;
         private ImageManager _imageManager;
         private OcrResult _result;
@@ -52,7 +54,7 @@ namespace luval.vision.sink
         private void DoLoadImage(string fileName)
         {
             var formResult = CheckForCelerisFile(fileName);
-            if(formResult == null)
+            if (formResult == null)
                 DoLoadImage(fileName, File.ReadAllBytes(fileName));
             else
             {
@@ -119,14 +121,46 @@ namespace luval.vision.sink
 
         }
 
+        private void LoadConfiguration()
+        {
+            var dlg = new OpenFileDialog()
+            {
+                Title = "Load configuration file",
+                Filter = "Json Files (*.json)|*.json",
+                Multiselect = false,
+                RestoreDirectory = true
+            };
+            if (dlg.ShowDialog() != DialogResult.OK) return;
+            _mappingFile = dlg.FileName;
+            if (!File.Exists(_mappingFile))
+            {
+                MessageBox.Show("Invalid file", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private List<AttributeMapping> GetMapping()
+        {
+            if (string.IsNullOrWhiteSpace(_mappingFile)) _mappingFile = "attribute-mapping.json";
+            var jsonData = File.ReadAllText(_mappingFile);
+            var options = new List<AttributeMapping>();
+            try
+            {
+                options = JsonConvert.DeserializeObject<List<AttributeMapping>>(jsonData);
+            }
+            catch (Exception ex)
+            {
+                Trace.WriteLine(string.Format("File {0} is not valid: {1}", _mappingFile, ex), "Error");
+                MessageBox.Show("Invalid file", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            return options;
+        }
         private void DoProcess()
         {
-            var jsonData = File.ReadAllText("attribute-mapping.json");
-            var options = JsonConvert.DeserializeObject<List<AttributeMapping>>(jsonData);
+            var options = GetMapping();
             var provider = new DocumentProcesor(GetProvider(false), new NlpProvider(new GoogleNlpEngine(), new GoogleNlpLoader()));
             var result = default(ProcessResult);
-            result = _formResult == null ? provider.DoProcess(_fileName, options) : 
-                provider.DoProcess(_formResult.FileData,_formResult.FileName, options, _formResult.Result.OcrResult, _formResult.Result.NlpResult);
+            result = _formResult == null ? provider.DoProcess(_fileName, options) :
+                provider.DoProcess(_formResult.FileData, _formResult.FileName, options, _formResult.Result.OcrResult, _formResult.Result.NlpResult);
             _result = result.OcrResult;
             _processResult = result;
             LoadVisionTree(result.OcrResult);
@@ -187,14 +221,6 @@ namespace luval.vision.sink
             }
         }
 
-        private List<MappingResult> GetData(OcrResult result)
-        {
-            var jsonData = File.ReadAllText("attribute-mapping.json");
-            var options = JsonConvert.DeserializeObject<List<AttributeMapping>>(jsonData);
-            var navigator = new Navigator(result.Info, result.Lines, options);
-            return navigator.ExtractAttributes();
-        }
-
         private void chkOcrResult_CheckedChanged(object sender, EventArgs e)
         {
             if (chkOcrResult.Checked && _result != null)
@@ -252,6 +278,11 @@ namespace luval.vision.sink
         private void mnuSelectAllTxt_Click(object sender, EventArgs e)
         {
             resultText.SelectAll();
+        }
+
+        private void mnuLoadConfiguration_Click(object sender, EventArgs e)
+        {
+            LoadConfiguration();
         }
     }
 }
