@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Recognizers.Text;
+using Microsoft.Recognizers.Text.DateTime;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,16 +8,15 @@ using System.Threading.Tasks;
 
 namespace luval.vision.core.resolvers
 {
-    public class DateResolver : RegexResolver
+    public class DateResolver : MicrosoftRecognizerResolver
     {
 
-        public DateResolver() : base(_exp)
+        public DateResolver() : base((query, culture) => DateTimeRecognizer.RecognizeDateTime(query, culture))
         {
 
         }
 
-        public const string _exp = @"([0-9]{1,2}[\/\-][0-9]{1,2}[\/\-][0-9]{2,4})|([0-9]{2,4}[\/\-][0-9]{1,2}[\/\-][0-9]{1,2})";
-
         public override string Code { get { return "date"; } }
+
     }
 }
