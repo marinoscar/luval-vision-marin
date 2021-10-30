@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Recognizers.Text.Sequence;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,11 +7,9 @@ using System.Threading.Tasks;
 
 namespace luval.vision.core.resolvers
 {
-    public class EmailResolver : RegexResolver
+    public class EmailResolver : MicrosoftRecognizerResolver
     {
-        private const string _exp = @"\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b";
-
-        public EmailResolver() : base(_exp)
+        public EmailResolver() : base((query, culture) => SequenceRecognizer.RecognizeEmail(query, culture))
         {
         }
 
