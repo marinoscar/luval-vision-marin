@@ -31,9 +31,14 @@ namespace luval.vision.core
         }
 
 
-        public IEnumerable<OcrElement> Find(string pattern)
+        public IEnumerable<OcrRegexResult> Find(string pattern)
         {
-            return Elements.Where(i => !string.IsNullOrWhiteSpace(i.Text) && Regex.IsMatch(i.Text, pattern)).OrderBy(i => i.Location.Y).ToList();
+            return Elements.Where(i => !string.IsNullOrWhiteSpace(i.Text) && Regex.IsMatch(i.Text, pattern)).OrderBy(i => i.Location.Y).
+                Select(i => new OcrRegexResult() { 
+                    RegExPattern = pattern,
+                    Element = i,
+                    Match = Regex.Match(i.Text, pattern)
+                }); ;
         }
 
         public List<MappingResult> ExtractAttributes()
@@ -55,16 +60,16 @@ namespace luval.vision.core
                         {
                             case Direction.Down:
                                 isDown = true;
-                                found = AcceptSearch(map, result, sortedAnchorItem, SearchDown(sortedAnchorItem, map.ValuePatterns), isDown);
+                                found = AcceptSearch(map, result, sortedAnchorItem, SearchDown(sortedAnchorItem.Element, map.ValuePatterns), isDown);
                                 break;
                             case Direction.Right:
-                                found = AcceptSearch(map, result, sortedAnchorItem, SearchRight(sortedAnchorItem, map.ValuePatterns), isDown);
+                                found = AcceptSearch(map, result, sortedAnchorItem, SearchRight(sortedAnchorItem.Element, map.ValuePatterns), isDown);
                                 break;
                             default:
-                                var vals = SearchRight(sortedAnchorItem, map.ValuePatterns);
+                                var vals = SearchRight(sortedAnchorItem.Element, map.ValuePatterns);
                                 if (vals == null || !vals.Any())
                                 {
-                                    vals = SearchDown(sortedAnchorItem, map.ValuePatterns);
+                                    vals = SearchDown(sortedAnchorItem.Element, map.ValuePatterns);
                                     isDown = true;
                                 }
                                 found = AcceptSearch(map, result, sortedAnchorItem, vals, isDown);
@@ -110,23 +115,24 @@ namespace luval.vision.core
             return new OcrLocation() { X = x, Y = y, Height = h, Width = w };
         }
 
-        private bool AcceptSearch(AttributeMapping map, List<MappingResult> items, OcrElement anchor, IEnumerable<SearchResult> values, bool isDown)
+        private bool AcceptSearch(AttributeMapping map, List<MappingResult> items, OcrRegexResult anchor, IEnumerable<SearchResult> values, bool isDown)
         {
             if (values == null || !values.Any()) return false;
             var val = map.IsValueLast ? values.LastOrDefault() : values.FirstOrDefault();
-            var loc = GetMapLocation(anchor, val.element, isDown);
+            var loc = GetMapLocation(anchor.Element, val.element, isDown);
             var value = default(string);
             if (val.success)
             {
                 value = GetResolver(val.pattern, val.element.Text).GetValue(val.element.Text);
             }
-            
+            if(anchor.Match.Success)
+                value = value.Replace(anchor.Match.Value, ""); //Removes the anchor from the value
             var res = new MappingResult()
             {
                 Map = map,
                 Location = loc.Item1,
                 RelativeLocation = loc.Item2,
-                AnchorElement = anchor,
+                AnchorElement = anchor.Element,
                 ResultElement = val.element,
                 Value = value
             };
