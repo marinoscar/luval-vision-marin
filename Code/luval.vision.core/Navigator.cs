@@ -44,30 +44,30 @@ namespace luval.vision.core
                 foreach (var pattern in map.AnchorPatterns)
                 {
                     if (string.IsNullOrWhiteSpace(pattern)) continue;
-                    var elements = Find(pattern);
-                    if (elements == null || !elements.Any()) continue;
-                    var sortedElements = map.IsAttributeLast ? elements.Reverse().ToList() : elements.ToList();
+                    var anchorElement = Find(pattern);
+                    if (anchorElement == null || !anchorElement.Any()) continue;
+                    var sortedAnchorEl = map.IsAttributeLast ? anchorElement.Reverse().ToList() : anchorElement.ToList();
                     var found = false;
                     var isDown = false;
-                    foreach (var item in sortedElements)
+                    foreach (var sortedAnchorItem in sortedAnchorEl)
                     {
                         switch (map.ValueDirection)
                         {
                             case Direction.Down:
                                 isDown = true;
-                                found = AcceptSearch(map, result, item, SearchDown(item, map.ValuePatterns), isDown);
+                                found = AcceptSearch(map, result, sortedAnchorItem, SearchDown(sortedAnchorItem, map.ValuePatterns), isDown);
                                 break;
                             case Direction.Right:
-                                found = AcceptSearch(map, result, item, SearchRight(item, map.ValuePatterns), isDown);
+                                found = AcceptSearch(map, result, sortedAnchorItem, SearchRight(sortedAnchorItem, map.ValuePatterns), isDown);
                                 break;
                             default:
-                                var vals = SearchRight(item, map.ValuePatterns);
+                                var vals = SearchRight(sortedAnchorItem, map.ValuePatterns);
                                 if (vals == null || !vals.Any())
                                 {
-                                    vals = SearchDown(item, map.ValuePatterns);
+                                    vals = SearchDown(sortedAnchorItem, map.ValuePatterns);
                                     isDown = true;
                                 }
-                                found = AcceptSearch(map, result, item, vals, isDown);
+                                found = AcceptSearch(map, result, sortedAnchorItem, vals, isDown);
                                 break;
                         }
                         if (found) break;
@@ -120,6 +120,7 @@ namespace luval.vision.core
             {
                 value = GetResolver(val.pattern, val.element.Text).GetValue(val.element.Text);
             }
+            
             var res = new MappingResult()
             {
                 Map = map,
