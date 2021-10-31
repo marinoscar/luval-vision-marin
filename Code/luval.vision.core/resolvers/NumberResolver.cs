@@ -11,7 +11,7 @@ namespace luval.vision.core.resolvers
     {
         public override string Code { get { return "number"; } }
 
-        NumberResolver() : base((query, culture) => NumberRecognizer.RecognizeNumber(query, culture))
+        public NumberResolver() : base((query, culture) => NumberRecognizer.RecognizeNumber(query, culture))
         {
 
         }
