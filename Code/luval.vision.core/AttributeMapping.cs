@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Recognizers.Text.Utilities;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,20 +27,25 @@ namespace luval.vision.core
         [JsonProperty(PropertyName = "cleanLeft")]
         public bool CleanLeft { get; set; }
         [JsonProperty(PropertyName = "areaSearchX")]
-        public int AreaSearchX { get; set; }
+        public double AreaSearchX { get; set; }
         [JsonProperty(PropertyName = "areaSearchY")]
-        public int AreaSearchY { get; set; }
+        public double AreaSearchY { get; set; }
         [JsonProperty(PropertyName = "getTopLine")]
         public bool GetTopLine { get; set; }
 
         [JsonProperty(PropertyName = "areaSearchTopX")]
-        public int AreaSearchTopX { get; set; }
+        public double AreaSearchTopX { get; set; }
         [JsonProperty(PropertyName = "areaSearchTopY")]
-        public int AreaSearchTopY { get; set; }
+        public double AreaSearchTopY { get; set; }
 
         [JsonProperty(PropertyName = "areaSearch")]
         public bool AreaSearch { get; set; }
         [JsonProperty(PropertyName = "areaSearchWordCount")]
         public int AreaSearchWordCount { get; set; }
+
+        public OcrLocation GetAreaSearch(OcrRegion region)
+        {
+            return OcrRelativeLocation.FromRelative(region, AreaSearchX, AreaSearchTopX, AreaSearchY, AreaSearchTopY);
+        }
     }
 }

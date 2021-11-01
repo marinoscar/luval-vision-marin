@@ -48,9 +48,10 @@ namespace luval.vision.core
                 var elements = Elements;
                 if (map.AreaSearch)
                 {
+                    var searchLoc = map.GetAreaSearch(OcrResult.Regions.First());
                     var words = OcrResult.Words
-                        .Where(i => i.Location.X >= map.AreaSearchX && i.Location.X < map.AreaSearchTopX)
-                        .Where(i => i.Location.Y >= map.AreaSearchY && i.Location.Y < map.AreaSearchTopY).ToList();
+                        .Where(i => i.Location.X >= searchLoc.X && i.Location.X < searchLoc.XBound)
+                        .Where(i => i.Location.Y >= searchLoc.Y && i.Location.Y < searchLoc.YBound).ToList();
                     elements = new List<OcrElement>(OcrLoaderHelper.GetLines(words, OcrResult.Regions.First(), ImageInfo));
                 }
                 ExtractAttributes(map, elements, result);

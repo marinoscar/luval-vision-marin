@@ -25,6 +25,7 @@ namespace luval.vision.sink
         private Image _resultImg;
         private ProcessResult _processResult;
         private FormResult _formResult;
+        private RelativeArea _formRelativeArea;
 
         public MainForm()
         {
@@ -387,6 +388,17 @@ namespace luval.vision.sink
                 // Save to file
                 package.Save();
             }
+        }
+
+        private void mnuDrawArea_Click(object sender, EventArgs e)
+        {
+            if (_formRelativeArea == null) _formRelativeArea = new RelativeArea();
+            if (_formRelativeArea.ShowDialog() == DialogResult.Cancel) return;
+            if (_imageManager == null) return;
+
+            var region = _result.Regions.FirstOrDefault();
+            var loc = OcrRelativeLocation.FromRelative(region, _formRelativeArea.X, _formRelativeArea.XBound, _formRelativeArea.Y, _formRelativeArea.YBound);
+            PictureBox.Image = _imageManager.DrawRegion(region, loc);
         }
     }
 }
