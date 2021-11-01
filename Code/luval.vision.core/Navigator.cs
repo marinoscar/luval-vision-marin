@@ -60,16 +60,16 @@ namespace luval.vision.core
                         {
                             case Direction.Down:
                                 isDown = true;
-                                found = AcceptSearch(map, result, sortedAnchorItem, SearchDown(sortedAnchorItem.Element, map.ValuePatterns), isDown);
+                                found = AcceptSearch(map, result, sortedAnchorItem, SearchDown(sortedAnchorItem.Element, map), isDown);
                                 break;
                             case Direction.Right:
-                                found = AcceptSearch(map, result, sortedAnchorItem, SearchRight(sortedAnchorItem.Element, map.ValuePatterns), isDown);
+                                found = AcceptSearch(map, result, sortedAnchorItem, SearchRight(sortedAnchorItem.Element, map), isDown);
                                 break;
                             default:
-                                var vals = SearchRight(sortedAnchorItem.Element, map.ValuePatterns);
+                                var vals = SearchRight(sortedAnchorItem.Element, map);
                                 if (vals == null || !vals.Any())
                                 {
-                                    vals = SearchDown(sortedAnchorItem.Element, map.ValuePatterns);
+                                    vals = SearchDown(sortedAnchorItem.Element, map);
                                     isDown = true;
                                 }
                                 found = AcceptSearch(map, result, sortedAnchorItem, vals, isDown);
@@ -123,8 +123,10 @@ namespace luval.vision.core
             var value = default(string);
             if (val.success)
             {
-                value = GetResolver(val.pattern, val.element.Text).GetValue(val.element.Text);
+                value = GetResolver(val.pattern, val.element.Text).GetValue(GetValueSearchableText(anchor, val));
             }
+            if (string.IsNullOrWhiteSpace(value)) 
+                return false;
             if(anchor.Match.Success)
                 value = value.Replace(anchor.Match.Value, ""); //Removes the anchor from the value
             var res = new MappingResult()
@@ -138,6 +140,16 @@ namespace luval.vision.core
             };
             items.Add(res);
             return !string.IsNullOrWhiteSpace(val.element.Text);
+        }
+
+        private string GetValueSearchableText(OcrRegexResult anchorElement, SearchResult element)
+        {
+            if (anchorElement.Element.Code != element.element.Code) return element.element.Text;
+            var startIndex = anchorElement.Match.Index + anchorElement.Match.Length;
+            var lenght = anchorElement.Element.Text.Length - startIndex;
+            if (lenght > 0)
+                return anchorElement.Element.Text.Substring(startIndex, lenght);
+            return element.element.Text;
         }
 
         private Tuple<OcrLocation, OcrRelativeLocation> GetMapLocation(OcrElement anchor, OcrElement value, bool isDown)
@@ -163,7 +175,7 @@ namespace luval.vision.core
             return new Tuple<OcrLocation, OcrRelativeLocation>(res, rel);
         }
 
-        private IEnumerable<SearchResult> SearchDown(OcrElement reference, IEnumerable<string> valuePatterns)
+        private IEnumerable<SearchResult> SearchDown(OcrElement reference, AttributeMapping map)
         {
             var dataSet = new List<OcrElement>();
             var searchArea = new OcrLocation()
@@ -187,13 +199,13 @@ namespace luval.vision.core
             var urMaxX = reference.Location.X;
             var underRight = subset.Where(i => i.Location.X >= urMaxX).OrderBy(i => i.Location.X).ToList();
             dataSet.AddRange(underRight);
-            return FilterByPattern(dataSet, valuePatterns);
+            return FilterByPattern(dataSet, map);
         }
 
-        private IEnumerable<SearchResult> SearchRight(OcrElement reference, IEnumerable<string> valuePatterns)
+        private IEnumerable<SearchResult> SearchRight(OcrElement reference, AttributeMapping map)
         {
             //First we check in the same element for the valaue
-            var sameElementRes = FilterByPattern(new OcrElement[] { reference }, valuePatterns);
+            var sameElementRes = FilterByPattern(new OcrElement[] { reference }, map);
             if (sameElementRes != null && sameElementRes.Any()) return sameElementRes;
             var minX = reference.Location.XBound;
             var minY = reference.Location.Y - (reference.Location.Y * ErrorMargin);
@@ -203,14 +215,14 @@ namespace luval.vision.core
                i.Location.Y > minY &&
                i.Location.YBound < maxY)
                .ToList();
-            return FilterByPattern(dataSet, valuePatterns);
+            return FilterByPattern(dataSet, map);
         }
 
-        private IEnumerable<SearchResult> FilterByPattern(IEnumerable<OcrElement> elements, IEnumerable<string> patterns)
+        private IEnumerable<SearchResult> FilterByPattern(IEnumerable<OcrElement> elements, AttributeMapping map)
         {
-            if (patterns == null || !patterns.Any()) return elements.Select(i => new SearchResult() { element = i });
+            if (map == null || map.ValuePatterns == null || !map.ValuePatterns.Any()) return elements.Select(i => new SearchResult() { element = i });
             var result = new List<SearchResult>();
-            foreach (var p in patterns)
+            foreach (var p in map.ValuePatterns)
             {
                 result.AddRange(elements.Where(i => Resolve(p, i.Text)).Select(t => new SearchResult() { pattern = p, element = t, success = true }));
             }

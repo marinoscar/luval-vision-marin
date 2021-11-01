@@ -59,21 +59,16 @@ namespace luval.vision.core
             var lineId = 1;
             var lines = new List<OcrLine>();
             var horLines = Navigator.GetWordsHorizontallyAligned(words, HorizontalLineMargin);
-            foreach (var horLine in horLines)
+            foreach (var line in horLines)
             {
-                horLine.ParentRegion = region;
-                var newLines = ProcessLines(horLine, lineId);
-                foreach (var line in newLines)
-                {
-                    line.ParentRegion = region;
-                    line.Location.X = line.Words.Min(i => i.Location.X);
-                    line.Location.Y = line.Words.Max(i => i.Location.Y);
-                    line.Location.Height = line.Words.Max(i => i.Location.YBound) - line.Location.Y;
-                    line.Location.Width = line.Words.Max(i => i.Location.XBound) - line.Location.X;
-                    line.Location.RelativeLocation = OcrRelativeLocation.Load(line.Location, info);
-                    line.Code = OcrLoaderHelper.GetLineCode(line.Id, region);
-                    lines.Add(line);
-                }
+                line.ParentRegion = region;
+                line.Location.X = line.Words.Min(i => i.Location.X);
+                line.Location.Y = line.Words.Max(i => i.Location.Y);
+                line.Location.Height = line.Words.Max(i => i.Location.YBound) - line.Location.Y;
+                line.Location.Width = line.Words.Max(i => i.Location.XBound) - line.Location.X;
+                line.Location.RelativeLocation = OcrRelativeLocation.Load(line.Location, info);
+                line.Code = OcrLoaderHelper.GetLineCode(lineId, region);
+                lines.Add(line);
                 lineId++;
             }
             return lines;

@@ -37,9 +37,8 @@ namespace luval.vision.sink
             set { resultText.Text = value; }
         }
 
-        private void openMenu_Click(object sender, EventArgs e)
+        private void OpenFile()
         {
-            _fileName = null;
             var dialog = new OpenFileDialog()
             {
                 Title = "Open Image",
@@ -48,7 +47,14 @@ namespace luval.vision.sink
             };
             if (dialog.ShowDialog() == DialogResult.Cancel) return;
             _fileName = dialog.FileName;
+            _result = null;
+            _formResult = null;
             DoLoadImage(_fileName);
+        }
+
+        private void openMenu_Click(object sender, EventArgs e)
+        {
+            OpenFile();
         }
 
         private void DoLoadImage(string fileName)
@@ -154,12 +160,22 @@ namespace luval.vision.sink
             }
             return options;
         }
+
+        private void DoOCR()
+        {
+            if (string.IsNullOrWhiteSpace(_fileName)) return;
+            var ocrProvider = GetProvider(false);
+            if(_result == null)
+                _result = ocrProvider.DoOcr(_fileName);
+        }
+
         private void DoProcess()
         {
             var options = GetMapping();
             var provider = new DocumentProcesor(GetProvider(false), new NlpProvider(new GoogleNlpEngine(), new GoogleNlpLoader()));
             var result = default(ProcessResult);
-            result = _formResult == null ? provider.DoProcess(_fileName, options) :
+            DoOCR();
+            result = _formResult == null ? provider.DoProcess(File.ReadAllBytes(_fileName), _fileName, options, _result, default(NlpResult)) :
                 provider.DoProcess(_formResult.FileData, _formResult.FileName, options, _formResult.Result.OcrResult, _formResult.Result.NlpResult);
             _result = result.OcrResult;
             _processResult = result;
@@ -221,11 +237,19 @@ namespace luval.vision.sink
             }
         }
 
-        private void chkOcrResult_CheckedChanged(object sender, EventArgs e)
+        private void ShowOCRBoxes()
         {
-            if (chkOcrResult.Checked && _result != null)
+            if (_result != null)
             {
                 PictureBox.Image = _imageManager.ProcessOcrResult(_result);
+            }
+        }
+
+        private void chkOcrResult_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkOcrResult.Checked)
+            {
+                ShowOCRBoxes();
             }
             else if (_resultImg != null)
             {
@@ -283,6 +307,57 @@ namespace luval.vision.sink
         private void mnuLoadConfiguration_Click(object sender, EventArgs e)
         {
             LoadConfiguration();
+        }
+
+        private void pictureBox_DoubleClick(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void pictureBox_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (_result == null) return;
+            var words = _result.Words.Where(i => i.Location.Y >= e.Y && i.Location.X >= e.X).OrderBy(o => o.Location.Y).ThenBy(o => o.Location.X).ToList();
+            var word = words.FirstOrDefault();
+            if (word == null) return;
+            MessageBox.Show(word.Text, "OCR Result", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void mnuRunOCR_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(_fileName)) OpenFile();
+            DoOCR();
+            ShowOCRBoxes();
+            if(_result != null)
+            {
+                LoadVisionTree(_result);
+                LoadText(_result);
+            }
+        }
+
+        private void ExtractFormValues()
+        {
+            DoOCR();
+            var options = GetMapping();
+            var docProvider = new DocumentProcesor(GetProvider(false), new NlpProvider(new GoogleNlpEngine(), new GoogleNlpLoader()));
+            var result = docProvider.DoProcess(File.ReadAllBytes(_fileName), _fileName, options, _result, default(NlpResult));
+            _processResult = result;
+            _resultImg = _imageManager.ProcessParseResult(result.TextResults);
+            PictureBox.Image = _resultImg;
+            listResult.Items.Clear();
+            foreach (var item in result.TextResults)
+            {
+                var listItem = new ListViewItem(new string[] { item.Map.AttributeName, item.Value });
+                listResult.Items.Add(listItem);
+            }
+        }
+
+        private void extractFormValuesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(_mappingFile)) LoadConfiguration();
+            if (string.IsNullOrWhiteSpace(_fileName)) OpenFile();
+            ExtractFormValues();
+
         }
     }
 }

@@ -31,8 +31,11 @@ namespace luval.vision.core
                     graphic.DrawRectangle(bluePen, regNum.X, regNum.Y, regNum.Width, regNum.Height);
                     foreach (var line in region.Lines)
                     {
-                        var linNum = line.Location;
-                        graphic.DrawRectangle(redPen, linNum.X, linNum.Y, linNum.Width, linNum.Height);
+                        foreach(var word in line.Words)
+                        {
+                            var wordLoc = word.Location;
+                            graphic.DrawRectangle(redPen, wordLoc.X, wordLoc.Y, wordLoc.Width, wordLoc.Height);
+                        }
                     }
                 }
             }
