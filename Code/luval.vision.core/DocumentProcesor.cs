@@ -43,7 +43,7 @@ namespace luval.vision.core
 
         private ProcessResult DoProcess(byte[] data, string fileName, IEnumerable<AttributeMapping> mappings, OcrResult ocr, NlpResult nlp, DateTime startedOn)
         {
-            var navigator = new Navigator(ocr.Info, ocr.Lines, mappings);
+            var navigator = new Navigator(ocr.Info, ocr, mappings);
             var attributes = navigator.ExtractAttributes();
             DoExtraValidations(attributes, ocr);
             return new ProcessResult()

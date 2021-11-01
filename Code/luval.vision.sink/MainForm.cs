@@ -380,8 +380,9 @@ namespace luval.vision.sink
                 var row = 2;
                 foreach (var result in _processResult.TextResults)
                 {
-                    sheet.Cells[1, 1].Value = result.Map.AttributeName;
-                    sheet.Cells[1, 2].Value = result.Value;
+                    sheet.Cells[row, 1].Value = result.Map.AttributeName;
+                    sheet.Cells[row, 2].Value = result.Value;
+                    row++;
                 }
                 // Save to file
                 package.Save();

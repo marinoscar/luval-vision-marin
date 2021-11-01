@@ -14,13 +14,15 @@ namespace luval.vision.core
         private const double ErrorMargin = 0.015d;
         private StringResolverManager _resManager;
 
-        public Navigator(ImageInfo info, IEnumerable<OcrElement> elements, IEnumerable<AttributeMapping> mappings)
+        public Navigator(ImageInfo info, OcrResult ocrResult, IEnumerable<AttributeMapping> mappings)
         {
-            Elements = new List<OcrElement>(elements);
+            OcrResult = ocrResult;
+            Elements = new List<OcrElement>(ocrResult.Lines);
             Mappings = new List<AttributeMapping>(mappings);
             ImageInfo = info;
             _resManager = new StringResolverManager();
         }
+        public OcrResult OcrResult { get; set; }
         public List<OcrElement> Elements { get; set; }
         public List<AttributeMapping> Mappings { get; set; }
         public ImageInfo ImageInfo { get; set; }
@@ -47,6 +49,20 @@ namespace luval.vision.core
             var result = new List<MappingResult>();
             foreach (var map in Mappings)
             {
+                if(map.AreaSearch)
+                {
+                    result.AddRange(
+                        SearchArea(map).Select(i => new MappingResult() { 
+                            AnchorElement = null,
+                            Location = i.element.Location,
+                            Map = map,
+                            ResultElement = i.element,
+                            Value = i.element.Text
+                        })
+                    );
+
+                    break;
+                }
                 foreach (var pattern in map.AnchorPatterns)
                 {
                     if (string.IsNullOrWhiteSpace(pattern)) continue;
@@ -208,6 +224,24 @@ namespace luval.vision.core
             var underRight = subset.Where(i => i.Location.X >= urMaxX).OrderBy(i => i.Location.X).ToList();
             dataSet.AddRange(underRight);
             return FilterByPattern(dataSet, map);
+        }
+
+        private IEnumerable<SearchResult> SearchArea(AttributeMapping map)
+        {
+            var items = OcrResult.Words
+                .Where(i => i.Location.X >= map.AreaSearchX && i.Location.X < map.AreaSearchTopX)
+                .Where(i => i.Location.Y >= map.AreaSearchY && i.Location.Y < map.AreaSearchTopY);
+            if (map.ValueDirection == Direction.Top)
+                items = items.OrderByDescending(i => i.Location.Y).ToList();
+            else
+                items = items.OrderBy(i => i.Location.Y).ToList();
+
+            var result = items.Where(i => Regex.IsMatch(i.Text, map.ValuePatterns.First()))
+                .Select(i => new SearchResult() {
+                    element = i, pattern = map.ValuePatterns.First(), success = true 
+                });
+
+            return result.ToList();
         }
 
         private IEnumerable<SearchResult> SearchRight(OcrElement reference, AttributeMapping map)
