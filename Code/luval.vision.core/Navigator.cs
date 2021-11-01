@@ -1,6 +1,7 @@
 ﻿using luval.vision.core.resolvers;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -62,20 +63,23 @@ namespace luval.vision.core
         {
             if (map.AnchorPatterns == null)
             {
-                result.AddRange(
-                    SearchValuePattern(map, elements).Select(i => new MappingResult()
-                    {
-                        AnchorElement = null,
-                        Location = i.element.Location,
-                        Map = map,
-                        ResultElement = i.element,
-                        Value = GetResolver(i.pattern, i.element.Text).GetValue(i.element.Text)
-                    })
-                );
+                var values = SearchValuePattern(map, elements).Select(i => new MappingResult()
+                {
+                    AnchorElement = null,
+                    Location = i.element.Location,
+                    Map = map,
+                    ResultElement = i.element,
+                    Value = GetResolver(i.pattern, i.element.Text).GetValue(i.element.Text)
+                });
+                var value = map.IsAttributeLast ? values.LastOrDefault() : values.FirstOrDefault();
+                if(value != null)
+                    result.Add(value);
                 return result;
             }
+            var found = false;
             foreach (var pattern in map.AnchorPatterns)
             {
+                if (found) continue;
                 var anchorElement = Find(pattern, elements);
                 if (anchorElement == null || !anchorElement.Any()) continue;
                 var sortedAnchorEl = new List<OcrRegexResult>();
@@ -85,7 +89,6 @@ namespace luval.vision.core
                 else if (anchorElement.Count() > map.AttributeIndex.Value)
                     sortedAnchorEl.Add(anchorElement.ToArray()[map.AttributeIndex.Value]);
 
-                var found = false;
                 var isDown = false;
                 foreach (var sortedAnchorItem in sortedAnchorEl)
                 {
@@ -97,6 +100,9 @@ namespace luval.vision.core
                             break;
                         case Direction.Right:
                             found = AcceptSearch(map, result, sortedAnchorItem, SearchRight(sortedAnchorItem.Element, map, elements), isDown);
+                            break;
+                        case Direction.Top:
+                            found = AcceptSearch(map, result, sortedAnchorItem, SearchTop(sortedAnchorItem.Element, map, elements), isDown);
                             break;
                         default:
                             var vals = SearchRight(sortedAnchorItem.Element, map, elements);
@@ -110,6 +116,17 @@ namespace luval.vision.core
                     }
                     if (found) break;
                 }
+            }
+            return result;
+        }
+
+        private IEnumerable<SearchResult> SearchTop(OcrElement anchor, AttributeMapping map, IEnumerable<OcrElement> elements)
+        {
+            var result = new List<SearchResult>();
+            if (map.GetTopLine)
+            {
+                var lines = elements.Where(i => i.Location.Y < anchor.Location.Y).OrderByDescending(i => i.Location.Y).ToList();
+                result.Add(new SearchResult() {  element = lines.FirstOrDefault(), pattern = map.ValuePatterns.FirstOrDefault(), success = true });
             }
             return result;
         }
