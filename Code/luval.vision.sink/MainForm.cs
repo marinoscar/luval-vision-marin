@@ -1,5 +1,6 @@
 ﻿using luval.vision.core;
 using Newtonsoft.Json;
+using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -358,6 +359,33 @@ namespace luval.vision.sink
             if (string.IsNullOrWhiteSpace(_fileName)) OpenFile();
             ExtractFormValues();
 
+        }
+
+        private void mnuExportToExcel_Click(object sender, EventArgs e)
+        {
+            if (_processResult == null) return;
+            var dlg = new SaveFileDialog()
+            {
+                Title = "Save Results to Excel",
+                Filter = "Excel Files (*.xlsx)|*.xlsx",
+                RestoreDirectory = true
+            };
+            if (dlg.ShowDialog() == DialogResult.Cancel) return;
+            var file = new FileInfo(dlg.FileName);
+            using (var package = new ExcelPackage(file))
+            {
+                var sheet = package.Workbook.Worksheets.Add("Results");
+                sheet.Cells[1,1].Value = "Field";
+                sheet.Cells[1, 2].Value = "Value";
+                var row = 2;
+                foreach (var result in _processResult.TextResults)
+                {
+                    sheet.Cells[1, 1].Value = result.Map.AttributeName;
+                    sheet.Cells[1, 2].Value = result.Value;
+                }
+                // Save to file
+                package.Save();
+            }
         }
     }
 }

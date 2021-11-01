@@ -34,7 +34,8 @@ namespace luval.vision.core
         public IEnumerable<OcrRegexResult> Find(string pattern)
         {
             return Elements.Where(i => !string.IsNullOrWhiteSpace(i.Text) && Regex.IsMatch(i.Text, pattern)).OrderBy(i => i.Location.Y).
-                Select(i => new OcrRegexResult() { 
+                Select(i => new OcrRegexResult()
+                {
                     RegExPattern = pattern,
                     Element = i,
                     Match = Regex.Match(i.Text, pattern)
@@ -51,7 +52,13 @@ namespace luval.vision.core
                     if (string.IsNullOrWhiteSpace(pattern)) continue;
                     var anchorElement = Find(pattern);
                     if (anchorElement == null || !anchorElement.Any()) continue;
-                    var sortedAnchorEl = map.IsAttributeLast ? anchorElement.Reverse().ToList() : anchorElement.ToList();
+                    var sortedAnchorEl = new List<OcrRegexResult>();
+
+                    if (map.AttributeIndex == null)
+                        sortedAnchorEl = map.IsAttributeLast ? anchorElement.Reverse().ToList() : anchorElement.ToList();
+                    else if (anchorElement.Count() > map.AttributeIndex.Value)
+                        sortedAnchorEl.Add(anchorElement.ToArray()[map.AttributeIndex.Value]);
+
                     var found = false;
                     var isDown = false;
                     foreach (var sortedAnchorItem in sortedAnchorEl)
@@ -118,16 +125,16 @@ namespace luval.vision.core
         private bool AcceptSearch(AttributeMapping map, List<MappingResult> items, OcrRegexResult anchor, IEnumerable<SearchResult> values, bool isDown)
         {
             if (values == null || !values.Any()) return false;
-            var val = map.IsValueLast ? values.LastOrDefault() : values.FirstOrDefault();
-            var loc = GetMapLocation(anchor.Element, val.element, isDown);
+            var searchValue = map.IsValueLast ? values.LastOrDefault() : values.FirstOrDefault();
+            var loc = GetMapLocation(anchor.Element, searchValue.element, isDown);
             var value = default(string);
-            if (val.success)
+            if (searchValue.success)
             {
-                value = GetResolver(val.pattern, val.element.Text).GetValue(GetValueSearchableText(anchor, val));
+                value = GetResolver(searchValue.pattern, searchValue.element.Text).GetValue(GetValueSearchableText(map, anchor, searchValue));
             }
-            if (string.IsNullOrWhiteSpace(value)) 
+            if (string.IsNullOrWhiteSpace(value))
                 return false;
-            if(anchor.Match.Success)
+            if (anchor.Match.Success)
                 value = value.Replace(anchor.Match.Value, ""); //Removes the anchor from the value
             var res = new MappingResult()
             {
@@ -135,15 +142,16 @@ namespace luval.vision.core
                 Location = loc.Item1,
                 RelativeLocation = loc.Item2,
                 AnchorElement = anchor.Element,
-                ResultElement = val.element,
+                ResultElement = searchValue.element,
                 Value = value
             };
             items.Add(res);
-            return !string.IsNullOrWhiteSpace(val.element.Text);
+            return !string.IsNullOrWhiteSpace(searchValue.element.Text);
         }
 
-        private string GetValueSearchableText(OcrRegexResult anchorElement, SearchResult element)
+        private string GetValueSearchableText(AttributeMapping map, OcrRegexResult anchorElement, SearchResult element)
         {
+            if (!map.CleanLeft) return element.element.Text;
             if (anchorElement.Element.Code != element.element.Code) return element.element.Text;
             var startIndex = anchorElement.Match.Index + anchorElement.Match.Length;
             var lenght = anchorElement.Element.Text.Length - startIndex;

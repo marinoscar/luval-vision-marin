@@ -19,7 +19,11 @@ namespace luval.vision.core
         public string[] ValuePatterns { get; set; }
         [JsonProperty(PropertyName = "isAttributeLast")]
         public bool IsAttributeLast { get; set; }
+        [JsonProperty(PropertyName = "attributeIndex")]
+        public int? AttributeIndex { get; set; }
         [JsonProperty(PropertyName = "isValueLast")]
         public bool IsValueLast { get; set; }
+        [JsonProperty(PropertyName = "cleanLeft")]
+        public bool CleanLeft { get; set; }
     }
 }
