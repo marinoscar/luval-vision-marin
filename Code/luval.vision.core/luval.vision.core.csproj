@@ -10,6 +10,7 @@
     <PackageLicenseFile>license.txt</PackageLicenseFile>
     <RepositoryUrl>https://github.com/marinoscar/luval-vision-marin</RepositoryUrl>
     <PackageIcon>LV-Luval-Logo-200x200.png</PackageIcon>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
