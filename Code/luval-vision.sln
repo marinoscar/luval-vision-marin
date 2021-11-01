@@ -5,17 +5,15 @@ VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "luval.vision.sink", "luval.vision.sink\luval.vision.sink.csproj", "{443E9AC3-B5FE-4F20-8B6F-87F59EBBC8F1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "luval.tests", "luval.tests\luval.tests.csproj", "{3299F628-3097-4799-A9E2-EAC16D587FB8}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "luval.vision.core", "luval.vision.core\luval.vision.core.csproj", "{3B0B8704-3CB1-4CF6-9137-FB04F3A6F22A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Luval.FormExtractor", "Luval.FormExtractor", "{4F26149D-6EAF-4D62-9CEE-D5505A9441A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Luval.FormExtractor", "Luval.FormExtractor\Luval.FormExtractor\Luval.FormExtractor.csproj", "{1A8422A5-8EFD-4997-BE00-E03234920E04}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Luval.FormExtractor", "Luval.FormExtractor\Luval.FormExtractor\Luval.FormExtractor.csproj", "{1A8422A5-8EFD-4997-BE00-E03234920E04}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Luval.FormExtractor.Activities", "Luval.FormExtractor\Luval.FormExtractor.Activities\Luval.FormExtractor.Activities.csproj", "{A19913B1-4374-485E-9A7C-2219D4A04180}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Luval.FormExtractor.Activities", "Luval.FormExtractor\Luval.FormExtractor.Activities\Luval.FormExtractor.Activities.csproj", "{A19913B1-4374-485E-9A7C-2219D4A04180}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Luval.FormExtractor.Activities.Design", "Luval.FormExtractor\Luval.FormExtractor.Activities.Design\Luval.FormExtractor.Activities.Design.csproj", "{15EBA636-D684-43F1-820A-D929424C52B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Luval.FormExtractor.Activities.Design", "Luval.FormExtractor\Luval.FormExtractor.Activities.Design\Luval.FormExtractor.Activities.Design.csproj", "{15EBA636-D684-43F1-820A-D929424C52B3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{693ECA2F-EAA9-447D-B183-FA3F4AC8A690}"
 EndProject
@@ -48,16 +46,6 @@ Global
 		{443E9AC3-B5FE-4F20-8B6F-87F59EBBC8F1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{443E9AC3-B5FE-4F20-8B6F-87F59EBBC8F1}.SingleImage|Any CPU.ActiveCfg = Release|Any CPU
 		{443E9AC3-B5FE-4F20-8B6F-87F59EBBC8F1}.SingleImage|Any CPU.Build.0 = Release|Any CPU
-		{3299F628-3097-4799-A9E2-EAC16D587FB8}.CD_ROM|Any CPU.ActiveCfg = Release|Any CPU
-		{3299F628-3097-4799-A9E2-EAC16D587FB8}.CD_ROM|Any CPU.Build.0 = Release|Any CPU
-		{3299F628-3097-4799-A9E2-EAC16D587FB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3299F628-3097-4799-A9E2-EAC16D587FB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3299F628-3097-4799-A9E2-EAC16D587FB8}.DVD-5|Any CPU.ActiveCfg = Debug|Any CPU
-		{3299F628-3097-4799-A9E2-EAC16D587FB8}.DVD-5|Any CPU.Build.0 = Debug|Any CPU
-		{3299F628-3097-4799-A9E2-EAC16D587FB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3299F628-3097-4799-A9E2-EAC16D587FB8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3299F628-3097-4799-A9E2-EAC16D587FB8}.SingleImage|Any CPU.ActiveCfg = Release|Any CPU
-		{3299F628-3097-4799-A9E2-EAC16D587FB8}.SingleImage|Any CPU.Build.0 = Release|Any CPU
 		{3B0B8704-3CB1-4CF6-9137-FB04F3A6F22A}.CD_ROM|Any CPU.ActiveCfg = Debug|Any CPU
 		{3B0B8704-3CB1-4CF6-9137-FB04F3A6F22A}.CD_ROM|Any CPU.Build.0 = Debug|Any CPU
 		{3B0B8704-3CB1-4CF6-9137-FB04F3A6F22A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
