@@ -25,12 +25,12 @@ namespace luval.vision.core
         public bool IsValueLast { get; set; }
         [JsonProperty(PropertyName = "cleanLeft")]
         public bool CleanLeft { get; set; }
-        [JsonProperty(PropertyName = "searchAreaXIncreasePercentage")]
-        public double SearchAreaXIncreasePercentage { get; set; }
         [JsonProperty(PropertyName = "areaSearchX")]
         public int AreaSearchX { get; set; }
         [JsonProperty(PropertyName = "areaSearchY")]
         public int AreaSearchY { get; set; }
+        [JsonProperty(PropertyName = "getTopLine")]
+        public bool GetTopLine { get; set; }
 
         [JsonProperty(PropertyName = "areaSearchTopX")]
         public int AreaSearchTopX { get; set; }

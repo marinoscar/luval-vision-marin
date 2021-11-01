@@ -13,7 +13,6 @@ namespace luval.vision.core.resolvers
 
         public DateResolver() : base((query, culture) => DateTimeRecognizer.RecognizeDateTime(query, culture))
         {
-
         }
 
         public override string Code { get { return "date"; } }

@@ -27,15 +27,10 @@ namespace luval.vision.core
         public List<AttributeMapping> Mappings { get; set; }
         public ImageInfo ImageInfo { get; set; }
 
-        public IEnumerable<OcrElement> FindByText(string text)
-        {
-            return Elements.Where(i => i.Text == text);
-        }
 
-
-        public IEnumerable<OcrRegexResult> Find(string pattern)
+        public IEnumerable<OcrRegexResult> Find(string pattern, IEnumerable<OcrElement> elements)
         {
-            return Elements.Where(i => !string.IsNullOrWhiteSpace(i.Text) && Regex.IsMatch(i.Text, pattern)).OrderBy(i => i.Location.Y).
+            return elements.Where(i => !string.IsNullOrWhiteSpace(i.Text) && Regex.IsMatch(i.Text, pattern)).OrderBy(i => i.Location.Y).
                 Select(i => new OcrRegexResult()
                 {
                     RegExPattern = pattern,
@@ -47,61 +42,74 @@ namespace luval.vision.core
         public List<MappingResult> ExtractAttributes()
         {
             var result = new List<MappingResult>();
-            for (int index = 0; index < Mappings.Count; index++)
+            foreach (var map in Mappings)
             {
-                var map = Mappings[index];
-                if(map.AreaSearch)
+                var elements = Elements;
+                if (map.AreaSearch)
                 {
-                    result.AddRange(
-                        SearchArea(map).Select(i => new MappingResult() { 
-                            AnchorElement = null,
-                            Location = i.element.Location,
-                            Map = map,
-                            ResultElement = i.element,
-                            Value = i.element.Text
-                        })
-                    );
-                    continue;
+                    var words = OcrResult.Words
+                        .Where(i => i.Location.X >= map.AreaSearchX && i.Location.X < map.AreaSearchTopX)
+                        .Where(i => i.Location.Y >= map.AreaSearchY && i.Location.Y < map.AreaSearchTopY).ToList();
+                    elements = new List<OcrElement>(OcrLoaderHelper.GetLines(words, OcrResult.Regions.First(), ImageInfo));
                 }
-                foreach (var pattern in map.AnchorPatterns)
-                {
-                    if (string.IsNullOrWhiteSpace(pattern)) continue;
-                    var anchorElement = Find(pattern);
-                    if (anchorElement == null || !anchorElement.Any()) continue;
-                    var sortedAnchorEl = new List<OcrRegexResult>();
-
-                    if (map.AttributeIndex == null)
-                        sortedAnchorEl = map.IsAttributeLast ? anchorElement.Reverse().ToList() : anchorElement.ToList();
-                    else if (anchorElement.Count() > map.AttributeIndex.Value)
-                        sortedAnchorEl.Add(anchorElement.ToArray()[map.AttributeIndex.Value]);
-
-                    var found = false;
-                    var isDown = false;
-                    foreach (var sortedAnchorItem in sortedAnchorEl)
-                    {
-                        switch (map.ValueDirection)
-                        {
-                            case Direction.Down:
-                                isDown = true;
-                                found = AcceptSearch(map, result, sortedAnchorItem, SearchDown(sortedAnchorItem.Element, map), isDown);
-                                break;
-                            case Direction.Right:
-                                found = AcceptSearch(map, result, sortedAnchorItem, SearchRight(sortedAnchorItem.Element, map), isDown);
-                                break;
-                            default:
-                                var vals = SearchRight(sortedAnchorItem.Element, map);
-                                if (vals == null || !vals.Any())
-                                {
-                                    vals = SearchDown(sortedAnchorItem.Element, map);
-                                    isDown = true;
-                                }
-                                found = AcceptSearch(map, result, sortedAnchorItem, vals, isDown);
-                                break;
-                        }
-                        if (found) break;
-                    }
-                }
+                ExtractAttributes(map, elements, result);
                 if (!result.Any(i => i.Map == map)) result.Add(new MappingResult() { Map = map, Value = null });
+            }
+            return result;
+        }
+
+        private List<MappingResult> ExtractAttributes(AttributeMapping map, IEnumerable<OcrElement> elements, List<MappingResult> result)
+        {
+            if (map.AnchorPatterns == null)
+            {
+                result.AddRange(
+                    SearchValuePattern(map, elements).Select(i => new MappingResult()
+                    {
+                        AnchorElement = null,
+                        Location = i.element.Location,
+                        Map = map,
+                        ResultElement = i.element,
+                        Value = GetResolver(i.pattern, i.element.Text).GetValue(i.element.Text)
+                    })
+                );
+                return result;
+            }
+            foreach (var pattern in map.AnchorPatterns)
+            {
+                var anchorElement = Find(pattern, elements);
+                if (anchorElement == null || !anchorElement.Any()) continue;
+                var sortedAnchorEl = new List<OcrRegexResult>();
+
+                if (map.AttributeIndex == null)
+                    sortedAnchorEl = map.IsAttributeLast ? anchorElement.Reverse().ToList() : anchorElement.ToList();
+                else if (anchorElement.Count() > map.AttributeIndex.Value)
+                    sortedAnchorEl.Add(anchorElement.ToArray()[map.AttributeIndex.Value]);
+
+                var found = false;
+                var isDown = false;
+                foreach (var sortedAnchorItem in sortedAnchorEl)
+                {
+                    switch (map.ValueDirection)
+                    {
+                        case Direction.Down:
+                            isDown = true;
+                            found = AcceptSearch(map, result, sortedAnchorItem, SearchDown(sortedAnchorItem.Element, map, elements), isDown);
+                            break;
+                        case Direction.Right:
+                            found = AcceptSearch(map, result, sortedAnchorItem, SearchRight(sortedAnchorItem.Element, map, elements), isDown);
+                            break;
+                        default:
+                            var vals = SearchRight(sortedAnchorItem.Element, map, elements);
+                            if (vals == null || !vals.Any())
+                            {
+                                vals = SearchDown(sortedAnchorItem.Element, map, elements);
+                                isDown = true;
+                            }
+                            found = AcceptSearch(map, result, sortedAnchorItem, vals, isDown);
+                            break;
+                    }
+                    if (found) break;
+                }
             }
             return result;
         }
@@ -199,7 +207,7 @@ namespace luval.vision.core
             return new Tuple<OcrLocation, OcrRelativeLocation>(res, rel);
         }
 
-        private IEnumerable<SearchResult> SearchDown(OcrElement reference, AttributeMapping map)
+        private IEnumerable<SearchResult> SearchDown(OcrElement reference, AttributeMapping map, IEnumerable<OcrElement> elements)
         {
             var dataSet = new List<OcrElement>();
             var searchArea = new OcrLocation()
@@ -212,7 +220,7 @@ namespace luval.vision.core
             var maxY = reference.Location.YBound + (reference.Location.Height * 5);
             var minX = reference.Location.X - (reference.Location.Width * 4);
             var maxX = reference.Location.XBound + (reference.Location.Width * 4);
-            var subset = Elements.Where(i => i != reference && i.Location.Y > searchArea.Y && i.Location.YBound <= maxY && i.Location.X > minX && i.Location.XBound < maxX)
+            var subset = elements.Where(i => i != reference && i.Location.Y > searchArea.Y && i.Location.YBound <= maxY && i.Location.X > minX && i.Location.XBound < maxX)
                 .OrderBy(i => i.Location.Y).ToList();
             var under = subset.Where(i => i != reference && i.Location.X >= searchArea.X && (i.Location.X < (searchArea.X + searchArea.Width)))
                 .OrderBy(i => i.Location.Y).ToList();
@@ -226,25 +234,23 @@ namespace luval.vision.core
             return FilterByPattern(dataSet, map);
         }
 
-        private IEnumerable<SearchResult> SearchArea(AttributeMapping map)
+        private IEnumerable<SearchResult> SearchValuePattern(AttributeMapping map, IEnumerable<OcrElement> elements)
         {
-            var items = OcrResult.Words
-                .Where(i => i.Location.X >= map.AreaSearchX && i.Location.X < map.AreaSearchTopX)
-                .Where(i => i.Location.Y >= map.AreaSearchY && i.Location.Y < map.AreaSearchTopY);
-            if (map.ValueDirection == Direction.Top)
-                items = items.OrderByDescending(i => i.Location.Y).ToList();
-            else
-                items = items.OrderBy(i => i.Location.Y).ToList();
-
-            var result = items.Where(i => Regex.IsMatch(i.Text, map.ValuePatterns.First()))
-                .Select(i => new SearchResult() {
-                    element = i, pattern = map.ValuePatterns.First(), success = true 
-                });
-
-            return result.ToList();
+            var result = new List<SearchResult>();
+            foreach (var pattern in map.ValuePatterns)
+            {
+                result.AddRange(elements.Where(i => GetResolver(pattern, i.Text).IsMatch(i.Text))
+                .Select(i => new SearchResult()
+                {
+                    element = i,
+                    pattern = map.ValuePatterns.First(),
+                    success = true
+                }));
+            }
+            return result;
         }
 
-        private IEnumerable<SearchResult> SearchRight(OcrElement reference, AttributeMapping map)
+        private IEnumerable<SearchResult> SearchRight(OcrElement reference, AttributeMapping map, IEnumerable<OcrElement> elements)
         {
             //First we check in the same element for the valaue
             var sameElementRes = FilterByPattern(new OcrElement[] { reference }, map);
@@ -253,7 +259,7 @@ namespace luval.vision.core
             var minY = reference.Location.Y - (reference.Location.Y * ErrorMargin);
             var maxY = reference.Location.YBound * (1 + ErrorMargin);
             var middleLine = (reference.Location.Y + (reference.Location.Height / 3));
-            var dataSet = Elements.Where(i => i.Location.X > minX &&
+            var dataSet = elements.Where(i => i.Location.X > minX &&
                i.Location.Y > minY &&
                i.Location.YBound < maxY)
                .ToList();

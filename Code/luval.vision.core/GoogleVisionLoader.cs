@@ -10,8 +10,6 @@ namespace luval.vision.core
     public class GoogleVisionLoader : IVisionResultParser
     {
 
-        private const float HorizontalLineMargin = 0.025f;
-
         public OcrResult DoParse(string jsonResult, ImageInfo info)
         {
             var words = new List<OcrWord>();
@@ -40,7 +38,7 @@ namespace luval.vision.core
                 }
                 wordId++;
             }
-            var lines = GetLines(words, mainRegion, info);
+            var lines = OcrLoaderHelper.GetLines(words, mainRegion, info);
             mainRegion.Lines = lines;
             mainRegion.Location = new OcrLocation();
             mainRegion.Location.X = mainRegion.Lines.Min(i => i.Location.X);
@@ -52,80 +50,6 @@ namespace luval.vision.core
             result.Words = words;
             result.Lines = lines;
             return result;
-        }
-
-        private List<OcrLine> GetLines(List<OcrWord> words, OcrRegion region, ImageInfo info)
-        {
-            var lineId = 1;
-            var lines = new List<OcrLine>();
-            var horLines = Navigator.GetWordsHorizontallyAligned(words, HorizontalLineMargin);
-            foreach (var line in horLines)
-            {
-                line.ParentRegion = region;
-                line.Location.X = line.Words.Min(i => i.Location.X);
-                line.Location.Y = line.Words.Max(i => i.Location.Y);
-                line.Location.Height = line.Words.Max(i => i.Location.YBound) - line.Location.Y;
-                line.Location.Width = line.Words.Max(i => i.Location.XBound) - line.Location.X;
-                line.Location.RelativeLocation = OcrRelativeLocation.Load(line.Location, info);
-                line.Code = OcrLoaderHelper.GetLineCode(lineId, region);
-                lines.Add(line);
-                lineId++;
-            }
-            return lines;
-        }
-
-        private List<OcrLine> ProcessLines(OcrLine line, int id)
-        {
-            var lineId = id;
-            var lines = new List<OcrLine>();
-            var words = new List<OcrWord>(line.Words);
-            var currentLine = default(OcrLine);
-            var currentWord = default(OcrWord);
-            while (words.Count > 0)
-            {
-                if (currentLine == null)
-                {
-                    currentLine = GetNewLine(line.ParentRegion, lineId);
-                    lines.Add(currentLine);
-                }
-                if(currentWord == null)
-                {
-                    currentWord = words[0];
-                }
-                words.Remove(currentWord);
-                if(!currentLine.Words.Contains(currentWord)) currentLine.Words.Add(currentWord);
-                if (words.Count <= 0)
-                {
-                    continue;
-                }
-                var nextWord = words[0];
-                var spaceSize = (currentWord.Location.Width / currentWord.Text.Length) * 1.1;
-                var distance = nextWord.Location.X - currentWord.Location.XBound;
-                if (distance > spaceSize)
-                {
-                    lineId++;
-                    currentLine = GetNewLine(line.ParentRegion, lineId);
-                    currentLine.Words.Add(nextWord);
-                    lines.Add(currentLine);
-                }
-                else
-                {
-                    currentLine.Words.Add(nextWord);
-                }
-                words.Remove(nextWord);
-                currentWord = nextWord;
-            }
-            return lines;
-        }
-
-        private OcrLine GetNewLine(OcrRegion region, int id)
-        {
-            return new OcrLine()
-            {
-                ParentRegion = region,
-                Id = id,
-                Code = OcrLoaderHelper.GetLineCode(id, region)
-            };
         }
 
         private OcrLocation GetLocation(JToken json, ImageInfo info)
