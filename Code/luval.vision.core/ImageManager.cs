@@ -48,7 +48,7 @@ namespace luval.vision.core
             var bluePen = new Pen(Color.Blue, 3);
             using (var graphic = Graphics.FromImage(bmp))
             {
-                foreach(var map in results)
+                foreach(var map in results.Where(i => i.Location != null))
                 {
                     graphic.DrawRectangle(bluePen, new Rectangle(map.Location.X, map.Location.Y, map.Location.Width, map.Location.Height));
                 }

@@ -47,8 +47,9 @@ namespace luval.vision.core
         public List<MappingResult> ExtractAttributes()
         {
             var result = new List<MappingResult>();
-            foreach (var map in Mappings)
+            for (int index = 0; index < Mappings.Count; index++)
             {
+                var map = Mappings[index];
                 if(map.AreaSearch)
                 {
                     result.AddRange(
@@ -60,8 +61,7 @@ namespace luval.vision.core
                             Value = i.element.Text
                         })
                     );
-
-                    break;
+                    continue;
                 }
                 foreach (var pattern in map.AnchorPatterns)
                 {
@@ -100,8 +100,8 @@ namespace luval.vision.core
                         }
                         if (found) break;
                     }
-                    break;
                 }
+                if (!result.Any(i => i.Map == map)) result.Add(new MappingResult() { Map = map, Value = null });
             }
             return result;
         }
