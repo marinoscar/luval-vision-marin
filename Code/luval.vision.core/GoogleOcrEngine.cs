@@ -11,9 +11,19 @@ namespace luval.vision.core
 {
     public class GoogleOcrEngine : IOcrEngine
     {
+        private string _apiKey;
+        public GoogleOcrEngine()
+        {
+
+        }
+
+        public GoogleOcrEngine(string apiKey)
+        {
+            _apiKey = apiKey;
+        }
         public IRestResponse Execute(string name, byte[] image)
         {
-            var apiKey = ConfigurationManager.AppSettings["google.vision.key"];
+            var apiKey = string.IsNullOrEmpty(_apiKey) ? ConfigurationManager.AppSettings["google.vision.key"] : _apiKey;
             var client = new RestClient(string.Format("https://vision.googleapis.com/v1/images:annotate?key={0}", apiKey));
             var request = new RestRequest(Method.POST);
             var payload = JsonConvert.SerializeObject(new GoogleVisionPayload(image));

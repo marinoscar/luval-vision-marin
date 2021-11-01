@@ -12,14 +12,12 @@ namespace luval.vision.core
     public class DocumentProcesor
     {
 
-        public DocumentProcesor(OcrProvider ocr, NlpProvider nlp)
+        public DocumentProcesor(OcrProvider ocr)
         {
             OcrProvider = ocr;
-            NlpProvider = nlp;
         }
 
         public OcrProvider OcrProvider { get; private set; }
-        public NlpProvider NlpProvider { get; private set; }
 
 
         public ProcessResult DoProcess(string fileName, IEnumerable<AttributeMapping> mappings)
@@ -31,24 +29,22 @@ namespace luval.vision.core
         {
             var startedOn = DateTime.UtcNow;
             var ocr = OcrProvider.DoOcr(data, fileName);
-            var nlp = NlpProvider.DoNlp(GetTextToAnalyze(ocr, mappings));
-            return DoProcess(data, fileName, mappings, ocr, nlp, startedOn);
+            return DoProcess(data, fileName, mappings, ocr, startedOn);
         }
 
-        public ProcessResult DoProcess(byte[] data, string fileName, IEnumerable<AttributeMapping> mappings, OcrResult ocr, NlpResult nlp)
+        public ProcessResult DoProcess(byte[] data, string fileName, IEnumerable<AttributeMapping> mappings, OcrResult ocr)
         {
             var startedOn = DateTime.UtcNow;
-            return DoProcess(data, fileName, mappings, ocr, nlp, startedOn);
+            return DoProcess(data, fileName, mappings, ocr, startedOn);
         }
 
-        private ProcessResult DoProcess(byte[] data, string fileName, IEnumerable<AttributeMapping> mappings, OcrResult ocr, NlpResult nlp, DateTime startedOn)
+        private ProcessResult DoProcess(byte[] data, string fileName, IEnumerable<AttributeMapping> mappings, OcrResult ocr, DateTime startedOn)
         {
             var navigator = new Navigator(ocr.Info, ocr, mappings);
             var attributes = navigator.ExtractAttributes();
             DoExtraValidations(attributes, ocr);
             return new ProcessResult()
             {
-                NlpResult = nlp,
                 OcrResult = ocr,
                 TextResults = attributes,
                 DurationInMs = DateTime.UtcNow.Subtract(startedOn).TotalMilliseconds

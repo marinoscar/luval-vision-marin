@@ -173,11 +173,11 @@ namespace luval.vision.sink
         private void DoProcess()
         {
             var options = GetMapping();
-            var provider = new DocumentProcesor(GetProvider(false), new NlpProvider(new GoogleNlpEngine(), new GoogleNlpLoader()));
+            var provider = new DocumentProcesor(GetProvider(false));
             var result = default(ProcessResult);
             DoOCR();
-            result = _formResult == null ? provider.DoProcess(File.ReadAllBytes(_fileName), _fileName, options, _result, default(NlpResult)) :
-                provider.DoProcess(_formResult.FileData, _formResult.FileName, options, _formResult.Result.OcrResult, _formResult.Result.NlpResult);
+            result = _formResult == null ? provider.DoProcess(File.ReadAllBytes(_fileName), _fileName, options, _result) :
+                provider.DoProcess(_formResult.FileData, _formResult.FileName, options, _formResult.Result.OcrResult);
             _result = result.OcrResult;
             _processResult = result;
             LoadVisionTree(result.OcrResult);
@@ -340,8 +340,8 @@ namespace luval.vision.sink
         {
             DoOCR();
             var options = GetMapping();
-            var docProvider = new DocumentProcesor(GetProvider(false), new NlpProvider(new GoogleNlpEngine(), new GoogleNlpLoader()));
-            var result = docProvider.DoProcess(File.ReadAllBytes(_fileName), _fileName, options, _result, default(NlpResult));
+            var docProvider = new DocumentProcesor(GetProvider(false));
+            var result = docProvider.DoProcess(File.ReadAllBytes(_fileName), _fileName, options, _result);
             _processResult = result;
             _resultImg = _imageManager.ProcessParseResult(result.TextResults);
             PictureBox.Image = _resultImg;

@@ -1,7 +1,15 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <ApplicationIcon>luval-128x128.ico</ApplicationIcon>
+    <Authors>Oscar Marin</Authors>
+    <Company>Oscar Marin</Company>
+    <Product>Luval Vision Forms Extractor</Product>
+    <Description>Provides a way to extract data fields from form pages</Description>
+    <PackageLicenseFile>license.txt</PackageLicenseFile>
+    <RepositoryUrl>https://github.com/marinoscar/luval-vision-marin</RepositoryUrl>
+    <PackageIcon>LV-Luval-Logo-200x200.png</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,9 +21,20 @@
     <PackageReference Include="Microsoft.Recognizers.Text.NumberWithUnit" Version="1.8.0" />
     <PackageReference Include="Microsoft.Recognizers.Text.Sequence" Version="1.8.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    <PackageReference Include="RestSharp" Version="106.12.0" />
+    <PackageReference Include="RestSharp" Version="106.13.0" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="5.0.0" />
-    <PackageReference Include="System.Drawing.Common" Version="6.0.0-rc.2.21480.5" />
+    <PackageReference Include="System.Drawing.Common" Version="5.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\luval-data\license.txt">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+    <None Include="..\..\..\marin\code\img\LV-Luval-Logo-200x200.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
