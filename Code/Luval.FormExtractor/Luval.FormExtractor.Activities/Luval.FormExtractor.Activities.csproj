@@ -12,7 +12,7 @@
     <Product>Luval Form Extractor</Product>
     <PackageIcon>LV-Luval-Logo-200x200.png</PackageIcon>
     <AssemblyVersion>1.0.0.2</AssemblyVersion>
-    <FileVersion>1.0.0.1</FileVersion>
+    <FileVersion>1.0.0.2</FileVersion>
   </PropertyGroup>
 	<ItemGroup>
 		<Reference Include="System" />

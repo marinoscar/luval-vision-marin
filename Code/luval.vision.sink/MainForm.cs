@@ -167,7 +167,7 @@ namespace luval.vision.sink
         {
             if (string.IsNullOrWhiteSpace(_fileName)) return;
             var ocrProvider = GetProvider(false);
-            if(_result == null)
+            if (_result == null)
                 _result = ocrProvider.DoOcr(_fileName);
         }
 
@@ -313,7 +313,7 @@ namespace luval.vision.sink
 
         private void pictureBox_DoubleClick(object sender, EventArgs e)
         {
-            
+
         }
 
         private void pictureBox_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -330,7 +330,7 @@ namespace luval.vision.sink
             if (string.IsNullOrWhiteSpace(_fileName)) OpenFile();
             DoOCR();
             ShowOCRBoxes();
-            if(_result != null)
+            if (_result != null)
             {
                 LoadVisionTree(_result);
                 LoadText(_result);
@@ -376,7 +376,7 @@ namespace luval.vision.sink
             using (var package = new ExcelPackage(file))
             {
                 var sheet = package.Workbook.Worksheets.Add("Results");
-                sheet.Cells[1,1].Value = "Field";
+                sheet.Cells[1, 1].Value = "Field";
                 sheet.Cells[1, 2].Value = "Value";
                 var row = 2;
                 foreach (var result in _processResult.TextResults)
@@ -393,11 +393,15 @@ namespace luval.vision.sink
         private void mnuDrawArea_Click(object sender, EventArgs e)
         {
             if (_formRelativeArea == null) _formRelativeArea = new RelativeArea();
-            if (_formRelativeArea.ShowDialog() == DialogResult.Cancel) return;
             if (_imageManager == null) return;
+            if (_result == null) return;
 
             var region = _result.Regions.FirstOrDefault();
-            var loc = OcrRelativeLocation.FromRelative(region, _formRelativeArea.X, _formRelativeArea.XBound, _formRelativeArea.Y, _formRelativeArea.YBound);
+            _formRelativeArea.WorkingArea = new OcrLocation() { X = 0, Width = _imageManager.Source.Width, Y = 0, Height = _imageManager.Source.Height };
+            if (_formRelativeArea.ShowDialog() == DialogResult.Cancel) return;
+
+
+            var loc = OcrRelativeLocation.FromRelative(_result.Info.ToLocation(), _formRelativeArea.X, _formRelativeArea.XBound, _formRelativeArea.Y, _formRelativeArea.YBound);
             PictureBox.Image = _imageManager.DrawRegion(region, loc);
         }
     }

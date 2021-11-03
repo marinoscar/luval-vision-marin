@@ -32,14 +32,14 @@ namespace luval.vision.core
             return res;
         }
 
-        public static OcrLocation FromRelative(OcrRegion region, double x, double xbound, double y, double ybound)
+        public static OcrLocation FromRelative(OcrLocation workingArea, double x, double xbound, double y, double ybound)
         {
             return new OcrLocation()
             {
-                X = (int)(region.Location.Width * x),
-                Width = (int)((region.Location.Width * xbound)-(region.Location.Width * x)),
-                Y = (int)(region.Location.Height * y),
-                Height = (int)((region.Location.Height * ybound)-(region.Location.Height * y)),
+                X = (int)(workingArea.Width * x),
+                Width = (int)((workingArea.Width * xbound)-(workingArea.Width * x)),
+                Y = (int)(workingArea.Height * y),
+                Height = (int)((workingArea.Height * ybound)-(workingArea.Height * y)),
             };
         }
 

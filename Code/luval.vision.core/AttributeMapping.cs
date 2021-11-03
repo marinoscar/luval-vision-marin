@@ -43,9 +43,9 @@ namespace luval.vision.core
         [JsonProperty(PropertyName = "areaSearchWordCount")]
         public int AreaSearchWordCount { get; set; }
 
-        public OcrLocation GetAreaSearch(OcrRegion region)
+        public OcrLocation GetAreaSearch(OcrLocation workingArea)
         {
-            return OcrRelativeLocation.FromRelative(region, AreaSearchX, AreaSearchTopX, AreaSearchY, AreaSearchTopY);
+            return OcrRelativeLocation.FromRelative(workingArea, AreaSearchX, AreaSearchTopX, AreaSearchY, AreaSearchTopY);
         }
     }
 }

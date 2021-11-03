@@ -41,12 +41,13 @@ namespace luval.vision.sink
             this.label6 = new System.Windows.Forms.Label();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnOk = new System.Windows.Forms.Button();
+            this.lblAspectRatio = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(10, 39);
+            this.label1.Location = new System.Drawing.Point(10, 62);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(36, 13);
             this.label1.TabIndex = 0;
@@ -54,7 +55,7 @@ namespace luval.vision.sink
             // 
             // txtX
             // 
-            this.txtX.Location = new System.Drawing.Point(67, 36);
+            this.txtX.Location = new System.Drawing.Point(67, 59);
             this.txtX.Name = "txtX";
             this.txtX.Size = new System.Drawing.Size(100, 20);
             this.txtX.TabIndex = 1;
@@ -63,7 +64,7 @@ namespace luval.vision.sink
             // 
             // txtXTop
             // 
-            this.txtXTop.Location = new System.Drawing.Point(187, 36);
+            this.txtXTop.Location = new System.Drawing.Point(187, 59);
             this.txtXTop.Name = "txtXTop";
             this.txtXTop.Size = new System.Drawing.Size(100, 20);
             this.txtXTop.TabIndex = 2;
@@ -72,7 +73,7 @@ namespace luval.vision.sink
             // 
             // txtYTop
             // 
-            this.txtYTop.Location = new System.Drawing.Point(187, 97);
+            this.txtYTop.Location = new System.Drawing.Point(187, 120);
             this.txtYTop.Name = "txtYTop";
             this.txtYTop.Size = new System.Drawing.Size(100, 20);
             this.txtYTop.TabIndex = 5;
@@ -82,7 +83,7 @@ namespace luval.vision.sink
             // 
             // txtY
             // 
-            this.txtY.Location = new System.Drawing.Point(67, 97);
+            this.txtY.Location = new System.Drawing.Point(67, 120);
             this.txtY.Name = "txtY";
             this.txtY.Size = new System.Drawing.Size(100, 20);
             this.txtY.TabIndex = 4;
@@ -92,7 +93,7 @@ namespace luval.vision.sink
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(10, 100);
+            this.label2.Location = new System.Drawing.Point(10, 123);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(36, 13);
             this.label2.TabIndex = 3;
@@ -101,7 +102,7 @@ namespace luval.vision.sink
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(64, 20);
+            this.label3.Location = new System.Drawing.Point(64, 43);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(65, 13);
             this.label3.TabIndex = 6;
@@ -110,7 +111,7 @@ namespace luval.vision.sink
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(184, 20);
+            this.label4.Location = new System.Drawing.Point(184, 43);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(62, 13);
             this.label4.TabIndex = 7;
@@ -119,7 +120,7 @@ namespace luval.vision.sink
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(64, 81);
+            this.label5.Location = new System.Drawing.Point(64, 104);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(65, 13);
             this.label5.TabIndex = 8;
@@ -128,7 +129,7 @@ namespace luval.vision.sink
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(184, 81);
+            this.label6.Location = new System.Drawing.Point(184, 104);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(62, 13);
             this.label6.TabIndex = 9;
@@ -137,7 +138,7 @@ namespace luval.vision.sink
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(227, 145);
+            this.btnCancel.Location = new System.Drawing.Point(227, 168);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 24);
             this.btnCancel.TabIndex = 10;
@@ -147,7 +148,7 @@ namespace luval.vision.sink
             // 
             // btnOk
             // 
-            this.btnOk.Location = new System.Drawing.Point(146, 145);
+            this.btnOk.Location = new System.Drawing.Point(146, 168);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 24);
             this.btnOk.TabIndex = 11;
@@ -155,13 +156,23 @@ namespace luval.vision.sink
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
             // 
+            // lblAspectRatio
+            // 
+            this.lblAspectRatio.Location = new System.Drawing.Point(1, 9);
+            this.lblAspectRatio.Name = "lblAspectRatio";
+            this.lblAspectRatio.Size = new System.Drawing.Size(312, 22);
+            this.lblAspectRatio.TabIndex = 12;
+            this.lblAspectRatio.Text = "Aspect Ratio";
+            this.lblAspectRatio.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // RelativeArea
             // 
             this.AcceptButton = this.btnOk;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(314, 181);
+            this.ClientSize = new System.Drawing.Size(314, 214);
+            this.Controls.Add(this.lblAspectRatio);
             this.Controls.Add(this.btnOk);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.label6);
@@ -199,5 +210,6 @@ namespace luval.vision.sink
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnOk;
+        private System.Windows.Forms.Label lblAspectRatio;
     }
 }

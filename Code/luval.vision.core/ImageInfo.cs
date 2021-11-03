@@ -32,5 +32,16 @@ namespace luval.vision.core
                 Name = fileInfo.Name
             };
         }
+
+        public OcrLocation ToLocation()
+        {
+            return new OcrLocation()
+            {
+                X = 0,
+                Y = 0,
+                Height = this.Height,
+                Width = this.Width
+            };
+        }
     }
 }

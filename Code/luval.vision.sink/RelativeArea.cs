@@ -1,4 +1,5 @@
-﻿using OfficeOpenXml.FormulaParsing.Utilities;
+﻿using luval.vision.core;
+using OfficeOpenXml.FormulaParsing.Utilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -30,9 +31,12 @@ namespace luval.vision.sink
 
         private void RelativeArea_Load(object sender, EventArgs e)
         {
-
+            if (WorkingArea == null) return;
+            lblAspectRatio.Text = string.Format("Aspect Ratio: H: {0} W: {1} Ratio: {2}", WorkingArea.Height, WorkingArea.Width, Math.Round((double)WorkingArea.Height/(double)WorkingArea.Width, 2));
         }
 
+
+        public OcrLocation WorkingArea { get; set; }
         public double X { get { return Convert.ToDouble(txtX.Text); }  }
         public double XBound { get { return Convert.ToDouble(txtXTop.Text); } }
         public double Y { get { return Convert.ToDouble(txtY.Text); } }
