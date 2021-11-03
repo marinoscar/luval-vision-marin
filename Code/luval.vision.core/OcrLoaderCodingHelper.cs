@@ -31,16 +31,28 @@ namespace luval.vision.core
             foreach (var line in horLines)
             {
                 line.ParentRegion = region;
-                line.Location.X = line.Words.Min(i => i.Location.X);
-                line.Location.Y = line.Words.Max(i => i.Location.Y);
-                line.Location.Height = line.Words.Max(i => i.Location.YBound) - line.Location.Y;
-                line.Location.Width = line.Words.Max(i => i.Location.XBound) - line.Location.X;
+                //line.Location.X = line.Words.Min(i => i.Location.X);
+                //line.Location.Y = line.Words.Max(i => i.Location.Y);
+                //line.Location.Height = line.Words.Max(i => i.Location.YBound) - line.Location.Y;
+                //line.Location.Width = line.Words.Max(i => i.Location.XBound) - line.Location.X;
+                line.Location = GetLocationFromElements(line.Words);
                 line.Location.RelativeLocation = OcrRelativeLocation.Load(line.Location, info);
                 line.Code = OcrLoaderHelper.GetLineCode(lineId, region);
                 lines.Add(line);
                 lineId++;
             }
             return lines;
+        }
+
+        public static OcrLocation GetLocationFromElements(IEnumerable<OcrElement> elements)
+        {
+            return new OcrLocation()
+            {
+                X = elements.Min(i => i.Location.X),
+                Y = elements.Max(i => i.Location.Y),
+                Height = elements.Max(i => i.Location.YBound) - elements.Max(i => i.Location.Y),
+                Width = elements.Max(i => i.Location.XBound) - elements.Min(i => i.Location.X)
+            };
         }
 
         private const float HorizontalLineMargin = 0.025f;

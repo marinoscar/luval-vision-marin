@@ -225,7 +225,6 @@ namespace luval.vision.sink
                     var wordNodeRoot = new TreeNode("Words");
                     lineNode.Nodes.Add(line.Location.ToString());
                     lineNode.Nodes.Add(line.Text);
-                    lineNode.Nodes.Add(wordNodeRoot);
                     regionNode.Nodes.Add(lineNode);
                     foreach (var word in line.Words)
                     {
@@ -234,6 +233,7 @@ namespace luval.vision.sink
                         wordNode.Nodes.Add(word.DataType.ToString());
                         wordNodeRoot.Nodes.Add(wordNode);
                     }
+                    lineNode.Nodes.Add(wordNodeRoot);
                 }
                 root.Nodes.Add(regionNode);
             }
