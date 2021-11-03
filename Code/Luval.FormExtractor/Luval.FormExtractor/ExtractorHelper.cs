@@ -22,10 +22,26 @@ namespace Luval.FormExtractor
             var fileInfo = new FileInfo(filePath);
             if (!fileInfo.Exists) throw new ArgumentException("File does not exists", "filePath");
             var ocr = GetProvider(apiKey);
-            var options = GetOptions(jsonConfiguration);
+            var options = new List<AttributeMapping>();
+            try
+            {
+                options = GetOptions(jsonConfiguration);
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException("Unable to parse the json configuration", "jsonConfiguration", ex);
+            }
             var bytes = File.ReadAllBytes(filePath);
             var docProvider = new DocumentProcesor(ocr);
-            var result = docProvider.DoProcess(bytes, filePath, options);
+            var result = default(ProcessResult);
+            try
+            {
+                docProvider.DoProcess(bytes, filePath, options);
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Unable to process the OCR request or parsing of the elements", ex);
+            }
             var dt = GetResult(result.TextResults);
             return dt;
         }

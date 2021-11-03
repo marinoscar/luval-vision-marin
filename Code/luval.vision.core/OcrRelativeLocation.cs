@@ -43,6 +43,23 @@ namespace luval.vision.core
             };
         }
 
+        public static OcrLocation FromRelativeAnchorPoint(OcrLocation workingArea, OcrLocation anchor, double x, double xbound, double y, double ybound)
+        {
+
+            var XVal = ((int)(workingArea.Width * x)) + anchor.X;
+            var WidthVal = ((int)(workingArea.Width * xbound)) + anchor.XBound;
+            var YVal = (int)(workingArea.Height * y) + anchor.Y;
+            var HeightVal = ((int)(workingArea.Height * y) + anchor.Y) + anchor.YBound;
+
+            return new OcrLocation()
+            {
+                X = XVal,
+                Width = WidthVal,
+                Y = YVal,
+                Height = HeightVal,
+            };
+        }
+
         private static short GetQuadrant(OcrRelativeLocation location)
         {
             if (location.X <= 50 && location.Y <= 50) return 1;

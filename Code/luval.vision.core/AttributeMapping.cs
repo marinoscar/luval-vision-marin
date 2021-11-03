@@ -40,12 +40,18 @@ namespace luval.vision.core
 
         [JsonProperty(PropertyName = "areaSearch")]
         public bool AreaSearch { get; set; }
-        [JsonProperty(PropertyName = "areaSearchWordCount")]
-        public int AreaSearchWordCount { get; set; }
+
+        [JsonProperty(PropertyName = "areaSearchFromAnchor")]
+        public bool AreaSearchFromAnchor { get; set; }
 
         public OcrLocation GetAreaSearch(OcrLocation workingArea)
         {
             return OcrRelativeLocation.FromRelative(workingArea, AreaSearchX, AreaSearchTopX, AreaSearchY, AreaSearchTopY);
+        }
+
+        public OcrLocation GetAreaSearchFromAnchor(OcrLocation workingArea, OcrLocation anchor)
+        {
+            return OcrRelativeLocation.FromRelativeAnchorPoint(workingArea, anchor, AreaSearchX, AreaSearchTopX, AreaSearchY, AreaSearchTopY);
         }
     }
 }
