@@ -71,7 +71,7 @@ namespace luval.vision.core
         private List<MappingResult> ExtractAttributes(AttributeMapping map, IEnumerable<OcrLine> lines, List<MappingResult> result)
         {
             //TODO: Remove later
-            if (RepNameResover.FindRepName(map, lines, result)) return result;
+            if (RepNameResover.FindRepName(map, lines, result, ImageInfo)) return result;
 
             if (map.AnchorPatterns == null)
             {
@@ -200,12 +200,10 @@ namespace luval.vision.core
             while (sorted.Count > 0)
             {
                 var item = sorted.First();
-                //var minY = (int)(item.Location.Y - (item.Location.Y * horizontalErrorMargin));
-                //var maxY = (int)(item.Location.Y + (item.Location.Y * horizontalErrorMargin));
-                var minY = (int)(item.Location.Y - (item.Location.Y * 0.05));
-                var maxY = (int)(item.Location.YBound + (item.Location.YBound * 0.05));
+                var minY = (int)(item.Location.Y - (item.Location.Y * horizontalErrorMargin));
+                var maxY = (int)(item.Location.YBound + (item.Location.YBound * horizontalErrorMargin));
                 var mid = ((int)((maxY - minY) / 2)) + minY;
-                var wordsInLine = sorted.Where(i => (i.Id != item.Id) && (i.Location.Y < mid && i.Location.YBound > mid))
+                var wordsInLine = sorted.Where(i => (i.Id != item.Id) && (i.Location.Y <= mid && i.Location.YBound >= mid))
                     .OrderBy(i => i.Location.X).ToList();
 
                 wordsInLine.Insert(0, item);

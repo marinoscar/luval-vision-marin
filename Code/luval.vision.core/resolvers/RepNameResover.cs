@@ -92,18 +92,20 @@ namespace luval.vision.core.resolvers
             return topLine;
         }
 
-        public static bool FindRepName(AttributeMapping map, IEnumerable<OcrLine> lines, List<MappingResult> result)
+        public static bool FindRepName(AttributeMapping map, IEnumerable<OcrLine> lines, List<MappingResult> result, ImageInfo imageInfo)
         {
             if (!map.ValuePatterns.Contains("@repname")) return false;
-            var text = string.Join("\n", lines.Select(i => i.Text));
+            var workingWords = lines.SelectMany(i => i.Words).ToList();
+            var workingLines = OcrLoaderHelper.GetLines2(workingWords, lines.First().ParentRegion, imageInfo);
+            var text = string.Join("\n", workingLines.Select(i => i.Text));
             var resolver = new RepNameResover();
             var res = resolver.GetValue(text);
             if (string.IsNullOrWhiteSpace(res)) return false;
             result.Add(new MappingResult()
             {
-                Location = lines.First().Location,
+                Location = workingLines.First().Location,
                 Map = map,
-                ResultElement = lines.First(),
+                ResultElement = workingLines.First(),
                 Value = res
             });
             return true;
