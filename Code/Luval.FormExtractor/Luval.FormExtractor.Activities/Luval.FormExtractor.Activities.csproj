@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net461</TargetFrameworks>
 		<RootNamespace>Luval.FormExtractor.Activities</RootNamespace>
@@ -13,7 +13,7 @@
     <PackageIcon>LV-Luval-Logo-200x200.png</PackageIcon>
     <AssemblyVersion>1.0.0.2</AssemblyVersion>
     <FileVersion>1.0.0.2</FileVersion>
-    <Version>1.0.4</Version>
+    <Version>1.0.5</Version>
     <Copyright>Oscar Marin</Copyright>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
