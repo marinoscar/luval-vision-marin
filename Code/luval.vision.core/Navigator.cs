@@ -65,11 +65,14 @@ namespace luval.vision.core
         {
             var items = words.Where(i => i.Location.X >= area.X && i.Location.X < area.XBound)
                         .Where(i => i.Location.Y >= area.Y && i.Location.Y < area.YBound).ToList();
-            return OcrLoaderHelper.GetLines(words, OcrResult.Regions.First(), ImageInfo);
+            return OcrLoaderHelper.GetLines(items, OcrResult.Regions.First(), ImageInfo);
         }
 
         private List<MappingResult> ExtractAttributes(AttributeMapping map, IEnumerable<OcrLine> lines, List<MappingResult> result)
         {
+            //TODO: Remove later
+            if (RepNameResover.FindRepName(map, lines, result)) return result;
+
             if (map.AnchorPatterns == null)
             {
                 var values = SearchValuePattern(map, lines).Select(i => new MappingResult()
@@ -78,7 +81,7 @@ namespace luval.vision.core
                     Location = i.element.Location,
                     Map = map,
                     ResultElement = i.element,
-                    Value = GetResolver(i.pattern, i.element.Text).GetValue(i.element.Text)
+                    Value = GetResolver(i.pattern).GetValue(i.element.Text)
                 });
                 var value = map.IsAttributeLast ? values.LastOrDefault() : values.FirstOrDefault();
                 if (value != null)
@@ -108,6 +111,8 @@ namespace luval.vision.core
             }
             return result;
         }
+
+        
 
         private IEnumerable<OcrRegexResult> FindAnchorElements(AttributeMapping map, string pattern, IEnumerable<OcrElement> elements)
         {
@@ -163,6 +168,7 @@ namespace luval.vision.core
             return result;
         }
 
+        [Obsolete("Method does not work well")]
         public static IEnumerable<OcrLine> GetWordsHorizontallyAligned(IEnumerable<OcrWord> elements, float horizontalErrorMargin)
         {
             var lines = new List<OcrLine>();
@@ -174,6 +180,34 @@ namespace luval.vision.core
                 var minY = (int)(item.Location.Y - (item.Location.Y * horizontalErrorMargin));
                 var maxY = (int)(item.Location.Y + (item.Location.Y * horizontalErrorMargin));
                 var wordsInLine = sorted.Where(i => (i.Id != item.Id) && (i.Location.Y >= minY && i.Location.Y <= maxY)).OrderBy(i => i.Location.X).ToList();
+                wordsInLine.Insert(0, item);
+                lines.Add(new OcrLine()
+                {
+                    Id = id,
+                    Words = wordsInLine.OrderBy(i => i.Location.X).ToList(),
+                    Location = GetLineLocation(wordsInLine)
+                });
+                wordsInLine.ForEach(i => sorted.Remove(i));
+            }
+            return lines;
+        }
+
+        public static IEnumerable<OcrLine> GetWordsHorizontallyAligned2(IEnumerable<OcrWord> elements, float horizontalErrorMargin)
+        {
+            var lines = new List<OcrLine>();
+            var sorted = elements.OrderBy(i => i.Location.Y).ThenBy(i => i.Location.X).ToList();
+            var id = 1;
+            while (sorted.Count > 0)
+            {
+                var item = sorted.First();
+                //var minY = (int)(item.Location.Y - (item.Location.Y * horizontalErrorMargin));
+                //var maxY = (int)(item.Location.Y + (item.Location.Y * horizontalErrorMargin));
+                var minY = (int)(item.Location.Y - (item.Location.Y * 0.05));
+                var maxY = (int)(item.Location.YBound + (item.Location.YBound * 0.05));
+                var mid = ((int)((maxY - minY) / 2)) + minY;
+                var wordsInLine = sorted.Where(i => (i.Id != item.Id) && (i.Location.Y < mid && i.Location.YBound > mid))
+                    .OrderBy(i => i.Location.X).ToList();
+
                 wordsInLine.Insert(0, item);
                 lines.Add(new OcrLine()
                 {
@@ -203,7 +237,7 @@ namespace luval.vision.core
             var value = default(string);
             if (searchValue.success)
             {
-                value = GetResolver(searchValue.pattern, searchValue.element.Text).GetValue(GetValueSearchableText(map, anchor, searchValue));
+                value = GetResolver(searchValue.pattern).GetValue(GetValueSearchableText(map, anchor, searchValue));
             }
             if (string.IsNullOrWhiteSpace(value))
                 return false;
@@ -288,7 +322,7 @@ namespace luval.vision.core
             var result = new List<SearchResult>();
             foreach (var pattern in map.ValuePatterns)
             {
-                result.AddRange(elements.Where(i => GetResolver(pattern, i.Text).IsMatch(i.Text))
+                result.AddRange(elements.Where(i => GetResolver(pattern).IsMatch(i.Text))
                 .Select(i => new SearchResult()
                 {
                     element = i,
@@ -328,10 +362,10 @@ namespace luval.vision.core
 
         private bool Resolve(string pattern, string text)
         {
-            return GetResolver(pattern, text).IsMatch(text);
+            return GetResolver(pattern).IsMatch(text);
         }
 
-        private IStringResolver GetResolver(string pattern, string text)
+        private IStringResolver GetResolver(string pattern)
         {
             if (pattern.StartsWith("@"))
             {

@@ -19,7 +19,8 @@ namespace luval.vision.core.resolvers
                 {typeof(WordResolver), new WordResolver()},
                 {typeof(CodeResolver), new CodeResolver()},
                 {typeof(NumberResolver), new NumberResolver()},
-                {typeof(EmailResolver), new EmailResolver()}
+                {typeof(EmailResolver), new EmailResolver()},
+                {typeof(RepNameResover), new RepNameResover()}
 
             };
         }

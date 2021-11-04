@@ -27,7 +27,7 @@ namespace luval.vision.core
         {
             var lineId = 1;
             var lines = new List<OcrLine>();
-            var horLines = Navigator.GetWordsHorizontallyAligned(words, HorizontalLineMargin);
+            var horLines = Navigator.GetWordsHorizontallyAligned2(words, HorizontalLineMargin);
             foreach (var line in horLines)
             {
                 line.ParentRegion = region;

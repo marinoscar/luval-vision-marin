@@ -7,7 +7,7 @@ namespace luval.vision.core.resolvers
 {
     public class RepNameResover : IStringResolver
     {
-        public string Code => "@repname";
+        public string Code => "repname";
 
         public string GetValue(string text)
         {
@@ -38,8 +38,8 @@ namespace luval.vision.core.resolvers
         private string FindValue(string text)
         {
             var lines = GetLines(text);
-            TrimBottom(lines);
-            TrimTop(lines);
+            if (!TrimBottom(lines)) return null;
+            if (!TrimTop(lines)) return null;
             var content = TrimContent(string.Join(" ", lines));
             return content;
         }
@@ -53,34 +53,60 @@ namespace luval.vision.core.resolvers
             content = content.Replace("Sales Representative Name", "");
             content = content.Replace("Sales Representative", "");
             content = content.Replace("Representative", "");
-            return content;
+            content = content.Replace("Ассepted", "");
+            content = content.Replace("By", "");
+            content = content.Replace("by", "");
+            content = content.Replace(":", "");
+            content = content.Replace(".", "");
+            content = content.Replace("Sales", "");
+            content = content.Replace("Name", "");
+            return content.Trim();
         }
 
-        private void TrimBottom(List<string> lines)
+        private bool TrimBottom(List<string> lines)
         {
-            var bottomLine = lines.Where(i => i.ToLowerInvariant().StartsWith("additional notices to customer".ToLowerInvariant())).LastOrDefault();
-            if (string.IsNullOrWhiteSpace(bottomLine)) return;
+            var bottomLine = lines.Where(i => i.ToLowerInvariant().StartsWith("additional".ToLowerInvariant())).LastOrDefault();
+            if (string.IsNullOrWhiteSpace(bottomLine)) return false;
             var bottomLineIdx = lines.IndexOf(bottomLine);
             lines.RemoveRange(bottomLineIdx, lines.Count - bottomLineIdx);
+            return true;
         }
 
-        private void TrimTop(List<string> lines)
+        private bool TrimTop(List<string> lines)
         {
             var topLine = GetTopAchorLine(lines);
-            if (string.IsNullOrWhiteSpace(topLine)) return;
+            if (string.IsNullOrWhiteSpace(topLine)) return false;
             var topLineIdx = lines.IndexOf(topLine);
-            lines.RemoveRange(0, topLineIdx);
+            lines.RemoveRange(0, topLineIdx + 1);
+            return true;
         }
 
         private string GetTopAchorLine(List<string> lines)
         {
-            var criteria1 = "including sales tax, in full as indicated".ToLowerInvariant();
-            var criteria2 = "property upon payment of the purchase amount".ToLowerInvariant();
+            var criteria1 = "including sales tax".ToLowerInvariant();
+            var criteria2 = "property upon".ToLowerInvariant();
             var topLine = lines.Where(i => i.ToLowerInvariant().StartsWith(criteria1)).LastOrDefault();
-            if(string.IsNullOrWhiteSpace(topLine))
+            if (string.IsNullOrWhiteSpace(topLine))
                 topLine = lines.Where(i => i.ToLowerInvariant().StartsWith(criteria2)).LastOrDefault();
             if (string.IsNullOrWhiteSpace(topLine)) return null;
             return topLine;
+        }
+
+        public static bool FindRepName(AttributeMapping map, IEnumerable<OcrLine> lines, List<MappingResult> result)
+        {
+            if (!map.ValuePatterns.Contains("@repname")) return false;
+            var text = string.Join("\n", lines.Select(i => i.Text));
+            var resolver = new RepNameResover();
+            var res = resolver.GetValue(text);
+            if (string.IsNullOrWhiteSpace(res)) return false;
+            result.Add(new MappingResult()
+            {
+                Location = lines.First().Location,
+                Map = map,
+                ResultElement = lines.First(),
+                Value = res
+            });
+            return true;
         }
     }
 }

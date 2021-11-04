@@ -58,7 +58,7 @@ namespace luval.vision.core
             if (response.StatusCode != HttpStatusCode.OK)
                 throw new InvalidOperationException("Unable to process request");
             var result = Loader.DoParse(response.Content, imgInfo);
-            result.HorizontalLines = Navigator.GetWordsHorizontallyAligned(result.Words, 0.025f).ToList();
+            result.HorizontalLines = Navigator.GetWordsHorizontallyAligned2(result.Words, 0.025f).ToList();
             result.HorizontalLines.ForEach(i => i.Location.RelativeLocation = OcrRelativeLocation.Load(i.Location, result.Info));
             result.Lines.ForEach(ExtractEntitiesFromLine);
             result.Entities = result.Lines.SelectMany(i => i.Entities).ToList();
