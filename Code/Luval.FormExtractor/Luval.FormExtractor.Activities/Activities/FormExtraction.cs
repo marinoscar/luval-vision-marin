@@ -73,7 +73,6 @@ namespace Luval.FormExtractor.Activities
             var fileName = FileName.Get(context);
             var jsonConfiguration = JsonConfiguration.Get(context);
             var apiKey = APIKey.Get(context);
-
             var extractorHelper = new ExtractorHelper();
             var dtResult = extractorHelper.DoExtraction(apiKey, fileName, jsonConfiguration);
 
