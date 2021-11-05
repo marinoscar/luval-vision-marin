@@ -16,7 +16,6 @@ namespace luval.vision.core
         public string Id { get; set; }
         public string UserId { get; set; }
         public OcrResult OcrResult { get; set; }
-        public NlpResult NlpResult { get; set; }
         public List<MappingResult> TextResults { get; set; }
         public DateTime UtcTimestamp { get; set; }
         public double DurationInMs { get; set; }
