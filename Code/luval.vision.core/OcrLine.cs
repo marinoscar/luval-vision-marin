@@ -14,13 +14,11 @@ namespace luval.vision.core
         public OcrLine()
         {
             Words = new List<OcrWord>();
-            Phrases = new List<OcrPhrase>();
             ParentRegion = new OcrRegion();
         }
 
         public OcrRegion ParentRegion { get; set; }
         public List<OcrWord> Words { get; set; }
-        public List<OcrPhrase> Phrases { get; set; }
 
         public override string Text
         {
@@ -39,46 +37,5 @@ namespace luval.vision.core
                 _text = value;
             }
         }
-
-        public void LoadPhrases()
-        {
-            var prevWord = default(OcrWord);
-            var words = new List<OcrWord>();
-            foreach (var word in Words)
-            {
-                if (prevWord == null)
-                {
-                    prevWord = word; words.Add(word); continue;
-                }
-                else
-                    words.Add(word);
-
-                var spacing = word.Location.X - prevWord.Location.XBound;
-                if (spacing > (word.GetCharSpacing() * 5))
-                {
-                    AddPhrase(words);
-                    words.Clear();
-                }
-                prevWord = word;
-            }
-            if(words.Any()) AddPhrase(words);
-        }
-
-        private void AddPhrase(List<OcrWord> words)
-        {
-            var loc = OcrLoaderHelper.GetLocationFromElements(words);
-            var phrase = new OcrPhrase()
-            {
-                ParentLine = this,
-                Code = Code,
-                Id = Phrases.Count + 1,
-                Location = OcrLoaderHelper.GetLocationFromElements(words),
-                Text = string.Join(" ", words.Select(i => i.Text)),
-                Words = words
-            };
-            Phrases.Add(phrase);
-        }
-
-
     }
 }
