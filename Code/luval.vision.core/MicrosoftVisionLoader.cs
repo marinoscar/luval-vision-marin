@@ -51,7 +51,6 @@ namespace luval.vision.core
                         var word = ParseWord(jWord, line, result);
                         word.Code = OcrLoaderHelper.GetWordCode(wordId, line);
                         line.Words.Add(word);
-                        EntityExtractor.ClassifyWord(word);
                         result.Words.Add(word);
                         wordId++;
                     }
