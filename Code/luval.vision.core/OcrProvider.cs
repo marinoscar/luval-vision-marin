@@ -19,25 +19,11 @@ namespace luval.vision.core
     public class OcrProvider
     {
 
-        private IStringResolver _dateResolver;
-        private IStringResolver _codeResolver;
-        private IStringResolver _numberResolver;
-        private IStringResolver _amountResolver;
-        private IStringResolver _emailResolver;
-
 
         public OcrProvider(IOcrEngine engine, IVisionResultParser loader)
         {
             Engine = engine;
             Loader = loader;
-            var res = new StringResolverManager();
-            _dateResolver = res.Get<DateResolver>();
-            _codeResolver = res.Get<CodeResolver>();
-            _numberResolver = res.Get<NumberResolver>();
-            _amountResolver = res.Get<AmountResolver>();
-            _emailResolver = res.Get<EmailResolver>();
-
-
         }
 
         public IOcrEngine Engine { get; private set; }
@@ -58,10 +44,6 @@ namespace luval.vision.core
             if (response.StatusCode != HttpStatusCode.OK)
                 throw new InvalidOperationException("Unable to process request");
             var result = Loader.DoParse(response.Content, imgInfo);
-            result.HorizontalLines = Navigator.GetWordsHorizontallyAligned2(result.Words, 0.025f).ToList();
-            result.HorizontalLines.ForEach(i => i.Location.RelativeLocation = OcrRelativeLocation.Load(i.Location, result.Info));
-            result.Lines.ForEach(ExtractEntitiesFromLine);
-            result.Entities = result.Lines.SelectMany(i => i.Entities).ToList();
             imgInfo.WorkingHeight = result.Lines.Max(i => i.Location.YBound) - result.Lines.Min(i => i.Location.Y);
             imgInfo.WorkingHeight = result.Lines.Max(i => i.Location.XBound) - result.Lines.Min(i => i.Location.X);
             return result;
@@ -70,20 +52,6 @@ namespace luval.vision.core
         private byte[] GetImageBytes(string fileName)
         {
             return File.ReadAllBytes(fileName);
-        }
-
-        private void ExtractEntitiesFromLine(OcrLine line)
-        {
-            var codes = _codeResolver.GetValues(line.Text).Select(i => new OcrEntity() { Type = DataType.Code, Text = i.Text, Element = line }).ToList();
-            var dates = _dateResolver.GetValues(line.Text).Select(i => new OcrEntity() { Type = DataType.Date, Text = i.Text, Element = line }).ToList();
-            var nums= _numberResolver.GetValues(line.Text).Select(i => new OcrEntity() { Type = DataType.Number, Text = i.Text, Element = line }).ToList();
-            var amounts = _amountResolver.GetValues(line.Text).Select(i => new OcrEntity() { Type = DataType.Amount, Text = i.Text, Element = line }).ToList();
-            var emails = _emailResolver.GetValues(line.Text).Select(i => new OcrEntity() { Type = DataType.Email, Text = i.Text, Element = line }).ToList();
-            line.Entities.AddRange(codes);
-            line.Entities.AddRange(dates);
-            line.Entities.AddRange(nums);
-            line.Entities.AddRange(amounts);
-            line.Entities.AddRange(emails);
         }
     }
 }
