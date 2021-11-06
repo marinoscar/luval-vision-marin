@@ -15,8 +15,6 @@ namespace luval.vision.core
             Regions = new List<OcrRegion>();
             Words = new List<OcrWord>();
             Lines = new List<OcrLine>();
-            HorizontalLines = new List<OcrLine>();
-            Entities = new List<OcrEntity>();
         }
 
         public string Language { get; set; }
@@ -26,14 +24,12 @@ namespace luval.vision.core
         public List<OcrRegion> Regions { get; set; }
         public List<OcrWord> Words { get; set; }
         public List<OcrLine> Lines { get; set; }
-        public List<OcrLine> HorizontalLines { get; set; }
-        public List<OcrEntity> Entities { get; set; }
 
 
         public override string ToString()
         {
             var sb = new StringBuilder();
-            foreach(var line in HorizontalLines)
+            foreach(var line in Lines)
             {
                 sb.AppendLine(line.Text);
             }
