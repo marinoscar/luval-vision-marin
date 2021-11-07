@@ -1,4 +1,5 @@
 ﻿using luval.vision.core;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -91,11 +92,23 @@ namespace luval.vision
                         var post = option.FieldExtractor.PostProcessing.Create();
                         text = post.ProcessValue(val, option.FieldExtractor.PostProcessing.Options);
                     }
-                    res.Add(new ExtractionResult() { Element = element, Value = text, Option = option });
+                    res.Add(new ExtractionResult() { Element = element, Value = text.TrimEx(), Option = option });
                 }
             }
+            if (option.FieldExtractor.ExpectedIndex > 0 && res.Any())
+            {
+                if (res.Count < option.FieldExtractor.ExpectedIndex)
+                    throw new IndexOutOfRangeException(string.Format("Provided index for field {0} is out of range", option.FieldName));
+                return new[] { new ExtractionResult() { Option = option, Value = res[option.FieldExtractor.ExpectedIndex].Value } };
+            }
             //if there is no result we add a null value
-            if (!res.Any()) res.Add(new ExtractionResult() { Option = option, Value = null });
+            if (!res.Any())
+                res.Add(new ExtractionResult() { Option = option, Value = null });
+            else if (option.FieldExtractor.UseLast)
+                return new[] { res.Last() };
+            else
+                return new[] { res.First() };
+            
             //remove duplicate nulls
             if (res.Count > res.Count(i => string.IsNullOrWhiteSpace(i.Value))) 
                 return res.Where(i => !string.IsNullOrWhiteSpace(i.Value)).ToList();

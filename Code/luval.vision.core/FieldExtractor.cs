@@ -31,6 +31,10 @@ namespace luval.vision.core
         /// </summary>
         public bool UseLast { get; set; }
         /// <summary>
+        /// If multiple elements are found, which element to use on a 0 based index
+        /// </summary>
+        public int ExpectedIndex { get; set; }
+        /// <summary>
         /// Indicates if the value would be looked for line by line, or using the entire text available in the provided search relative area
         /// </summary>
         public bool UseAllArea { get; set; }
