@@ -1,5 +1,10 @@
-﻿using System;
+﻿using luval.vision.core;
+using luval.vision.core.extractors;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
@@ -8,7 +13,7 @@ using System.Windows.Forms;
 namespace luval.vision.sink
 {
 
-    
+
 
     /// <summary>
     /// Application entry point
@@ -27,6 +32,7 @@ namespace luval.vision.sink
         [STAThread]
         static void Main(string[] args)
         {
+
             var arguments = new ConsoleSwitches(args);
 
             RunAction(() =>
