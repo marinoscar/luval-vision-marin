@@ -1,11 +1,12 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using luval.vision.core;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace luval.vision.core
+namespace luval.vision.google
 {
     public class GoogleVisionLoader : IVisionResultParser
     {
@@ -38,14 +39,12 @@ namespace luval.vision.core
                 }
                 wordId++;
             }
-            var lines = OcrLoaderHelper.GetLines(words, mainRegion, info);
-            mainRegion.Lines = lines;
+            var lines = new List<OcrLine>();
             mainRegion.Location = new OcrLocation();
-            mainRegion.Location.X = mainRegion.Lines.Min(i => i.Location.X);
-            mainRegion.Location.Width = mainRegion.Lines.Max(i => i.Location.XBound) - mainRegion.Location.X;
-            mainRegion.Location.Y = mainRegion.Lines.Min(i => i.Location.Y);
-            mainRegion.Location.Height = mainRegion.Lines.Max(i => i.Location.YBound) - mainRegion.Location.Y;
-            mainRegion.Location.RelativeLocation = OcrRelativeLocation.Load(mainRegion.Location, info);
+            mainRegion.Location.X = mainRegion.Words.Min(i => i.Location.X);
+            mainRegion.Location.Width = mainRegion.Words.Max(i => i.Location.XBound) - mainRegion.Location.X;
+            mainRegion.Location.Y = mainRegion.Words.Min(i => i.Location.Y);
+            mainRegion.Location.Height = mainRegion.Words.Max(i => i.Location.YBound) - mainRegion.Location.Y;
             result.Regions.Add(mainRegion);
             result.Words = words;
             result.Lines = lines;
@@ -60,7 +59,6 @@ namespace luval.vision.core
             result.Width = boxVals[1]["x"].Value<int>() - result.X;
             result.Y = boxVals[0]["y"].Value<int>();
             result.Height = boxVals[2]["y"].Value<int>() - result.Y;
-            result.RelativeLocation = OcrRelativeLocation.Load(result, info);
             return result;
         }
     }

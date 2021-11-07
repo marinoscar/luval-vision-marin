@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 using RestSharp;
 using System.Configuration;
 using Newtonsoft.Json;
+using luval.vision.core;
 
-namespace luval.vision.core
+namespace luval.vision.google
 {
     public class GoogleOcrEngine : IOcrEngine
     {

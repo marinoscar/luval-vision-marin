@@ -11,7 +11,7 @@ namespace luval.vision.core
 
         public OcrElement()
         {
-            Location = new OcrLocation() { RelativeLocation = new OcrRelativeLocation() };
+            Location = new OcrLocation();
         }
         public int Id { get; set; }
         public string Code { get; set; }

@@ -1,33 +1,18 @@
-﻿using System;
+﻿using luval.vision.core;
+using luval.vision.core.extractors;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace luval.vision.core.resolvers
+namespace luval.vision.resolvers.custom
 {
-    public class RepNameResover : IStringResolver
+    public class RepNameResover : IFieldExtractor
     {
-        public string Code => "repname";
 
-        public string GetValue(string text)
+        public IEnumerable<string> GetValue(string text, IDictionary<string, string> options)
         {
-            return FindValue(text);
-        }
-
-        public IEnumerable<ResolverMatch> GetValues(string text)
-        {
-            var content = FindValue(text);
-            if (string.IsNullOrWhiteSpace(content)) return new List<ResolverMatch>();
-            return new[] { new ResolverMatch() {
-                Index = 0, Length = content.Length, Text = content
-            } };
-        }
-
-        public bool IsMatch(string text)
-        {
-            var content = FindValue(text);
-            if (string.IsNullOrWhiteSpace(content)) return false;
-            return GetLines(FindValue(text)).Count == 1;
+            return new[] { FindValue(text) };
         }
 
 
@@ -90,25 +75,6 @@ namespace luval.vision.core.resolvers
                 topLine = lines.Where(i => i.ToLowerInvariant().StartsWith(criteria2)).LastOrDefault();
             if (string.IsNullOrWhiteSpace(topLine)) return null;
             return topLine;
-        }
-
-        public static bool FindRepName(AttributeMapping map, IEnumerable<OcrLine> lines, List<MappingResult> result, ImageInfo imageInfo)
-        {
-            if (!map.ValuePatterns.Contains("@repname")) return false;
-            var workingWords = lines.SelectMany(i => i.Words).ToList();
-            var workingLines = OcrLoaderHelper.GetLines2(workingWords, lines.First().ParentRegion, imageInfo);
-            var text = string.Join("\n", workingLines.Select(i => i.Text));
-            var resolver = new RepNameResover();
-            var res = resolver.GetValue(text);
-            if (string.IsNullOrWhiteSpace(res)) return false;
-            result.Add(new MappingResult()
-            {
-                Location = workingLines.First().Location,
-                Map = map,
-                ResultElement = workingLines.First(),
-                Value = res
-            });
-            return true;
         }
     }
 }

@@ -21,6 +21,16 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "UiPath.Shared.Activities", 
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "UiPath.Shared.Activities.Design", "Shared\UiPath.Shared.Activities.Design\UiPath.Shared.Activities.Design.shproj", "{DF9C43F0-ADD3-4FBF-995E-84B92F9CBF25}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "luval.vision", "luval.vision\luval.vision.csproj", "{79B27A4C-6E0A-4FA7-947E-3266586D8D16}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "luval.vision.microsoft", "luval.vision.microsoft\luval.vision.microsoft.csproj", "{ADB64C06-A5BB-4000-8030-E5844AAE7DA3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "luval.vision.google", "luval.vision.google\luval.vision.google.csproj", "{FE2D4500-DDC8-44F7-A009-573080F8C80F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Resolvers", "Resolvers", "{C59B3ECD-5CC9-4E29-8355-D8F88BE59982}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "luval.vision.resolvers.custom", "luval.vision.resolvers.custom\luval.vision.resolvers.custom.csproj", "{7360F757-8C80-4386-BE18-DC52E6634F0C}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Shared\UiPath.Shared.Activities.Design\UiPath.Shared.Activities.Design.projitems*{15eba636-d684-43f1-820a-d929424c52b3}*SharedItemsImports = 5
@@ -86,6 +96,46 @@ Global
 		{15EBA636-D684-43F1-820A-D929424C52B3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{15EBA636-D684-43F1-820A-D929424C52B3}.SingleImage|Any CPU.ActiveCfg = Debug|Any CPU
 		{15EBA636-D684-43F1-820A-D929424C52B3}.SingleImage|Any CPU.Build.0 = Debug|Any CPU
+		{79B27A4C-6E0A-4FA7-947E-3266586D8D16}.CD_ROM|Any CPU.ActiveCfg = Debug|Any CPU
+		{79B27A4C-6E0A-4FA7-947E-3266586D8D16}.CD_ROM|Any CPU.Build.0 = Debug|Any CPU
+		{79B27A4C-6E0A-4FA7-947E-3266586D8D16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79B27A4C-6E0A-4FA7-947E-3266586D8D16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79B27A4C-6E0A-4FA7-947E-3266586D8D16}.DVD-5|Any CPU.ActiveCfg = Debug|Any CPU
+		{79B27A4C-6E0A-4FA7-947E-3266586D8D16}.DVD-5|Any CPU.Build.0 = Debug|Any CPU
+		{79B27A4C-6E0A-4FA7-947E-3266586D8D16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79B27A4C-6E0A-4FA7-947E-3266586D8D16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79B27A4C-6E0A-4FA7-947E-3266586D8D16}.SingleImage|Any CPU.ActiveCfg = Debug|Any CPU
+		{79B27A4C-6E0A-4FA7-947E-3266586D8D16}.SingleImage|Any CPU.Build.0 = Debug|Any CPU
+		{ADB64C06-A5BB-4000-8030-E5844AAE7DA3}.CD_ROM|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADB64C06-A5BB-4000-8030-E5844AAE7DA3}.CD_ROM|Any CPU.Build.0 = Debug|Any CPU
+		{ADB64C06-A5BB-4000-8030-E5844AAE7DA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADB64C06-A5BB-4000-8030-E5844AAE7DA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADB64C06-A5BB-4000-8030-E5844AAE7DA3}.DVD-5|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADB64C06-A5BB-4000-8030-E5844AAE7DA3}.DVD-5|Any CPU.Build.0 = Debug|Any CPU
+		{ADB64C06-A5BB-4000-8030-E5844AAE7DA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADB64C06-A5BB-4000-8030-E5844AAE7DA3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ADB64C06-A5BB-4000-8030-E5844AAE7DA3}.SingleImage|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADB64C06-A5BB-4000-8030-E5844AAE7DA3}.SingleImage|Any CPU.Build.0 = Debug|Any CPU
+		{FE2D4500-DDC8-44F7-A009-573080F8C80F}.CD_ROM|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE2D4500-DDC8-44F7-A009-573080F8C80F}.CD_ROM|Any CPU.Build.0 = Debug|Any CPU
+		{FE2D4500-DDC8-44F7-A009-573080F8C80F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE2D4500-DDC8-44F7-A009-573080F8C80F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE2D4500-DDC8-44F7-A009-573080F8C80F}.DVD-5|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE2D4500-DDC8-44F7-A009-573080F8C80F}.DVD-5|Any CPU.Build.0 = Debug|Any CPU
+		{FE2D4500-DDC8-44F7-A009-573080F8C80F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE2D4500-DDC8-44F7-A009-573080F8C80F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE2D4500-DDC8-44F7-A009-573080F8C80F}.SingleImage|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE2D4500-DDC8-44F7-A009-573080F8C80F}.SingleImage|Any CPU.Build.0 = Debug|Any CPU
+		{7360F757-8C80-4386-BE18-DC52E6634F0C}.CD_ROM|Any CPU.ActiveCfg = Debug|Any CPU
+		{7360F757-8C80-4386-BE18-DC52E6634F0C}.CD_ROM|Any CPU.Build.0 = Debug|Any CPU
+		{7360F757-8C80-4386-BE18-DC52E6634F0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7360F757-8C80-4386-BE18-DC52E6634F0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7360F757-8C80-4386-BE18-DC52E6634F0C}.DVD-5|Any CPU.ActiveCfg = Debug|Any CPU
+		{7360F757-8C80-4386-BE18-DC52E6634F0C}.DVD-5|Any CPU.Build.0 = Debug|Any CPU
+		{7360F757-8C80-4386-BE18-DC52E6634F0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7360F757-8C80-4386-BE18-DC52E6634F0C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7360F757-8C80-4386-BE18-DC52E6634F0C}.SingleImage|Any CPU.ActiveCfg = Debug|Any CPU
+		{7360F757-8C80-4386-BE18-DC52E6634F0C}.SingleImage|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -96,6 +146,7 @@ Global
 		{15EBA636-D684-43F1-820A-D929424C52B3} = {4F26149D-6EAF-4D62-9CEE-D5505A9441A7}
 		{4546856D-EA50-45C6-9419-EEEACB5A80AA} = {693ECA2F-EAA9-447D-B183-FA3F4AC8A690}
 		{DF9C43F0-ADD3-4FBF-995E-84B92F9CBF25} = {693ECA2F-EAA9-447D-B183-FA3F4AC8A690}
+		{7360F757-8C80-4386-BE18-DC52E6634F0C} = {C59B3ECD-5CC9-4E29-8355-D8F88BE59982}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D3D8E232-3DD4-41DF-A042-D87DCE6EB478}

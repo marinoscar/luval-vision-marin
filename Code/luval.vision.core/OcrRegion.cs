@@ -12,14 +12,14 @@ namespace luval.vision.core
 
         public OcrRegion()
         {
-            Lines = new List<OcrLine>();
+            Words = new List<OcrWord>();
         }
-        public List<OcrLine> Lines { get; set; }
+        public IEnumerable<OcrWord> Words { get; set; }
 
         public override string ToString()
         {
             var sb = new StringBuilder();
-            Lines.ForEach(i => sb.AppendLine(i.Text));
+            Words.ToList().ForEach(i => sb.AppendLine(i.Text));
             return sb.ToString();
         }
     }

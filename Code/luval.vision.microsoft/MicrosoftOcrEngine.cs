@@ -5,8 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using RestSharp;
 using System.Configuration;
+using luval.vision.core;
 
-namespace luval.vision.core
+namespace luval.vision.microsoft
 {
     public class MicrosoftOcrEngine : IOcrEngine
     {

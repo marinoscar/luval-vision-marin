@@ -1,4 +1,6 @@
 ﻿using luval.vision.core;
+using luval.vision.google;
+using Microsoft.Recognizers.Text;
 using Newtonsoft.Json;
 using OfficeOpenXml;
 using OfficeOpenXml.Table;
@@ -37,7 +39,7 @@ namespace luval.vision.sink
             var results = new List<Result>();
             ValidateParams(folderName, jsonPath);
             var json = new FileInfo(jsonPath);
-            var options = JsonConvert.DeserializeObject<List<AttributeMapping>>(File.ReadAllText(jsonPath));
+            var options = JsonConvert.DeserializeObject<ConfigOptions>(File.ReadAllText(jsonPath));
             var dir = new DirectoryInfo(folderName);
             if (string.IsNullOrWhiteSpace(filter)) filter = "*.png";
             var files = dir.GetFiles(filter, SearchOption.AllDirectories).ToList();
@@ -47,7 +49,7 @@ namespace luval.vision.sink
                 foreach(var result in ProcessFile(file, options))
                 {
                     results.Add(new Result() { 
-                        File = file, Json = json.Name, MappingResult = result
+                        File = file, Json = json.Name, FieldResult = result
                     });
                 }
                 _log.WriteInformation("File {0} of {1} completed", files.IndexOf(file) + 1, files.Count);
@@ -71,8 +73,8 @@ namespace luval.vision.sink
                     sheet.Cells[row, 1].Value = result.File.Name;
                     sheet.Cells[row, 1].Hyperlink = new Uri("file:///" + result.File.FullName);
                     sheet.Cells[row, 2].Value = result.Json;
-                    sheet.Cells[row, 3].Value = result.MappingResult.Map.AttributeName;
-                    sheet.Cells[row, 4].Value = result.MappingResult.Value;
+                    sheet.Cells[row, 3].Value = result.FieldResult.Option.FieldName;
+                    sheet.Cells[row, 4].Value = result.FieldResult.Value;
                     row++;
                 }
                 var range = sheet.Cells[1, 1, row-1, 4];
@@ -88,12 +90,11 @@ namespace luval.vision.sink
             return Path.Combine(dir.FullName, "output.xlsx");
         }
 
-        public List<MappingResult> ProcessFile(FileInfo fileInfo, List<AttributeMapping> options)
+        public List<ExtractionResult> ProcessFile(FileInfo fileInfo, ConfigOptions options)
         {
             var ocrResult = _ocrProvider.DoOcr(fileInfo.FullName);
-            var docProvider = new DocumentProcesor(_ocrProvider);
-            var result = docProvider.DoProcess(File.ReadAllBytes(fileInfo.FullName), fileInfo.FullName, options, ocrResult);
-            return result.TextResults;
+            var extractor = new Extractor(options, ocrResult.Regions.First(), ocrResult.Info);
+            return extractor.GetValues().ToList();
         }
 
         private void ValidateParams(string folderName, string jsonPath)
@@ -109,7 +110,7 @@ namespace luval.vision.sink
             if (!Directory.Exists(folderName)) throw new ArgumentException(string.Format("Folder {0} does not exists", folderName));
         }
 
-        private class Result { public FileInfo File; public string Json; public MappingResult MappingResult;  }
+        private class Result { public FileInfo File; public string Json; public ExtractionResult FieldResult;  }
 
     }
 }

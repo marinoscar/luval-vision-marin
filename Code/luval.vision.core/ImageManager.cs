@@ -29,13 +29,16 @@ namespace luval.vision.core
                 {
                     var regNum = region.Location;
                     graphic.DrawRectangle(bluePen, regNum.X, regNum.Y, regNum.Width, regNum.Height);
-                    foreach (var line in region.Lines)
+                    foreach (var line in region.Words)
                     {
-                        foreach(var word in line.Words)
-                        {
-                            var wordLoc = word.Location;
-                            graphic.DrawRectangle(redPen, wordLoc.X, wordLoc.Y, wordLoc.Width, wordLoc.Height);
-                        }
+                        var wordLoc = line.Location;
+                        graphic.DrawRectangle(redPen, wordLoc.X, wordLoc.Y, wordLoc.Width, wordLoc.Height);
+
+                        //foreach (var word in line.Words)
+                        //{
+                        //    var wordLoc = word.Location;
+                        //    graphic.DrawRectangle(redPen, wordLoc.X, wordLoc.Y, wordLoc.Width, wordLoc.Height);
+                        //}
                     }
                 }
             }
@@ -51,20 +54,6 @@ namespace luval.vision.core
             {
                 graphic.DrawRectangle(bluePen, region.Location.X, region.Location.Y, region.Location.Width, region.Location.Height);
                 graphic.DrawRectangle(greenPen, ocrLocation.X, ocrLocation.Y, ocrLocation.Width, ocrLocation.Height);
-            }
-            return bmp;
-        }
-
-        public Image ProcessParseResult(List<MappingResult> results)
-        {
-            var bmp = new Bitmap(Source);
-            var bluePen = new Pen(Color.Blue, 3);
-            using (var graphic = Graphics.FromImage(bmp))
-            {
-                foreach(var map in results.Where(i => i.Location != null))
-                {
-                    graphic.DrawRectangle(bluePen, new Rectangle(map.Location.X, map.Location.Y, map.Location.Width, map.Location.Height));
-                }
             }
             return bmp;
         }

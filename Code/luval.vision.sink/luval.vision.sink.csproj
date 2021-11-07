@@ -183,7 +183,6 @@
     <Compile Include="BatchProcessing.cs" />
     <Compile Include="ConsoleLog.cs" />
     <Compile Include="ConsoleSwitches.cs" />
-    <Compile Include="FormResult.cs" />
     <Compile Include="ICustomLog.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -252,6 +251,18 @@
     <ProjectReference Include="..\luval.vision.core\luval.vision.core.csproj">
       <Project>{3b0b8704-3cb1-4cf6-9137-fb04f3a6f22a}</Project>
       <Name>luval.vision.core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\luval.vision.google\luval.vision.google.csproj">
+      <Project>{fe2d4500-ddc8-44f7-a009-573080f8c80f}</Project>
+      <Name>luval.vision.google</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\luval.vision.microsoft\luval.vision.microsoft.csproj">
+      <Project>{adb64c06-a5bb-4000-8030-e5844aae7da3}</Project>
+      <Name>luval.vision.microsoft</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\luval.vision\luval.vision.csproj">
+      <Project>{79b27a4c-6e0a-4fa7-947e-3266586d8d16}</Project>
+      <Name>luval.vision</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

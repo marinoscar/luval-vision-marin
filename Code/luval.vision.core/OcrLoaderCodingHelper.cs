@@ -23,11 +23,21 @@ namespace luval.vision.core
             return string.Format("{0}.{1}", line.Code, id.ToString().PadLeft(5, '0'));
         }
 
+        public static OcrLocation GetLineLocation(IEnumerable<OcrElement> items)
+        {
+            var x = items.Min(i => i.Location.X);
+            var y = items.Min(i => i.Location.Y);
+            var h = items.Max(i => i.Location.YBound) - x;
+            var w = items.Max(i => i.Location.XBound) - y;
+            return new OcrLocation() { X = x, Y = y, Height = h, Width = w };
+        }
+
         public static List<OcrLine> GetLines(List<OcrWord> words, OcrRegion region, ImageInfo info)
         {
             var lineId = 1;
             var lines = new List<OcrLine>();
-            var horLines = Navigator.GetWordsHorizontallyAligned(words, HorizontalLineMargin);
+            var horLines = new List<OcrLine>();
+            //var horLines = Navigator.GetWordsHorizontallyAligned(words, HorizontalLineMargin);
             foreach (var line in horLines)
             {
                 line.ParentRegion = region;
@@ -36,7 +46,6 @@ namespace luval.vision.core
                 //line.Location.Height = line.Words.Max(i => i.Location.YBound) - line.Location.Y;
                 //line.Location.Width = line.Words.Max(i => i.Location.XBound) - line.Location.X;
                 line.Location = GetLocationFromElements(line.Words);
-                line.Location.RelativeLocation = OcrRelativeLocation.Load(line.Location, info);
                 line.Code = OcrLoaderHelper.GetLineCode(lineId, region);
                 lines.Add(line);
                 lineId++;
@@ -48,7 +57,8 @@ namespace luval.vision.core
         {
             var lineId = 1;
             var lines = new List<OcrLine>();
-            var horLines = Navigator.GetWordsHorizontallyAligned2(words, HorizontalLineMargin);
+            var horLines = new List<OcrLine>();
+            //var horLines = Navigator.GetWordsHorizontallyAligned2(words, HorizontalLineMargin);
             foreach (var line in horLines)
             {
                 line.ParentRegion = region;
@@ -57,7 +67,6 @@ namespace luval.vision.core
                 //line.Location.Height = line.Words.Max(i => i.Location.YBound) - line.Location.Y;
                 //line.Location.Width = line.Words.Max(i => i.Location.XBound) - line.Location.X;
                 line.Location = GetLocationFromElements(line.Words);
-                line.Location.RelativeLocation = OcrRelativeLocation.Load(line.Location, info);
                 line.Code = OcrLoaderHelper.GetLineCode(lineId, region);
                 lines.Add(line);
                 lineId++;

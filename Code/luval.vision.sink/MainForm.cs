@@ -1,4 +1,6 @@
 ﻿using luval.vision.core;
+using luval.vision.google;
+using luval.vision.microsoft;
 using Newtonsoft.Json;
 using OfficeOpenXml;
 using System;
@@ -23,8 +25,6 @@ namespace luval.vision.sink
         private ImageManager _imageManager;
         private OcrResult _result;
         private Image _resultImg;
-        private ProcessResult _processResult;
-        private FormResult _formResult;
         private RelativeArea _formRelativeArea;
 
         public MainForm()
@@ -50,7 +50,6 @@ namespace luval.vision.sink
             if (dialog.ShowDialog() == DialogResult.Cancel) return;
             _fileName = dialog.FileName;
             _result = null;
-            _formResult = null;
             DoLoadImage(_fileName);
         }
 
@@ -61,14 +60,7 @@ namespace luval.vision.sink
 
         private void DoLoadImage(string fileName)
         {
-            var formResult = CheckForCelerisFile(fileName);
-            if (formResult == null)
-                DoLoadImage(fileName, File.ReadAllBytes(fileName));
-            else
-            {
-                _formResult = formResult;
-                DoLoadImage(formResult.FileName, formResult.FileData);
-            }
+            DoLoadImage(fileName, File.ReadAllBytes(fileName));
         }
 
         private void DoLoadImage(string fileName, byte[] data)
@@ -86,14 +78,6 @@ namespace luval.vision.sink
             PictureBox.Image = img;
             PictureBox.Refresh();
         }
-
-        private FormResult CheckForCelerisFile(string fileName)
-        {
-            if (!fileName.ToLowerInvariant().EndsWith(".celeris")) return null;
-            _formResult = JsonConvert.DeserializeObject<FormResult>(File.ReadAllText(fileName));
-            return _formResult;
-        }
-
 
         private void exitMenu_Click(object sender, EventArgs e)
         {
@@ -146,23 +130,6 @@ namespace luval.vision.sink
             }
         }
 
-        private List<AttributeMapping> GetMapping()
-        {
-            if (string.IsNullOrWhiteSpace(_mappingFile)) _mappingFile = "attribute-mapping.json";
-            var jsonData = File.ReadAllText(_mappingFile);
-            var options = new List<AttributeMapping>();
-            try
-            {
-                options = JsonConvert.DeserializeObject<List<AttributeMapping>>(jsonData);
-            }
-            catch (Exception ex)
-            {
-                Trace.WriteLine(string.Format("File {0} is not valid: {1}", _mappingFile, ex), "Error");
-                MessageBox.Show("Invalid file", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            return options;
-        }
-
         private void DoOCR()
         {
             if (string.IsNullOrWhiteSpace(_fileName)) return;
@@ -173,24 +140,6 @@ namespace luval.vision.sink
 
         private void DoProcess()
         {
-            var options = GetMapping();
-            var provider = new DocumentProcesor(GetProvider(false));
-            var result = default(ProcessResult);
-            DoOCR();
-            result = _formResult == null ? provider.DoProcess(File.ReadAllBytes(_fileName), _fileName, options, _result) :
-                provider.DoProcess(_formResult.FileData, _formResult.FileName, options, _formResult.Result.OcrResult);
-            _result = result.OcrResult;
-            _processResult = result;
-            LoadVisionTree(result.OcrResult);
-            LoadText(result.OcrResult);
-            _resultImg = _imageManager.ProcessParseResult(result.TextResults);
-            PictureBox.Image = _resultImg;
-            listResult.Items.Clear();
-            foreach (var item in result.TextResults)
-            {
-                var listItem = new ListViewItem(new string[] { item.Map.AttributeName, item.Value });
-                listResult.Items.Add(listItem);
-            }
         }
 
         private void LoadText(OcrResult ocrResult)
@@ -206,37 +155,37 @@ namespace luval.vision.sink
 
         private void LoadVisionTree(OcrResult ocrResult)
         {
-            var root = new TreeNode("JSON Result");
-            treeJsonVision.Nodes.Clear();
-            treeJsonVision.Nodes.Add(root);
-            foreach (var region in ocrResult.Regions)
-            {
-                var regionNode = new TreeNode()
-                {
-                    Text = string.Format("Region: {0}", region.Code)
-                };
-                regionNode.Nodes.Add(region.Location.ToString());
-                foreach (var line in region.Lines)
-                {
-                    var lineNode = new TreeNode()
-                    {
-                        Text = string.Format("Line: {0}", line.Code)
-                    };
-                    var wordNodeRoot = new TreeNode("Words");
-                    lineNode.Nodes.Add(line.Location.ToString());
-                    lineNode.Nodes.Add(line.Text);
-                    regionNode.Nodes.Add(lineNode);
-                    foreach (var word in line.Words)
-                    {
-                        var wordNode = new TreeNode(word.Text);
-                        wordNode.Nodes.Add(word.Location.ToString());
-                        wordNode.Nodes.Add(word.DataType.ToString());
-                        wordNodeRoot.Nodes.Add(wordNode);
-                    }
-                    lineNode.Nodes.Add(wordNodeRoot);
-                }
-                root.Nodes.Add(regionNode);
-            }
+            //var root = new TreeNode("JSON Result");
+            //treeJsonVision.Nodes.Clear();
+            //treeJsonVision.Nodes.Add(root);
+            //foreach (var region in ocrResult.Regions)
+            //{
+            //    var regionNode = new TreeNode()
+            //    {
+            //        Text = string.Format("Region: {0}", region.Code)
+            //    };
+            //    regionNode.Nodes.Add(region.Location.ToString());
+            //    foreach (var line in region.Lines)
+            //    {
+            //        var lineNode = new TreeNode()
+            //        {
+            //            Text = string.Format("Line: {0}", line.Code)
+            //        };
+            //        var wordNodeRoot = new TreeNode("Words");
+            //        lineNode.Nodes.Add(line.Location.ToString());
+            //        lineNode.Nodes.Add(line.Text);
+            //        regionNode.Nodes.Add(lineNode);
+            //        foreach (var word in line.Words)
+            //        {
+            //            var wordNode = new TreeNode(word.Text);
+            //            wordNode.Nodes.Add(word.Location.ToString());
+            //            wordNode.Nodes.Add(word.DataType.ToString());
+            //            wordNodeRoot.Nodes.Add(wordNode);
+            //        }
+            //        lineNode.Nodes.Add(wordNodeRoot);
+            //    }
+            //    root.Nodes.Add(regionNode);
+            //}
         }
 
         private void ShowOCRBoxes()
@@ -261,39 +210,11 @@ namespace luval.vision.sink
 
         private void mnuSaveResult_Click(object sender, EventArgs e)
         {
-            if (_processResult == null)
-            {
-                MessageBox.Show("Please process a document first", "Save", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            var dlg = new SaveFileDialog()
-            {
-                DefaultExt = "celeris",
-                AddExtension = true,
-                Filter = "Celeris Files(*.celeris)|*.celeris",
-                RestoreDirectory = true,
-                Title = "Save Results",
-                OverwritePrompt = true
-            };
-            if (dlg.ShowDialog() != DialogResult.OK) return;
-            DoSaveResult(dlg.FileName);
+           
         }
 
         private void DoSaveResult(string resultFileName)
         {
-            var data = new FormResult()
-            {
-                FileName = _fileName,
-                FileData = File.ReadAllBytes(_fileName),
-                Result = _processResult
-            };
-            var json = JsonConvert.SerializeObject(data, Formatting.None, new JsonSerializerSettings() { PreserveReferencesHandling = PreserveReferencesHandling.Objects });
-            using (var stream = new StreamWriter(resultFileName, false))
-            {
-                stream.Write(json);
-                stream.Close();
-            }
-            MessageBox.Show("Result has been saved", "Save", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void mnuTextCopy_Click(object sender, EventArgs e)
@@ -340,18 +261,18 @@ namespace luval.vision.sink
         private void ExtractFormValues()
         {
             DoOCR();
-            var options = GetMapping();
-            var docProvider = new DocumentProcesor(GetProvider(false));
-            var result = docProvider.DoProcess(File.ReadAllBytes(_fileName), _fileName, options, _result);
-            _processResult = result;
-            _resultImg = _imageManager.ProcessParseResult(result.TextResults);
-            PictureBox.Image = _resultImg;
-            listResult.Items.Clear();
-            foreach (var item in result.TextResults)
-            {
-                var listItem = new ListViewItem(new string[] { item.Map.AttributeName, item.Value });
-                listResult.Items.Add(listItem);
-            }
+            //var options = GetMapping();
+            //var docProvider = new DocumentProcesor(GetProvider(false));
+            //var result = docProvider.DoProcess(File.ReadAllBytes(_fileName), _fileName, options, _result);
+            //_processResult = result;
+            //_resultImg = _imageManager.ProcessParseResult(result.TextResults);
+            //PictureBox.Image = _resultImg;
+            //listResult.Items.Clear();
+            //foreach (var item in result.TextResults)
+            //{
+            //    var listItem = new ListViewItem(new string[] { item.Map.AttributeName, item.Value });
+            //    listResult.Items.Add(listItem);
+            //}
         }
 
         private void extractFormValuesToolStripMenuItem_Click(object sender, EventArgs e)
@@ -364,7 +285,6 @@ namespace luval.vision.sink
 
         private void mnuExportToExcel_Click(object sender, EventArgs e)
         {
-            if (_processResult == null) return;
             var dlg = new SaveFileDialog()
             {
                 Title = "Save Results to Excel",
@@ -379,12 +299,12 @@ namespace luval.vision.sink
                 sheet.Cells[1, 1].Value = "Field";
                 sheet.Cells[1, 2].Value = "Value";
                 var row = 2;
-                foreach (var result in _processResult.TextResults)
-                {
-                    sheet.Cells[row, 1].Value = result.Map.AttributeName;
-                    sheet.Cells[row, 2].Value = result.Value;
-                    row++;
-                }
+                //foreach (var result in _processResult.TextResults)
+                //{
+                //    sheet.Cells[row, 1].Value = result.Map.AttributeName;
+                //    sheet.Cells[row, 2].Value = result.Value;
+                //    row++;
+                //}
                 // Save to file
                 package.Save();
             }
@@ -401,8 +321,8 @@ namespace luval.vision.sink
             if (_formRelativeArea.ShowDialog() == DialogResult.Cancel) return;
 
 
-            var loc = OcrRelativeLocation.FromRelative(_result.Info.ToLocation(), _formRelativeArea.X, _formRelativeArea.XBound, _formRelativeArea.Y, _formRelativeArea.YBound);
-            PictureBox.Image = _imageManager.DrawRegion(region, loc);
+            //var loc = OcrRelativeLocation.FromRelative(_result.Info.ToLocation(), _formRelativeArea.X, _formRelativeArea.XBound, _formRelativeArea.Y, _formRelativeArea.YBound);
+            //PictureBox.Image = _imageManager.DrawRegion(region, loc);
         }
     }
 }

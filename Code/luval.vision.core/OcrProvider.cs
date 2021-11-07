@@ -1,5 +1,4 @@
-﻿using luval.vision.core.resolvers;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RestSharp;
 using System;

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using luval.vision.core;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace luval.vision.core
+namespace luval.vision.microsoft
 {
     public class MicrosoftVisionLoader : IVisionResultParser
     {
@@ -54,7 +55,6 @@ namespace luval.vision.core
                         result.Words.Add(word);
                         wordId++;
                     }
-                    region.Lines.Add(line);
                     result.Lines.Add(line);
                     lineId++;
                 }
@@ -74,7 +74,6 @@ namespace luval.vision.core
                 Width = Convert.ToInt32(vals[2]),
                 Height = Convert.ToInt32(vals[3])
             };
-            result.RelativeLocation = OcrRelativeLocation.Load(result, res.Info);
             return result;
         }
 
