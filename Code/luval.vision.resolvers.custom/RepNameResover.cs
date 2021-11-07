@@ -32,6 +32,7 @@ namespace luval.vision.resolvers.custom
 
         private string TrimContent(string content)
         {
+            content = content.Trim();
             content = content.Replace("Accepted By:", "");
             content = content.Replace("Accepted by:", "");
             content = content.Replace("Accepted by", "");
@@ -39,14 +40,21 @@ namespace luval.vision.resolvers.custom
             content = content.Replace("Sales Representative Name", "");
             content = content.Replace("Sales Representative", "");
             content = content.Replace("Representative", "");
-            content = content.Replace("Ассepted", "");
             content = content.Replace("By", "");
             content = content.Replace("by", "");
             content = content.Replace(":", "");
             content = content.Replace(".", "");
             content = content.Replace("Sales", "");
             content = content.Replace("Name", "");
+            content = RemoveAccepted(content);
             return content.Trim();
+        }
+
+        private string RemoveAccepted(string content)
+        {
+            if (content.Contains("Accepted"))
+                return content.Replace("Accepted", "");
+            return content;
         }
 
         private bool TrimBottom(List<string> lines)
