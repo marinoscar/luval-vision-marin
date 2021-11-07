@@ -43,5 +43,10 @@ namespace luval.vision.core
             var d = default(decimal);
             return decimal.TryParse(s, out d);
         }
+
+        public static string TrimEx(this string s)
+        {
+            return s.Trim().Trim('_');
+        }
     }
 }
