@@ -2,6 +2,7 @@
 using luval.vision.core.extractors;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -68,13 +69,19 @@ namespace luval.vision.resolvers.custom
 
         private string GetTopAchorLine(List<string> lines)
         {
-            var criteria1 = "including sales tax".ToLowerInvariant();
-            var criteria2 = "property upon".ToLowerInvariant();
-            var topLine = lines.Where(i => i.ToLowerInvariant().StartsWith(criteria1)).LastOrDefault();
-            if (string.IsNullOrWhiteSpace(topLine))
-                topLine = lines.Where(i => i.ToLowerInvariant().StartsWith(criteria2)).LastOrDefault();
-            if (string.IsNullOrWhiteSpace(topLine)) return null;
-            return topLine;
+            foreach (var criteria in GetTopCriteria())
+            {
+                var topLine = lines.Where(i => i.ToLowerInvariant().StartsWith(criteria)).LastOrDefault();
+                if (!string.IsNullOrWhiteSpace(topLine)) return topLine;
+            }
+            return null;
+        }
+
+        private string[] GetTopCriteria()
+        {
+            return new[] {
+                "including sales tax", "property upon", "amount total"
+            };
         }
     }
 }
