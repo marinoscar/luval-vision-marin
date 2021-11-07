@@ -9,7 +9,8 @@ namespace luval.vision.core.extractors
     public class FieldExtractorFactory
     {
 
-        private static Dictionary<string, IFieldExtractor> _cache = new Dictionary<string, IFieldExtractor>();
+        private static Cache<string, IFieldExtractor> _cache = new Cache<string, IFieldExtractor>();
+
         private static Type[] _knownTypes = new[] {
             typeof(DateExtractor) , typeof(EmailExtractor), typeof(PercentageExtractor),
             typeof(NumberExtractor), typeof(RegexExtractor)
@@ -17,9 +18,9 @@ namespace luval.vision.core.extractors
 
         public static IFieldExtractor Create(string typeName)
         {
-            if (_cache.ContainsKey(typeName)) return _cache[typeName];
-            _cache.Add(typeName, ObjectFactory.Create<IFieldExtractor>(TryToGetFullName(typeName)));
-            return _cache[typeName];
+            return _cache.Get(typeName, () => {
+                return ObjectFactory.Create<IFieldExtractor>(TryToGetFullName(typeName));
+            });
         }
 
         private static string TryToGetFullName(string typeName)
