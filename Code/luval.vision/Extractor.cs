@@ -94,6 +94,8 @@ namespace luval.vision
                     res.Add(new ExtractionResult() { Element = element, Value = text, Option = option });
                 }
             }
+            //if there is no result we add a null value
+            if (!res.Any()) res.Add(new ExtractionResult() { Option = option, Value = null });
             //remove duplicate nulls
             if (res.Count > res.Count(i => string.IsNullOrWhiteSpace(i.Value))) 
                 return res.Where(i => !string.IsNullOrWhiteSpace(i.Value)).ToList();
