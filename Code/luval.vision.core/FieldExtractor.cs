@@ -35,6 +35,11 @@ namespace luval.vision.core
         /// </summary>
         public bool UseAllArea { get; set; }
 
+        /// <summary>
+        /// Provides the a post processing custom code for the field
+        /// </summary>
+        public FieldExtractorPostProcessing PostProcessing { get; set; }
+
         public IFieldExtractor Create()
         {
             return FieldExtractorFactory.Create(ExtractorName);
