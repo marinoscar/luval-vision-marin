@@ -25,7 +25,7 @@ namespace luval.vision.core.extractors
         private static string TryToGetFullName(string typeName)
         {
             var t = _knownTypes.FirstOrDefault(i => i.Name.ToLowerInvariant().Equals(typeName.ToLowerInvariant()));
-            if (t != null) return t.AssemblyQualifiedName + "," + t.FullName;
+            if (t != null) return t.AssemblyQualifiedName;
             return typeName;
         }
 
