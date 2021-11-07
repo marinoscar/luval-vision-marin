@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 
@@ -12,19 +13,19 @@ namespace luval.vision.core
             if (string.IsNullOrWhiteSpace(typeName)) throw new ArgumentNullException("typeName");
             Type type = null;
             Assembly assembly;
-            var nameParts = typeName.Split(',');
+            var fullName = GetFullName(typeName);
             object result;
             try
             {
-                if (nameParts.Length == 1)
+                if (string.IsNullOrWhiteSpace(fullName.Item2))
                 {
-                    type = Type.GetType(nameParts[0]);
+                    type = Type.GetType(fullName.Item1);
                     result = Activator.CreateInstance(type);
                 }
                 else
                 {
-                    assembly = Assembly.Load(nameParts[1]);
-                    type = assembly.GetType(nameParts[0]);
+                    assembly = Assembly.Load(fullName.Item2);
+                    type = assembly.GetType(fullName.Item1);
                     result = Activator.CreateInstance(type);
                 }
             }
@@ -35,9 +36,16 @@ namespace luval.vision.core
             return result;
         }
 
+        private static Tuple<string, string> GetFullName(string typeName)
+        {
+            var parts = typeName.Split(',');
+            if (parts.Length == 1) return new Tuple<string, string>(typeName, null);
+            return new Tuple<string, string>(parts[0], string.Join(",", parts.Skip(1)));
+        }
+
         public static T Create<T>(string typeName)
         {
-            return (T)Convert.ChangeType(Create(typeName), typeof(T));
+            return (T)Create(typeName);
         }
     }
 }
