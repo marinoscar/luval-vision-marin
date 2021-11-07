@@ -23,8 +23,8 @@ namespace luval.vision.core
                 }
                 else
                 {
-                    assembly = Assembly.Load(nameParts[0]);
-                    type = assembly.GetType(nameParts[1]);
+                    assembly = Assembly.Load(nameParts[1]);
+                    type = assembly.GetType(nameParts[0]);
                     result = Activator.CreateInstance(type);
                 }
             }
