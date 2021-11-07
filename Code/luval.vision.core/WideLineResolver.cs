@@ -7,7 +7,7 @@ namespace luval.vision.core
 {
     public class WideLineResolver : IOcrLineResolver
     {
-        private const float HorizontalLineMargin = 0.15f;
+        private const float HorizontalLineMargin = 0.1f;
 
 
         public IEnumerable<OcrLine> GetLines(IEnumerable<OcrWord> words)
@@ -20,7 +20,7 @@ namespace luval.vision.core
                 var item = sorted.First();
                 var minY = (int)(item.Location.Y - (item.Location.Y * HorizontalLineMargin));
                 var maxY = (int)(item.Location.YBound + (item.Location.YBound * HorizontalLineMargin));
-                var wordsInLine = sorted.Where(i => (i.Location.Y >= minY && i.Location.YBound <= maxY)).OrderBy(i => i.Location.X).ToList();
+                var wordsInLine = sorted.Where(i => (i.Id != item.Id) && (i.Location.Y >= minY && i.Location.YBound <= maxY)).OrderBy(i => i.Location.X).ToList();
                 wordsInLine.Insert(0, item);
                 lines.Add(new OcrLine()
                 {
