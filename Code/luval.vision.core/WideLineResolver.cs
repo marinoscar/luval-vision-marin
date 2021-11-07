@@ -7,7 +7,7 @@ namespace luval.vision.core
 {
     public class WideLineResolver : IOcrLineResolver
     {
-        private const float HorizontalLineMargin = 0.1f;
+        private const float HorizontalLineMargin = 0.15f;
 
 
         public IEnumerable<OcrLine> GetLines(IEnumerable<OcrWord> words)
