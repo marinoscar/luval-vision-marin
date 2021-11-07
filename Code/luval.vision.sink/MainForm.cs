@@ -146,10 +146,10 @@ namespace luval.vision.sink
         {
             resultText.Clear();
             var sb = new StringBuilder();
-            foreach (var line in ocrResult.Lines)
-            {
-                sb.AppendLine(line.Text);
-            }
+            //foreach (var line in ocrResult.Lines)
+            //{
+            //    sb.AppendLine(line.Text);
+            //}
             resultText.Text = sb.ToString();
         }
 

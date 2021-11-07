@@ -40,7 +40,6 @@ namespace luval.vision.google
                 }
                 wordId++;
             }
-            var lines = new List<OcrLine>();
             mainRegion.Location = new OcrLocation();
             mainRegion.Location.X = mainRegion.Words.Min(i => i.Location.X);
             mainRegion.Location.Width = mainRegion.Words.Max(i => i.Location.XBound) - mainRegion.Location.X;
@@ -48,7 +47,6 @@ namespace luval.vision.google
             mainRegion.Location.Height = mainRegion.Words.Max(i => i.Location.YBound) - mainRegion.Location.Y;
             result.Regions.Add(mainRegion);
             result.Words = words;
-            result.Lines = lines;
             return result;
         }
 

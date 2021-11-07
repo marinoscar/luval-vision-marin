@@ -34,28 +34,19 @@ namespace luval.vision.microsoft
                 {
                     Id = regionId,
                     Code = OcrLoaderHelper.GetRegionCode(regionId),
-                    Location = ParseBox(jRegion, result)
+                    Location = ParseBox(jRegion, result),
+                    Words = result.Words
                 };
                 var lineId = 1;
                 foreach (var jLine in jRegion["lines"])
                 {
-                    var line = new OcrLine()
-                    {
-                        Id = lineId,
-                        Code = OcrLoaderHelper.GetLineCode(lineId, region),
-                        ParentRegion = region,
-                        Location = ParseBox(jLine, result),
-                    };
                     var wordId = 1;
                     foreach (var jWord in jLine["words"])
                     {
-                        var word = ParseWord(jWord, line, result);
-                        word.Code = OcrLoaderHelper.GetWordCode(wordId, line);
-                        line.Words.Add(word);
+                        var word = ParseWord(jWord, result);
                         result.Words.Add(word);
                         wordId++;
                     }
-                    result.Lines.Add(line);
                     lineId++;
                 }
                 result.Regions.Add(region);
@@ -77,11 +68,10 @@ namespace luval.vision.microsoft
             return result;
         }
 
-        private OcrWord ParseWord(JToken token, OcrLine line, OcrResult result)
+        private OcrWord ParseWord(JToken token, OcrResult result)
         {
             var word = new OcrWord()
             {
-                ParentLine = line,
                 Location = ParseBox(token, result),
                 Text = Convert.ToString(token["text"])
             };

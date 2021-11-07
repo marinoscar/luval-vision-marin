@@ -43,8 +43,8 @@ namespace luval.vision.core
             if (response.StatusCode != HttpStatusCode.OK)
                 throw new InvalidOperationException("Unable to process request");
             var result = Loader.DoParse(response.Content, imgInfo);
-            imgInfo.WorkingHeight = result.Lines.Max(i => i.Location.YBound) - result.Lines.Min(i => i.Location.Y);
-            imgInfo.WorkingHeight = result.Lines.Max(i => i.Location.XBound) - result.Lines.Min(i => i.Location.X);
+            imgInfo.WorkingHeight = result.Words.Max(i => i.Location.YBound) - result.Words.Min(i => i.Location.Y);
+            imgInfo.WorkingHeight = result.Words.Max(i => i.Location.XBound) - result.Words.Min(i => i.Location.X);
             return result;
         }
 

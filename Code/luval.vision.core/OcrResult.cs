@@ -14,7 +14,6 @@ namespace luval.vision.core
         {
             Regions = new List<OcrRegion>();
             Words = new List<OcrWord>();
-            Lines = new List<OcrLine>();
         }
 
         public string Language { get; set; }
@@ -23,15 +22,14 @@ namespace luval.vision.core
         public ImageInfo Info { get; set; }
         public List<OcrRegion> Regions { get; set; }
         public List<OcrWord> Words { get; set; }
-        public List<OcrLine> Lines { get; set; }
 
 
         public override string ToString()
         {
             var sb = new StringBuilder();
-            foreach(var line in Lines)
+            foreach(var word in Words)
             {
-                sb.AppendLine(line.Text);
+                sb.AppendLine(word.Text);
             }
             return sb.ToString();
         }
