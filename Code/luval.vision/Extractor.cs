@@ -35,6 +35,7 @@ namespace luval.vision
         {
             var result = new List<ExtractionResult>();
             var area = GetArea(option);
+
             var lines = GetLinesFromArea(option.GetLineResolver(), area, _region.Words);
             if (option.FieldExtractor.UseAllArea) lines = GetSingleLine(lines);
             if (option.FieldAnchor == null)

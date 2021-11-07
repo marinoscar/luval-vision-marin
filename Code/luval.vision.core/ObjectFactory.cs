@@ -8,6 +8,8 @@ namespace luval.vision.core
 {
     public static class ObjectFactory
     {
+        private static Cache<string, Type> _cache = new Cache<string, Type>();
+
         public static object Create(string typeName)
         {
             if (string.IsNullOrWhiteSpace(typeName)) throw new ArgumentNullException("typeName");
@@ -17,17 +19,19 @@ namespace luval.vision.core
             object result;
             try
             {
-                if (string.IsNullOrWhiteSpace(fullName.Item2))
-                {
-                    type = Type.GetType(fullName.Item1);
-                    result = Activator.CreateInstance(type);
-                }
-                else
-                {
-                    assembly = Assembly.Load(fullName.Item2);
-                    type = assembly.GetType(fullName.Item1);
-                    result = Activator.CreateInstance(type);
-                }
+                type = _cache.Get(typeName, () => {
+                    if (string.IsNullOrWhiteSpace(fullName.Item2))
+                    {
+                        type = Type.GetType(fullName.Item1);
+                    }
+                    else
+                    {
+                        assembly = Assembly.Load(fullName.Item2);
+                        type = assembly.GetType(fullName.Item1);
+                    }
+                    return type;
+                });
+                result = Activator.CreateInstance(type);
             }
             catch (Exception ex)
             {

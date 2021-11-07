@@ -1,4 +1,5 @@
-﻿using System;
+﻿using luval.vision.core.extractors;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,6 +7,8 @@ namespace luval.vision.core
 {
     public class FieldOption
     {
+        private static Cache<string, IOcrLineResolver> _cache = new Cache<string, IOcrLineResolver>();
+
         /// <summary>
         /// Indentify the name of the filed
         /// </summary>
@@ -35,7 +38,10 @@ namespace luval.vision.core
         public IOcrLineResolver GetLineResolver()
         {
             if (string.IsNullOrWhiteSpace(LineResolverQualifiedName)) return new TraditionalOcrLineResolver();
-            return ObjectFactory.Create<IOcrLineResolver>(LineResolverQualifiedName);
+            return _cache.Get(LineResolverQualifiedName, () =>
+            {
+                return ObjectFactory.Create<IOcrLineResolver>(LineResolverQualifiedName);
+            });
         }
 
         public OcrLocation GetAreaSearch(OcrLocation workingArea)
