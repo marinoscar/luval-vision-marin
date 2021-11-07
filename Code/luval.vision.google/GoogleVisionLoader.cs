@@ -20,7 +20,8 @@ namespace luval.vision.google
             var mainRegion = new OcrRegion()
             {
                 Id = 1,
-                Code = OcrLoaderHelper.GetRegionCode(1)
+                Code = OcrLoaderHelper.GetRegionCode(1),
+                Words = words
             };
             var annotations = json["responses"].Value<JArray>()[0]["textAnnotations"].Value<JArray>();
             var wordId = 1;
