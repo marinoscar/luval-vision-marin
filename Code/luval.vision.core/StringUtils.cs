@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace luval.vision.core
 {
-    public class StringUtils
+    public static class StringUtils
     {
         public static IEnumerable<Match> GetWords(string text)
         {
@@ -35,6 +36,12 @@ namespace luval.vision.core
                         );
                 }
             return distances[lengthA, lengthB];
+        }
+
+        public static bool IsNumericValue(this string s)
+        {
+            var d = default(decimal);
+            return decimal.TryParse(s, out d);
         }
     }
 }
