@@ -24,7 +24,7 @@ namespace luval.vision.core
         {
             get
             {
-                if (Words != null && Words.Any())
+                if (string.IsNullOrWhiteSpace(_text) && Words != null && Words.Any())
                 {
                     _text = string.Join(" ", Words.Select(i => i.Text));
                     return _text;
