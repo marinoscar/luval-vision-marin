@@ -1,6 +1,8 @@
 ﻿using luval.vision.core;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -48,23 +50,29 @@ namespace luval.vision
         private IEnumerable<ExtractionResult> ExtractValueFromAnchor(FieldOption option, IEnumerable<OcrElement> elements)
         {
             var items = new List<OcrElement>();
+
             foreach (var pattern in option.FieldAnchor.Patterns)
             {
                 OcrElement element = null;
                 var matchedLines = elements.Where(i => Regex.IsMatch(i.Text, pattern)).ToList();
-                if (option.FieldAnchor.ExpectedIndex > 0)
+                if (matchedLines.Any())
                 {
-                    if (matchedLines.Count < option.FieldAnchor.ExpectedIndex)
-                        throw new IndexOutOfRangeException(string.Format("Index provided {0} is out of range for field {1}",
-                            option.FieldAnchor.ExpectedIndex, option.FieldName));
-                    element = matchedLines[option.FieldAnchor.ExpectedIndex];
+                    if (option.FieldAnchor.ExpectedIndex > 0)
+                    {
+                        if (matchedLines.Count < option.FieldAnchor.ExpectedIndex)
+                            throw new IndexOutOfRangeException(string.Format("Index provided {0} is out of range for field {1}",
+                                option.FieldAnchor.ExpectedIndex, option.FieldName));
+                        element = matchedLines[option.FieldAnchor.ExpectedIndex];
+                    }
+                    else if (option.FieldAnchor.UseLast)
+                        element = matchedLines.Last();
+                    else
+                        element = matchedLines.First();
+                    items.Add(element);
                 }
-                else if (option.FieldAnchor.UseLast)
-                    element = matchedLines.Last();
-                else
-                    element = matchedLines.First();
-                items.Add(element);
             }
+            if (!items.Any()) 
+                return new[] { new ExtractionResult() { Option = option, Value = null } };
             return ExtractValue(option, items);
         }
 
@@ -77,9 +85,19 @@ namespace luval.vision
                 var values = extractor.GetValue(element.Text, option.FieldExtractor.ExtractorOptions);
                 foreach (var val in values)
                 {
-                    res.Add(new ExtractionResult() { Element = element, Value = val, Option = option });
+                    var text = val;
+                    if(option.FieldExtractor.PostProcessing != null)
+                    {
+                        var post = option.FieldExtractor.PostProcessing.Create();
+                        text = post.ProcessValue(val, option.FieldExtractor.PostProcessing.Options);
+                    }
+                    res.Add(new ExtractionResult() { Element = element, Value = text, Option = option });
                 }
             }
+            //remove duplicate nulls
+            if (res.Count > res.Count(i => string.IsNullOrWhiteSpace(i.Value))) 
+                return res.Where(i => !string.IsNullOrWhiteSpace(i.Value)).ToList();
+
             return res;
         }
 
@@ -100,6 +118,13 @@ namespace luval.vision
                 }
             };
             return new List<OcrLine>(new[] { line });
+        }
+
+        private string GetTextFromLines(IEnumerable<OcrLine> lines)
+        {
+            var sw = new StringWriter();
+            lines.ToList().ForEach(i => sw.WriteLine(i.Text));
+            return sw.ToString();
         }
 
         private IEnumerable<OcrLine> GetLinesFromArea(IOcrLineResolver lineResolver, OcrLocation area, IEnumerable<OcrWord> elements)
