@@ -260,6 +260,10 @@
       <Project>{adb64c06-a5bb-4000-8030-e5844aae7da3}</Project>
       <Name>luval.vision.microsoft</Name>
     </ProjectReference>
+    <ProjectReference Include="..\luval.vision.resolvers.custom\luval.vision.resolvers.custom.csproj">
+      <Project>{7360f757-8c80-4386-be18-dc52e6634f0c}</Project>
+      <Name>luval.vision.resolvers.custom</Name>
+    </ProjectReference>
     <ProjectReference Include="..\luval.vision\luval.vision.csproj">
       <Project>{79b27a4c-6e0a-4fa7-947e-3266586d8d16}</Project>
       <Name>luval.vision</Name>
