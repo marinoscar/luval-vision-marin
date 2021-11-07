@@ -46,7 +46,6 @@ namespace luval.vision.google
             mainRegion.Location.Y = mainRegion.Words.Min(i => i.Location.Y);
             mainRegion.Location.Height = mainRegion.Words.Max(i => i.Location.YBound) - mainRegion.Location.Y;
             result.Regions.Add(mainRegion);
-            result.Words = words;
             return result;
         }
 
