@@ -6,6 +6,7 @@ using OfficeOpenXml;
 using OfficeOpenXml.Table;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -60,6 +61,8 @@ namespace luval.vision.sink
         private void SaveResults(DirectoryInfo directory, List<Result> results)
         {
             var fileInfo = new FileInfo(GetOutFileName(directory));
+            if (fileInfo.Exists) fileInfo.Delete();
+
             using (var package = new ExcelPackage(fileInfo))
             {
                 var sheet = package.Workbook.Worksheets.Add("Results");
@@ -72,6 +75,9 @@ namespace luval.vision.sink
                 {
                     sheet.Cells[row, 1].Value = result.File.Name;
                     sheet.Cells[row, 1].Hyperlink = new Uri("file:///" + result.File.FullName);
+                    sheet.Cells[row, 1].Style.Font.UnderLine = true;
+                    sheet.Cells[row, 1].Style.Font.Color.SetColor(Color.Blue);
+
                     sheet.Cells[row, 2].Value = result.Json;
                     sheet.Cells[row, 3].Value = result.FieldResult.Option.FieldName;
                     sheet.Cells[row, 4].Value = result.FieldResult.Value;
@@ -80,6 +86,7 @@ namespace luval.vision.sink
                 var range = sheet.Cells[1, 1, row-1, 4];
                 var tab = sheet.Tables.Add(range, "DataTable");
                 tab.TableStyle = TableStyles.Medium2;
+                range.AutoFitColumns();
                 // Save to file
                 package.Save();
             }
