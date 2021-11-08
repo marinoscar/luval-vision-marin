@@ -6,6 +6,6 @@ namespace luval.vision.core
 {
     public interface IOcrLineResolver
     {
-        IEnumerable<OcrLine> GetLines(IEnumerable<OcrWord> words);
+        IEnumerable<OcrLine> GetLines(IEnumerable<OcrWord> words, IDictionary<string, string> options);
     }
 }

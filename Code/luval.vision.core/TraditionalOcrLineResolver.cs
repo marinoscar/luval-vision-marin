@@ -10,7 +10,7 @@ namespace luval.vision.core
         private const float HorizontalLineMargin = 0.025f;
 
 
-        public IEnumerable<OcrLine> GetLines(IEnumerable<OcrWord> words)
+        public IEnumerable<OcrLine> GetLines(IEnumerable<OcrWord> words, IDictionary<string, string> options)
         {
             var lines = new List<OcrLine>();
             var sorted = words.OrderBy(i => i.Location.Y).ThenBy(i => i.Location.X).ToList();

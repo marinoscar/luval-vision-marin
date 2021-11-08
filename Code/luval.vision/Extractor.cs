@@ -39,7 +39,7 @@ namespace luval.vision
             var result = new List<ExtractionResult>();
             var area = GetArea(option);
 
-            var lines = GetLinesFromArea(option.GetLineResolver(), area, _region.Words);
+            var lines = GetLinesFromArea(option.GetLineResolver(), option.GetLinerResolverOptions(),  area, _region.Words);
             if (option.FieldExtractor.UseAllArea) lines = GetSingleLine(lines);
             if (option.FieldAnchor == null)
                 result.AddRange(ExtractValue(option, lines));
@@ -142,11 +142,11 @@ namespace luval.vision
             return sw.ToString();
         }
 
-        private IEnumerable<OcrLine> GetLinesFromArea(IOcrLineResolver lineResolver, OcrLocation area, IEnumerable<OcrWord> elements)
+        private IEnumerable<OcrLine> GetLinesFromArea(IOcrLineResolver lineResolver, IDictionary<string, string> lineResolverOptions, OcrLocation area, IEnumerable<OcrWord> elements)
         {
             var items = elements.Where(i => i.Location.X >= area.X && i.Location.X < area.XBound)
                         .Where(i => i.Location.Y >= area.Y && i.Location.Y < area.YBound).ToList();
-            return lineResolver.GetLines(items);
+            return lineResolver.GetLines(items, lineResolverOptions);
         }
 
         private OcrLocation GetArea(FieldOption option)
