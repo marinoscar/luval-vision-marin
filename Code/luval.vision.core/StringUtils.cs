@@ -46,6 +46,7 @@ namespace luval.vision.core
 
         public static string TrimEx(this string s)
         {
+            if (string.IsNullOrWhiteSpace(s)) return s;
             return s.Trim().Trim('_');
         }
     }
