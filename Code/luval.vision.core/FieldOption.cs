@@ -52,6 +52,8 @@ namespace luval.vision.core
 
         private static OcrLocation FromRelative(OcrLocation workingArea, double x, double xbound, double y, double ybound)
         {
+            if (x >= xbound) throw new ArgumentOutOfRangeException("X cannot be greater or equal than XBound");
+            if (y >= ybound) throw new ArgumentOutOfRangeException("Y cannot be greater or equal than YBound");
             return new OcrLocation()
             {
                 X = (int)(workingArea.Width * x),
