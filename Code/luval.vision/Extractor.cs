@@ -83,7 +83,7 @@ namespace luval.vision
             var extractor = option.FieldExtractor.Create();
             foreach (var element in elements)
             {
-                var values = extractor.GetValue(element.Text, option.FieldExtractor.ExtractorOptions);
+                var values = extractor.GetValue(element.Text.Replace("_", " "), option.FieldExtractor.ExtractorOptions);
                 foreach (var val in values)
                 {
                     var text = val;
