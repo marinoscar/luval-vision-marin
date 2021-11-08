@@ -42,9 +42,9 @@ namespace luval.vision.core
 
         public IOcrLineResolver GetLineResolver()
         {
-            if(LineResolver != null && string.IsNullOrWhiteSpace(LineResolver.LineResolverQualifiedName))
+            if(LineResolver != null && !string.IsNullOrWhiteSpace(LineResolver.LineResolverQualifiedName))
             {
-                return _cache.Get(LineResolverQualifiedName, () =>
+                return _cache.Get(LineResolver.LineResolverQualifiedName, () =>
                 {
                     return ObjectFactory.Create<IOcrLineResolver>(LineResolver.LineResolverQualifiedName);
                 });
