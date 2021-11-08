@@ -36,6 +36,9 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\luval.vision.core\luval.vision.core.csproj" />
+    <ProjectReference Include="..\..\luval.vision.google\luval.vision.google.csproj" />
+    <ProjectReference Include="..\..\luval.vision.resolvers.custom\luval.vision.resolvers.custom.csproj" />
+    <ProjectReference Include="..\..\luval.vision\luval.vision.csproj" />
     <ProjectReference Include="..\Luval.FormExtractor\Luval.FormExtractor.csproj" PrivateAssets="All" />
   </ItemGroup>
   <ItemGroup>

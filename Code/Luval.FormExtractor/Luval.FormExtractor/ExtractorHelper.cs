@@ -1,4 +1,6 @@
-﻿using luval.vision.core;
+﻿using luval.vision;
+using luval.vision.core;
+using luval.vision.google;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -22,7 +24,8 @@ namespace Luval.FormExtractor
             var fileInfo = new FileInfo(filePath);
             if (!fileInfo.Exists) throw new ArgumentException("File does not exists", "filePath");
             var ocr = GetProvider(apiKey);
-            var options = new List<AttributeMapping>();
+            var options = new ConfigOptions();
+            var result = new List<ExtractionResult>();
             try
             {
                 options = GetOptions(jsonConfiguration);
@@ -32,21 +35,21 @@ namespace Luval.FormExtractor
                 throw new ArgumentException("Unable to parse the json configuration", "jsonConfiguration", ex);
             }
             var bytes = File.ReadAllBytes(filePath);
-            var docProvider = new DocumentProcesor(ocr);
-            var result = default(ProcessResult);
             try
             {
-                docProvider.DoProcess(bytes, filePath, options);
+                var ocrResult = ocr.DoOcr(fileInfo.FullName);
+                var extractor = new Extractor(options, ocrResult.Regions.First(), ocrResult.Info);
+                result.AddRange(extractor.GetValues());
             }
             catch (Exception ex)
             {
                 throw new InvalidOperationException("Unable to process the OCR request or parsing of the elements", ex);
             }
-            var dt = GetResult(result.TextResults);
+            var dt = GetResult(result);
             return dt;
         }
 
-        private DataTable GetResult(IEnumerable<MappingResult> results)
+        private DataTable GetResult(IEnumerable<ExtractionResult> results)
         {
             var dt = new DataTable("Results");
             dt.Columns.Add("Field", typeof(string));
@@ -54,7 +57,7 @@ namespace Luval.FormExtractor
             foreach(var item in results)
             {
                 var row = dt.NewRow();
-                row["Field"] = item.Map.AttributeName;
+                row["Field"] = item.Option.FieldName;
                 row["Value"] = item.Value;
                 dt.Rows.Add(row);
             }
@@ -67,9 +70,9 @@ namespace Luval.FormExtractor
             return new OcrProvider(new GoogleOcrEngine(credential.Password), new GoogleVisionLoader());
         }
 
-        private List<AttributeMapping> GetOptions(string jsonConfiguration)
+        private ConfigOptions GetOptions(string jsonConfiguration)
         {
-            return JsonConvert.DeserializeObject<List<AttributeMapping>>(jsonConfiguration);
+            return JsonConvert.DeserializeObject<ConfigOptions>(jsonConfiguration);
         }
     }
 }
