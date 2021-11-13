@@ -7,8 +7,8 @@
     <ProjectGuid>{443E9AC3-B5FE-4F20-8B6F-87F59EBBC8F1}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>luval.vision.sink</RootNamespace>
-    <AssemblyName>luval.vision.sink</AssemblyName>
+    <RootNamespace>luval.vision.app</RootNamespace>
+    <AssemblyName>luval.vision.app</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -113,8 +113,8 @@
     <Reference Include="Microsoft.Recognizers.Text.Sequence, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Recognizers.Text.Sequence.1.8.0\lib\netstandard2.0\Microsoft.Recognizers.Text.Sequence.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="RestSharp, Version=106.13.0.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
@@ -241,9 +241,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Keys\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="luval-128x128.ico" />
   </ItemGroup>

@@ -23,13 +23,13 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "UiPath.Shared.Activities.De
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "luval.vision", "luval.vision\luval.vision.csproj", "{79B27A4C-6E0A-4FA7-947E-3266586D8D16}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "luval.vision.microsoft", "luval.vision.microsoft\luval.vision.microsoft.csproj", "{ADB64C06-A5BB-4000-8030-E5844AAE7DA3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "luval.vision.microsoft", "luval.vision.microsoft\luval.vision.microsoft.csproj", "{ADB64C06-A5BB-4000-8030-E5844AAE7DA3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "luval.vision.google", "luval.vision.google\luval.vision.google.csproj", "{FE2D4500-DDC8-44F7-A009-573080F8C80F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "luval.vision.google", "luval.vision.google\luval.vision.google.csproj", "{FE2D4500-DDC8-44F7-A009-573080F8C80F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Resolvers", "Resolvers", "{C59B3ECD-5CC9-4E29-8355-D8F88BE59982}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "luval.vision.resolvers.custom", "luval.vision.resolvers.custom\luval.vision.resolvers.custom.csproj", "{7360F757-8C80-4386-BE18-DC52E6634F0C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "luval.vision.resolvers.custom", "luval.vision.resolvers.custom\luval.vision.resolvers.custom.csproj", "{7360F757-8C80-4386-BE18-DC52E6634F0C}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution

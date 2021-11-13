@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace luval.vision.sink
+namespace luval.vision.app
 {
     /// <summary>
     /// Provides an abstraction to handle common console switches

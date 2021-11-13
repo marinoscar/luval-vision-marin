@@ -12,7 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace luval.vision.sink
+namespace luval.vision.app
 {
     public class BatchProcessing
     {
@@ -55,7 +55,7 @@ namespace luval.vision.sink
                 }
                 _log.WriteInformation("File {0} of {1} completed", files.IndexOf(file) + 1, files.Count);
             }
-            SaveResults(dir, results);
+            SaveResults(files.First().Directory, results);
         }
 
         private void SaveResults(DirectoryInfo directory, List<Result> results)

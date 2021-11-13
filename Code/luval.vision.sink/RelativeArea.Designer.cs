@@ -1,5 +1,5 @@
 ﻿
-namespace luval.vision.sink
+namespace luval.vision.app
 {
     partial class RelativeArea
     {

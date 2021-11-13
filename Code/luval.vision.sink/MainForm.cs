@@ -15,7 +15,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace luval.vision.sink
+namespace luval.vision.app
 {
     public partial class MainForm : Form
     {
