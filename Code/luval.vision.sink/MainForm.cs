@@ -17,7 +17,7 @@ using System.Windows.Forms;
 
 namespace luval.vision.app
 {
-    public partial class MainForm : Form
+    public partial class MainForm : BaseForm
     {
 
         private string _mappingFile;
@@ -323,6 +323,12 @@ namespace luval.vision.app
 
             //var loc = OcrRelativeLocation.FromRelative(_result.Info.ToLocation(), _formRelativeArea.X, _formRelativeArea.XBound, _formRelativeArea.Y, _formRelativeArea.YBound);
             //PictureBox.Image = _imageManager.DrawRegion(region, loc);
+        }
+
+        private void mnuConfiguration_Click(object sender, EventArgs e)
+        {
+            var configForm = new ConfigForm();
+            configForm.Show();
         }
     }
 }
