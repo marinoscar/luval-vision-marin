@@ -115,23 +115,6 @@ namespace luval.vision.app
 
         }
 
-        private void LoadConfiguration()
-        {
-            var dlg = new OpenFileDialog()
-            {
-                Title = "Load configuration file",
-                Filter = "Json Files (*.json)|*.json",
-                Multiselect = false,
-                RestoreDirectory = true
-            };
-            if (dlg.ShowDialog() != DialogResult.OK) return;
-            _mappingFile = dlg.FileName;
-            if (!File.Exists(_mappingFile))
-            {
-                MessageBox.Show("Invalid file", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
         private void DoOCR()
         {
             if (string.IsNullOrWhiteSpace(_fileName)) return;
@@ -231,7 +214,6 @@ namespace luval.vision.app
 
         private void mnuLoadConfiguration_Click(object sender, EventArgs e)
         {
-            LoadConfiguration();
         }
 
         private void pictureBox_DoubleClick(object sender, EventArgs e)
@@ -279,7 +261,6 @@ namespace luval.vision.app
 
         private void extractFormValuesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(_mappingFile)) LoadConfiguration();
             if (string.IsNullOrWhiteSpace(_fileName)) OpenFile();
             ExtractFormValues();
 

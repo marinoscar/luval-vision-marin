@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.mainMenu = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -37,6 +36,7 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.exitMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuExtractFormValues = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuConfiguration = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuLoadConfiguration = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuRunOCR = new System.Windows.Forms.ToolStripMenuItem();
             this.extractFormValuesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -55,15 +55,11 @@
             this.tabVision = new System.Windows.Forms.TabControl();
             this.tabText = new System.Windows.Forms.TabPage();
             this.resultText = new System.Windows.Forms.TextBox();
-            this.cmenText = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.mnuTextCopy = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuSelectAllTxt = new System.Windows.Forms.ToolStripMenuItem();
             this.tabVisionJson = new System.Windows.Forms.TabPage();
             this.treeJsonVision = new System.Windows.Forms.TreeView();
             this.listResult = new System.Windows.Forms.ListView();
             this.colAttribute = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colValue = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.mnuConfiguration = new System.Windows.Forms.ToolStripMenuItem();
             this.mainMenu.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
@@ -73,7 +69,6 @@
             this.tabResult.SuspendLayout();
             this.tabVision.SuspendLayout();
             this.tabText.SuspendLayout();
-            this.cmenText.SuspendLayout();
             this.tabVisionJson.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -142,38 +137,45 @@
             this.mnuExtractFormValues.Size = new System.Drawing.Size(46, 20);
             this.mnuExtractFormValues.Text = "&Tools";
             // 
+            // mnuConfiguration
+            // 
+            this.mnuConfiguration.Name = "mnuConfiguration";
+            this.mnuConfiguration.Size = new System.Drawing.Size(177, 22);
+            this.mnuConfiguration.Text = "Configuration";
+            this.mnuConfiguration.Click += new System.EventHandler(this.mnuConfiguration_Click);
+            // 
             // mnuLoadConfiguration
             // 
             this.mnuLoadConfiguration.Name = "mnuLoadConfiguration";
-            this.mnuLoadConfiguration.Size = new System.Drawing.Size(180, 22);
+            this.mnuLoadConfiguration.Size = new System.Drawing.Size(177, 22);
             this.mnuLoadConfiguration.Text = "&Load Configuration";
             this.mnuLoadConfiguration.Click += new System.EventHandler(this.mnuLoadConfiguration_Click);
             // 
             // mnuRunOCR
             // 
             this.mnuRunOCR.Name = "mnuRunOCR";
-            this.mnuRunOCR.Size = new System.Drawing.Size(180, 22);
+            this.mnuRunOCR.Size = new System.Drawing.Size(177, 22);
             this.mnuRunOCR.Text = "Run OCR";
             this.mnuRunOCR.Click += new System.EventHandler(this.mnuRunOCR_Click);
             // 
             // extractFormValuesToolStripMenuItem
             // 
             this.extractFormValuesToolStripMenuItem.Name = "extractFormValuesToolStripMenuItem";
-            this.extractFormValuesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.extractFormValuesToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
             this.extractFormValuesToolStripMenuItem.Text = "Extract Form Values";
             this.extractFormValuesToolStripMenuItem.Click += new System.EventHandler(this.extractFormValuesToolStripMenuItem_Click);
             // 
             // mnuExportToExcel
             // 
             this.mnuExportToExcel.Name = "mnuExportToExcel";
-            this.mnuExportToExcel.Size = new System.Drawing.Size(180, 22);
+            this.mnuExportToExcel.Size = new System.Drawing.Size(177, 22);
             this.mnuExportToExcel.Text = "Export To Excel";
             this.mnuExportToExcel.Click += new System.EventHandler(this.mnuExportToExcel_Click);
             // 
             // mnuDrawArea
             // 
             this.mnuDrawArea.Name = "mnuDrawArea";
-            this.mnuDrawArea.Size = new System.Drawing.Size(180, 22);
+            this.mnuDrawArea.Size = new System.Drawing.Size(177, 22);
             this.mnuDrawArea.Text = "Draw Area";
             this.mnuDrawArea.Click += new System.EventHandler(this.mnuDrawArea_Click);
             // 
@@ -310,7 +312,6 @@
             // 
             // resultText
             // 
-            this.resultText.ContextMenuStrip = this.cmenText;
             this.resultText.Dock = System.Windows.Forms.DockStyle.Fill;
             this.resultText.Font = new System.Drawing.Font("Courier New", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.resultText.Location = new System.Drawing.Point(3, 3);
@@ -318,31 +319,6 @@
             this.resultText.Name = "resultText";
             this.resultText.Size = new System.Drawing.Size(516, 459);
             this.resultText.TabIndex = 5;
-            // 
-            // cmenText
-            // 
-            this.cmenText.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.cmenText.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuTextCopy,
-            this.mnuSelectAllTxt});
-            this.cmenText.Name = "cmenText";
-            this.cmenText.Size = new System.Drawing.Size(165, 48);
-            // 
-            // mnuTextCopy
-            // 
-            this.mnuTextCopy.Name = "mnuTextCopy";
-            this.mnuTextCopy.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.mnuTextCopy.Size = new System.Drawing.Size(164, 22);
-            this.mnuTextCopy.Text = "Copy";
-            this.mnuTextCopy.Click += new System.EventHandler(this.mnuTextCopy_Click);
-            // 
-            // mnuSelectAllTxt
-            // 
-            this.mnuSelectAllTxt.Name = "mnuSelectAllTxt";
-            this.mnuSelectAllTxt.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
-            this.mnuSelectAllTxt.Size = new System.Drawing.Size(164, 22);
-            this.mnuSelectAllTxt.Text = "Select All";
-            this.mnuSelectAllTxt.Click += new System.EventHandler(this.mnuSelectAllTxt_Click);
             // 
             // tabVisionJson
             // 
@@ -385,13 +361,6 @@
             // 
             this.colValue.Text = "Value";
             // 
-            // mnuConfiguration
-            // 
-            this.mnuConfiguration.Name = "mnuConfiguration";
-            this.mnuConfiguration.Size = new System.Drawing.Size(180, 22);
-            this.mnuConfiguration.Text = "Configuration";
-            this.mnuConfiguration.Click += new System.EventHandler(this.mnuConfiguration_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -417,7 +386,6 @@
             this.tabVision.ResumeLayout(false);
             this.tabText.ResumeLayout(false);
             this.tabText.PerformLayout();
-            this.cmenText.ResumeLayout(false);
             this.tabVisionJson.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -452,9 +420,6 @@
         private System.Windows.Forms.ColumnHeader colValue;
         private System.Windows.Forms.CheckBox chkOcrResult;
         private System.Windows.Forms.ToolStripMenuItem mnuSaveResult;
-        private System.Windows.Forms.ContextMenuStrip cmenText;
-        private System.Windows.Forms.ToolStripMenuItem mnuTextCopy;
-        private System.Windows.Forms.ToolStripMenuItem mnuSelectAllTxt;
         private System.Windows.Forms.ToolStripMenuItem mnuRunOCR;
         private System.Windows.Forms.ToolStripMenuItem extractFormValuesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mnuExportToExcel;
