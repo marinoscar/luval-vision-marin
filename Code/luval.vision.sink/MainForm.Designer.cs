@@ -41,7 +41,6 @@
             this.extractFormValuesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuExportToExcel = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.btnDemo = new System.Windows.Forms.Button();
             this.processBtn = new System.Windows.Forms.Button();
             this.pictureBox = new System.Windows.Forms.PictureBox();
             this.splitter1 = new System.Windows.Forms.Splitter();
@@ -135,52 +134,39 @@
             // mnuConfiguration
             // 
             this.mnuConfiguration.Name = "mnuConfiguration";
-            this.mnuConfiguration.Size = new System.Drawing.Size(180, 22);
+            this.mnuConfiguration.Size = new System.Drawing.Size(177, 22);
             this.mnuConfiguration.Text = "Configuration";
             this.mnuConfiguration.Click += new System.EventHandler(this.mnuConfiguration_Click);
             // 
             // mnuRunOCR
             // 
             this.mnuRunOCR.Name = "mnuRunOCR";
-            this.mnuRunOCR.Size = new System.Drawing.Size(180, 22);
+            this.mnuRunOCR.Size = new System.Drawing.Size(177, 22);
             this.mnuRunOCR.Text = "Run OCR";
             this.mnuRunOCR.Click += new System.EventHandler(this.mnuRunOCR_Click);
             // 
             // extractFormValuesToolStripMenuItem
             // 
             this.extractFormValuesToolStripMenuItem.Name = "extractFormValuesToolStripMenuItem";
-            this.extractFormValuesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.extractFormValuesToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
             this.extractFormValuesToolStripMenuItem.Text = "Extract Form Values";
             this.extractFormValuesToolStripMenuItem.Click += new System.EventHandler(this.extractFormValuesToolStripMenuItem_Click);
             // 
             // mnuExportToExcel
             // 
             this.mnuExportToExcel.Name = "mnuExportToExcel";
-            this.mnuExportToExcel.Size = new System.Drawing.Size(180, 22);
+            this.mnuExportToExcel.Size = new System.Drawing.Size(177, 22);
             this.mnuExportToExcel.Text = "Export To Excel";
             this.mnuExportToExcel.Click += new System.EventHandler(this.mnuExportToExcel_Click);
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.btnDemo);
             this.panel1.Controls.Add(this.processBtn);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.Location = new System.Drawing.Point(0, 547);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(832, 50);
             this.panel1.TabIndex = 1;
-            // 
-            // btnDemo
-            // 
-            this.btnDemo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDemo.Location = new System.Drawing.Point(664, 12);
-            this.btnDemo.Name = "btnDemo";
-            this.btnDemo.Size = new System.Drawing.Size(75, 23);
-            this.btnDemo.TabIndex = 1;
-            this.btnDemo.Text = "&Demo";
-            this.btnDemo.UseVisualStyleBackColor = true;
-            this.btnDemo.Visible = false;
-            this.btnDemo.Click += new System.EventHandler(this.btnDemo_Click);
             // 
             // processBtn
             // 
@@ -376,7 +362,6 @@
         private System.Windows.Forms.TabPage tabPicture;
         private System.Windows.Forms.Panel panelPicture;
         private System.Windows.Forms.TabPage tabResult;
-        private System.Windows.Forms.Button btnDemo;
         private System.Windows.Forms.TabControl tabVision;
         private System.Windows.Forms.TabPage tabText;
         private System.Windows.Forms.TextBox resultText;

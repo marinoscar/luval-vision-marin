@@ -100,17 +100,6 @@ namespace luval.vision.app
             return !ms ? new OcrProvider(new GoogleOcrEngine(), new GoogleVisionLoader()) : new OcrProvider(new MicrosoftOcrEngine(), new MicrosoftVisionLoader());
         }
 
-
-
-        private void btnDemo_Click(object sender, EventArgs e)
-        {
-            DoLoadImage(@"Demo/sample-receipt.jpg");
-            var response = File.ReadAllText(@"Demo/sample-response.json");
-            var ocrResult = JsonConvert.DeserializeObject<OcrResult>(response);
-            //DoProcess(ocrResult);
-
-        }
-
         private void DoOCR()
         {
             if (PictureFile == null || !PictureFile.Exists) return;
