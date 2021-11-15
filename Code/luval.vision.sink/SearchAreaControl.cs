@@ -39,20 +39,23 @@ namespace luval.vision.app
             ocrRelativeSearchLocationBindingSource.ResetBindings(false);
         }
 
-        private void Text_KeyDown(object sender, KeyEventArgs e)
-        {
-            var txt = sender as TextBox;
-            if (string.IsNullOrWhiteSpace(txt.Text)) return;
-            if (e.KeyCode == Keys.Oemcomma || e.KeyCode == Keys.OemPeriod ||
-                e.KeyCode == Keys.Decimal || e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab
-                || e.KeyCode == Keys.Shift || e.KeyCode == Keys.ShiftKey)
-                return;
-            if (txt.Text.IsNumericValue()) e.SuppressKeyPress = true;
-        }
-
         private void btnTest_Click(object sender, EventArgs e)
         {
             OnDrawSearchArea(new SearchAreaEventArgs(SearchLocation));
+        }
+
+        private void Text_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
+            {
+                e.Handled = true;
+            }
+
+            // only allow one decimal point
+            if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
+            {
+                e.Handled = true;
+            }
         }
     }
 

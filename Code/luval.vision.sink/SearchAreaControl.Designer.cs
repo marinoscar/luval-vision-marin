@@ -112,7 +112,7 @@ namespace luval.vision.app
             this.txtX.Name = "txtX";
             this.txtX.Size = new System.Drawing.Size(176, 20);
             this.txtX.TabIndex = 0;
-            this.txtX.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Text_KeyDown);
+            this.txtX.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Text_KeyPress);
             // 
             // ocrRelativeSearchLocationBindingSource
             // 
@@ -126,7 +126,7 @@ namespace luval.vision.app
             this.txtTopX.Name = "txtTopX";
             this.txtTopX.Size = new System.Drawing.Size(176, 20);
             this.txtTopX.TabIndex = 1;
-            this.txtTopX.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Text_KeyDown);
+            this.txtTopX.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Text_KeyPress);
             // 
             // txtY
             // 
@@ -136,7 +136,7 @@ namespace luval.vision.app
             this.txtY.Name = "txtY";
             this.txtY.Size = new System.Drawing.Size(176, 20);
             this.txtY.TabIndex = 2;
-            this.txtY.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Text_KeyDown);
+            this.txtY.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Text_KeyPress);
             // 
             // txtTopY
             // 
@@ -146,7 +146,7 @@ namespace luval.vision.app
             this.txtTopY.Name = "txtTopY";
             this.txtTopY.Size = new System.Drawing.Size(176, 20);
             this.txtTopY.TabIndex = 3;
-            this.txtTopY.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Text_KeyDown);
+            this.txtTopY.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Text_KeyPress);
             // 
             // label1
             // 
