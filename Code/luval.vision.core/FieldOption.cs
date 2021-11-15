@@ -30,12 +30,6 @@ namespace luval.vision.core
         public OcrRelativeSearchLocation SearchArea { get; set; }
 
         /// <summary>
-        /// The full qualified name of a class that implements the <see cref="IOcrLineResolver"/> interface
-        /// </summary>
-        [Obsolete]
-        public string LineResolverQualifiedName { get; set; }
-
-        /// <summary>
         /// Provides information to create a line resolver for the extraction or the default resolver will be used
         /// </summary>
         public FieldLineResolver LineResolver { get; set; }
@@ -49,12 +43,7 @@ namespace luval.vision.core
                     return ObjectFactory.Create<IOcrLineResolver>(LineResolver.LineResolverQualifiedName);
                 });
             }
-
-            if (string.IsNullOrWhiteSpace(LineResolverQualifiedName)) return new TraditionalOcrLineResolver();
-            return _cache.Get(LineResolverQualifiedName, () =>
-            {
-                return ObjectFactory.Create<IOcrLineResolver>(LineResolverQualifiedName);
-            });
+            return new TraditionalOcrLineResolver();
         }
 
         public IDictionary<string, string> GetLinerResolverOptions()
