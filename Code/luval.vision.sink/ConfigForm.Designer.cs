@@ -31,13 +31,13 @@ namespace luval.vision.app
         {
             this.components = new System.ComponentModel.Container();
             this.dataGrid = new System.Windows.Forms.DataGridView();
-            this.fieldNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Edit = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.Delete = new System.Windows.Forms.DataGridViewButtonColumn();
             this.fieldOptionBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.btnCreate = new System.Windows.Forms.Button();
             this.btnLoad = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
+            this.fieldNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Edit = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.Delete = new System.Windows.Forms.DataGridViewButtonColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fieldOptionBindingSource)).BeginInit();
             this.SuspendLayout();
@@ -57,22 +57,6 @@ namespace luval.vision.app
             this.dataGrid.Size = new System.Drawing.Size(776, 376);
             this.dataGrid.TabIndex = 0;
             this.dataGrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGrid_CellContentClick);
-            // 
-            // fieldNameDataGridViewTextBoxColumn
-            // 
-            this.fieldNameDataGridViewTextBoxColumn.DataPropertyName = "FieldName";
-            this.fieldNameDataGridViewTextBoxColumn.HeaderText = "FieldName";
-            this.fieldNameDataGridViewTextBoxColumn.Name = "fieldNameDataGridViewTextBoxColumn";
-            // 
-            // Edit
-            // 
-            this.Edit.HeaderText = "Edit";
-            this.Edit.Name = "Edit";
-            // 
-            // Delete
-            // 
-            this.Delete.HeaderText = "Delete";
-            this.Delete.Name = "Delete";
             // 
             // fieldOptionBindingSource
             // 
@@ -107,6 +91,24 @@ namespace luval.vision.app
             this.btnSave.Text = "Save Configuration";
             this.btnSave.UseVisualStyleBackColor = true;
             // 
+            // fieldNameDataGridViewTextBoxColumn
+            // 
+            this.fieldNameDataGridViewTextBoxColumn.DataPropertyName = "FieldName";
+            this.fieldNameDataGridViewTextBoxColumn.HeaderText = "FieldName";
+            this.fieldNameDataGridViewTextBoxColumn.Name = "fieldNameDataGridViewTextBoxColumn";
+            // 
+            // Edit
+            // 
+            this.Edit.HeaderText = "Edit";
+            this.Edit.Name = "Edit";
+            this.Edit.Text = "Edit";
+            // 
+            // Delete
+            // 
+            this.Delete.HeaderText = "Delete";
+            this.Delete.Name = "Delete";
+            this.Delete.Text = "Delete";
+            // 
             // ConfigForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -127,12 +129,12 @@ namespace luval.vision.app
         #endregion
 
         private System.Windows.Forms.DataGridView dataGrid;
-        private System.Windows.Forms.DataGridViewTextBoxColumn fieldNameDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewButtonColumn Edit;
-        private System.Windows.Forms.DataGridViewButtonColumn Delete;
         private System.Windows.Forms.BindingSource fieldOptionBindingSource;
         private System.Windows.Forms.Button btnCreate;
         private System.Windows.Forms.Button btnLoad;
         private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.DataGridViewTextBoxColumn fieldNameDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewButtonColumn Edit;
+        private System.Windows.Forms.DataGridViewButtonColumn Delete;
     }
 }

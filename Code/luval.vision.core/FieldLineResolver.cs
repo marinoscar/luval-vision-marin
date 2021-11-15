@@ -6,6 +6,11 @@ namespace luval.vision.core
 {
     public class FieldLineResolver
     {
+        public FieldLineResolver()
+        {
+            Options = new Dictionary<string, string>();
+        }
+
         /// <summary>
         /// The full qualified name of a class that implements the <see cref="IOcrLineResolver"/> interface
         /// </summary>

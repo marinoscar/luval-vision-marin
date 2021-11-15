@@ -26,7 +26,7 @@ namespace luval.vision.app
 
         public void DoBinding()
         {
-            if (FieldExtractor == null) return;
+            if (FieldExtractor == null || FieldExtractor.PostProcessing == null) return;
             fieldExtractorBindingSource.DataSource = FieldExtractor;
             fieldExtractorBindingSource.ResetBindings(false);
             extractorData.Options.Name = FieldExtractor.ExtractorName;

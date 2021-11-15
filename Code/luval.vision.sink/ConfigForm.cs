@@ -64,12 +64,13 @@ namespace luval.vision.app
         {
             if (string.IsNullOrWhiteSpace(fileName) || !File.Exists(fileName)) throw new ArgumentException(string.Format("Invalid file name: {0}", fileName));
             ConfigOptions = JsonConvert.DeserializeObject<ConfigOptions>(File.ReadAllText(fileName));
-            fieldOptionBindingSource.ResetBindings(false);
+            fieldOptionBindingSource.DataSource = ConfigOptions.Fields;
+            fieldOptionBindingSource.ResetBindings(true);
         }
 
         private void dataGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if(e.ColumnIndex == 2)
+            if(e.ColumnIndex == 1)
             {
                 ShowFieldOptionForm(GetRow(e.RowIndex));
             }
@@ -77,8 +78,26 @@ namespace luval.vision.app
 
         private void ShowFieldOptionForm(FieldOption fieldOption)
         {
+            if (fieldOption == null) throw new ArgumentNullException("fieldOption");
+            PrepareOptionForUi(fieldOption);
             var frmOption = new FieldOptionForm() { FieldOption = fieldOption };
+            frmOption.ApplyChanges += FrmOption_ApplyChanges;
             frmOption.Show();
+        }
+
+        private void FrmOption_ApplyChanges(object sender, EventArgs e)
+        {
+            //new changes are comming
+            fieldOptionBindingSource.ResetBindings(false);
+        }
+
+        private void PrepareOptionForUi(FieldOption fieldOption)
+        {
+            if (fieldOption.FieldAnchor == null) fieldOption.FieldAnchor = new FieldAnchor();
+            if (fieldOption.FieldExtractor == null) fieldOption.FieldExtractor = new FieldExtractor();
+            if (fieldOption.FieldExtractor.PostProcessing == null) fieldOption.FieldExtractor.PostProcessing = new FieldExtractorPostProcessing();
+            if (fieldOption.LineResolver == null) fieldOption.LineResolver = new FieldLineResolver();
+            if (fieldOption.SearchArea == null) fieldOption.SearchArea = new OcrRelativeSearchLocation();
         }
 
         private FieldOption GetRow(int rowIndex)

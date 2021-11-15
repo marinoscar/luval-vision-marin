@@ -15,14 +15,30 @@ namespace luval.vision.app
     public partial class FieldOptionForm : BaseForm
     {
 
+
+        public event EventHandler ApplyChanges;
+
         private FieldOption _fieldOption;
         public FieldOptionForm()
         {
             InitializeComponent();
-            FieldOption = new FieldOption() { FieldAnchor = new FieldAnchor(), FieldExtractor = new FieldExtractor() };
+            FieldOption = new FieldOption()
+            {
+                FieldAnchor = new FieldAnchor(),
+                FieldExtractor = new FieldExtractor(),
+                SearchArea = new OcrRelativeSearchLocation(),
+                LineResolver = new FieldLineResolver()
+            };
+            FieldOption.FieldExtractor.PostProcessing = new FieldExtractorPostProcessing();
         }
 
-        public FieldOption FieldOption { get { return _fieldOption;  } set { _fieldOption = value; DoBinding(); } }
+        public FieldOption FieldOption { get { return _fieldOption; } set { _fieldOption = value; DoBinding(); } }
+
+        protected virtual void OnApplyChanges(EventArgs e)
+        {
+            EventHandler handler = ApplyChanges;
+            handler?.Invoke(this, e);
+        }
 
         public void DoBinding()
         {
@@ -35,7 +51,8 @@ namespace luval.vision.app
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-            Debug.WriteLine("Hello");
+            OnApplyChanges(new EventArgs());
+            Close();
         }
     }
 }
