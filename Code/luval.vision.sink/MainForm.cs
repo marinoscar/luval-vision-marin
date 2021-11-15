@@ -22,7 +22,6 @@ namespace luval.vision.app
 
         private ImageManager _imageManager;
         private OcrResult _result;
-        private RelativeArea _formRelativeArea;
 
         public MainForm()
         {
@@ -278,21 +277,6 @@ namespace luval.vision.app
             }
         }
 
-        private void mnuDrawArea_Click(object sender, EventArgs e)
-        {
-            if (_formRelativeArea == null) _formRelativeArea = new RelativeArea();
-            if (_imageManager == null) return;
-            if (_result == null) return;
-
-            var region = _result.Regions.FirstOrDefault();
-            _formRelativeArea.WorkingArea = new OcrLocation() { X = 0, Width = _imageManager.Source.Width, Y = 0, Height = _imageManager.Source.Height };
-            if (_formRelativeArea.ShowDialog() == DialogResult.Cancel) return;
-
-
-            //var loc = OcrRelativeLocation.FromRelative(_result.Info.ToLocation(), _formRelativeArea.X, _formRelativeArea.XBound, _formRelativeArea.Y, _formRelativeArea.YBound);
-            //PictureBox.Image = _imageManager.DrawRegion(region, loc);
-        }
-
         private void mnuConfiguration_Click(object sender, EventArgs e)
         {
             var configForm = new ConfigForm();
@@ -303,6 +287,16 @@ namespace luval.vision.app
         private void ConfigForm_DrawSearchArea(object sender, SearchAreaEventArgs e)
         {
             //TODO: Implement test logic
+            if (_imageManager == null) return;
+            if (_result == null) return;
+
+            var region = _result.Regions.FirstOrDefault();
+            //_formRelativeArea.WorkingArea = new OcrLocation() { X = 0, Width = _imageManager.Source.Width, Y = 0, Height = _imageManager.Source.Height };
+            //if (_formRelativeArea.ShowDialog() == DialogResult.Cancel) return;
+
+
+            //var loc = OcrRelativeLocation.FromRelative(_result.Info.ToLocation(), _formRelativeArea.X, _formRelativeArea.XBound, _formRelativeArea.Y, _formRelativeArea.YBound);
+            //PictureBox.Image = _imageManager.DrawRegion(region, loc);
         }
     }
 }

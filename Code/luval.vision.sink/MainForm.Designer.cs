@@ -37,11 +37,9 @@
             this.exitMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuExtractFormValues = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuConfiguration = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuLoadConfiguration = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuRunOCR = new System.Windows.Forms.ToolStripMenuItem();
             this.extractFormValuesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuExportToExcel = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuDrawArea = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnDemo = new System.Windows.Forms.Button();
             this.processBtn = new System.Windows.Forms.Button();
@@ -127,11 +125,9 @@
             // 
             this.mnuExtractFormValues.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuConfiguration,
-            this.mnuLoadConfiguration,
             this.mnuRunOCR,
             this.extractFormValuesToolStripMenuItem,
-            this.mnuExportToExcel,
-            this.mnuDrawArea});
+            this.mnuExportToExcel});
             this.mnuExtractFormValues.Name = "mnuExtractFormValues";
             this.mnuExtractFormValues.Size = new System.Drawing.Size(46, 20);
             this.mnuExtractFormValues.Text = "&Tools";
@@ -139,44 +135,30 @@
             // mnuConfiguration
             // 
             this.mnuConfiguration.Name = "mnuConfiguration";
-            this.mnuConfiguration.Size = new System.Drawing.Size(177, 22);
+            this.mnuConfiguration.Size = new System.Drawing.Size(180, 22);
             this.mnuConfiguration.Text = "Configuration";
             this.mnuConfiguration.Click += new System.EventHandler(this.mnuConfiguration_Click);
-            // 
-            // mnuLoadConfiguration
-            // 
-            this.mnuLoadConfiguration.Name = "mnuLoadConfiguration";
-            this.mnuLoadConfiguration.Size = new System.Drawing.Size(177, 22);
-            this.mnuLoadConfiguration.Text = "&Load Configuration";
-            this.mnuLoadConfiguration.Click += new System.EventHandler(this.mnuLoadConfiguration_Click);
             // 
             // mnuRunOCR
             // 
             this.mnuRunOCR.Name = "mnuRunOCR";
-            this.mnuRunOCR.Size = new System.Drawing.Size(177, 22);
+            this.mnuRunOCR.Size = new System.Drawing.Size(180, 22);
             this.mnuRunOCR.Text = "Run OCR";
             this.mnuRunOCR.Click += new System.EventHandler(this.mnuRunOCR_Click);
             // 
             // extractFormValuesToolStripMenuItem
             // 
             this.extractFormValuesToolStripMenuItem.Name = "extractFormValuesToolStripMenuItem";
-            this.extractFormValuesToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+            this.extractFormValuesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.extractFormValuesToolStripMenuItem.Text = "Extract Form Values";
             this.extractFormValuesToolStripMenuItem.Click += new System.EventHandler(this.extractFormValuesToolStripMenuItem_Click);
             // 
             // mnuExportToExcel
             // 
             this.mnuExportToExcel.Name = "mnuExportToExcel";
-            this.mnuExportToExcel.Size = new System.Drawing.Size(177, 22);
+            this.mnuExportToExcel.Size = new System.Drawing.Size(180, 22);
             this.mnuExportToExcel.Text = "Export To Excel";
             this.mnuExportToExcel.Click += new System.EventHandler(this.mnuExportToExcel_Click);
-            // 
-            // mnuDrawArea
-            // 
-            this.mnuDrawArea.Name = "mnuDrawArea";
-            this.mnuDrawArea.Size = new System.Drawing.Size(177, 22);
-            this.mnuDrawArea.Text = "Draw Area";
-            this.mnuDrawArea.Click += new System.EventHandler(this.mnuDrawArea_Click);
             // 
             // panel1
             // 
@@ -386,7 +368,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem exitMenu;
         private System.Windows.Forms.ToolStripMenuItem mnuExtractFormValues;
-        private System.Windows.Forms.ToolStripMenuItem mnuLoadConfiguration;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button processBtn;
         private System.Windows.Forms.PictureBox pictureBox;
@@ -408,7 +389,6 @@
         private System.Windows.Forms.ToolStripMenuItem mnuRunOCR;
         private System.Windows.Forms.ToolStripMenuItem extractFormValuesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mnuExportToExcel;
-        private System.Windows.Forms.ToolStripMenuItem mnuDrawArea;
         private System.Windows.Forms.ToolStripMenuItem mnuConfiguration;
     }
 }
