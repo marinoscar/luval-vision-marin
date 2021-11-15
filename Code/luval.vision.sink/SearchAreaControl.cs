@@ -17,6 +17,7 @@ namespace luval.vision.app
 
         private OcrRelativeSearchLocation _searchLocation;
 
+
         public SearchAreaControl()
         {
             InitializeComponent();

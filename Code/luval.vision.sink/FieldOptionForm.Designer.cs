@@ -33,6 +33,7 @@ namespace luval.vision.app
             luval.vision.core.FieldAnchor fieldAnchor1 = new luval.vision.core.FieldAnchor();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FieldOptionForm));
             luval.vision.core.FieldExtractor fieldExtractor1 = new luval.vision.core.FieldExtractor();
+            luval.vision.core.FieldExtractorPostProcessing fieldExtractorPostProcessing1 = new luval.vision.core.FieldExtractorPostProcessing();
             luval.vision.core.OcrRelativeSearchLocation ocrRelativeSearchLocation1 = new luval.vision.core.OcrRelativeSearchLocation();
             this.table1 = new System.Windows.Forms.TableLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
@@ -44,11 +45,11 @@ namespace luval.vision.app
             this.tabExtractor = new System.Windows.Forms.TabPage();
             this.extractorControl = new luval.vision.app.FieldExtractorControl();
             this.tabArea = new System.Windows.Forms.TabPage();
-            this.searchAreaControl1 = new luval.vision.app.SearchAreaControl();
+            this.searchAreaControl = new luval.vision.app.SearchAreaControl();
             this.tabLineResolver = new System.Windows.Forms.TabPage();
+            this.linResolverControl = new luval.vision.app.LineResolverControl();
             this.btnOk = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.lineResolverControl1 = new luval.vision.app.LineResolverControl();
             this.table1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fieldOptionBindingSource)).BeginInit();
             this.tabOptions.SuspendLayout();
@@ -150,7 +151,9 @@ namespace luval.vision.app
             fieldExtractor1.ExpectedIndex = 0;
             fieldExtractor1.ExtractorName = null;
             fieldExtractor1.ExtractorOptions = ((System.Collections.Generic.Dictionary<string, string>)(resources.GetObject("fieldExtractor1.ExtractorOptions")));
-            fieldExtractor1.PostProcessing = null;
+            fieldExtractorPostProcessing1.Options = ((System.Collections.Generic.Dictionary<string, string>)(resources.GetObject("fieldExtractorPostProcessing1.Options")));
+            fieldExtractorPostProcessing1.PostProcessingName = null;
+            fieldExtractor1.PostProcessing = fieldExtractorPostProcessing1;
             fieldExtractor1.UseAllArea = false;
             fieldExtractor1.UseLast = false;
             this.extractorControl.FieldExtractor = fieldExtractor1;
@@ -161,7 +164,7 @@ namespace luval.vision.app
             // 
             // tabArea
             // 
-            this.tabArea.Controls.Add(this.searchAreaControl1);
+            this.tabArea.Controls.Add(this.searchAreaControl);
             this.tabArea.Location = new System.Drawing.Point(4, 22);
             this.tabArea.Name = "tabArea";
             this.tabArea.Size = new System.Drawing.Size(765, 341);
@@ -169,27 +172,36 @@ namespace luval.vision.app
             this.tabArea.Text = "Area";
             this.tabArea.UseVisualStyleBackColor = true;
             // 
-            // searchAreaControl1
+            // searchAreaControl
             // 
-            this.searchAreaControl1.Location = new System.Drawing.Point(3, 3);
-            this.searchAreaControl1.Name = "searchAreaControl1";
+            this.searchAreaControl.Location = new System.Drawing.Point(3, 3);
+            this.searchAreaControl.Name = "searchAreaControl";
             ocrRelativeSearchLocation1.X = 0D;
             ocrRelativeSearchLocation1.XBound = 0D;
             ocrRelativeSearchLocation1.Y = 0D;
             ocrRelativeSearchLocation1.YBound = 0D;
-            this.searchAreaControl1.SearchLocation = ocrRelativeSearchLocation1;
-            this.searchAreaControl1.Size = new System.Drawing.Size(759, 118);
-            this.searchAreaControl1.TabIndex = 0;
+            this.searchAreaControl.SearchLocation = ocrRelativeSearchLocation1;
+            this.searchAreaControl.Size = new System.Drawing.Size(759, 118);
+            this.searchAreaControl.TabIndex = 0;
             // 
             // tabLineResolver
             // 
-            this.tabLineResolver.Controls.Add(this.lineResolverControl1);
+            this.tabLineResolver.Controls.Add(this.linResolverControl);
             this.tabLineResolver.Location = new System.Drawing.Point(4, 22);
             this.tabLineResolver.Name = "tabLineResolver";
             this.tabLineResolver.Size = new System.Drawing.Size(765, 341);
             this.tabLineResolver.TabIndex = 3;
             this.tabLineResolver.Text = "Line Resolver";
             this.tabLineResolver.UseVisualStyleBackColor = true;
+            // 
+            // linResolverControl
+            // 
+            this.linResolverControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.linResolverControl.LineResolver = null;
+            this.linResolverControl.Location = new System.Drawing.Point(0, 0);
+            this.linResolverControl.Name = "linResolverControl";
+            this.linResolverControl.Size = new System.Drawing.Size(765, 341);
+            this.linResolverControl.TabIndex = 0;
             // 
             // btnOk
             // 
@@ -209,15 +221,6 @@ namespace luval.vision.app
             this.btnCancel.TabIndex = 3;
             this.btnCancel.Text = "&Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
-            // 
-            // lineResolverControl1
-            // 
-            this.lineResolverControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lineResolverControl1.LineResolver = null;
-            this.lineResolverControl1.Location = new System.Drawing.Point(0, 0);
-            this.lineResolverControl1.Name = "lineResolverControl1";
-            this.lineResolverControl1.Size = new System.Drawing.Size(765, 341);
-            this.lineResolverControl1.TabIndex = 0;
             // 
             // FieldOptionForm
             // 
@@ -257,7 +260,7 @@ namespace luval.vision.app
         private System.Windows.Forms.Button btnCancel;
         private FieldExtractorControl extractorControl;
         private FieldAnchorControl anchorControl;
-        private SearchAreaControl searchAreaControl1;
-        private LineResolverControl lineResolverControl1;
+        private SearchAreaControl searchAreaControl;
+        private LineResolverControl linResolverControl;
     }
 }

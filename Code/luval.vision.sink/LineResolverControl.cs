@@ -25,8 +25,10 @@ namespace luval.vision.app
         public void DoBinding()
         {
             if (LineResolver == null) return;
-            externalOptions.Options.Name = LineResolver.LineResolverQualifiedName;
-            externalOptions.Options.Options = LineResolver.Options.Select(i => new ExternalDataOptions() { Name = i.Key, Value = i.Value }).ToList();
+            externalOptions.Options = new ExternalCallAndOptions() {
+                Name = LineResolver.LineResolverQualifiedName,
+                Options = LineResolver.Options.Select(i => new ExternalDataOptions() { Name = i.Key, Value = i.Value }).ToList()
+            };
         }
 
         private void externalOptions_DataChanged(object sender, EventArgs e)

@@ -15,6 +15,8 @@ namespace luval.vision.app
         public delegate void DataChangedEventHandler(object sender, EventArgs e);
         public event DataChangedEventHandler DataChanged;
 
+        private ExternalCallAndOptions _options;
+
         public ExternalOptions()
         {
             InitializeComponent();
@@ -23,9 +25,18 @@ namespace luval.vision.app
         }
 
         public string NameLabel { get { return lblName.Text; } set { lblName.Text = value; } }
+        public string OptionsLabel { get { return grpBox.Text; } set { grpBox.Text = value; } }
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public ExternalCallAndOptions Options { get; set; }
+        public ExternalCallAndOptions Options { get { return _options; } set { _options = value; DoBinding(); } }
+
+        public void DoBinding()
+        {
+            if (Options == null) return;
+            externalCallAndOptionsBindingSource.DataSource = Options;
+            externalCallAndOptionsBindingSource.ResetBindings(true);
+
+        }
 
         private void optionsBindingSource_ListChanged(object sender, ListChangedEventArgs e)
         {

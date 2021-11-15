@@ -23,6 +23,7 @@ namespace luval.vision.app
         }
 
         public ConfigOptions ConfigOptions { get; set; }
+        public FileInfo ConfigurationFile { get; set; }
 
         public void DoBinding()
         {
@@ -57,7 +58,8 @@ namespace luval.vision.app
                 MessageBox.Show("Invalid file", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
             }
-            return dlg.FileName;
+            ConfigurationFile = new FileInfo(dlg.FileName);
+            return ConfigurationFile.FullName;
         }
 
         private void LoadConfigurationFile(string fileName)

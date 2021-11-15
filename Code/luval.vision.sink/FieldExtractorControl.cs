@@ -29,10 +29,18 @@ namespace luval.vision.app
             if (FieldExtractor == null || FieldExtractor.PostProcessing == null) return;
             fieldExtractorBindingSource.DataSource = FieldExtractor;
             fieldExtractorBindingSource.ResetBindings(false);
-            extractorData.Options.Name = FieldExtractor.ExtractorName;
-            extractorData.Options.Options = FieldExtractor.ExtractorOptions.Select(i => new ExternalDataOptions() { Name = i.Key, Value = i.Value }).ToList();
-            postProccesor.Options.Name = FieldExtractor.PostProcessing.PostProcessingName;
-            postProccesor.Options.Options = FieldExtractor.PostProcessing.Options.Select(i => new ExternalDataOptions() { Name = i.Key, Value = i.Value }).ToList();
+
+            extractorData.Options = new ExternalCallAndOptions() { 
+                Name = FieldExtractor.ExtractorName,
+                Options = FieldExtractor.ExtractorOptions.Select(i => new ExternalDataOptions() { Name = i.Key, Value = i.Value }).ToList()
+            };
+            postProccesor.Options = new ExternalCallAndOptions()
+            {
+                Name = FieldExtractor.PostProcessing.PostProcessingName,
+                Options = FieldExtractor.PostProcessing.Options.Select(i => new ExternalDataOptions() { Name = i.Key, Value = i.Value }).ToList()
+            };
+
+
         }
 
         private void FieldExtractorControl_Load(object sender, EventArgs e)

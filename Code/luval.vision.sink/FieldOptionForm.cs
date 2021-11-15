@@ -46,6 +46,8 @@ namespace luval.vision.app
             fieldOptionBindingSource.DataSource = FieldOption;
             anchorControl.FieldAnchor = FieldOption.FieldAnchor;
             extractorControl.FieldExtractor = FieldOption.FieldExtractor;
+            searchAreaControl.SearchLocation = FieldOption.SearchArea;
+            linResolverControl.LineResolver = FieldOption.LineResolver;
             fieldOptionBindingSource.ResetBindings(false);
         }
 

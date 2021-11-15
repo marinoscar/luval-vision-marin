@@ -35,13 +35,13 @@ namespace luval.vision.app
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.txtX = new System.Windows.Forms.TextBox();
+            this.ocrRelativeSearchLocationBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.txtTopX = new System.Windows.Forms.TextBox();
             this.txtY = new System.Windows.Forms.TextBox();
             this.txtTopY = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.btnTest = new System.Windows.Forms.Button();
-            this.ocrRelativeSearchLocationBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.table1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ocrRelativeSearchLocationBindingSource)).BeginInit();
             this.SuspendLayout();
@@ -114,6 +114,10 @@ namespace luval.vision.app
             this.txtX.TabIndex = 0;
             this.txtX.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Text_KeyDown);
             // 
+            // ocrRelativeSearchLocationBindingSource
+            // 
+            this.ocrRelativeSearchLocationBindingSource.DataSource = typeof(luval.vision.core.OcrRelativeSearchLocation);
+            // 
             // txtTopX
             // 
             this.txtTopX.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.ocrRelativeSearchLocationBindingSource, "XBound", true));
@@ -175,10 +179,6 @@ namespace luval.vision.app
             this.btnTest.TabIndex = 2;
             this.btnTest.Text = "Show Area";
             this.btnTest.UseVisualStyleBackColor = true;
-            // 
-            // ocrRelativeSearchLocationBindingSource
-            // 
-            this.ocrRelativeSearchLocationBindingSource.DataSource = typeof(luval.vision.core.OcrRelativeSearchLocation);
             // 
             // SearchAreaControl
             // 
