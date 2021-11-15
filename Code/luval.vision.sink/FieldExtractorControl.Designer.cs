@@ -216,6 +216,7 @@ namespace luval.vision.app
             this.postProccesor.NameLabel = "Processor Qualified Name";
             this.postProccesor.Size = new System.Drawing.Size(422, 191);
             this.postProccesor.TabIndex = 0;
+            this.postProccesor.DataChanged += new luval.vision.app.ExternalOptions.DataChangedEventHandler(this.postProccesor_DataChanged);
             // 
             // FieldExtractorControl
             // 
