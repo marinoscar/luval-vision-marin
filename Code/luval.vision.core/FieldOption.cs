@@ -36,7 +36,7 @@ namespace luval.vision.core
 
         public IOcrLineResolver GetLineResolver()
         {
-            if(LineResolver != null && !string.IsNullOrWhiteSpace(LineResolver.LineResolverQualifiedName))
+            if (LineResolver != null && !string.IsNullOrWhiteSpace(LineResolver.LineResolverQualifiedName))
             {
                 return _cache.Get(LineResolver.LineResolverQualifiedName, () =>
                 {
@@ -58,16 +58,27 @@ namespace luval.vision.core
             return FromRelative(workingArea, SearchArea.X, SearchArea.XBound, SearchArea.Y, SearchArea.YBound);
         }
 
-        private static OcrLocation FromRelative(OcrLocation workingArea, double x, double xbound, double y, double ybound)
+        public static OcrLocation FromRelative(OcrLocation workingArea, double x, double xbound, double y, double ybound)
         {
-            if (x >= xbound) throw new ArgumentOutOfRangeException("X cannot be greater or equal than XBound");
-            if (y >= ybound) throw new ArgumentOutOfRangeException("Y cannot be greater or equal than YBound");
+            return FromRelative(workingArea, new OcrRelativeSearchLocation()
+            {
+                X = x,
+                XBound = xbound,
+                Y = y,
+                YBound = ybound
+            });
+        }
+
+        public static OcrLocation FromRelative(OcrLocation workingArea, OcrRelativeSearchLocation loc)
+        {
+            if (loc.X >= loc.XBound) throw new ArgumentOutOfRangeException("X cannot be greater or equal than XBound");
+            if (loc.Y >= loc.YBound) throw new ArgumentOutOfRangeException("Y cannot be greater or equal than YBound");
             return new OcrLocation()
             {
-                X = (int)(workingArea.Width * x),
-                Width = (int)((workingArea.Width * xbound) - (workingArea.Width * x)),
-                Y = (int)(workingArea.Height * y),
-                Height = (int)((workingArea.Height * ybound) - (workingArea.Height * y)),
+                X = (int)(workingArea.Width * loc.X),
+                Width = (int)((workingArea.Width * loc.XBound) - (workingArea.Width * loc.X)),
+                Y = (int)(workingArea.Height * loc.Y),
+                Height = (int)((workingArea.Height * loc.YBound) - (workingArea.Height * loc.Y)),
             };
         }
     }

@@ -21,7 +21,7 @@ namespace luval.vision.app
     {
 
         private ImageManager _imageManager;
-        private OcrResult _result;
+
 
         public MainForm()
         {
@@ -30,6 +30,7 @@ namespace luval.vision.app
 
         public PictureBox PictureBox { get { return pictureBox; } }
         public FileInfo PictureFile { get; set; }
+        public OcrResult OcrResult { get; set; }
 
         public string ResultText
         {
@@ -47,7 +48,7 @@ namespace luval.vision.app
             };
             if (dialog.ShowDialog() == DialogResult.Cancel) return;
             PictureFile = new FileInfo(dialog.FileName);
-            _result = null;
+            OcrResult = null;
             DoLoadImage(PictureFile.FullName);
         }
 
@@ -72,7 +73,7 @@ namespace luval.vision.app
                 stream.Close();
             }
             _imageManager = new ImageManager(img);
-            _result = null;
+            OcrResult = null;
             PictureBox.Image = img;
             PictureBox.Refresh();
         }
@@ -102,10 +103,10 @@ namespace luval.vision.app
 
         private void DoOCR()
         {
-            if (PictureFile == null || !PictureFile.Exists) return;
+            if (PictureFile == null || !PictureFile.Exists) OpenFile();
             var ocrProvider = GetProvider(false);
-            if (_result == null)
-                _result = ocrProvider.DoOcr(PictureFile.FullName);
+            if (OcrResult == null)
+                OcrResult = ocrProvider.DoOcr(PictureFile.FullName);
         }
 
         private void DoProcess()
@@ -160,9 +161,9 @@ namespace luval.vision.app
 
         private void ShowOCRBoxes()
         {
-            if (_result != null)
+            if (OcrResult != null)
             {
-                PictureBox.Image = _imageManager.ProcessOcrResult(_result);
+                PictureBox.Image = _imageManager.ProcessOcrResult(OcrResult);
             }
         }
 
@@ -196,8 +197,8 @@ namespace luval.vision.app
 
         private void pictureBox_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            if (_result == null) return;
-            var words = _result.Words.Where(i => i.Location.Y >= e.Y && i.Location.X >= e.X).OrderBy(o => o.Location.Y).ThenBy(o => o.Location.X).ToList();
+            if (OcrResult == null) return;
+            var words = OcrResult.Words.Where(i => i.Location.Y >= e.Y && i.Location.X >= e.X).OrderBy(o => o.Location.Y).ThenBy(o => o.Location.X).ToList();
             var word = words.FirstOrDefault();
             if (word == null) return;
             MessageBox.Show(word.Text, "OCR Result", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -206,12 +207,12 @@ namespace luval.vision.app
         private void mnuRunOCR_Click(object sender, EventArgs e)
         {
             if (PictureFile == null || !PictureFile.Exists) OpenFile();
-            DoOCR();                      
+            DoOCR();
             ShowOCRBoxes();
-            if (_result != null)
+            if (OcrResult != null)
             {
-                LoadVisionTree(_result);
-                LoadText(_result);
+                LoadVisionTree(OcrResult);
+                LoadText(OcrResult);
             }
         }
 
@@ -276,16 +277,10 @@ namespace luval.vision.app
         private void ConfigForm_DrawSearchArea(object sender, SearchAreaEventArgs e)
         {
             //TODO: Implement test logic
-            if (_imageManager == null) return;
-            if (_result == null) return;
-
-            var region = _result.Regions.FirstOrDefault();
-            //_formRelativeArea.WorkingArea = new OcrLocation() { X = 0, Width = _imageManager.Source.Width, Y = 0, Height = _imageManager.Source.Height };
-            //if (_formRelativeArea.ShowDialog() == DialogResult.Cancel) return;
-
-
-            //var loc = OcrRelativeLocation.FromRelative(_result.Info.ToLocation(), _formRelativeArea.X, _formRelativeArea.XBound, _formRelativeArea.Y, _formRelativeArea.YBound);
-            //PictureBox.Image = _imageManager.DrawRegion(region, loc);
+            if (OcrResult == null) DoOCR();
+            var region = OcrResult.Regions.FirstOrDefault();
+            var loc = FieldOption.FromRelative(OcrResult.Info.ToLocation(), e.Location);
+            PictureBox.Image = _imageManager.DrawRegion(region, loc);
         }
     }
 }
