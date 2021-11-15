@@ -43,7 +43,6 @@
             this.mnuExportToExcel = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuDrawArea = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.chkOcrResult = new System.Windows.Forms.CheckBox();
             this.btnDemo = new System.Windows.Forms.Button();
             this.processBtn = new System.Windows.Forms.Button();
             this.pictureBox = new System.Windows.Forms.PictureBox();
@@ -181,7 +180,6 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.chkOcrResult);
             this.panel1.Controls.Add(this.btnDemo);
             this.panel1.Controls.Add(this.processBtn);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -189,17 +187,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(832, 50);
             this.panel1.TabIndex = 1;
-            // 
-            // chkOcrResult
-            // 
-            this.chkOcrResult.AutoSize = true;
-            this.chkOcrResult.Location = new System.Drawing.Point(12, 16);
-            this.chkOcrResult.Name = "chkOcrResult";
-            this.chkOcrResult.Size = new System.Drawing.Size(112, 17);
-            this.chkOcrResult.TabIndex = 2;
-            this.chkOcrResult.Text = "Show OCR Result";
-            this.chkOcrResult.UseVisualStyleBackColor = true;
-            this.chkOcrResult.CheckedChanged += new System.EventHandler(this.chkOcrResult_CheckedChanged);
             // 
             // btnDemo
             // 
@@ -376,7 +363,6 @@
             this.mainMenu.ResumeLayout(false);
             this.mainMenu.PerformLayout();
             this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             this.mainTab.ResumeLayout(false);
             this.tabPicture.ResumeLayout(false);
@@ -418,7 +404,6 @@
         private System.Windows.Forms.ListView listResult;
         private System.Windows.Forms.ColumnHeader colAttribute;
         private System.Windows.Forms.ColumnHeader colValue;
-        private System.Windows.Forms.CheckBox chkOcrResult;
         private System.Windows.Forms.ToolStripMenuItem mnuSaveResult;
         private System.Windows.Forms.ToolStripMenuItem mnuRunOCR;
         private System.Windows.Forms.ToolStripMenuItem extractFormValuesToolStripMenuItem;

@@ -20,11 +20,8 @@ namespace luval.vision.app
     public partial class MainForm : BaseForm
     {
 
-        private string _mappingFile;
-        private string _fileName;
         private ImageManager _imageManager;
         private OcrResult _result;
-        private Image _resultImg;
         private RelativeArea _formRelativeArea;
 
         public MainForm()
@@ -50,9 +47,9 @@ namespace luval.vision.app
                 RestoreDirectory = true
             };
             if (dialog.ShowDialog() == DialogResult.Cancel) return;
-            _fileName = dialog.FileName;
+            PictureFile = new FileInfo(dialog.FileName);
             _result = null;
-            DoLoadImage(_fileName);
+            DoLoadImage(PictureFile.FullName);
         }
 
         private void openMenu_Click(object sender, EventArgs e)
@@ -88,7 +85,7 @@ namespace luval.vision.app
 
         private void processBtn_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(_fileName))
+            if (PictureFile == null || !PictureFile.Exists)
             {
                 MessageBox.Show("Please load an image for processing", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -117,10 +114,10 @@ namespace luval.vision.app
 
         private void DoOCR()
         {
-            if (string.IsNullOrWhiteSpace(_fileName)) return;
+            if (PictureFile == null || !PictureFile.Exists) return;
             var ocrProvider = GetProvider(false);
             if (_result == null)
-                _result = ocrProvider.DoOcr(_fileName);
+                _result = ocrProvider.DoOcr(PictureFile.FullName);
         }
 
         private void DoProcess()
@@ -181,21 +178,9 @@ namespace luval.vision.app
             }
         }
 
-        private void chkOcrResult_CheckedChanged(object sender, EventArgs e)
-        {
-            if (chkOcrResult.Checked)
-            {
-                ShowOCRBoxes();
-            }
-            else if (_resultImg != null)
-            {
-                PictureBox.Image = _resultImg;
-            }
-        }
-
         private void mnuSaveResult_Click(object sender, EventArgs e)
         {
-           
+
         }
 
         private void DoSaveResult(string resultFileName)
@@ -232,8 +217,8 @@ namespace luval.vision.app
 
         private void mnuRunOCR_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(_fileName)) OpenFile();
-            DoOCR();
+            if (PictureFile == null || !PictureFile.Exists) OpenFile();
+            DoOCR();                      
             ShowOCRBoxes();
             if (_result != null)
             {
@@ -261,7 +246,7 @@ namespace luval.vision.app
 
         private void extractFormValuesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(_fileName)) OpenFile();
+            if (PictureFile == null || !PictureFile.Exists) OpenFile();
             ExtractFormValues();
 
         }
