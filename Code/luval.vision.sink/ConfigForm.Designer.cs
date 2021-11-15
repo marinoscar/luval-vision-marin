@@ -31,11 +31,13 @@ namespace luval.vision.app
         {
             this.components = new System.ComponentModel.Container();
             this.dataGrid = new System.Windows.Forms.DataGridView();
-            this.fieldOptionBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.fieldNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Edit = new System.Windows.Forms.DataGridViewButtonColumn();
             this.Delete = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.fieldOptionBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.btnCreate = new System.Windows.Forms.Button();
+            this.btnLoad = new System.Windows.Forms.Button();
+            this.btnSave = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fieldOptionBindingSource)).BeginInit();
             this.SuspendLayout();
@@ -54,10 +56,7 @@ namespace luval.vision.app
             this.dataGrid.Name = "dataGrid";
             this.dataGrid.Size = new System.Drawing.Size(776, 376);
             this.dataGrid.TabIndex = 0;
-            // 
-            // fieldOptionBindingSource
-            // 
-            this.fieldOptionBindingSource.DataSource = typeof(luval.vision.core.FieldOption);
+            this.dataGrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGrid_CellContentClick);
             // 
             // fieldNameDataGridViewTextBoxColumn
             // 
@@ -75,9 +74,13 @@ namespace luval.vision.app
             this.Delete.HeaderText = "Delete";
             this.Delete.Name = "Delete";
             // 
+            // fieldOptionBindingSource
+            // 
+            this.fieldOptionBindingSource.DataSource = typeof(luval.vision.core.FieldOption);
+            // 
             // btnCreate
             // 
-            this.btnCreate.Location = new System.Drawing.Point(52, 13);
+            this.btnCreate.Location = new System.Drawing.Point(12, 12);
             this.btnCreate.Name = "btnCreate";
             this.btnCreate.Size = new System.Drawing.Size(122, 23);
             this.btnCreate.TabIndex = 1;
@@ -85,11 +88,32 @@ namespace luval.vision.app
             this.btnCreate.UseVisualStyleBackColor = true;
             this.btnCreate.Click += new System.EventHandler(this.btnCreate_Click);
             // 
+            // btnLoad
+            // 
+            this.btnLoad.Location = new System.Drawing.Point(140, 12);
+            this.btnLoad.Name = "btnLoad";
+            this.btnLoad.Size = new System.Drawing.Size(122, 23);
+            this.btnLoad.TabIndex = 2;
+            this.btnLoad.Text = "Load Configuration";
+            this.btnLoad.UseVisualStyleBackColor = true;
+            this.btnLoad.Click += new System.EventHandler(this.btnLoad_Click);
+            // 
+            // btnSave
+            // 
+            this.btnSave.Location = new System.Drawing.Point(268, 12);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(122, 23);
+            this.btnSave.TabIndex = 3;
+            this.btnSave.Text = "Save Configuration";
+            this.btnSave.UseVisualStyleBackColor = true;
+            // 
             // ConfigForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnSave);
+            this.Controls.Add(this.btnLoad);
             this.Controls.Add(this.btnCreate);
             this.Controls.Add(this.dataGrid);
             this.Name = "ConfigForm";
@@ -108,5 +132,7 @@ namespace luval.vision.app
         private System.Windows.Forms.DataGridViewButtonColumn Delete;
         private System.Windows.Forms.BindingSource fieldOptionBindingSource;
         private System.Windows.Forms.Button btnCreate;
+        private System.Windows.Forms.Button btnLoad;
+        private System.Windows.Forms.Button btnSave;
     }
 }
