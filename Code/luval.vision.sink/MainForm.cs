@@ -33,6 +33,8 @@ namespace luval.vision.app
         }
 
         public PictureBox PictureBox { get { return pictureBox; } }
+        public FileInfo PictureFile { get; set; }
+
         public string ResultText
         {
             get { return resultText.Text; }
@@ -328,7 +330,13 @@ namespace luval.vision.app
         private void mnuConfiguration_Click(object sender, EventArgs e)
         {
             var configForm = new ConfigForm();
+            configForm.DrawSearchArea += ConfigForm_DrawSearchArea;
             configForm.Show();
+        }
+
+        private void ConfigForm_DrawSearchArea(object sender, SearchAreaEventArgs e)
+        {
+            //TODO: Implement test logic
         }
     }
 }

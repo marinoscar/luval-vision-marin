@@ -183,6 +183,7 @@ namespace luval.vision.app
             this.searchAreaControl.SearchLocation = ocrRelativeSearchLocation1;
             this.searchAreaControl.Size = new System.Drawing.Size(759, 118);
             this.searchAreaControl.TabIndex = 0;
+            this.searchAreaControl.DrawSearchArea += new System.EventHandler<luval.vision.app.SearchAreaEventArgs>(this.searchAreaControl_DrawSearchArea);
             // 
             // tabLineResolver
             // 

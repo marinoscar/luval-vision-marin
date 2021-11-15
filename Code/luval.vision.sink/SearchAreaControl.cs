@@ -16,7 +16,13 @@ namespace luval.vision.app
     {
 
         private OcrRelativeSearchLocation _searchLocation;
+        public event EventHandler<SearchAreaEventArgs> DrawSearchArea;
 
+        protected virtual void OnDrawSearchArea(SearchAreaEventArgs e)
+        {
+            EventHandler<SearchAreaEventArgs> handler = DrawSearchArea;
+            handler?.Invoke(this, e);
+        }
 
         public SearchAreaControl()
         {
@@ -37,11 +43,26 @@ namespace luval.vision.app
         {
             var txt = sender as TextBox;
             if (string.IsNullOrWhiteSpace(txt.Text)) return;
-            if (e.KeyCode == Keys.Oemcomma || e.KeyCode == Keys.OemPeriod || 
-                e.KeyCode == Keys.Decimal || e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab 
-                || e.KeyCode == Keys.Shift || e.KeyCode == Keys.ShiftKey) 
+            if (e.KeyCode == Keys.Oemcomma || e.KeyCode == Keys.OemPeriod ||
+                e.KeyCode == Keys.Decimal || e.KeyCode == Keys.Enter || e.KeyCode == Keys.Tab
+                || e.KeyCode == Keys.Shift || e.KeyCode == Keys.ShiftKey)
                 return;
             if (txt.Text.IsNumericValue()) e.SuppressKeyPress = true;
         }
+
+        private void btnTest_Click(object sender, EventArgs e)
+        {
+            OnDrawSearchArea(new SearchAreaEventArgs(SearchLocation));
+        }
     }
+
+    public class SearchAreaEventArgs : EventArgs
+    {
+        public SearchAreaEventArgs(OcrRelativeSearchLocation location)
+        {
+            Location = location;
+        }
+        public OcrRelativeSearchLocation Location { get; private set; }
+    }
+
 }

@@ -179,6 +179,7 @@ namespace luval.vision.app
             this.btnTest.TabIndex = 2;
             this.btnTest.Text = "Show Area";
             this.btnTest.UseVisualStyleBackColor = true;
+            this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
             // 
             // SearchAreaControl
             // 

@@ -15,6 +15,15 @@ namespace luval.vision.app
 {
     public partial class ConfigForm : BaseForm
     {
+
+        public event EventHandler<SearchAreaEventArgs> DrawSearchArea;
+
+        protected virtual void OnDrawSearchArea(SearchAreaEventArgs e)
+        {
+            EventHandler<SearchAreaEventArgs> handler = DrawSearchArea;
+            handler?.Invoke(this, e);
+        }
+
         public ConfigForm()
         {
             InitializeComponent();
@@ -84,7 +93,13 @@ namespace luval.vision.app
             PrepareOptionForUi(fieldOption);
             var frmOption = new FieldOptionForm() { FieldOption = fieldOption };
             frmOption.ApplyChanges += FrmOption_ApplyChanges;
+            frmOption.DrawSearchArea += FrmOption_DrawSearchArea;
             frmOption.Show();
+        }
+
+        private void FrmOption_DrawSearchArea(object sender, SearchAreaEventArgs e)
+        {
+            OnDrawSearchArea(e);
         }
 
         private void FrmOption_ApplyChanges(object sender, EventArgs e)

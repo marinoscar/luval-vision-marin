@@ -17,6 +17,13 @@ namespace luval.vision.app
 
 
         public event EventHandler ApplyChanges;
+        public event EventHandler<SearchAreaEventArgs> DrawSearchArea;
+
+        protected virtual void OnDrawSearchArea(SearchAreaEventArgs e)
+        {
+            EventHandler<SearchAreaEventArgs> handler = DrawSearchArea;
+            handler?.Invoke(this, e);
+        }
 
         private FieldOption _fieldOption;
         public FieldOptionForm()
@@ -55,6 +62,11 @@ namespace luval.vision.app
         {
             OnApplyChanges(new EventArgs());
             Close();
+        }
+
+        private void searchAreaControl_DrawSearchArea(object sender, SearchAreaEventArgs e)
+        {
+            OnDrawSearchArea(e);
         }
     }
 }
