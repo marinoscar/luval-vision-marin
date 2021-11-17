@@ -117,10 +117,12 @@ namespace luval.vision.app
         {
             resultText.Clear();
             var sb = new StringBuilder();
-            //foreach (var line in ocrResult.Lines)
-            //{
-            //    sb.AppendLine(line.Text);
-            //}
+            var lineProvider = new MidLineOcrLineResolver();
+            var lines = lineProvider.GetLines(ocrResult.Words, new Dictionary<string, string>());
+            foreach (var line in lines)
+            {
+                sb.AppendLine(line.Text);
+            }
             resultText.Text = sb.ToString();
         }
 
