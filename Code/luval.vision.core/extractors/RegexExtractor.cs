@@ -9,7 +9,7 @@ namespace luval.vision.core.extractors
 {
     public class RegexExtractor : IFieldExtractor
     {
-        public IEnumerable<string> GetValue(string text, IDictionary<string, string> options)
+        public virtual IEnumerable<string> GetValue(string text, IDictionary<string, string> options)
         {
             if (options == null) throw new ArgumentNullException("options");
             if (!options.ContainsKey("pattern")) throw new ArgumentNullException("pattern is required", "options");

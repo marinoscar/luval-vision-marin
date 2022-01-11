@@ -11,9 +11,9 @@
     <Authors>Oscar Marin</Authors>
     <Product>Luval Form Extractor</Product>
     <PackageIcon>LV-Luval-Logo-200x200.png</PackageIcon>
-    <AssemblyVersion>1.0.0.2</AssemblyVersion>
-    <FileVersion>1.0.0.2</FileVersion>
-    <Version>1.2.5</Version>
+    <AssemblyVersion>1.2.7.21010</AssemblyVersion>
+    <FileVersion>1.2.7.21010</FileVersion>
+    <Version>1.2.7</Version>
     <Copyright>Oscar Marin</Copyright>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Description>Luval Form Extractor</Description>
