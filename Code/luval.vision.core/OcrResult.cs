@@ -22,6 +22,7 @@ namespace luval.vision.core
         public ImageInfo Info { get; set; }
         public List<OcrRegion> Regions { get; set; }
         public List<OcrWord> Words { get; set; }
+        public string Json { get; set; }
 
 
         public override string ToString()
