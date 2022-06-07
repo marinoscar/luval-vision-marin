@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Luval.FormExtractor
 {
-    public class ExtractionResult
+    public class ExtractionPackage
     {
 
         public DataTable Table { get; set; }
