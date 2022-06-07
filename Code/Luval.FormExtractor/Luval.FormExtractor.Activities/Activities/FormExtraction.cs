@@ -44,6 +44,11 @@ namespace Luval.FormExtractor.Activities
         [LocalizedCategory(nameof(Resources.Output_Category))]
         public OutArgument<DataTable> Results { get; set; }
 
+        [LocalizedDisplayName("Json Text")]
+        [LocalizedDescription("Json text with the result from the OCR operation")]
+        [LocalizedCategory(nameof(Resources.Output_Category))]
+        public OutArgument<string> JsonText { get; set; }
+
         #endregion
 
 
@@ -74,11 +79,12 @@ namespace Luval.FormExtractor.Activities
             var jsonConfiguration = JsonConfiguration.Get(context);
             var apiKey = APIKey.Get(context);
             var extractorHelper = new ExtractorHelper();
-            var dtResult = extractorHelper.DoExtraction(apiKey, fileName, jsonConfiguration);
+            var resultPack = extractorHelper.DoExtraction(apiKey, fileName, jsonConfiguration);
 
             // Outputs
             return (ctx) => {
-                Results.Set(ctx, dtResult);
+                Results.Set(ctx, resultPack.Table);
+                JsonText.Set(ctx, resultPack.OcrResult.Json);
             };
         }
 
