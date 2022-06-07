@@ -16,7 +16,7 @@ namespace Luval.FormExtractor
 {
     public class ExtractorHelper
     {
-        public DataTable DoExtraction(SecureString apiKey, string filePath, string jsonConfiguration)
+        public ExtractionPackage DoExtraction(SecureString apiKey, string filePath, string jsonConfiguration)
         {
             if (apiKey == null) throw new ArgumentNullException("apiKey");
             if (string.IsNullOrWhiteSpace(filePath)) throw new ArgumentNullException("filePath");
@@ -35,9 +35,10 @@ namespace Luval.FormExtractor
                 throw new ArgumentException("Unable to parse the json configuration", "jsonConfiguration", ex);
             }
             var bytes = File.ReadAllBytes(filePath);
+            OcrResult ocrResult = new OcrResult();
             try
             {
-                var ocrResult = ocr.DoOcr(fileInfo.FullName);
+                ocrResult = ocr.DoOcr(fileInfo.FullName);
                 var extractor = new Extractor(options, ocrResult.Regions.First(), ocrResult.Info);
                 result.AddRange(extractor.GetValues());
             }
@@ -46,7 +47,7 @@ namespace Luval.FormExtractor
                 throw new InvalidOperationException("Unable to process the OCR request or parsing of the elements", ex);
             }
             var dt = GetResult(result);
-            return dt;
+            return new ExtractionPackage() { Table = dt, OcrResult = ocrResult };
         }
 
         private DataTable GetResult(IEnumerable<ExtractionResult> results)
